@@ -1,0 +1,25 @@
+<!-- 4. Client (index.html) -->
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
+</head>
+<body>
+  <video id="video" controls autoplay width="720"></video>
+  <div id="metrics"></div>
+  
+  <script>
+    const player = dashjs.MediaPlayer().create();
+    player.initialize(document.getElementById('video'), 
+      'http://localhost:8080/manifest.mpd', true);
+    
+    // Display metrics every second
+    setInterval(() => {
+      document.getElementById('metrics').innerHTML = `
+        Buffer: ${player.getBufferLength()}s<br>
+        Latency: ${player.getCurrentLiveLatency() || 'N/A'}s
+      `;
+    }, 1000);
+  </script>
+</body>
+</html>
