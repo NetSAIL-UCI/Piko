@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NetSail DASH Player</title>
+  <script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+      background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+      min-height: 100vh;
+      color: #e4e4e7;
+      padding: 2rem;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    h1 {
+      font-size: 2rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      color: #22d3ee;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    
+    .subtitle {
+      color: #71717a;
+      font-size: 0.875rem;
+    }
+    
+    .player-container {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid #27272a;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+    
+    video {
+      width: 100%;
+      display: block;
+      background: #000;
+    }
+    
+    .metrics-panel {
+      background: rgba(15, 15, 35, 0.8);
+      padding: 1.5rem;
+      border-top: 1px solid #27272a;
+    }
+    
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    
+    .metric {
+      background: rgba(39, 39, 42, 0.5);
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid #3f3f46;
+    }
+    
+    .metric-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #71717a;
+      margin-bottom: 0.5rem;
+    }
+    
+    .metric-value {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #22d3ee;
+    }
+    
+    .metric-value.warning {
+      color: #fbbf24;
+    }
+    
+    .metric-value.danger {
+      color: #ef4444;
+    }
+    
+    .metric-value.good {
+      color: #22c55e;
+    }
+    
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      background: rgba(0, 0, 0, 0.3);
+      border-top: 1px solid #27272a;
+      font-size: 0.75rem;
+    }
+    
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    .config-panel {
+      margin-top: 1.5rem;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid #27272a;
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    
+    .config-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #71717a;
+      margin-bottom: 1rem;
+    }
+    
+    .config-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #27272a;
+    }
+    
+    .config-item:last-child {
+      border-bottom: none;
+    }
+    
+    .config-key {
+      color: #a1a1aa;
+    }
+    
+    .config-value {
+      color: #22d3ee;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>NetSail</h1>
+      <p class="subtitle">DASH Streaming Testbed</p>
+    </header>
+    
+    <div class="player-container">
+      <video id="video" controls autoplay muted></video>
+      
+      <div class="metrics-panel">
+        <div class="metrics-grid">
+          <div class="metric">
+            <div class="metric-label">Buffer Length</div>
+            <div class="metric-value" id="buffer">0.00s</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Bitrate</div>
+            <div class="metric-value" id="bitrate">-- kbps</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Latency</div>
+            <div class="metric-value" id="latency">-- ms</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Dropped Frames</div>
+            <div class="metric-value" id="dropped">0</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="status-bar">
+        <div class="status-indicator">
+          <div class="status-dot" id="status-dot"></div>
+          <span id="status-text">Initializing...</span>
+        </div>
+        <div>
+          <span id="current-time">0:00</span> / <span id="duration">0:00</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="config-panel">
+      <div class="config-title">Stream Configuration</div>
+      <div class="config-item">
+        <span class="config-key">Manifest URL</span>
+        <span class="config-value" id="manifest-url">--</span>
+      </div>
+      <div class="config-item">
+        <span class="config-key">Server</span>
+        <span class="config-value" id="server-url">--</span>
+      </div>
+      <div class="config-item">
+        <span class="config-key">Protocol</span>
+        <span class="config-value">DASH (MPEG-DASH)</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Determine manifest URL based on current location
+    const baseUrl = window.location.origin;
+    const manifestUrl = `${baseUrl}/manifest.mpd`;
+    
+    document.getElementById('manifest-url').textContent = '/manifest.mpd';
+    document.getElementById('server-url').textContent = baseUrl;
+    
+    // Initialize dash.js player
+    const player = dashjs.MediaPlayer().create();
+    const video = document.getElementById('video');
+    
+    player.initialize(video, manifestUrl, true);
+    
+    // Update status
+    function updateStatus(text, isError = false) {
+      document.getElementById('status-text').textContent = text;
+      document.getElementById('status-dot').style.background = isError ? '#ef4444' : '#22c55e';
+    }
+    
+    // Format time
+    function formatTime(seconds) {
+      if (!seconds || isNaN(seconds)) return '0:00';
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+    
+    // Update metrics
+    function updateMetrics() {
+      // Buffer length
+      const bufferLength = player.getBufferLength('video');
+      const bufferEl = document.getElementById('buffer');
+      bufferEl.textContent = `${(bufferLength || 0).toFixed(2)}s`;
+      bufferEl.className = 'metric-value ' + (
+        bufferLength < 2 ? 'danger' : 
+        bufferLength < 5 ? 'warning' : 'good'
+      );
+      
+      // Bitrate
+      const streamInfo = player.getActiveStream();
+      if (streamInfo) {
+        const bitrateInfo = player.getQualityFor('video');
+        const bitrateList = player.getBitrateInfoListFor('video');
+        if (bitrateList && bitrateList[bitrateInfo]) {
+          const kbps = Math.round(bitrateList[bitrateInfo].bitrate / 1000);
+          document.getElementById('bitrate').textContent = `${kbps} kbps`;
+        }
+      }
+      
+      // Dropped frames
+      if (video.getVideoPlaybackQuality) {
+        const quality = video.getVideoPlaybackQuality();
+        const droppedEl = document.getElementById('dropped');
+        droppedEl.textContent = quality.droppedVideoFrames;
+        droppedEl.className = 'metric-value ' + (
+          quality.droppedVideoFrames > 10 ? 'danger' :
+          quality.droppedVideoFrames > 0 ? 'warning' : 'good'
+        );
+      }
+      
+      // Latency (download time of last segment)
+      const dashMetrics = player.getDashMetrics();
+      if (dashMetrics) {
+        const httpRequests = dashMetrics.getHttpRequests('video');
+        if (httpRequests && httpRequests.length > 0) {
+          const lastRequest = httpRequests[httpRequests.length - 1];
+          if (lastRequest.tresponse && lastRequest.trequest) {
+            const latency = lastRequest.tresponse.getTime() - lastRequest.trequest.getTime();
+            document.getElementById('latency').textContent = `${latency} ms`;
+          }
+        }
+      }
+      
+      // Time
+      document.getElementById('current-time').textContent = formatTime(video.currentTime);
+      document.getElementById('duration').textContent = formatTime(video.duration);
+    }
+    
+    // Event listeners
+    player.on(dashjs.MediaPlayer.events.CAN_PLAY, () => {
+      updateStatus('Playing');
+      setInterval(updateMetrics, 500);
+    });
+    
+    player.on(dashjs.MediaPlayer.events.PLAYBACK_WAITING, () => {
+      updateStatus('Buffering...', false);
+    });
+    
+    player.on(dashjs.MediaPlayer.events.PLAYBACK_PLAYING, () => {
+      updateStatus('Playing');
+    });
+    
+    player.on(dashjs.MediaPlayer.events.ERROR, (e) => {
+      console.error('Player error:', e);
+      updateStatus('Error: ' + (e.error?.message || 'Unknown'), true);
+    });
+    
+    player.on(dashjs.MediaPlayer.events.PLAYBACK_ENDED, () => {
+      updateStatus('Playback ended');
+    });
+  </script>
+</body>
+</html>
+
