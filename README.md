@@ -1,4 +1,4 @@
-# NetSail
+# Benchmarking
 
 A containerized DASH video streaming testbed with network emulation for researching adaptive bitrate streaming under various network conditions.
 
