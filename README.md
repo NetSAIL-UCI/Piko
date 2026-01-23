@@ -6,7 +6,7 @@ A containerized DASH video streaming testbed with network emulation for research
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                              Docker Network                       │
+│                              Docker Network                                 │
 │                                192.168.100.0/24                             │
 │                                                                             │
 │  ┌─────────────────────────────┐      ┌────────────────────────────────┐    │
