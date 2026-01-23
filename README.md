@@ -215,39 +215,6 @@ shaper:
     DEFAULT_RATE: "10mbit"  # Limited bandwidth
 ```
 
-## Troubleshooting
-
-### Traffic Shaping Not Working
-
-**Symptom:** No difference between direct (8080) and shaped (9080) access.
-
-**Cause:** tc/netem requires Linux kernel features not available in Docker Desktop VMs.
-
-**Solution:** Run on a Linux host or Linux VM with Docker installed natively.
-
-### Permission Denied for tc
-
-**Symptom:** "RTNETLINK answers: Operation not permitted"
-
-**Solution:** Ensure `cap_add: NET_ADMIN` is in docker-compose.yaml.
-
-### Video Not Playing
-
-1. Check the server is running: `curl http://localhost:8080/health`
-2. Verify DASH content exists: `ls Benchmarking/output/manifest.mpd`
-3. Check browser console for errors
-
-### Container Won't Start
-
-```bash
-# Check logs
-docker-compose logs server
-docker-compose logs shaper
-
-# Rebuild
-docker-compose build --no-cache
-```
-
 ## Project Structure
 
 ```
@@ -285,10 +252,4 @@ NetSail/
         ├── generate-dash.sh  # Generate DASH from video
         └── download-sample.sh # Download test videos
 ```
-
-## Credits
-
-- Network emulation approach from [mmsys24-starlink-livestreaming](https://github.com/clarkzjw/mmsys24-starlink-livestreaming)
-- Test video: [Big Buck Bunny](https://peach.blender.org/)
-- DASH player: [dash.js](https://github.com/Dash-Industry-Forum/dash.js)
 
