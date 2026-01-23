@@ -1,0 +1,106 @@
+version: '3.8'
+
+# ============================================================================
+# NetSail - DASH Streaming Testbed with Network Emulation
+# ============================================================================
+#
+# Services:
+#   - server:  DASH video streaming server (Python)
+#   - shaper:  Network emulator with tc/netem (applies to server traffic)
+#
+# Quick Start:
+#   docker-compose up -d
+#
+# Access:
+#   - Direct server (no shaping):  http://localhost:8080
+#   - Via shaper (shaped traffic): http://localhost:9080
+#
+# ============================================================================
+
+services:
+  # --------------------------------------------------------------------------
+  # DASH Streaming Server
+  # --------------------------------------------------------------------------
+  # Serves DASH video content (MPD manifest + video segments)
+  # 
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: netsail/server:latest
+    container_name: netsail-server
+    volumes:
+      # Mount your DASH content here (manifest.mpd + segments)
+      # Generate content with: cd Benchmarking/scripts && ./generate-dash.sh
+      - ./content:/app/content:ro
+    environment:
+      PORT: "8080"
+      HOST: "0.0.0.0"
+      CONTENT_DIR: "/app/content"
+    ports:
+      # Direct access (bypasses traffic shaping)
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      netsail:
+        ipv4_address: 192.168.100.20
+
+  # --------------------------------------------------------------------------
+  # Network Shaper (tc/netem)
+  # --------------------------------------------------------------------------
+  # Applies network conditions from trace files using Linux tc/netem
+  # Acts as a reverse proxy in front of the DASH server
+  #
+  # NOTE: Requires Linux host. Won't work on Docker Desktop for macOS/Windows.
+  #
+  shaper:
+    build:
+      context: ./shaper
+      dockerfile: Dockerfile
+    image: netsail/shaper:latest
+    container_name: netsail-shaper
+    volumes:
+      # Network latency trace file
+      - ./shaper/trace/sample-trace.csv:/trace/trace.csv:ro
+      # Use Starlink trace instead:
+      # - ./shaper/trace/starlink-isl-trace.csv:/trace/trace.csv:ro
+      
+      # Custom nginx config to proxy to server
+      - ./shaper/nginx-proxy.conf:/etc/nginx/conf.d/default.conf:ro
+    environment:
+      ETHERNET: eth0
+      INTERVAL: "0.01"
+      DEFAULT_RATE: "100mbit"
+      DEFAULT_CEIL: "50mbit"
+      DEFAULT_DELAY: "40ms"
+      DEFAULT_LOSS: "0.1%"
+    ports:
+      # Access server through shaper (traffic shaped)
+      - "9080:80"
+      - "9443:443"
+    cap_add:
+      - NET_ADMIN
+    depends_on:
+      - server
+    restart: unless-stopped
+    networks:
+      netsail:
+        ipv4_address: 192.168.100.10
+
+# ============================================================================
+# Network Configuration
+# ============================================================================
+networks:
+  netsail:
+    name: netsail
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "192.168.100.0/24"
+          gateway: "192.168.100.1"
