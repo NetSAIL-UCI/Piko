@@ -267,9 +267,15 @@
         bufferLength < 5 ? 'warning' : 'good'
       );
       
-      // Bitrate
-      const streamInfo = player.getActiveStream();
-      if (streamInfo) {
+      // Bitrate - use getCurrentRepresentationForType
+      try {
+        const currentRep = player.getCurrentRepresentationForType('video');
+        if (currentRep && currentRep.bandwidth) {
+          const kbps = Math.round(currentRep.bandwidth / 1000);
+          document.getElementById('bitrate').textContent = `${kbps} kbps`;
+        }
+      } catch (e) {
+        // Fallback method
         const bitrateInfo = player.getQualityFor('video');
         const bitrateList = player.getBitrateInfoListFor('video');
         if (bitrateList && bitrateList[bitrateInfo]) {
@@ -290,16 +296,28 @@
       }
       
       // Latency (download time of last segment)
-      const dashMetrics = player.getDashMetrics();
-      if (dashMetrics) {
-        const httpRequests = dashMetrics.getHttpRequests('video');
-        if (httpRequests && httpRequests.length > 0) {
-          const lastRequest = httpRequests[httpRequests.length - 1];
-          if (lastRequest.tresponse && lastRequest.trequest) {
-            const latency = lastRequest.tresponse.getTime() - lastRequest.trequest.getTime();
-            document.getElementById('latency').textContent = `${latency} ms`;
+      try {
+        const dashMetrics = player.getDashMetrics();
+        if (dashMetrics) {
+          const httpRequests = dashMetrics.getHttpRequests('video');
+          if (httpRequests && httpRequests.length > 0) {
+            // Find the last completed request
+            for (let i = httpRequests.length - 1; i >= 0; i--) {
+              const req = httpRequests[i];
+              if (req._tfinish && req.tresponse) {
+                const latency = req.tresponse.getTime() - req.trequest.getTime();
+                document.getElementById('latency').textContent = `${latency} ms`;
+                break;
+              } else if (req.tresponse && req.trequest) {
+                const latency = req.tresponse.getTime() - req.trequest.getTime();
+                document.getElementById('latency').textContent = `${latency} ms`;
+                break;
+              }
+            }
           }
         }
+      } catch (e) {
+        console.log('Latency metric error:', e);
       }
       
       // Time

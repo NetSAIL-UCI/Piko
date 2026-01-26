@@ -66,9 +66,9 @@ services:
     container_name: netsail-shaper
     volumes:
       # Network latency trace file
-      - ./shaper/trace/sample-trace.csv:/trace/trace.csv:ro
+      # - ./shaper/trace/sample-trace.csv:/trace/trace.csv:ro
       # Use Starlink trace instead:
-      # - ./shaper/trace/starlink-isl-trace.csv:/trace/trace.csv:ro
+      - ./shaper/trace/starlink-isl-trace.csv:/trace/trace.csv:ro
       
       # Custom nginx config to proxy to server
       - ./shaper/nginx-proxy.conf:/etc/nginx/conf.d/default.conf:ro
