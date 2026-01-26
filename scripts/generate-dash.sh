@@ -60,16 +60,27 @@ echo -e "${YELLOW}Video Info:${NC}"
 ffprobe -v quiet -show_format -show_streams "$INPUT_VIDEO" 2>/dev/null | grep -E "^(duration|width|height|bit_rate|codec_name)=" | head -10
 echo ""
 
-# Generate DASH content
-echo -e "${YELLOW}Generating DASH segments...${NC}"
+# Generate DASH content with multiple bitrates for ABR (video only)
+echo -e "${YELLOW}Generating DASH segments with multiple quality levels...${NC}"
 echo ""
 
+# Multiple quality levels for adaptive streaming:
+#   - 240p @ 400kbps  (low)
+#   - 360p @ 800kbps  (medium)
+#   - 480p @ 1500kbps (high)
+#   - 720p @ 3000kbps (HD)
+
 ffmpeg -y -i "$INPUT_VIDEO" \
-    -c:v libx264 \
-    -preset fast \
-    -crf 23 \
-    -c:a aac \
-    -b:a 128k \
+    -filter_complex "[0:v]split=4[v1][v2][v3][v4]; \
+        [v1]scale=426:240[v1out]; \
+        [v2]scale=640:360[v2out]; \
+        [v3]scale=854:480[v3out]; \
+        [v4]scale=1280:720[v4out]" \
+    -map "[v1out]" -c:v:0 libx264 -b:v:0 400k -preset fast -g 48 -keyint_min 48 \
+    -map "[v2out]" -c:v:1 libx264 -b:v:1 800k -preset fast -g 48 -keyint_min 48 \
+    -map "[v3out]" -c:v:2 libx264 -b:v:2 1500k -preset fast -g 48 -keyint_min 48 \
+    -map "[v4out]" -c:v:3 libx264 -b:v:3 3000k -preset fast -g 48 -keyint_min 48 \
+    -an \
     -f dash \
     -seg_duration "$SEGMENT_DURATION" \
     -use_timeline 1 \

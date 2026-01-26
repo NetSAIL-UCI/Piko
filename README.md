@@ -1,255 +1,84 @@
-# Benchmarking
+# DASH Streaming QoE Benchmark
 
-A containerized DASH video streaming testbed with network emulation for researching adaptive bitrate streaming under various network conditions.
-
-## Architecture
-
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                              Docker Network                                 │
-│                                192.168.100.0/24                             │
-│                                                                             │
-│  ┌─────────────────────────────┐      ┌────────────────────────────────┐    │
-│  │      Traffic Shaper         │      │       DASH Server              │    │
-│  │    (192.168.100.10)         │      │     (192.168.100.20)           │    │
-│  │                             │      │                                │    │
-│  │  ┌─────────┐  ┌──────────┐  │      │  ┌─────────────────────────┐   │    │
-│  │  │  nginx  │──│tc/netem  │  │─────▶│  │  Python HTTP Server     │   │    │
-│  │  │ (proxy) │  │(shaping) │  │      │  │  - DASH MIME types      │   │    │
-│  │  └─────────┘  └──────────┘  │      │  │  - CORS headers         │   │    │
-│  │       │                     │      │  │  - Health check         │   │    │
-│  │       │ Applies:            │      │  └─────────────────────────┘   │    │
-│  │       │ - Latency           │      │              │                 │    │
-│  │       │ - Packet loss       │      │              ▼                 │    │
-│  │       │ - Bandwidth limits  │      │  ┌─────────────────────────┐   │    │
-│  │       │                     │      │  │    Video Content        │   │    │
-│  └───────┼─────────────────────┘      │  │  - manifest.mpd         │   │    │
-│          │                            │  │  - *.m4s segments       │   │    │
-│          │                            │  └─────────────────────────┘   │    │
-└──────────┼────────────────────────────┴────────────────────────────────┘    │
-           │                                            │                     │
-           ▼                                            ▼                     │
-    Port 9080 (shaped)                           Port 8080 (direct)           │
-```
+Testbed for measuring video streaming Quality of Experience under network emulation.
 
 ## Quick Start
 
-### Prerequisites
-
-- Docker and Docker Compose
-- **Linux host** (required for tc/netem - won't work on Docker Desktop for macOS/Windows)
-- FFmpeg (for generating DASH content)
-
-### 1. Generate DASH Content (if needed)
-
-If you don't have DASH content yet:
-
 ```bash
-# Download sample video
-curl -O https://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4
+# 1. Start services (Linux required)
+sudo docker compose up -d
 
-# Generate DASH segments
-mkdir -p Benchmarking/output
-ffmpeg -i BigBuckBunny_320x180.mp4 \
-  -c:v libx264 -preset fast \
-  -f dash -seg_duration 4 \
-  Benchmarking/output/manifest.mpd
+# 2. Generate multi-bitrate content (first time only)
+cd scripts && ./generate-dash.sh <input.mp4> ../content 4
+
+# 3. Run benchmark
+python3 scripts/benchmark.py                    # Direct (port 8080)
+python3 scripts/benchmark.py --shaped           # Shaped (port 9080)
+python3 scripts/benchmark.py --duration 60      # Limit to 60s
 ```
 
-### 2. Start the Services
+## Access
 
-```bash
-# Build and start all containers
-docker-compose up -d
-
-# View logs
-docker-compose logs -f
-```
-
-### 3. Access the Player
-
-| URL | Description |
-|-----|-------------|
-| http://localhost:8080 | **Direct access** - No traffic shaping |
-| http://localhost:9080 | **Shaped access** - Traffic goes through tc/netem |
-
-Open your browser to either URL to view the DASH player with real-time metrics.
-
-## Services
-
-### DASH Server (`netsail/server`)
-
-A Python HTTP server optimized for DASH streaming:
-
-- Proper MIME types for `.mpd` and `.m4s` files
-- CORS headers for cross-origin requests
-- Health check endpoint at `/health`
-- Built-in video player at `/`
-
-**Environment Variables:**
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `PORT` | `8080` | Server port |
-| `HOST` | `0.0.0.0` | Bind address |
-| `CONTENT_DIR` | `/app/content` | Path to DASH content |
-
-### Traffic Shaper (`netsail/shaper`)
-
-Linux tc/netem-based network emulator:
-
-- Trace-driven latency from CSV files
-- HTB for bandwidth limiting
-- netem for delay/loss/jitter
-- Nginx reverse proxy
-
-**Environment Variables:**
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `ETHERNET` | `eth0` | Network interface |
-| `INTERVAL` | `0.01` | TC update interval (seconds) |
-| `DEFAULT_RATE` | `100mbit` | Bandwidth rate |
-| `DEFAULT_CEIL` | `50mbit` | Bandwidth ceiling |
-| `DEFAULT_DELAY` | `40ms` | Network delay |
-| `DEFAULT_LOSS` | `0.1%` | Packet loss percentage |
-
-## Network Trace Files
-
-The shaper reads network conditions from CSV trace files:
-
-```csv
-since,relative_seconds,rtt
-0.0,0.0,40.0
-0.1,0.1,45.2
-0.2,0.1,38.5
-...
-```
-
-### Available Traces
-
-| File | Description |
+| Port | Description |
 |------|-------------|
-| `shaper/trace/sample-trace.csv` | Simple 3-second sample |
-| `shaper/trace/starlink-isl-trace.csv` | Real Starlink ISL measurements (353K samples) |
+| `8080` | Direct server (no shaping) |
+| `9080` | Traffic-shaped (tc/netem) |
 
-### Using a Different Trace
+**Browser player:** http://localhost:8080
 
-Edit `docker-compose.yaml`:
-
-```yaml
-shaper:
-  volumes:
-    - ./shaper/trace/starlink-isl-trace.csv:/trace/trace.csv:ro
-```
-
-### Creating Custom Traces
-
-Create a CSV with columns:
-- `since`: Absolute timestamp (seconds)
-- `relative_seconds`: Time since previous sample
-- `rtt`: Round-trip time in milliseconds
-
-## Common Operations
-
-### Rebuild Containers
+## Benchmark Tool
 
 ```bash
-docker-compose build --no-cache
-docker-compose up -d
+python3 scripts/benchmark.py [OPTIONS]
 ```
 
-### View Shaper Logs
+| Option | Description |
+|--------|-------------|
+| `--url URL` | Server URL (default: localhost:8080) |
+| `--shaped` | Use shaped port 9080 |
+| `--duration N` | Test N seconds (default: full video) |
+| `-o FILE` | Output JSON file |
 
-```bash
-docker logs -f netsail-shaper
+### QoE Metrics
+
+| Metric | Description |
+|--------|-------------|
+| Avg Bitrate | Mean video quality (kbps) |
+| Bitrate Switches | Quality level changes |
+| Rebuffer Time | Total stalling duration |
+| Rebuffer Ratio | % time spent buffering |
+| **QoE Score** | 1-5 composite score |
+
+### QoE Formula
+
+```
+QoE = 0.40×Quality + 0.35×Continuity + 0.15×Stability + 0.10×Startup
 ```
 
-### Check Health
+## Traffic Shaping
 
-```bash
-# Server health
-curl http://localhost:8080/health
-
-# Shaper health
-curl http://localhost:9080/shaper/health
-```
-
-### Stop Everything
-
-```bash
-docker-compose down
-```
-
-### Run Server Only (No Shaping)
-
-```bash
-docker-compose up -d server
-```
-
-## Development
-
-### Local Server (Without Docker)
-
-```bash
-cd Benchmarking/output
-python3 ../server/server.py
-```
-
-### Modifying the Player
-
-Edit `server/index.html` - changes require container rebuild:
-
-```bash
-docker-compose build server
-docker-compose up -d server
-```
-
-### Custom Network Conditions
-
-For static conditions, edit environment variables in `docker-compose.yaml`:
+Edit `docker-compose.yaml` environment:
 
 ```yaml
 shaper:
   environment:
-    DEFAULT_DELAY: "200ms"  # High latency
-    DEFAULT_LOSS: "5%"      # 5% packet loss
-    DEFAULT_RATE: "10mbit"  # Limited bandwidth
+    DEFAULT_DELAY: "100ms"
+    DEFAULT_LOSS: "2%"
+    DEFAULT_RATE: "5mbit"
 ```
 
-## Project Structure
-
+Use trace files for dynamic conditions:
+```yaml
+volumes:
+  - ./shaper/trace/starlink-isl-trace.csv:/trace/trace.csv:ro
 ```
-NetSail/
-├── docker-compose.yaml       # Main orchestration file
-├── README.md                 # This file
-├── BigBuckBunny_320x180.mp4  # Sample video source
-│
-├── content/                  # DASH video content (generated)
-│   ├── manifest.mpd          # DASH manifest
-│   ├── init-*.m4s            # Init segments
-│   └── chunk-*.m4s           # Video/audio segments
-│
-├── server/                   # DASH streaming server
-│   ├── Dockerfile
-│   ├── server.py             # Python HTTP server
-│   └── index.html            # Video player UI
-│
-├── shaper/                   # Traffic shaper (tc/netem)
-│   ├── Dockerfile
-│   ├── entrypoint.sh         # Container entry point
-│   ├── supervisord.conf      # Process manager config
-│   ├── nginx.conf            # Default nginx config
-│   ├── nginx-proxy.conf      # Proxy config for server
-│   ├── tc.py                 # TC utility functions
-│   ├── tc-trace.py           # Trace-driven TC control
-│   ├── README.md             # Shaper documentation
-│   └── trace/                # Network trace files
-│       ├── sample-trace.csv
-│       └── starlink-isl-trace.csv
-│
-└── Benchmarking/             # Content generation tools
-    ├── README.md
-    └── scripts/
-        ├── generate-dash.sh  # Generate DASH from video
-        └── download-sample.sh # Download test videos
+
+## Common Commands
+
+```bash
+sudo docker compose up -d          # Start
+sudo docker compose down           # Stop
+sudo docker compose build --no-cache  # Rebuild
+docker logs -f netsail-shaper      # View shaper logs
 ```
 

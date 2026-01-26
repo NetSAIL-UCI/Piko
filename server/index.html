@@ -190,6 +190,18 @@
             <div class="metric-value" id="bitrate">-- kbps</div>
           </div>
           <div class="metric">
+            <div class="metric-label">Avg Bitrate</div>
+            <div class="metric-value" id="avg-bitrate">-- kbps</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Bitrate Switches</div>
+            <div class="metric-value" id="bitrate-switches">0</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Stalling Time</div>
+            <div class="metric-value" id="stalling-time">0.00s</div>
+          </div>
+          <div class="metric">
             <div class="metric-label">Latency</div>
             <div class="metric-value" id="latency">-- ms</div>
           </div>
@@ -242,6 +254,14 @@
     
     player.initialize(video, manifestUrl, true);
     
+    // Metrics tracking variables
+    let bitrateHistory = [];          // Array of {bitrate, timestamp} for average calculation
+    let bitrateSwitchCount = 0;       // Number of bitrate switches
+    let lastBitrate = null;           // Last recorded bitrate for switch detection
+    let totalStallingTime = 0;        // Total stalling time in milliseconds
+    let stallingStartTime = null;     // When current stall started
+    let isStalling = false;           // Currently stalling flag
+    
     // Update status
     function updateStatus(text, isError = false) {
       document.getElementById('status-text').textContent = text;
@@ -267,11 +287,14 @@
         bufferLength < 5 ? 'warning' : 'good'
       );
       
-      // Bitrate - use getCurrentRepresentationForType
+      
+      // Get current bitrate
+      let currentBitrate = null;
       try {
         const currentRep = player.getCurrentRepresentationForType('video');
         if (currentRep && currentRep.bandwidth) {
-          const kbps = Math.round(currentRep.bandwidth / 1000);
+          currentBitrate = currentRep.bandwidth;
+          const kbps = Math.round(currentBitrate / 1000);
           document.getElementById('bitrate').textContent = `${kbps} kbps`;
         }
       } catch (e) {
@@ -279,10 +302,43 @@
         const bitrateInfo = player.getQualityFor('video');
         const bitrateList = player.getBitrateInfoListFor('video');
         if (bitrateList && bitrateList[bitrateInfo]) {
-          const kbps = Math.round(bitrateList[bitrateInfo].bitrate / 1000);
+          currentBitrate = bitrateList[bitrateInfo].bitrate;
+          const kbps = Math.round(currentBitrate / 1000);
           document.getElementById('bitrate').textContent = `${kbps} kbps`;
         }
       }
+      
+      // Track bitrate for average and switch detection
+      if (currentBitrate !== null) {
+        const now = Date.now();
+        bitrateHistory.push({ bitrate: currentBitrate, timestamp: now });
+        
+        // Detect bitrate switch
+        if (lastBitrate !== null && lastBitrate !== currentBitrate) {
+          bitrateSwitchCount++;
+          document.getElementById('bitrate-switches').textContent = bitrateSwitchCount;
+        }
+        lastBitrate = currentBitrate;
+        
+        // Calculate average bitrate
+        if (bitrateHistory.length > 0) {
+          const avgBitrate = bitrateHistory.reduce((sum, b) => sum + b.bitrate, 0) / bitrateHistory.length;
+          const avgKbps = Math.round(avgBitrate / 1000);
+          document.getElementById('avg-bitrate').textContent = `${avgKbps} kbps`;
+        }
+      }
+      
+      // Update stalling time display
+      let displayStallingTime = totalStallingTime;
+      if (isStalling && stallingStartTime) {
+        displayStallingTime += Date.now() - stallingStartTime;
+      }
+      document.getElementById('stalling-time').textContent = `${(displayStallingTime / 1000).toFixed(2)}s`;
+      const stallingEl = document.getElementById('stalling-time');
+      stallingEl.className = 'metric-value ' + (
+        displayStallingTime > 5000 ? 'danger' :
+        displayStallingTime > 1000 ? 'warning' : 'good'
+      );
       
       // Dropped frames
       if (video.getVideoPlaybackQuality) {
@@ -333,10 +389,21 @@
     
     player.on(dashjs.MediaPlayer.events.PLAYBACK_WAITING, () => {
       updateStatus('Buffering...', false);
+      // Start tracking stalling time
+      if (!isStalling) {
+        isStalling = true;
+        stallingStartTime = Date.now();
+      }
     });
     
     player.on(dashjs.MediaPlayer.events.PLAYBACK_PLAYING, () => {
       updateStatus('Playing');
+      // Stop tracking stalling time
+      if (isStalling && stallingStartTime) {
+        totalStallingTime += Date.now() - stallingStartTime;
+        isStalling = false;
+        stallingStartTime = null;
+      }
     });
     
     player.on(dashjs.MediaPlayer.events.ERROR, (e) => {
