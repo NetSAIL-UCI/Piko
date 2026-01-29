@@ -18,12 +18,15 @@ import argparse
 import json
 import time
 import sys
+import shutil
+import subprocess
 import requests
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass, field
 from typing import List, Optional, Tuple
 from datetime import datetime
 from collections import deque
+from pathlib import Path
 
 # Progress bar - fallback if tqdm not available
 try:
@@ -665,6 +668,7 @@ def main():
 Examples:
   python benchmark.py                           # Test localhost:8080
   python benchmark.py --shaped                  # Test through shaper (port 9080)
+  python benchmark.py --trace traces/trace_12743_3g_tc.csv  # Use specific trace
   python benchmark.py --duration 60             # Test first 60 seconds
   python benchmark.py --output results.json     # Save to specific file
         """
@@ -677,8 +681,32 @@ Examples:
                        help="Output JSON file")
     parser.add_argument("--shaped", action="store_true",
                        help="Use shaped port (9080)")
+    parser.add_argument("--trace", type=str, default=None,
+                       help="Path to trace file (e.g., traces/trace_12743_3g_tc.csv)")
     
     args = parser.parse_args()
+    
+    # Handle trace file setup
+    if args.trace:
+        trace_path = Path(args.trace)
+        if not trace_path.exists():
+            print(f"❌ Trace file not found: {args.trace}")
+            sys.exit(1)
+        
+        # Copy trace to shaper directory
+        shaper_trace = Path(__file__).parent / "shaper" / "trace" / "trace.csv"
+        shaper_trace.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy(trace_path, shaper_trace)
+        print(f"📋 Using trace: {trace_path.name}")
+        
+        # Restart shaper to pick up new trace
+        print("🔄 Restarting shaper...")
+        subprocess.run(["docker", "compose", "restart", "shaper"], 
+                      capture_output=True, cwd=Path(__file__).parent)
+        time.sleep(3)  # Wait for shaper to restart
+        
+        # Auto-enable shaped mode when using a trace
+        args.shaped = True
     
     url = args.url
     if args.shaped and "8080" in url:

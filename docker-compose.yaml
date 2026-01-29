@@ -65,10 +65,8 @@ services:
     image: netsail/shaper:latest
     container_name: netsail-shaper
     volumes:
-      # Network latency trace file
-      # - ./shaper/trace/sample-trace.csv:/trace/trace.csv:ro
-      # Use Starlink trace instead:
-      - ./shaper/trace/starlink-isl-trace.csv:/trace/trace.csv:ro
+      # Network trace file (copy traces here with --trace option in benchmark.py)
+      - ./shaper/trace:/trace:ro
       
       # Custom nginx config to proxy to server
       - ./shaper/nginx-proxy.conf:/etc/nginx/conf.d/default.conf:ro
