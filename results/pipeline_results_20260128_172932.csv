@@ -1,0 +1,16 @@
+dataset,trace_name,success,avg_bitrate_kbps,rebuffer_ratio,rebuffer_count,bitrate_switches,startup_delay_ms,avg_throughput_kbps,bandwidth_utilization
+synthetic,bursty,True,1261.33,0.000000,0,26,218.34,2128.14,0.5927
+synthetic,constant_high,True,4350.67,0.000000,0,3,31.83,5022.12,0.8663
+synthetic,constant_low,True,300.00,0.000000,0,0,286.38,498.05,0.6023
+synthetic,constant_medium,True,1412.00,0.000000,0,13,79.26,1988.83,0.7100
+synthetic,degrading,True,2937.33,0.000000,0,2,36.18,3940.06,0.7455
+hsdpa_3g,trace_12743_http---www.yahoo,True,684.00,0.000000,0,1,150.73,1049.33,0.6518
+hsdpa_3g,trace_27001_http---www.yahoo,True,2196.00,0.000000,0,10,48.23,2975.55,0.7380
+hsdpa_3g,trace_27161_http---www.yahoo,True,2612.00,0.000000,0,8,38.67,3287.81,0.7944
+hsdpa_3g,trace_27447_http---www.yahoo,True,2628.00,0.000000,0,7,61.98,3374.37,0.7788
+hsdpa_3g,trace_5407_http---www.yahoo,True,1074.67,0.000000,0,4,122.88,1257.13,0.8549
+fcc,trace_797466_http---www.amazon_part1,True,300.00,0.000000,0,0,324.24,462.62,0.6485
+fcc,trace_797466_http---www.amazon_part2,True,684.00,0.000000,0,1,190.31,788.17,0.8678
+fcc,trace_799296_http---www.amazon_part0,True,1174.67,0.000000,0,2,80.08,1844.47,0.6369
+fcc,trace_799448_http---www.facebook_part6,True,1121.33,0.000000,0,2,116.57,1286.73,0.8715
+fcc,trace_806172_http---www.amazon_part0,True,904.00,0.000000,0,3,153.22,1151.78,0.7849

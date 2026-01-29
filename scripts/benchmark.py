@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 """
-DASH Streaming QoE Benchmark Tool
+DASH Streaming Benchmark Tool
 
-Measures Quality of Experience (QoE) metrics:
-- Average bitrate (quality)
-- Bitrate switches (stability)
-- Rebuffering time & ratio (continuity)
+Measures streaming performance metrics:
+- Average/min/max bitrate and variance
+- Bitrate switches and switch magnitude
+- Rebuffering time, ratio, and frequency
 - Startup delay
-- QoE Score (composite metric)
+- Throughput statistics
+- Buffer health metrics
+- Bandwidth utilization
 
-References:
-- ITU-T P.1203 (Video QoE)
-- MOS (Mean Opinion Score) estimation
+No composite QoE score - individual metrics for detailed analysis.
 """
 
 import argparse
@@ -60,8 +60,8 @@ class SegmentMetrics:
 
 
 @dataclass 
-class QoEMetrics:
-    """Quality of Experience metrics."""
+class StreamingMetrics:
+    """Comprehensive streaming performance metrics."""
     # Timing
     startup_delay_ms: float = 0
     total_playback_time_ms: float = 0
@@ -72,76 +72,115 @@ class QoEMetrics:
     min_bitrate_kbps: float = 0
     max_bitrate_kbps: float = 0
     bitrate_std_dev: float = 0
+    bitrate_variance: float = 0
+    bitrate_25th_percentile: float = 0
+    bitrate_75th_percentile: float = 0
+    bitrate_median: float = 0
     
     # Switching metrics
     bitrate_switches: int = 0
     switch_magnitude_total: int = 0  # Sum of |old - new| for all switches
     avg_switch_magnitude: float = 0
+    switch_up_count: int = 0  # Switches to higher quality
+    switch_down_count: int = 0  # Switches to lower quality
     
     # Rebuffering metrics
     rebuffer_count: int = 0
     rebuffer_time_ms: float = 0
     rebuffer_ratio: float = 0  # rebuffer_time / total_time
+    rebuffer_frequency: float = 0  # rebuffers per minute
+    avg_rebuffer_duration_ms: float = 0
+    max_rebuffer_duration_ms: float = 0
     
-    # Quality scores
-    qoe_score: float = 0  # 1-5 MOS scale
-    quality_score: float = 0  # Based on bitrate
-    stability_score: float = 0  # Based on switches
-    continuity_score: float = 0  # Based on rebuffering
+    # Throughput metrics
+    throughput_samples: List[float] = field(default_factory=list)
+    avg_throughput_kbps: float = 0
+    min_throughput_kbps: float = 0
+    max_throughput_kbps: float = 0
+    throughput_std_dev: float = 0
+    throughput_variance: float = 0
+    
+    # Buffer metrics
+    buffer_samples: List[float] = field(default_factory=list)
+    avg_buffer_level_ms: float = 0
+    min_buffer_level_ms: float = 0
+    max_buffer_level_ms: float = 0
+    time_below_safe_buffer_ms: float = 0  # Time with buffer < 10s
+    
+    # Bandwidth utilization
+    bandwidth_utilization: float = 0  # avg_bitrate / avg_throughput
+    
+    # Segment statistics
+    total_segments: int = 0
+    failed_segments: int = 0
     
     # Raw data
     segments: List[SegmentMetrics] = field(default_factory=list)
+    rebuffer_durations: List[float] = field(default_factory=list)
     
-    def calculate_scores(self, max_bitrate: int = 3000):
-        """Calculate all QoE scores."""
+    def calculate_statistics(self, max_bitrate: int = 3000):
+        """Calculate all streaming statistics."""
         if not self.bitrate_samples:
             return
         
-        # Basic stats
+        # Bitrate statistics
         self.avg_bitrate_kbps = sum(self.bitrate_samples) / len(self.bitrate_samples)
         self.min_bitrate_kbps = min(self.bitrate_samples)
         self.max_bitrate_kbps = max(self.bitrate_samples)
         
-        # Standard deviation
+        # Standard deviation and variance
         mean = self.avg_bitrate_kbps
-        variance = sum((x - mean) ** 2 for x in self.bitrate_samples) / len(self.bitrate_samples)
-        self.bitrate_std_dev = variance ** 0.5
+        self.bitrate_variance = sum((x - mean) ** 2 for x in self.bitrate_samples) / len(self.bitrate_samples)
+        self.bitrate_std_dev = self.bitrate_variance ** 0.5
         
-        # Average switch magnitude
+        # Percentiles
+        sorted_bitrates = sorted(self.bitrate_samples)
+        n = len(sorted_bitrates)
+        self.bitrate_median = sorted_bitrates[n // 2]
+        self.bitrate_25th_percentile = sorted_bitrates[n // 4]
+        self.bitrate_75th_percentile = sorted_bitrates[3 * n // 4]
+        
+        # Switching statistics
         if self.bitrate_switches > 0:
             self.avg_switch_magnitude = self.switch_magnitude_total / self.bitrate_switches
         
-        # Rebuffer ratio
+        # Rebuffer statistics
         total_time = self.total_playback_time_ms + self.rebuffer_time_ms
         if total_time > 0:
             self.rebuffer_ratio = self.rebuffer_time_ms / total_time
         
-        # Quality score (1-5): Based on average bitrate relative to max
-        bitrate_ratio = self.avg_bitrate_kbps / max_bitrate if max_bitrate > 0 else 0
-        self.quality_score = 1 + 4 * bitrate_ratio
+        # Rebuffer frequency (per minute)
+        playback_minutes = self.total_playback_time_ms / 60000
+        if playback_minutes > 0:
+            self.rebuffer_frequency = self.rebuffer_count / playback_minutes
         
-        # Stability score (1-5): Penalize switches
-        # Each switch reduces score, more penalty for larger switches
-        switch_penalty = min(1, (self.bitrate_switches * 0.1) + (self.avg_switch_magnitude / max_bitrate * 0.5))
-        self.stability_score = 5 - 4 * switch_penalty
+        # Rebuffer duration stats
+        if self.rebuffer_durations:
+            self.avg_rebuffer_duration_ms = sum(self.rebuffer_durations) / len(self.rebuffer_durations)
+            self.max_rebuffer_duration_ms = max(self.rebuffer_durations)
         
-        # Continuity score (1-5): Based on rebuffering
-        # rebuffer_ratio of 0 = 5, rebuffer_ratio of 0.1+ = 1
-        rebuffer_penalty = min(1, self.rebuffer_ratio * 10)
-        self.continuity_score = 5 - 4 * rebuffer_penalty
+        # Throughput statistics
+        if self.throughput_samples:
+            self.avg_throughput_kbps = sum(self.throughput_samples) / len(self.throughput_samples)
+            self.min_throughput_kbps = min(self.throughput_samples)
+            self.max_throughput_kbps = max(self.throughput_samples)
+            if len(self.throughput_samples) > 1:
+                tp_mean = self.avg_throughput_kbps
+                self.throughput_variance = sum((x - tp_mean) ** 2 for x in self.throughput_samples) / len(self.throughput_samples)
+                self.throughput_std_dev = self.throughput_variance ** 0.5
         
-        # Startup penalty
-        startup_penalty = min(1, self.startup_delay_ms / 5000)  # 5s+ startup = max penalty
-        startup_score = 5 - 4 * startup_penalty
+        # Buffer statistics
+        if self.buffer_samples:
+            self.avg_buffer_level_ms = sum(self.buffer_samples) / len(self.buffer_samples)
+            self.min_buffer_level_ms = min(self.buffer_samples)
+            self.max_buffer_level_ms = max(self.buffer_samples)
         
-        # Overall QoE (weighted average based on ITU-T P.1203 principles)
-        # Quality: 40%, Continuity: 35%, Stability: 15%, Startup: 10%
-        self.qoe_score = (
-            0.40 * self.quality_score +
-            0.35 * self.continuity_score +
-            0.15 * self.stability_score +
-            0.10 * startup_score
-        )
+        # Bandwidth utilization
+        if self.avg_throughput_kbps > 0:
+            self.bandwidth_utilization = self.avg_bitrate_kbps / self.avg_throughput_kbps
+        
+        # Total segments
+        self.total_segments = len(self.segments)
     
     def to_dict(self) -> dict:
         return {
@@ -153,25 +192,50 @@ class QoEMetrics:
                 "average_kbps": round(self.avg_bitrate_kbps, 2),
                 "min_kbps": round(self.min_bitrate_kbps, 2),
                 "max_kbps": round(self.max_bitrate_kbps, 2),
+                "median_kbps": round(self.bitrate_median, 2),
                 "std_dev": round(self.bitrate_std_dev, 2),
+                "variance": round(self.bitrate_variance, 2),
+                "percentile_25": round(self.bitrate_25th_percentile, 2),
+                "percentile_75": round(self.bitrate_75th_percentile, 2),
             },
             "switching": {
-                "count": self.bitrate_switches,
+                "total_count": self.bitrate_switches,
+                "up_count": self.switch_up_count,
+                "down_count": self.switch_down_count,
                 "total_magnitude": self.switch_magnitude_total,
                 "avg_magnitude": round(self.avg_switch_magnitude, 2),
             },
             "rebuffering": {
                 "count": self.rebuffer_count,
                 "total_time_ms": round(self.rebuffer_time_ms, 2),
-                "ratio": round(self.rebuffer_ratio, 4),
+                "ratio": round(self.rebuffer_ratio, 6),
+                "frequency_per_min": round(self.rebuffer_frequency, 3),
+                "avg_duration_ms": round(self.avg_rebuffer_duration_ms, 2),
+                "max_duration_ms": round(self.max_rebuffer_duration_ms, 2),
             },
-            "scores": {
-                "qoe_score": round(self.qoe_score, 2),
-                "quality_score": round(self.quality_score, 2),
-                "stability_score": round(self.stability_score, 2),
-                "continuity_score": round(self.continuity_score, 2),
+            "throughput": {
+                "average_kbps": round(self.avg_throughput_kbps, 2),
+                "min_kbps": round(self.min_throughput_kbps, 2),
+                "max_kbps": round(self.max_throughput_kbps, 2),
+                "std_dev": round(self.throughput_std_dev, 2),
+                "variance": round(self.throughput_variance, 2),
             },
-            "bitrate_samples": self.bitrate_samples,
+            "buffer": {
+                "average_ms": round(self.avg_buffer_level_ms, 2),
+                "min_ms": round(self.min_buffer_level_ms, 2),
+                "max_ms": round(self.max_buffer_level_ms, 2),
+            },
+            "utilization": {
+                "bandwidth_utilization": round(self.bandwidth_utilization, 4),
+            },
+            "segments": {
+                "total": self.total_segments,
+                "failed": self.failed_segments,
+            },
+            "samples": {
+                "bitrate": self.bitrate_samples,
+                "throughput": self.throughput_samples,
+            },
         }
 
 
@@ -306,14 +370,14 @@ class ThroughputBasedABR:
             self.throughput_history.append(throughput_kbps)
 
 
-class QoEBenchmark:
-    """DASH streaming QoE benchmark runner."""
+class StreamingBenchmark:
+    """DASH streaming performance benchmark runner."""
     
     def __init__(self, base_url: str, max_duration: Optional[float] = None):
         self.base_url = base_url.rstrip('/')
         self.max_duration = max_duration
         self.session = requests.Session()
-        self.metrics = QoEMetrics()
+        self.metrics = StreamingMetrics()
         
         # Playback simulation state
         self.buffer_level_ms: float = 0
@@ -358,7 +422,7 @@ class QoEBenchmark:
             self.buffer_level_ms = self.segment_duration_ms  # Refilled after download
             return True, stall_duration
     
-    def run(self) -> QoEMetrics:
+    def run(self) -> StreamingMetrics:
         """Run the benchmark."""
         print("\n" + "=" * 70)
         print("  DASH Streaming QoE Benchmark")
@@ -442,6 +506,10 @@ class QoEBenchmark:
             if self.last_bitrate is not None and self.last_bitrate != bitrate_kbps:
                 self.metrics.bitrate_switches += 1
                 self.metrics.switch_magnitude_total += abs(bitrate_kbps - self.last_bitrate)
+                if bitrate_kbps > self.last_bitrate:
+                    self.metrics.switch_up_count += 1
+                else:
+                    self.metrics.switch_down_count += 1
             
             self.last_bitrate = bitrate_kbps
             self.metrics.bitrate_samples.append(bitrate_kbps)
@@ -456,6 +524,10 @@ class QoEBenchmark:
                 size_bytes = len(content)
                 throughput_kbps = (size_bytes * 8 / 1000) / (download_time_ms / 1000) if download_time_ms > 0 else 0
                 
+                # Track throughput and buffer samples
+                self.metrics.throughput_samples.append(throughput_kbps)
+                self.metrics.buffer_samples.append(self.buffer_level_ms)
+                
                 # Report to ABR
                 abr.report_download(size_bytes, download_time_ms)
                 
@@ -465,6 +537,7 @@ class QoEBenchmark:
                 if stalled:
                     self.metrics.rebuffer_count += 1
                     self.metrics.rebuffer_time_ms += stall_duration
+                    self.metrics.rebuffer_durations.append(stall_duration)
                 
                 self.metrics.total_playback_time_ms += self.segment_duration_ms
                 
@@ -500,8 +573,8 @@ class QoEBenchmark:
                 if not HAS_TQDM:
                     print(f"\n   ❌ Segment {segment_number} error: {e}")
         
-        # Calculate final scores
-        self.metrics.calculate_scores(self.max_bitrate)
+        # Calculate final statistics
+        self.metrics.calculate_statistics(self.max_bitrate)
         
         return self.metrics
     
@@ -522,31 +595,46 @@ class QoEBenchmark:
         print("\n  📈 BITRATE")
         print(f"      Average:           {m.avg_bitrate_kbps:,.0f} kbps")
         print(f"      Min / Max:         {m.min_bitrate_kbps:,.0f} / {m.max_bitrate_kbps:,.0f} kbps")
+        print(f"      Median:            {m.bitrate_median:,.0f} kbps")
         print(f"      Std deviation:     {m.bitrate_std_dev:,.1f} kbps")
+        print(f"      Variance:          {m.bitrate_variance:,.1f}")
+        print(f"      25th/75th %%ile:   {m.bitrate_25th_percentile:,.0f} / {m.bitrate_75th_percentile:,.0f} kbps")
         
         # Switching
         print("\n  🔄 BITRATE SWITCHES")
-        print(f"      Count:             {m.bitrate_switches}")
+        print(f"      Total count:       {m.bitrate_switches}")
+        print(f"      Up / Down:         {m.switch_up_count} / {m.switch_down_count}")
         print(f"      Avg magnitude:     {m.avg_switch_magnitude:,.0f} kbps")
         
         # Rebuffering
         print("\n  ⏸  REBUFFERING")
         print(f"      Events:            {m.rebuffer_count}")
         print(f"      Total time:        {m.rebuffer_time_ms:,.0f} ms")
-        print(f"      Ratio:             {m.rebuffer_ratio*100:.2f}%")
+        print(f"      Ratio:             {m.rebuffer_ratio*100:.4f}%")
+        print(f"      Frequency:         {m.rebuffer_frequency:.3f} per minute")
+        if m.rebuffer_count > 0:
+            print(f"      Avg duration:      {m.avg_rebuffer_duration_ms:,.0f} ms")
+            print(f"      Max duration:      {m.max_rebuffer_duration_ms:,.0f} ms")
         
-        # QoE Scores
-        print("\n  ⭐ QoE SCORES (1-5 scale)")
-        print(f"      Quality:           {m.quality_score:.2f}")
-        print(f"      Stability:         {m.stability_score:.2f}")
-        print(f"      Continuity:        {m.continuity_score:.2f}")
-        print("      " + "-" * 30)
-        print(f"      Overall QoE:       {m.qoe_score:.2f}")
+        # Throughput
+        print("\n  📶 THROUGHPUT")
+        print(f"      Average:           {m.avg_throughput_kbps:,.0f} kbps")
+        print(f"      Min / Max:         {m.min_throughput_kbps:,.0f} / {m.max_throughput_kbps:,.0f} kbps")
+        print(f"      Std deviation:     {m.throughput_std_dev:,.1f} kbps")
         
-        # Visual QoE bar
-        qoe_bar_len = int(m.qoe_score * 8)
-        qoe_bar = "█" * qoe_bar_len + "░" * (40 - qoe_bar_len)
-        print(f"\n      [{qoe_bar}] {m.qoe_score:.2f}/5.00")
+        # Buffer
+        print("\n  📦 BUFFER")
+        print(f"      Average level:     {m.avg_buffer_level_ms/1000:,.1f} s")
+        print(f"      Min / Max:         {m.min_buffer_level_ms/1000:,.1f} / {m.max_buffer_level_ms/1000:,.1f} s")
+        
+        # Utilization
+        print("\n  ⚡ BANDWIDTH UTILIZATION")
+        print(f"      Utilization:       {m.bandwidth_utilization*100:.1f}%")
+        
+        # Segments
+        print("\n  📦 SEGMENTS")
+        print(f"      Total:             {m.total_segments}")
+        print(f"      Failed:            {m.failed_segments}")
         
         print("\n" + "=" * 70)
     
@@ -571,7 +659,7 @@ class QoEBenchmark:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="DASH Streaming QoE Benchmark Tool",
+        description="DASH Streaming Benchmark Tool",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -596,18 +684,18 @@ Examples:
     if args.shaped and "8080" in url:
         url = url.replace("8080", "9080")
     
-    benchmark = QoEBenchmark(url, args.duration)
+    benchmark = StreamingBenchmark(url, args.duration)
     
     try:
         benchmark.run()
         benchmark.print_results()
         
-        output = args.output or f"qoe_benchmark_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+        output = args.output or f"benchmark_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
         benchmark.save_results(output)
         
     except KeyboardInterrupt:
         print("\n\n⚠ Benchmark interrupted")
-        benchmark.metrics.calculate_scores(benchmark.max_bitrate)
+        benchmark.metrics.calculate_statistics(benchmark.max_bitrate)
         benchmark.print_results()
     except requests.exceptions.ConnectionError:
         print(f"\n❌ Cannot connect to {url}")

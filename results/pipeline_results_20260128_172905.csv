@@ -1,0 +1,6 @@
+dataset,trace_name,success,avg_bitrate_kbps,rebuffer_ratio,rebuffer_count,bitrate_switches,startup_delay_ms,avg_throughput_kbps,bandwidth_utilization
+fcc,trace_797466_http---www.amazon_part1,True,300.00,0.000000,0,0,324.24,462.62,0.6485
+fcc,trace_797466_http---www.amazon_part2,True,660.00,0.000000,0,1,190.31,788.17,0.8374
+fcc,trace_799296_http---www.amazon_part0,True,1136.67,0.000000,0,2,80.08,1859.03,0.6114
+fcc,trace_799448_http---www.facebook_part6,True,1003.33,0.000000,0,2,116.57,1286.73,0.7798
+fcc,trace_806172_http---www.amazon_part0,True,776.67,0.000000,0,2,153.22,1145.48,0.6780

@@ -1,0 +1,2 @@
+dataset,trace_name,success,avg_bitrate_kbps,rebuffer_ratio,rebuffer_count,bitrate_switches,startup_delay_ms,avg_throughput_kbps,bandwidth_utilization
+synthetic,synthetic_medium_stable,True,1140.00,0.000000,0,1,78.94,1995.23,0.5714

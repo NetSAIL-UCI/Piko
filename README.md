@@ -1,6 +1,6 @@
-# DASH Streaming QoE Benchmark
+# DASH Streaming Benchmark
 
-Testbed for measuring video streaming Quality of Experience under network emulation.
+Testbed for measuring video streaming performance under network emulation.
 
 ## Quick Start
 
@@ -16,6 +16,34 @@ python3 scripts/benchmark.py                    # Direct (port 8080)
 python3 scripts/benchmark.py --shaped           # Shaped (port 9080)
 python3 scripts/benchmark.py --duration 60      # Limit to 60s
 ```
+
+## Measurement Pipeline
+
+For systematic benchmarking across multiple network traces with statistical analysis:
+
+```bash
+cd scripts
+
+# Create synthetic traces or download real traces
+python3 download_traces.py --synthetic          # Quick test traces
+python3 download_traces.py --all                # Download HSDPA 3G + FCC traces
+
+# Run the pipeline
+python3 run_pipeline.py                         # All traces, 5-minute video
+python3 run_pipeline.py --datasets hsdpa_3g fcc # Specific datasets
+python3 run_pipeline.py --duration 300          # Custom video duration
+python3 run_pipeline.py --max-traces 10         # Limit traces per dataset
+```
+
+See [PIPELINE_README.md](PIPELINE_README.md) for full documentation.
+
+## Trace Datasets
+
+| Dataset | Description | Source |
+|---------|-------------|--------|
+| HSDPA 3G | Real-world mobile traces (bus, metro, train, etc.) | [Riiser et al., IMC 2013](https://dl.acm.org/doi/10.1145/2483977.2483991) |
+| FCC | Broadband America traces | [GitHub](https://github.com/confiwent/Real-world-bandwidth-traces) |
+| Synthetic | Controllable test patterns | Generated locally |
 
 ## Access
 
@@ -39,21 +67,21 @@ python3 scripts/benchmark.py [OPTIONS]
 | `--duration N` | Test N seconds (default: full video) |
 | `-o FILE` | Output JSON file |
 
-### QoE Metrics
+### Metrics
 
-| Metric | Description |
-|--------|-------------|
-| Avg Bitrate | Mean video quality (kbps) |
-| Bitrate Switches | Quality level changes |
-| Rebuffer Time | Total stalling duration |
-| Rebuffer Ratio | % time spent buffering |
-| **QoE Score** | 1-5 composite score |
-
-### QoE Formula
-
-```
-QoE = 0.40×Quality + 0.35×Continuity + 0.15×Stability + 0.10×Startup
-```
+| Category | Metric | Description |
+|----------|--------|-------------|
+| **Bitrate** | avg/min/max | Selected quality levels |
+| | std_dev, variance | Bitrate stability |
+| | percentiles | 25th, 50th, 75th percentile |
+| **Switching** | count | Total quality changes |
+| | up/down | Direction of switches |
+| | avg_magnitude | Size of quality jumps |
+| **Rebuffering** | count, time, ratio | Stall events |
+| | frequency | Stalls per minute |
+| **Throughput** | avg/min/max | Network performance |
+| **Buffer** | avg/min/max | Buffer occupancy |
+| **Utilization** | bandwidth_util | bitrate / throughput |
 
 ## Traffic Shaping
 
