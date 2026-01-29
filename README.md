@@ -1,104 +1,68 @@
 # DASH Streaming Benchmark
 
-Testbed for measuring video streaming performance under network emulation.
-
-## Structure
-
-```
-├── benchmark.py          # Main benchmark tool
-├── download_traces.py    # Download network traces
-├── generate-dash.sh      # Generate DASH content from video
-├── docker-compose.yaml   # Docker services config
-├── content/              # DASH video segments (generated)
-├── traces/               # Network bandwidth traces
-├── results/              # Benchmark output files
-├── server/               # DASH streaming server (Docker)
-└── shaper/               # Traffic shaper with tc/netem (Docker)
-```
+Measure video streaming QoE under emulated network conditions.
 
 ## Quick Start
 
 ```bash
-# 1. Start services (Linux required for traffic shaping)
-docker compose up -d
-
-# 2. Generate DASH content (first time only)
-./generate-dash.sh <input.mp4> ./content 4
-
-# 3. Run benchmark
-python3 benchmark.py                    # Direct server (port 8080)
-python3 benchmark.py --shaped           # Through traffic shaper (port 9080)
-python3 benchmark.py --duration 60      # Limit to 60 seconds
+docker compose up -d                                        # Start services
+python3 benchmark.py --trace traces/trace_12743_3g_tc.csv   # Run with trace
 ```
 
-## Ports
-
-| Port | Description |
-|------|-------------|
-| `8080` | Direct DASH server (no shaping) |
-| `9080` | Traffic-shaped connection (tc/netem) |
-
-## Benchmark Options
+## Usage
 
 ```bash
 python3 benchmark.py [OPTIONS]
+
+--trace FILE     Use network trace (auto-enables shaping)
+--shaped         Use traffic-shaped port (9080)
+--duration N     Limit test to N seconds
+-o FILE          Save results to JSON file
 ```
 
-| Option | Description |
-|--------|-------------|
-| `--url URL` | Server URL (default: localhost:8080) |
-| `--shaped` | Use shaped port 9080 |
-| `--duration N` | Test N seconds (default: full video) |
-| `-o FILE` | Output JSON file |
-
-## Metrics
-
-| Category | Metrics |
-|----------|---------|
-| **Bitrate** | avg, min, max, std_dev, percentiles |
-| **Switching** | count, up/down, magnitude |
-| **Rebuffering** | count, time, ratio, frequency |
-| **Throughput** | avg, min, max |
-| **Buffer** | avg, min, max levels |
-| **Utilization** | bitrate / throughput |
-
-## Network Traces
-
-Download real-world bandwidth traces:
+## Examples
 
 ```bash
-python3 download_traces.py --all        # Download all datasets
-python3 download_traces.py --hsdpa      # HSDPA 3G mobile traces
-python3 download_traces.py --fcc        # FCC broadband traces
-python3 download_traces.py --list       # List available traces
+benchmark.py                                          # Direct (no shaping)
+benchmark.py --shaped                                 # Shaped (default settings)
+benchmark.py --trace traces/trace_12743_3g_tc.csv    # 3G mobile trace
+benchmark.py --trace traces/trace_797466_*_tc.csv    # FCC broadband trace
+benchmark.py --duration 60 -o results.json           # 60s test, save output
 ```
 
-### Datasets
+## Metrics Output
 
-| Dataset | Description | Source |
-|---------|-------------|--------|
-| HSDPA 3G | Mobile traces (bus, metro, train) | [Riiser et al., IMC 2013](https://dl.acm.org/doi/10.1145/2483977.2483991) |
-| FCC | Broadband America traces | [GitHub](https://github.com/confiwent/Real-world-bandwidth-traces) |
+**Bitrate**: avg, min, max, std_dev, percentiles  
+**Switching**: count, up/down, magnitude  
+**Rebuffering**: count, time, ratio, frequency  
+**Throughput**: avg, min, max  
+**Buffer**: avg, min levels  
 
-## Traffic Shaping
+## Traces
 
-Configure in `docker-compose.yaml`:
-
-```yaml
-shaper:
-  environment:
-    DEFAULT_DELAY: "100ms"
-    DEFAULT_LOSS: "2%"
-    DEFAULT_RATE: "5mbit"
+```bash
+python3 download_traces.py --all     # Download HSDPA 3G + FCC traces
+python3 download_traces.py --list    # List available
 ```
 
-Use trace files for dynamic bandwidth:
-```yaml
-volumes:
-  - ./shaper/trace/my-trace.csv:/trace/trace.csv:ro
-```
+| Type | Files | Source |
+|------|-------|--------|
+| 3G Mobile | `*_3g_tc.csv` | [Riiser, IMC 2013](https://dl.acm.org/doi/10.1145/2483977.2483991) |
+| Broadband | `*_http-*_tc.csv` | [FCC/GitHub](https://github.com/confiwent/Real-world-bandwidth-traces) |
 
-## Docker Commands
+## Ports
+
+- **8080** - Direct server
+- **9080** - Traffic-shaped
+
+## Files
+
+```
+benchmark.py         Main tool
+traces/              Network traces (*_tc.csv)
+results/             Output JSON files
+shaper/trace/        Active trace (auto-copied)
+```## Docker Commands
 
 ```bash
 docker compose up -d              # Start
