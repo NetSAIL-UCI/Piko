@@ -8,7 +8,7 @@ This pipeline enables systematic benchmarking of DASH streaming across multiple 
 
 ## Features
 
-- **Multiple Trace Support**: HSDPA 3G mobile traces, FCC broadband traces, synthetic traces
+- **Multiple Trace Support**: HSDPA 3G mobile traces, FCC broadband traces
 - **Statistical Analysis**: Mean, variance, standard deviation, 95% confidence intervals
 - **Per-Dataset Comparison**: Compare performance across different network conditions
 - **Comprehensive Metrics**: Bitrate, rebuffering, switching, throughput, buffer health
@@ -27,7 +27,6 @@ python download_traces.py --all
 # Or download specific datasets
 python download_traces.py --hsdpa      # HSDPA 3G mobile traces
 python download_traces.py --fcc        # FCC broadband traces
-python download_traces.py --synthetic  # Create synthetic traces for testing
 
 # List available traces
 python download_traces.py --list
@@ -82,13 +81,6 @@ python benchmark.py --duration 60       # 60-second test
 - **Source**: https://github.com/confiwent/Real-world-bandwidth-traces
 - **Description**: FCC Measuring Broadband America traces
 - **Format**: `timestamp(s) throughput(Mbps)`
-
-### Synthetic Traces
-
-For testing and debugging, synthetic traces with controlled patterns:
-- Low/medium/high stable bandwidth
-- Variable bandwidth (simulating mobile)
-- Degrading bandwidth over time
 
 ## Metrics
 
@@ -184,8 +176,7 @@ Benchmarking/
 │   ├── hsdpa_3g/              # Existing HSDPA traces
 │   ├── fcc/                   # Existing FCC traces
 │   ├── hsdpa_3g_downloaded/   # Downloaded HSDPA traces
-│   ├── fcc_downloaded/        # Downloaded FCC traces
-│   └── synthetic/             # Generated synthetic traces
+│   └── fcc_downloaded/        # Downloaded FCC traces
 ├── results/
 │   ├── pipeline_results_*.json
 │   └── pipeline_results_*.csv
@@ -237,8 +228,8 @@ python benchmark.py --shaped --duration 120
 ### No Traces Found
 
 ```bash
-# Create synthetic traces for testing
-python download_traces.py --synthetic
+# Download traces
+python download_traces.py --all
 
 # List available traces
 python download_traces.py --list

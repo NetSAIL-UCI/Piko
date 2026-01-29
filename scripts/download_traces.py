@@ -270,52 +270,6 @@ def use_existing_traces(traces_dir: Path) -> Tuple[List[Path], List[Path]]:
     return hsdpa_traces, fcc_traces
 
 
-def create_synthetic_traces(output_dir: Path) -> int:
-    """Create synthetic traces for testing when downloads fail."""
-    print("\n" + "=" * 60)
-    print("  🔧 Creating Synthetic Traces for Testing")
-    print("=" * 60)
-    
-    output_dir.mkdir(parents=True, exist_ok=True)
-    
-    import random
-    
-    traces = [
-        # Low bandwidth, stable
-        ("synthetic_low_stable.txt", 0.5, 1.5, 0.1),
-        # Medium bandwidth, stable  
-        ("synthetic_medium_stable.txt", 2.0, 4.0, 0.2),
-        # High bandwidth, stable
-        ("synthetic_high_stable.txt", 5.0, 10.0, 0.5),
-        # Variable bandwidth (simulating mobile)
-        ("synthetic_variable.txt", 1.0, 8.0, 2.0),
-        # Degrading bandwidth
-        ("synthetic_degrading.txt", 5.0, 1.0, 0.5),
-    ]
-    
-    created = 0
-    for name, start_bw, end_bw, noise in traces:
-        path = output_dir / name
-        lines = []
-        
-        duration = 300  # 5 minutes
-        interval = 1.0
-        
-        for i in range(int(duration / interval)):
-            t = i * interval
-            # Linear interpolation with noise
-            progress = t / duration
-            base_bw = start_bw + (end_bw - start_bw) * progress
-            bw = max(0.1, base_bw + random.uniform(-noise, noise))
-            lines.append(f"{t:.1f}\t{bw:.6f}")
-        
-        path.write_text('\n'.join(lines))
-        print(f"  ✓ Created: {name}")
-        created += 1
-    
-    return created
-
-
 def list_available_traces(traces_dir: Path):
     """List all available traces."""
     print("\n" + "=" * 60)
@@ -358,7 +312,6 @@ Examples:
   python download_traces.py --hsdpa        # Download only HSDPA 3G traces
   python download_traces.py --fcc          # Download only FCC traces
   python download_traces.py --list         # List available traces
-  python download_traces.py --synthetic    # Create synthetic traces for testing
         """
     )
     
@@ -368,8 +321,6 @@ Examples:
                        help="Download HSDPA 3G dataset")
     parser.add_argument("--fcc", action="store_true",
                        help="Download FCC broadband dataset")
-    parser.add_argument("--synthetic", action="store_true",
-                       help="Create synthetic traces for testing")
     parser.add_argument("--list", action="store_true",
                        help="List available traces")
     parser.add_argument("--output", "-o", type=Path, default=TRACES_DIR,
@@ -386,7 +337,7 @@ Examples:
         list_available_traces(output_dir)
         return
     
-    if not any([args.all, args.hsdpa, args.fcc, args.synthetic]):
+    if not any([args.all, args.hsdpa, args.fcc]):
         # Default: show help and list existing traces
         parser.print_help()
         list_available_traces(output_dir)
@@ -404,10 +355,6 @@ Examples:
         s, f = download_fcc_traces(output_dir / "fcc_downloaded", verbose)
         total_success += s
         total_fail += f
-    
-    if args.synthetic:
-        s = create_synthetic_traces(output_dir / "synthetic")
-        total_success += s
     
     print("\n" + "=" * 60)
     print(f"  ✅ Download Complete: {total_success} traces available")

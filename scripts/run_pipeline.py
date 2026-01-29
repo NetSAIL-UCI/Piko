@@ -6,7 +6,7 @@ Runs benchmarks across multiple network traces and computes statistical metrics
 including confidence intervals and variance analysis.
 
 Features:
-- Multiple trace dataset support (HSDPA 3G, FCC, synthetic)
+- Multiple trace dataset support (HSDPA 3G, FCC)
 - Statistical analysis with confidence intervals
 - Per-dataset and aggregate metrics
 - Parallel trace execution (optional)
@@ -658,7 +658,6 @@ Examples:
 Datasets:
   hsdpa_3g    - HSDPA 3G mobile traces (Riiser et al., IMC 2013)
   fcc         - FCC Measuring Broadband America traces
-  synthetic   - Synthetic traces for testing
         """
     )
     
@@ -696,8 +695,7 @@ Datasets:
     
     if not trace_map:
         print("\n❌ No traces found!")
-        print("   Run: python download_traces.py --synthetic")
-        print("   Or:  python download_traces.py --all")
+        print("   Run: python download_traces.py --all")
         sys.exit(1)
     
     print(f"\n📁 Found {len(trace_map)} datasets:")

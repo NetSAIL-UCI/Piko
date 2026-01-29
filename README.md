@@ -24,8 +24,7 @@ For systematic benchmarking across multiple network traces with statistical anal
 ```bash
 cd scripts
 
-# Create synthetic traces or download real traces
-python3 download_traces.py --synthetic          # Quick test traces
+# Download real traces
 python3 download_traces.py --all                # Download HSDPA 3G + FCC traces
 
 # Run the pipeline
@@ -43,7 +42,6 @@ See [PIPELINE_README.md](PIPELINE_README.md) for full documentation.
 |---------|-------------|--------|
 | HSDPA 3G | Real-world mobile traces (bus, metro, train, etc.) | [Riiser et al., IMC 2013](https://dl.acm.org/doi/10.1145/2483977.2483991) |
 | FCC | Broadband America traces | [GitHub](https://github.com/confiwent/Real-world-bandwidth-traces) |
-| Synthetic | Controllable test patterns | Generated locally |
 
 ## Access
 
