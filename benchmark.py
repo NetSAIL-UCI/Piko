@@ -440,12 +440,12 @@ class StreamingBenchmark:
         representations = parser.get_representations()
         
         if not representations:
-            print("❌ ERROR: No video representations found")
+            print("[ERROR] No video representations found")
             return self.metrics
         
         self.max_bitrate = max(r['bandwidth'] // 1000 for r in representations)
         
-        print(f"\n📊 Quality Levels ({len(representations)}):")
+        print(f"\n[QUALITY LEVELS] ({len(representations)})")
         for rep in representations:
             print(f"   • {rep['id']}: {rep['bandwidth']//1000:4} kbps @ {rep['width']}x{rep['height']}")
         
@@ -471,24 +471,24 @@ class StreamingBenchmark:
         if self.max_duration:
             segment_count = min(segment_count, int(self.max_duration * 1000 / self.segment_duration_ms) + 1)
         
-        print(f"\n⏱  Duration: {total_duration:.1f}s ({segment_count} segments @ {self.segment_duration_ms/1000:.1f}s each)")
+        print(f"\n[DURATION] {total_duration:.1f}s ({segment_count} segments @ {self.segment_duration_ms/1000:.1f}s each)")
         
         # Download init segment
         selected, _ = abr.select_representation(0)
         init_url = selected['init'].replace('$RepresentationID$', selected['id'])
-        print(f"\n🎬 Initializing stream...")
+        print(f"\n[INIT] Loading stream...")
         
         try:
             _, init_time = self.download_segment(init_url)
             self.metrics.startup_delay_ms = (time.time() - startup_start) * 1000
         except Exception as e:
-            print(f"   ⚠ Init segment error: {e}")
+            print(f"   [WARN] Init segment error: {e}")
             self.metrics.startup_delay_ms = (time.time() - startup_start) * 1000
         
         print(f"   Startup delay: {self.metrics.startup_delay_ms:.0f}ms\n")
         
         # Progress bar setup
-        print("📥 Downloading segments:\n")
+        print("[DOWNLOAD] Fetching segments:\n")
         
         start_number = rep.get('startNumber', 1)
         
@@ -560,7 +560,7 @@ class StreamingBenchmark:
                 self.metrics.segments.append(seg_metrics)
                 
                 # Update progress bar description
-                status = "🔴 STALL" if stalled else "🟢 OK"
+                status = "STALL" if stalled else "OK"
                 if HAS_TQDM:
                     progress.set_postfix({
                         'bitrate': f"{bitrate_kbps}k",
@@ -574,7 +574,7 @@ class StreamingBenchmark:
                 
             except Exception as e:
                 if not HAS_TQDM:
-                    print(f"\n   ❌ Segment {segment_number} error: {e}")
+                    print(f"\n   [ERROR] Segment {segment_number}: {e}")
         
         # Calculate final statistics
         self.metrics.calculate_statistics(self.max_bitrate)
@@ -586,31 +586,31 @@ class StreamingBenchmark:
         m = self.metrics
         
         print("\n" + "=" * 70)
-        print("  📊 BENCHMARK RESULTS")
+        print("  BENCHMARK RESULTS")
         print("=" * 70)
         
         # Timing
-        print("\n  ⏱  TIMING")
+        print("\n  [TIMING]")
         print(f"      Startup delay:     {m.startup_delay_ms:,.0f} ms")
         print(f"      Playback time:     {m.total_playback_time_ms/1000:,.1f} s")
         
         # Bitrate
-        print("\n  📈 BITRATE")
+        print("\n  [BITRATE]")
         print(f"      Average:           {m.avg_bitrate_kbps:,.0f} kbps")
         print(f"      Min / Max:         {m.min_bitrate_kbps:,.0f} / {m.max_bitrate_kbps:,.0f} kbps")
         print(f"      Median:            {m.bitrate_median:,.0f} kbps")
         print(f"      Std deviation:     {m.bitrate_std_dev:,.1f} kbps")
         print(f"      Variance:          {m.bitrate_variance:,.1f}")
-        print(f"      25th/75th %%ile:   {m.bitrate_25th_percentile:,.0f} / {m.bitrate_75th_percentile:,.0f} kbps")
+        print(f"      25th/75th %ile:    {m.bitrate_25th_percentile:,.0f} / {m.bitrate_75th_percentile:,.0f} kbps")
         
         # Switching
-        print("\n  🔄 BITRATE SWITCHES")
+        print("\n  [SWITCHES]")
         print(f"      Total count:       {m.bitrate_switches}")
         print(f"      Up / Down:         {m.switch_up_count} / {m.switch_down_count}")
         print(f"      Avg magnitude:     {m.avg_switch_magnitude:,.0f} kbps")
         
         # Rebuffering
-        print("\n  ⏸  REBUFFERING")
+        print("\n  [REBUFFERING]")
         print(f"      Events:            {m.rebuffer_count}")
         print(f"      Total time:        {m.rebuffer_time_ms:,.0f} ms")
         print(f"      Ratio:             {m.rebuffer_ratio*100:.4f}%")
@@ -620,22 +620,22 @@ class StreamingBenchmark:
             print(f"      Max duration:      {m.max_rebuffer_duration_ms:,.0f} ms")
         
         # Throughput
-        print("\n  📶 THROUGHPUT")
+        print("\n  [THROUGHPUT]")
         print(f"      Average:           {m.avg_throughput_kbps:,.0f} kbps")
         print(f"      Min / Max:         {m.min_throughput_kbps:,.0f} / {m.max_throughput_kbps:,.0f} kbps")
         print(f"      Std deviation:     {m.throughput_std_dev:,.1f} kbps")
         
         # Buffer
-        print("\n  📦 BUFFER")
+        print("\n  [BUFFER]")
         print(f"      Average level:     {m.avg_buffer_level_ms/1000:,.1f} s")
         print(f"      Min / Max:         {m.min_buffer_level_ms/1000:,.1f} / {m.max_buffer_level_ms/1000:,.1f} s")
         
         # Utilization
-        print("\n  ⚡ BANDWIDTH UTILIZATION")
-        print(f"      Utilization:       {m.bandwidth_utilization*100:.1f}%")
+        print("\n  [UTILIZATION]")
+        print(f"      Bandwidth:         {m.bandwidth_utilization*100:.1f}%")
         
         # Segments
-        print("\n  📦 SEGMENTS")
+        print("\n  [SEGMENTS]")
         print(f"      Total:             {m.total_segments}")
         print(f"      Failed:            {m.failed_segments}")
         
@@ -657,7 +657,7 @@ class StreamingBenchmark:
         with open(filename, 'w') as f:
             json.dump(results, f, indent=2)
         
-        print(f"\n💾 Results saved to: {filename}")
+        print(f"\n[SAVED] {filename}")
 
 
 def main():
@@ -690,17 +690,17 @@ Examples:
     if args.trace:
         trace_path = Path(args.trace)
         if not trace_path.exists():
-            print(f"❌ Trace file not found: {args.trace}")
+            print(f"[ERROR] Trace file not found: {args.trace}")
             sys.exit(1)
         
         # Copy trace to shaper directory
         shaper_trace = Path(__file__).parent / "shaper" / "trace" / "trace.csv"
         shaper_trace.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy(trace_path, shaper_trace)
-        print(f"📋 Using trace: {trace_path.name}")
+        print(f"[TRACE] {trace_path.name}")
         
         # Restart shaper to pick up new trace
-        print("🔄 Restarting shaper...")
+        print("[SHAPER] Restarting...")
         subprocess.run(["docker", "compose", "restart", "shaper"], 
                       capture_output=True, cwd=Path(__file__).parent)
         time.sleep(3)  # Wait for shaper to restart
@@ -718,19 +718,27 @@ Examples:
         benchmark.run()
         benchmark.print_results()
         
-        output = args.output or f"benchmark_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
-        benchmark.save_results(output)
+        # Save results to results/ directory
+        results_dir = Path(__file__).parent / "results"
+        results_dir.mkdir(parents=True, exist_ok=True)
+        
+        if args.output:
+            output = results_dir / Path(args.output).name
+        else:
+            output = results_dir / f"benchmark_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+        
+        benchmark.save_results(str(output))
         
     except KeyboardInterrupt:
-        print("\n\n⚠ Benchmark interrupted")
+        print("\n\n[INTERRUPTED] Benchmark stopped")
         benchmark.metrics.calculate_statistics(benchmark.max_bitrate)
         benchmark.print_results()
     except requests.exceptions.ConnectionError:
-        print(f"\n❌ Cannot connect to {url}")
-        print("   Make sure the server is running: docker compose up -d")
+        print(f"\n[ERROR] Cannot connect to {url}")
+        print("        Run: docker compose up -d")
         sys.exit(1)
     except Exception as e:
-        print(f"\n❌ Benchmark failed: {e}")
+        print(f"\n[ERROR] Benchmark failed: {e}")
         raise
 
 
