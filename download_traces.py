@@ -24,7 +24,7 @@ from typing import List, Tuple
 
 # Base directories
 SCRIPT_DIR = Path(__file__).parent
-TRACES_DIR = SCRIPT_DIR.parent / "traces"
+TRACES_DIR = SCRIPT_DIR / "traces"
 
 # HSDPA 3G Dataset URLs (from Riiser et al. IMC 2013)
 # Original dataset: http://home.ifi.uio.no/paalh/dataset/hsdpa-tcp-logs/
