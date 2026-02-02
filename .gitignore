@@ -1,6 +1,45 @@
+# Video content
 *.mp4
 *.m4s
 *.mpd
-*.json
 
+# Results (keep structure, ignore data)
+results/*.json
 
+# Node.js
+node_modules/
+webrtc-server/node_modules/
+npm-debug.log*
+.npm/
+
+# Python
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+*.egg
+
+# NVM (Node Version Manager)
+.nvm/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp files
+tmp/
+*.tmp
+*.temp
+
+# Build artifacts
+*.o
+*.so
+*.dylib

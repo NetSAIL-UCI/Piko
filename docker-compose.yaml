@@ -1,19 +1,22 @@
-version: '3.8'
-
 # ============================================================================
-# NetSail - DASH Streaming Testbed with Network Emulation
+# NetSail - Streaming Testbed with Network Emulation (DASH + WebRTC)
 # ============================================================================
 #
 # Services:
-#   - server:  DASH video streaming server (Python)
-#   - shaper:  Network emulator with tc/netem (applies to server traffic)
+#   - server:        DASH video streaming server (Python)
+#   - webrtc-server: WebRTC streaming server using mediasoup (Node.js)
+#   - shaper:        Network emulator with tc/netem (applies to traffic)
 #
 # Quick Start:
 #   docker-compose up -d
 #
 # Access:
-#   - Direct server (no shaping):  http://localhost:8080
-#   - Via shaper (shaped traffic): http://localhost:9080
+#   DASH:
+#     - Direct server (no shaping):  http://localhost:8080
+#     - Via shaper (shaped traffic): http://localhost:9080
+#   WebRTC:
+#     - Direct server (no shaping):  http://localhost:3000
+#     - Via shaper (shaped traffic): http://localhost:9030
 #
 # ============================================================================
 
@@ -51,6 +54,42 @@ services:
         ipv4_address: 192.168.100.20
 
   # --------------------------------------------------------------------------
+  # WebRTC Streaming Server (mediasoup)
+  # --------------------------------------------------------------------------
+  # Serves WebRTC video streams for comparison with DASH
+  # Uses mediasoup SFU to stream video content over WebRTC
+  #
+  webrtc-server:
+    build:
+      context: ./webrtc-server
+      dockerfile: Dockerfile
+    image: netsail/webrtc-server:latest
+    container_name: netsail-webrtc
+    volumes:
+      # Mount video content (same as DASH server)
+      - ./content:/app/content:ro
+    environment:
+      PORT: "3000"
+      HOST: "0.0.0.0"
+      CONTENT_DIR: "/app/content"
+      ANNOUNCED_IP: "192.168.100.30"
+    ports:
+      # HTTP signaling port
+      - "3000:3000"
+      # RTP ports for media
+      - "10000-10100:10000-10100/udp"
+      - "10000-10100:10000-10100/tcp"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      netsail:
+        ipv4_address: 192.168.100.30
+
+  # --------------------------------------------------------------------------
   # Network Shaper (tc/netem)
   # --------------------------------------------------------------------------
   # Applies network conditions from trace files using Linux tc/netem
@@ -78,13 +117,16 @@ services:
       DEFAULT_DELAY: "40ms"
       DEFAULT_LOSS: "0.1%"
     ports:
-      # Access server through shaper (traffic shaped)
+      # Access DASH server through shaper (traffic shaped)
       - "9080:80"
       - "9443:443"
+      # Access WebRTC server through shaper (traffic shaped)
+      - "9030:8030"
     cap_add:
       - NET_ADMIN
     depends_on:
       - server
+      - webrtc-server
     restart: unless-stopped
     networks:
       netsail:

@@ -1,0 +1,8 @@
+# Streaming Benchmark Dependencies
+
+# Required for both DASH and WebRTC
+requests>=2.28.0
+tqdm>=4.64.0
+
+# Required for WebRTC benchmarking
+aiortc>=1.6.0

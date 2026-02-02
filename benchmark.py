@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-DASH Streaming Benchmark Tool
+Streaming Benchmark Tool (DASH + WebRTC)
 
 Measures streaming performance metrics:
 - Average/min/max bitrate and variance
@@ -11,7 +11,7 @@ Measures streaming performance metrics:
 - Buffer health metrics
 - Bandwidth utilization
 
-No composite QoE score - individual metrics for detailed analysis.
+Supports both DASH and WebRTC (mediasoup) protocols for comparison.
 """
 
 import argparse
@@ -22,6 +22,8 @@ import shutil
 import subprocess
 import requests
 import xml.etree.ElementTree as ET
+import asyncio
+import uuid
 from dataclasses import dataclass, field
 from typing import List, Optional, Tuple
 from datetime import datetime
@@ -34,6 +36,14 @@ try:
     HAS_TQDM = True
 except ImportError:
     HAS_TQDM = False
+
+# aiortc for WebRTC - optional
+try:
+    from aiortc import RTCPeerConnection, RTCSessionDescription, RTCConfiguration, RTCIceServer
+    from aiortc.contrib.media import MediaRecorder, MediaBlackhole
+    HAS_AIORTC = True
+except ImportError:
+    HAS_AIORTC = False
 
 
 def print_progress(current: int, total: int, prefix: str = "", suffix: str = "", width: int = 40):
@@ -646,6 +656,7 @@ class StreamingBenchmark:
         results = {
             "timestamp": datetime.now().isoformat(),
             "server": self.base_url,
+            "protocol": "dash",
             "config": {
                 "segment_duration_ms": self.segment_duration_ms,
                 "buffer_target_ms": self.buffer_target_ms,
@@ -660,31 +671,450 @@ class StreamingBenchmark:
         print(f"\n[SAVED] {filename}")
 
 
+class WebRTCBenchmark:
+    """WebRTC streaming performance benchmark using mediasoup server."""
+    
+    def __init__(self, base_url: str, max_duration: Optional[float] = None):
+        self.base_url = base_url.rstrip('/')
+        self.max_duration = max_duration or 60  # Default 60 seconds for WebRTC
+        self.session = requests.Session()
+        self.metrics = StreamingMetrics()
+        self.client_id = str(uuid.uuid4())
+        
+        # WebRTC state
+        self.pc: Optional['RTCPeerConnection'] = None
+        self.transport_id: Optional[str] = None
+        self.consumer_id: Optional[str] = None
+        
+        # Stats collection
+        self.stats_interval_ms = 1000  # Collect stats every second
+        self.last_bytes_received = 0
+        self.last_stats_time = 0
+        self.frames_received = 0
+        self.frames_decoded = 0
+        self.freeze_count = 0
+        self.jitter_samples: List[float] = []
+        self.packet_loss_samples: List[float] = []
+        self.rtt_samples: List[float] = []
+        
+    def _api_get(self, endpoint: str) -> dict:
+        """Make GET request to signaling server."""
+        response = self.session.get(f"{self.base_url}{endpoint}", timeout=10)
+        response.raise_for_status()
+        return response.json()
+    
+    def _api_post(self, endpoint: str, data: dict = None) -> dict:
+        """Make POST request to signaling server."""
+        response = self.session.post(
+            f"{self.base_url}{endpoint}", 
+            json=data or {},
+            timeout=10
+        )
+        response.raise_for_status()
+        return response.json()
+    
+    async def run_async(self) -> StreamingMetrics:
+        """Run the WebRTC benchmark asynchronously."""
+        if not HAS_AIORTC:
+            print("[ERROR] aiortc not installed. Install with: pip install aiortc")
+            return self.metrics
+        
+        print("\n" + "=" * 70)
+        print("  WebRTC Streaming QoE Benchmark (mediasoup)")
+        print("=" * 70)
+        print(f"  Server: {self.base_url}")
+        print(f"  Client ID: {self.client_id}")
+        print("=" * 70 + "\n")
+        
+        startup_start = time.time()
+        
+        try:
+            # Step 1: Get router capabilities
+            print("📡 Getting router capabilities...")
+            rtp_capabilities = self._api_get('/rtpCapabilities')
+            
+            # Step 2: Create WebRTC transport
+            print("🔌 Creating WebRTC transport...")
+            transport_info = self._api_post('/createTransport', {
+                'clientId': self.client_id
+            })
+            self.transport_id = transport_info['id']
+            
+            # Step 3: Create RTCPeerConnection
+            print("🤝 Setting up peer connection...")
+            config = RTCConfiguration(iceServers=[])
+            self.pc = RTCPeerConnection(configuration=config)
+            
+            # Track stats
+            stats_task = None
+            video_track_received = asyncio.Event()
+            
+            @self.pc.on('track')
+            def on_track(track):
+                print(f"   Track received: {track.kind}")
+                if track.kind == 'video':
+                    video_track_received.set()
+                    # Consume the track (blackhole - just measure stats)
+                    asyncio.ensure_future(self._consume_track(track))
+            
+            @self.pc.on('connectionstatechange')
+            async def on_connection_state_change():
+                print(f"   Connection state: {self.pc.connectionState}")
+            
+            # Step 4: Create offer and connect
+            # Since we're receiving only, create a recvonly transceiver
+            self.pc.addTransceiver('video', direction='recvonly')
+            
+            # Create offer
+            offer = await self.pc.createOffer()
+            await self.pc.setLocalDescription(offer)
+            
+            # Step 5: Connect transport with our DTLS parameters
+            print("🔒 Connecting transport (DTLS)...")
+            dtls_params = {
+                'role': 'auto',
+                'fingerprints': [
+                    {
+                        'algorithm': fp.algorithm,
+                        'value': fp.value
+                    }
+                    for fp in self.pc.localDescription.sdp_fingerprints if hasattr(self.pc.localDescription, 'sdp_fingerprints')
+                ] if hasattr(self.pc.localDescription, 'sdp_fingerprints') else []
+            }
+            
+            # For mediasoup, we need to exchange SDP differently
+            # The client sends its RTP capabilities and gets consumer info
+            
+            # Step 6: Request to consume the video
+            print("📺 Requesting video stream...")
+            
+            # Build simplified RTP capabilities for mediasoup
+            consumer_rtp_caps = {
+                'codecs': [
+                    {
+                        'mimeType': 'video/VP8',
+                        'kind': 'video',
+                        'clockRate': 90000,
+                        'preferredPayloadType': 96,
+                        'rtcpFeedback': [
+                            {'type': 'nack'},
+                            {'type': 'nack', 'parameter': 'pli'},
+                            {'type': 'ccm', 'parameter': 'fir'},
+                            {'type': 'goog-remb'},
+                        ],
+                    },
+                    {
+                        'mimeType': 'video/H264',
+                        'kind': 'video',
+                        'clockRate': 90000,
+                        'preferredPayloadType': 97,
+                        'parameters': {
+                            'packetization-mode': 1,
+                            'profile-level-id': '42e01f',
+                            'level-asymmetry-allowed': 1,
+                        },
+                        'rtcpFeedback': [
+                            {'type': 'nack'},
+                            {'type': 'nack', 'parameter': 'pli'},
+                            {'type': 'ccm', 'parameter': 'fir'},
+                            {'type': 'goog-remb'},
+                        ],
+                    },
+                ],
+                'headerExtensions': [],
+            }
+            
+            try:
+                consume_info = self._api_post('/consume', {
+                    'clientId': self.client_id,
+                    'rtpCapabilities': consumer_rtp_caps,
+                })
+                self.consumer_id = consume_info['id']
+                print(f"   Consumer created: {self.consumer_id[:8]}...")
+            except Exception as e:
+                print(f"   [WARN] Could not create consumer: {e}")
+                print("   (Video producer may not be active yet)")
+            
+            # Measure startup delay
+            self.metrics.startup_delay_ms = (time.time() - startup_start) * 1000
+            print(f"\n   Startup delay: {self.metrics.startup_delay_ms:.0f}ms\n")
+            
+            # Step 7: Collect stats for duration
+            print(f"[STREAMING] Collecting metrics for {self.max_duration:.0f}s...\n")
+            
+            await self._collect_stats_for_duration()
+            
+        except requests.exceptions.ConnectionError as e:
+            print(f"\n[ERROR] Cannot connect to {self.base_url}")
+            print("        Run: docker compose up -d")
+            raise
+        except Exception as e:
+            print(f"\n[ERROR] WebRTC benchmark failed: {e}")
+            raise
+        finally:
+            # Cleanup
+            await self._cleanup()
+        
+        # Calculate final statistics
+        self.metrics.calculate_statistics()
+        
+        return self.metrics
+    
+    async def _consume_track(self, track):
+        """Consume video track and count frames."""
+        try:
+            while True:
+                frame = await track.recv()
+                self.frames_received += 1
+        except Exception:
+            pass  # Track ended
+    
+    async def _collect_stats_for_duration(self):
+        """Collect WebRTC stats over the benchmark duration."""
+        start_time = time.time()
+        sample_interval = 1.0  # seconds
+        samples = int(self.max_duration / sample_interval)
+        
+        if HAS_TQDM:
+            progress = tqdm(range(samples), desc="   Progress", unit="s",
+                          bar_format="   {l_bar}{bar:40}{r_bar}")
+        else:
+            progress = range(samples)
+        
+        prev_bytes = 0
+        prev_time = start_time
+        
+        for i in progress:
+            await asyncio.sleep(sample_interval)
+            
+            current_time = time.time()
+            elapsed = current_time - prev_time
+            
+            # Get stats from server (mediasoup side)
+            try:
+                stats = self._api_get(f'/stats/{self.client_id}')
+                
+                # Extract consumer stats
+                if 'consumer' in stats and stats['consumer']:
+                    consumer_stats = stats['consumer']
+                    
+                    # Find the relevant stats entry
+                    for stat_entry in consumer_stats:
+                        if isinstance(stat_entry, dict):
+                            # Bitrate calculation
+                            bytes_received = stat_entry.get('bytesReceived', 0) or stat_entry.get('bytesSent', 0)
+                            if bytes_received > prev_bytes:
+                                bitrate_bps = (bytes_received - prev_bytes) * 8 / elapsed
+                                bitrate_kbps = bitrate_bps / 1000
+                                self.metrics.bitrate_samples.append(int(bitrate_kbps))
+                                self.metrics.throughput_samples.append(bitrate_kbps)
+                                prev_bytes = bytes_received
+                            
+                            # Jitter
+                            jitter = stat_entry.get('jitter', 0)
+                            if jitter:
+                                self.jitter_samples.append(jitter * 1000)  # Convert to ms
+                            
+                            # Packet loss
+                            packets_lost = stat_entry.get('packetsLost', 0)
+                            packets_received = stat_entry.get('packetsReceived', 1)
+                            if packets_received > 0:
+                                loss_rate = packets_lost / (packets_received + packets_lost) * 100
+                                self.packet_loss_samples.append(loss_rate)
+                            
+                            # RTT (if available)
+                            rtt = stat_entry.get('roundTripTime', 0)
+                            if rtt:
+                                self.rtt_samples.append(rtt * 1000)  # Convert to ms
+                            
+                            break
+                    
+                    # Use simulated buffer level (WebRTC has jitter buffer, not playback buffer)
+                    # Estimate based on jitter buffer delay
+                    if self.jitter_samples:
+                        buffer_estimate = max(0, 1000 - self.jitter_samples[-1] * 10)
+                    else:
+                        buffer_estimate = 500  # Default estimate
+                    self.metrics.buffer_samples.append(buffer_estimate)
+                    
+            except Exception as e:
+                # Server stats not available, use default estimates
+                # This is normal if producer isn't streaming
+                pass
+            
+            # Track playback time
+            self.metrics.total_playback_time_ms += sample_interval * 1000
+            
+            # Track quality switches (simplified - check if bitrate changed significantly)
+            if len(self.metrics.bitrate_samples) >= 2:
+                prev_br = self.metrics.bitrate_samples[-2]
+                curr_br = self.metrics.bitrate_samples[-1]
+                if abs(curr_br - prev_br) > 200:  # 200 kbps threshold
+                    self.metrics.bitrate_switches += 1
+                    self.metrics.switch_magnitude_total += abs(curr_br - prev_br)
+                    if curr_br > prev_br:
+                        self.metrics.switch_up_count += 1
+                    else:
+                        self.metrics.switch_down_count += 1
+            
+            prev_time = current_time
+            
+            # Update progress
+            if HAS_TQDM:
+                bitrate_str = f"{self.metrics.bitrate_samples[-1]}k" if self.metrics.bitrate_samples else "N/A"
+                jitter_str = f"{self.jitter_samples[-1]:.1f}ms" if self.jitter_samples else "N/A"
+                progress.set_postfix({
+                    'bitrate': bitrate_str,
+                    'jitter': jitter_str,
+                })
+            else:
+                print_progress(i + 1, samples, 
+                             prefix="   Progress",
+                             suffix=f"| {self.metrics.bitrate_samples[-1] if self.metrics.bitrate_samples else 0}kbps")
+    
+    async def _cleanup(self):
+        """Cleanup WebRTC resources."""
+        print("\n[CLEANUP] Disconnecting...")
+        
+        try:
+            self._api_post('/disconnect', {'clientId': self.client_id})
+        except Exception:
+            pass
+        
+        if self.pc:
+            await self.pc.close()
+    
+    def run(self) -> StreamingMetrics:
+        """Run the benchmark (sync wrapper)."""
+        return asyncio.get_event_loop().run_until_complete(self.run_async())
+    
+    def print_results(self):
+        """Print formatted results."""
+        m = self.metrics
+        
+        print("\n" + "=" * 70)
+        print("  BENCHMARK RESULTS (WebRTC)")
+        print("=" * 70)
+        
+        # Timing
+        print("\n  [TIMING]")
+        print(f"      Startup delay:     {m.startup_delay_ms:,.0f} ms")
+        print(f"      Stream time:       {m.total_playback_time_ms/1000:,.1f} s")
+        
+        # Bitrate
+        if m.bitrate_samples:
+            print("\n  [BITRATE]")
+            print(f"      Average:           {m.avg_bitrate_kbps:,.0f} kbps")
+            print(f"      Min / Max:         {m.min_bitrate_kbps:,.0f} / {m.max_bitrate_kbps:,.0f} kbps")
+            print(f"      Median:            {m.bitrate_median:,.0f} kbps")
+            print(f"      Std deviation:     {m.bitrate_std_dev:,.1f} kbps")
+        
+        # Switching
+        print("\n  [QUALITY SWITCHES]")
+        print(f"      Total count:       {m.bitrate_switches}")
+        print(f"      Up / Down:         {m.switch_up_count} / {m.switch_down_count}")
+        if m.bitrate_switches > 0:
+            print(f"      Avg magnitude:     {m.avg_switch_magnitude:,.0f} kbps")
+        
+        # WebRTC-specific metrics
+        if self.jitter_samples:
+            avg_jitter = sum(self.jitter_samples) / len(self.jitter_samples)
+            print("\n  [JITTER]")
+            print(f"      Average:           {avg_jitter:.1f} ms")
+            print(f"      Min / Max:         {min(self.jitter_samples):.1f} / {max(self.jitter_samples):.1f} ms")
+        
+        if self.packet_loss_samples:
+            avg_loss = sum(self.packet_loss_samples) / len(self.packet_loss_samples)
+            print("\n  [PACKET LOSS]")
+            print(f"      Average:           {avg_loss:.2f}%")
+            print(f"      Max:               {max(self.packet_loss_samples):.2f}%")
+        
+        if self.rtt_samples:
+            avg_rtt = sum(self.rtt_samples) / len(self.rtt_samples)
+            print("\n  [ROUND-TRIP TIME]")
+            print(f"      Average:           {avg_rtt:.1f} ms")
+            print(f"      Min / Max:         {min(self.rtt_samples):.1f} / {max(self.rtt_samples):.1f} ms")
+        
+        # Throughput
+        if m.throughput_samples:
+            print("\n  [THROUGHPUT]")
+            print(f"      Average:           {m.avg_throughput_kbps:,.0f} kbps")
+            print(f"      Min / Max:         {m.min_throughput_kbps:,.0f} / {m.max_throughput_kbps:,.0f} kbps")
+        
+        print("\n" + "=" * 70)
+    
+    def save_results(self, filename: str):
+        """Save results to JSON."""
+        results = {
+            "timestamp": datetime.now().isoformat(),
+            "server": self.base_url,
+            "protocol": "webrtc",
+            "client_id": self.client_id,
+            "config": {
+                "duration_s": self.max_duration,
+            },
+            "metrics": self.metrics.to_dict(),
+            "webrtc_specific": {
+                "jitter": {
+                    "samples": self.jitter_samples,
+                    "average_ms": sum(self.jitter_samples) / len(self.jitter_samples) if self.jitter_samples else 0,
+                },
+                "packet_loss": {
+                    "samples": self.packet_loss_samples,
+                    "average_percent": sum(self.packet_loss_samples) / len(self.packet_loss_samples) if self.packet_loss_samples else 0,
+                },
+                "rtt": {
+                    "samples": self.rtt_samples,
+                    "average_ms": sum(self.rtt_samples) / len(self.rtt_samples) if self.rtt_samples else 0,
+                },
+            }
+        }
+        
+        with open(filename, 'w') as f:
+            json.dump(results, f, indent=2)
+        
+        print(f"\n[SAVED] {filename}")
+
+
 def main():
     parser = argparse.ArgumentParser(
-        description="DASH Streaming Benchmark Tool",
+        description="Streaming Benchmark Tool (DASH + WebRTC)",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python benchmark.py                           # Test localhost:8080
-  python benchmark.py --shaped                  # Test through shaper (port 9080)
+  python benchmark.py                           # Test DASH on localhost:8080
+  python benchmark.py --protocol webrtc         # Test WebRTC on localhost:3000
+  python benchmark.py --shaped                  # Test through shaper (port 9080/9030)
   python benchmark.py --trace traces/trace_12743_3g_tc.csv  # Use specific trace
   python benchmark.py --duration 60             # Test first 60 seconds
   python benchmark.py --output results.json     # Save to specific file
+  
+Protocol Comparison:
+  python benchmark.py --protocol dash -o dash_results.json
+  python benchmark.py --protocol webrtc -o webrtc_results.json
         """
     )
-    parser.add_argument("--url", default="http://localhost:8080",
-                       help="Base URL of DASH server")
+    parser.add_argument("--protocol", "-p", choices=["dash", "webrtc"], default="dash",
+                       help="Streaming protocol to benchmark (default: dash)")
+    parser.add_argument("--url", default=None,
+                       help="Base URL of server (default: auto-detect based on protocol)")
     parser.add_argument("--duration", type=float, default=None,
                        help="Max duration to test (seconds)")
     parser.add_argument("--output", "-o", default=None,
                        help="Output JSON file")
     parser.add_argument("--shaped", action="store_true",
-                       help="Use shaped port (9080)")
+                       help="Use shaped port (9080 for DASH, 9030 for WebRTC)")
     parser.add_argument("--trace", type=str, default=None,
                        help="Path to trace file (e.g., traces/trace_12743_3g_tc.csv)")
     
     args = parser.parse_args()
+    
+    # Set default URL based on protocol
+    if args.url is None:
+        if args.protocol == "dash":
+            args.url = "http://localhost:8080"
+        else:
+            args.url = "http://localhost:3000"
     
     # Handle trace file setup
     if args.trace:
@@ -709,10 +1139,25 @@ Examples:
         args.shaped = True
     
     url = args.url
-    if args.shaped and "8080" in url:
-        url = url.replace("8080", "9080")
     
-    benchmark = StreamingBenchmark(url, args.duration)
+    # Apply shaped port mapping
+    if args.shaped:
+        if args.protocol == "dash":
+            if "8080" in url:
+                url = url.replace("8080", "9080")
+        else:  # webrtc
+            if "3000" in url:
+                url = url.replace("3000", "9030")
+    
+    # Create appropriate benchmark based on protocol
+    if args.protocol == "dash":
+        benchmark = StreamingBenchmark(url, args.duration)
+    else:
+        if not HAS_AIORTC:
+            print("[ERROR] WebRTC benchmark requires aiortc library")
+            print("        Install with: pip install aiortc")
+            sys.exit(1)
+        benchmark = WebRTCBenchmark(url, args.duration)
     
     try:
         benchmark.run()
@@ -725,13 +1170,16 @@ Examples:
         if args.output:
             output = results_dir / Path(args.output).name
         else:
-            output = results_dir / f"benchmark_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+            output = results_dir / f"benchmark_{args.protocol}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
         
         benchmark.save_results(str(output))
         
     except KeyboardInterrupt:
         print("\n\n[INTERRUPTED] Benchmark stopped")
-        benchmark.metrics.calculate_statistics(benchmark.max_bitrate)
+        if hasattr(benchmark, 'max_bitrate'):
+            benchmark.metrics.calculate_statistics(benchmark.max_bitrate)
+        else:
+            benchmark.metrics.calculate_statistics()
         benchmark.print_results()
     except requests.exceptions.ConnectionError:
         print(f"\n[ERROR] Cannot connect to {url}")
