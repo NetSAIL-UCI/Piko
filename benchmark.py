@@ -1076,22 +1076,90 @@ class WebRTCBenchmark:
         print(f"\n[SAVED] {filename}")
 
 
+def setup_trace(trace_path: Path) -> None:
+    """Copy a trace file to the shaper directory and restart the shaper."""
+    shaper_trace = Path(__file__).parent / "shaper" / "trace" / "trace.csv"
+    shaper_trace.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy(trace_path, shaper_trace)
+    print(f"[TRACE] {trace_path.name}")
+
+    print("[SHAPER] Restarting...")
+    subprocess.run(
+        ["docker", "compose", "restart", "shaper"],
+        capture_output=True,
+        cwd=Path(__file__).parent,
+    )
+    time.sleep(3)  # Wait for shaper to restart
+
+
+def resolve_url(base_url: str, protocol: str, shaped: bool) -> str:
+    """Return the final URL after applying shaped-port mapping."""
+    url = base_url
+    if shaped:
+        if protocol == "dash" and "8080" in url:
+            url = url.replace("8080", "9080")
+        elif protocol == "webrtc" and "3000" in url:
+            url = url.replace("3000", "9030")
+    return url
+
+
+def run_single_benchmark(protocol: str, url: str, duration, output_path: str, trace_name: str = None):
+    """Run a single benchmark and save results. Returns True on success."""
+    if protocol == "dash":
+        benchmark = StreamingBenchmark(url, duration)
+    else:
+        if not HAS_AIORTC:
+            print("[ERROR] WebRTC benchmark requires aiortc library")
+            print("        Install with: pip install aiortc")
+            return False
+        benchmark = WebRTCBenchmark(url, duration)
+
+    try:
+        benchmark.run()
+        benchmark.print_results()
+        benchmark.save_results(output_path)
+        return True
+    except KeyboardInterrupt:
+        print("\n\n[INTERRUPTED] Benchmark stopped")
+        if hasattr(benchmark, 'max_bitrate'):
+            benchmark.metrics.calculate_statistics(benchmark.max_bitrate)
+        else:
+            benchmark.metrics.calculate_statistics()
+        benchmark.print_results()
+        return False
+    except requests.exceptions.ConnectionError:
+        print(f"\n[ERROR] Cannot connect to {url}")
+        print("        Run: docker compose up -d")
+        return False
+    except Exception as e:
+        print(f"\n[ERROR] Benchmark failed: {e}")
+        raise
+
+
+def collect_trace_files(directory: Path) -> List[Path]:
+    """Return sorted list of *_tc.csv trace files in a directory."""
+    traces = sorted(directory.glob("*_tc.csv"))
+    return traces
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Streaming Benchmark Tool (DASH + WebRTC)",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python benchmark.py                           # Test DASH on localhost:8080
-  python benchmark.py --protocol webrtc         # Test WebRTC on localhost:3000
-  python benchmark.py --shaped                  # Test through shaper (port 9080/9030)
-  python benchmark.py --trace traces/trace_12743_3g_tc.csv  # Use specific trace
-  python benchmark.py --duration 60             # Test first 60 seconds
-  python benchmark.py --output results.json     # Save to specific file
-  
-Protocol Comparison:
-  python benchmark.py --protocol dash -o dash_results.json
-  python benchmark.py --protocol webrtc -o webrtc_results.json
+  # Single trace
+  python benchmark.py --trace traces/trace_12743_3g_tc.csv
+
+  # All traces in a folder
+  python benchmark.py --trace-dir traces/
+
+  # WebRTC with a folder of traces
+  python benchmark.py -p webrtc --trace-dir traces/
+
+  # Direct (no shaping)
+  python benchmark.py
+  python benchmark.py -p webrtc --duration 60
         """
     )
     parser.add_argument("--protocol", "-p", choices=["dash", "webrtc"], default="dash",
@@ -1101,93 +1169,100 @@ Protocol Comparison:
     parser.add_argument("--duration", type=float, default=None,
                        help="Max duration to test (seconds)")
     parser.add_argument("--output", "-o", default=None,
-                       help="Output JSON file")
+                       help="Output JSON file (ignored when using --trace-dir)")
     parser.add_argument("--shaped", action="store_true",
                        help="Use shaped port (9080 for DASH, 9030 for WebRTC)")
     parser.add_argument("--trace", type=str, default=None,
-                       help="Path to trace file (e.g., traces/trace_12743_3g_tc.csv)")
-    
+                       help="Path to a single trace file (e.g., traces/trace_12743_3g_tc.csv)")
+    parser.add_argument("--trace-dir", type=str, default=None,
+                       help="Path to a folder of trace files; runs benchmark on every *_tc.csv in the folder")
+
     args = parser.parse_args()
-    
+
+    # --trace and --trace-dir are mutually exclusive
+    if args.trace and args.trace_dir:
+        print("[ERROR] --trace and --trace-dir are mutually exclusive. Use one or the other.")
+        sys.exit(1)
+
     # Set default URL based on protocol
     if args.url is None:
         if args.protocol == "dash":
             args.url = "http://localhost:8080"
         else:
             args.url = "http://localhost:3000"
-    
-    # Handle trace file setup
+
+    results_dir = Path(__file__).parent / "results"
+    results_dir.mkdir(parents=True, exist_ok=True)
+
+    # ── Folder of traces ──────────────────────────────────────────────
+    if args.trace_dir:
+        trace_dir = Path(args.trace_dir)
+        if not trace_dir.is_dir():
+            print(f"[ERROR] Trace directory not found: {args.trace_dir}")
+            sys.exit(1)
+
+        trace_files = collect_trace_files(trace_dir)
+        if not trace_files:
+            print(f"[ERROR] No *_tc.csv trace files found in {args.trace_dir}")
+            sys.exit(1)
+
+        print(f"\n{'=' * 70}")
+        print(f"  BATCH RUN: {len(trace_files)} trace(s) from {trace_dir}")
+        print(f"{'=' * 70}\n")
+
+        succeeded = 0
+        failed_traces = []
+
+        for idx, trace_path in enumerate(trace_files, 1):
+            print(f"\n{'─' * 70}")
+            print(f"  [{idx}/{len(trace_files)}] {trace_path.name}")
+            print(f"{'─' * 70}")
+
+            setup_trace(trace_path)
+            url = resolve_url(args.url, args.protocol, shaped=True)
+
+            trace_stem = trace_path.stem  # e.g. trace_12743_3g_tc
+            output_path = str(
+                results_dir / f"benchmark_{args.protocol}_{trace_stem}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+            )
+
+            ok = run_single_benchmark(args.protocol, url, args.duration, output_path, trace_name=trace_path.name)
+            if ok:
+                succeeded += 1
+            else:
+                failed_traces.append(trace_path.name)
+
+        # Summary
+        print(f"\n{'=' * 70}")
+        print(f"  BATCH COMPLETE: {succeeded}/{len(trace_files)} succeeded")
+        if failed_traces:
+            print(f"  Failed: {', '.join(failed_traces)}")
+        print(f"  Results saved to: {results_dir}/")
+        print(f"{'=' * 70}\n")
+        return
+
+    # ── Single trace ──────────────────────────────────────────────────
     if args.trace:
         trace_path = Path(args.trace)
         if not trace_path.exists():
             print(f"[ERROR] Trace file not found: {args.trace}")
             sys.exit(1)
-        
-        # Copy trace to shaper directory
-        shaper_trace = Path(__file__).parent / "shaper" / "trace" / "trace.csv"
-        shaper_trace.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy(trace_path, shaper_trace)
-        print(f"[TRACE] {trace_path.name}")
-        
-        # Restart shaper to pick up new trace
-        print("[SHAPER] Restarting...")
-        subprocess.run(["docker", "compose", "restart", "shaper"], 
-                      capture_output=True, cwd=Path(__file__).parent)
-        time.sleep(3)  # Wait for shaper to restart
-        
-        # Auto-enable shaped mode when using a trace
+
+        setup_trace(trace_path)
         args.shaped = True
-    
-    url = args.url
-    
-    # Apply shaped port mapping
-    if args.shaped:
-        if args.protocol == "dash":
-            if "8080" in url:
-                url = url.replace("8080", "9080")
-        else:  # webrtc
-            if "3000" in url:
-                url = url.replace("3000", "9030")
-    
-    # Create appropriate benchmark based on protocol
-    if args.protocol == "dash":
-        benchmark = StreamingBenchmark(url, args.duration)
+
+    url = resolve_url(args.url, args.protocol, args.shaped)
+
+    if args.output:
+        output_path = str(results_dir / Path(args.output).name)
     else:
-        if not HAS_AIORTC:
-            print("[ERROR] WebRTC benchmark requires aiortc library")
-            print("        Install with: pip install aiortc")
-            sys.exit(1)
-        benchmark = WebRTCBenchmark(url, args.duration)
-    
-    try:
-        benchmark.run()
-        benchmark.print_results()
-        
-        # Save results to results/ directory
-        results_dir = Path(__file__).parent / "results"
-        results_dir.mkdir(parents=True, exist_ok=True)
-        
-        if args.output:
-            output = results_dir / Path(args.output).name
-        else:
-            output = results_dir / f"benchmark_{args.protocol}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
-        
-        benchmark.save_results(str(output))
-        
-    except KeyboardInterrupt:
-        print("\n\n[INTERRUPTED] Benchmark stopped")
-        if hasattr(benchmark, 'max_bitrate'):
-            benchmark.metrics.calculate_statistics(benchmark.max_bitrate)
-        else:
-            benchmark.metrics.calculate_statistics()
-        benchmark.print_results()
-    except requests.exceptions.ConnectionError:
-        print(f"\n[ERROR] Cannot connect to {url}")
-        print("        Run: docker compose up -d")
+        output_path = str(
+            results_dir / f"benchmark_{args.protocol}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+        )
+
+    ok = run_single_benchmark(args.protocol, url, args.duration, output_path)
+    if not ok:
         sys.exit(1)
-    except Exception as e:
-        print(f"\n[ERROR] Benchmark failed: {e}")
-        raise
 
 
 if __name__ == "__main__":

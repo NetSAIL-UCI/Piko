@@ -1,151 +1,98 @@
-# Streaming Benchmark (DASH + WebRTC)
+# Streaming Benchmark
 
-Measure video streaming QoE under emulated network conditions. Compare DASH and WebRTC protocols.
+Measure video streaming QoE (DASH & WebRTC) under emulated network conditions.
 
-## Quick Start
+## Setup
 
 ```bash
 # Install Python dependencies
 pip install -r requirements.txt
 
-# Start services
+# Start all services (DASH server, WebRTC server, network shaper)
 docker compose up -d
-
-# Run DASH benchmark with network trace
-python3 benchmark.py --protocol dash --trace traces/trace_12743_3g_tc.csv
-
-# Run WebRTC benchmark
-python3 benchmark.py --protocol webrtc --duration 60
 ```
 
-## Usage
+## Run Benchmarks
+
+### Single trace
 
 ```bash
+# DASH with a specific network trace
+python3 benchmark.py --trace traces/trace_12743_3g_tc.csv
+
+# WebRTC with a specific network trace
+python3 benchmark.py -p webrtc --trace traces/trace_12743_3g_tc.csv
+```
+
+### All traces in a folder
+
+```bash
+# DASH — run every *_tc.csv trace in the folder
+python3 benchmark.py --trace-dir traces/
+
+# WebRTC — run every trace in the folder
+python3 benchmark.py -p webrtc --trace-dir traces/
+```
+
+### Direct (no network shaping)
+
+```bash
+# DASH direct
+python3 benchmark.py
+
+# WebRTC direct (60 s)
+python3 benchmark.py -p webrtc --duration 60
+```
+
+### Shaped (no trace file, uses default shaper config)
+
+```bash
+python3 benchmark.py --shaped
+python3 benchmark.py -p webrtc --shaped
+```
+
+### Custom options
+
+```bash
+# Limit test duration to 30 seconds
+python3 benchmark.py --trace traces/trace_12743_3g_tc.csv --duration 30
+
+# Save to a specific output file
+python3 benchmark.py --trace traces/trace_12743_3g_tc.csv -o my_result.json
+
+# Use a custom server URL
+python3 benchmark.py --url http://192.168.1.10:8080
+```
+
+## Download Traces
+
+```bash
+# Download all available network traces (3G + FCC broadband)
+python3 download_traces.py --all
+
+# List available trace sets
+python3 download_traces.py --list
+```
+
+## CLI Reference
+
+```
 python3 benchmark.py [OPTIONS]
 
---protocol, -p   Protocol to benchmark: dash or webrtc (default: dash)
---trace FILE     Use network trace (auto-enables shaping)
---shaped         Use traffic-shaped ports (9080/9030)
+--protocol, -p   dash | webrtc           (default: dash)
+--trace FILE     Single trace file       (auto-enables shaping)
+--trace-dir DIR  Folder of traces        (runs all *_tc.csv files)
+--shaped         Use shaped ports        (9080 for DASH, 9030 for WebRTC)
 --duration N     Limit test to N seconds
--o FILE          Save results to JSON file
+-o FILE          Output JSON filename
 --url URL        Custom server URL
 ```
 
-## Protocol Comparison
+## Docker
 
 ```bash
-# Run both protocols with same trace for comparison
-python3 benchmark.py -p dash --trace traces/trace_12743_3g_tc.csv -o dash.json
-python3 benchmark.py -p webrtc --trace traces/trace_12743_3g_tc.csv -o webrtc.json
+docker compose up -d            # Start services
+docker compose down             # Stop services
+docker compose logs -f          # View logs
+docker compose restart shaper   # Restart shaper after config change
 ```
-
-## Examples
-
-```bash
-# DASH Streaming
-benchmark.py                                          # Direct (no shaping)
-benchmark.py --shaped                                 # Shaped (default settings)
-benchmark.py --trace traces/trace_12743_3g_tc.csv    # 3G mobile trace
-
-# WebRTC Streaming
-benchmark.py -p webrtc                               # Direct WebRTC
-benchmark.py -p webrtc --shaped                      # Shaped WebRTC
-benchmark.py -p webrtc --duration 60 -o webrtc.json  # 60s test
-```
-
-## Metrics Output
-
-### DASH Metrics
-**Bitrate**: avg, min, max, std_dev, percentiles  
-**Switching**: count, up/down, magnitude  
-**Rebuffering**: count, time, ratio, frequency  
-**Throughput**: avg, min, max  
-**Buffer**: avg, min levels  
-
-### WebRTC Metrics
-**Bitrate**: avg, min, max, std_dev  
-**Quality Switches**: count, up/down  
-**Jitter**: avg, min, max (ms)  
-**Packet Loss**: avg, max (%)  
-**RTT**: avg, min, max (ms)  
-**Throughput**: avg, min, max  
-
-## Network Traces
-
-```bash
-python3 download_traces.py --all     # Download HSDPA 3G + FCC traces
-python3 download_traces.py --list    # List available
-```
-
-| Type | Files | Source |
-|------|-------|--------|
-| 3G Mobile | `*_3g_tc.csv` | [Riiser, IMC 2013](https://dl.acm.org/doi/10.1145/2483977.2483991) |
-| Broadband | `*_http-*_tc.csv` | [FCC/GitHub](https://github.com/confiwent/Real-world-bandwidth-traces) |
-
-## Ports
-
-| Service | Direct | Shaped |
-|---------|--------|--------|
-| DASH Server | 8080 | 9080 |
-| WebRTC Server | 3000 | 9030 |
-
-## Architecture
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     Network Shaper                          │
-│                  (tc/netem on Linux)                        │
-│  ┌─────────────────────────────────────────────────────┐   │
-│  │              nginx reverse proxy                      │   │
-│  │         :80 → DASH    :8030 → WebRTC                 │   │
-│  └─────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
-              │                           │
-              ▼                           ▼
-┌─────────────────────────┐   ┌─────────────────────────┐
-│      DASH Server        │   │     WebRTC Server       │
-│   (Python HTTP/DASH)    │   │   (Node.js/mediasoup)   │
-│        :8080            │   │        :3000            │
-└─────────────────────────┘   └─────────────────────────┘
-```
-
-## Files
-
-```
-benchmark.py             Main CLI tool
-requirements.txt         Python dependencies
-docker-compose.yaml      Service definitions
-server/                  DASH streaming server
-webrtc-server/           WebRTC server (mediasoup)
-shaper/                  Network emulator
-traces/                  Network traces (*_tc.csv)
-results/                 Output JSON files
-```
-
-## Docker Commands
-
-```bash
-docker compose up -d              # Start all services
-docker compose down               # Stop all services
-docker compose build --no-cache   # Rebuild images
-docker compose logs -f            # View all logs
-docker logs -f netsail-shaper     # View shaper logs
-docker logs -f netsail-webrtc     # View WebRTC logs
-```
-
-## Requirements
-
-- Docker & Docker Compose
-- Python 3.8+
-- Linux host (required for traffic shaping with tc/netem)
-
-### Python Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-For WebRTC benchmarking:
-- `aiortc` - Python WebRTC implementation
-- `requests` - HTTP client
-- `tqdm` - Progress bars (optional)
