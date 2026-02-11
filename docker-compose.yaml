@@ -3,7 +3,7 @@
 # ============================================================================
 #
 # Services:
-#   - server:        DASH video streaming server (Python)
+#   - dash-server:   DASH video streaming server (Python)
 #   - webrtc-server: WebRTC streaming server using mediasoup (Node.js)
 #   - shaper:        Network emulator with tc/netem (applies to traffic)
 #
@@ -26,12 +26,12 @@ services:
   # --------------------------------------------------------------------------
   # Serves DASH video content (MPD manifest + video segments)
   # 
-  server:
+  dash-server:
     build:
-      context: ./server
+      context: ./dash-server
       dockerfile: Dockerfile
-    image: netsail/server:latest
-    container_name: netsail-server
+    image: netsail/dash-server:latest
+    container_name: netsail-dash-server
     volumes:
       # Mount your DASH content here (manifest.mpd + segments)
       # Generate content with: cd Benchmarking/scripts && ./generate-dash.sh
@@ -125,7 +125,7 @@ services:
     cap_add:
       - NET_ADMIN
     depends_on:
-      - server
+      - dash-server
       - webrtc-server
     restart: unless-stopped
     networks:

@@ -674,9 +674,11 @@ class StreamingBenchmark:
 class WebRTCBenchmark:
     """WebRTC streaming performance benchmark using mediasoup server."""
     
-    def __init__(self, base_url: str, max_duration: Optional[float] = None):
+    def __init__(self, base_url: str, max_duration: Optional[float] = None,
+                 dash_url: Optional[str] = None):
         self.base_url = base_url.rstrip('/')
-        self.max_duration = max_duration or 60  # Default 60 seconds for WebRTC
+        self.max_duration = max_duration  # None = derive from DASH manifest
+        self.dash_url = dash_url  # DASH server URL for manifest lookup
         self.session = requests.Session()
         self.metrics = StreamingMetrics()
         self.client_id = str(uuid.uuid4())
@@ -712,7 +714,38 @@ class WebRTCBenchmark:
         )
         response.raise_for_status()
         return response.json()
-    
+
+    def _resolve_duration(self) -> float:
+        """Determine stream duration from the DASH manifest, matching DASH behaviour.
+
+        Falls back to 60 s if the manifest cannot be reached.
+        """
+        if self.max_duration is not None:
+            return self.max_duration
+
+        # Derive the DASH server URL from the WebRTC URL if not explicitly set
+        dash_base = self.dash_url
+        if dash_base is None:
+            # Same host, default DASH port
+            from urllib.parse import urlparse
+            parsed = urlparse(self.base_url)
+            dash_base = f"{parsed.scheme}://{parsed.hostname}:8080"
+
+        try:
+            manifest_url = f"{dash_base}/manifest.mpd"
+            resp = self.session.get(manifest_url, timeout=10)
+            resp.raise_for_status()
+            parser = DASHManifestParser(resp.text)
+            duration = parser.get_duration_seconds()
+            if duration > 0:
+                print(f"[DURATION] Resolved from DASH manifest: {duration:.1f}s")
+                return duration
+        except Exception as e:
+            print(f"   [WARN] Could not fetch DASH manifest for duration: {e}")
+
+        print("   [WARN] Using default duration of 60s")
+        return 60.0
+
     async def run_async(self) -> StreamingMetrics:
         """Run the WebRTC benchmark asynchronously."""
         if not HAS_AIORTC:
@@ -727,6 +760,9 @@ class WebRTCBenchmark:
         print("=" * 70 + "\n")
         
         startup_start = time.time()
+        
+        # Resolve stream duration from DASH manifest (matches DASH behaviour)
+        self.max_duration = self._resolve_duration()
         
         try:
             # Step 1: Get router capabilities
@@ -1103,7 +1139,8 @@ def resolve_url(base_url: str, protocol: str, shaped: bool) -> str:
     return url
 
 
-def run_single_benchmark(protocol: str, url: str, duration, output_path: str, trace_name: str = None):
+def run_single_benchmark(protocol: str, url: str, duration, output_path: str,
+                         trace_name: str = None, dash_url: str = None):
     """Run a single benchmark and save results. Returns True on success."""
     if protocol == "dash":
         benchmark = StreamingBenchmark(url, duration)
@@ -1112,7 +1149,7 @@ def run_single_benchmark(protocol: str, url: str, duration, output_path: str, tr
             print("[ERROR] WebRTC benchmark requires aiortc library")
             print("        Install with: pip install aiortc")
             return False
-        benchmark = WebRTCBenchmark(url, duration)
+        benchmark = WebRTCBenchmark(url, duration, dash_url=dash_url)
 
     try:
         benchmark.run()
@@ -1191,6 +1228,11 @@ Examples:
         else:
             args.url = "http://localhost:3000"
 
+    # Derive the DASH server URL so WebRTC can query the manifest for duration
+    from urllib.parse import urlparse
+    parsed = urlparse(args.url)
+    dash_url = f"{parsed.scheme}://{parsed.hostname}:8080"
+
     results_dir = Path(__file__).parent / "results"
     results_dir.mkdir(parents=True, exist_ok=True)
 
@@ -1226,7 +1268,8 @@ Examples:
                 results_dir / f"benchmark_{args.protocol}_{trace_stem}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
             )
 
-            ok = run_single_benchmark(args.protocol, url, args.duration, output_path, trace_name=trace_path.name)
+            ok = run_single_benchmark(args.protocol, url, args.duration, output_path,
+                                     trace_name=trace_path.name, dash_url=dash_url)
             if ok:
                 succeeded += 1
             else:
@@ -1260,7 +1303,7 @@ Examples:
             results_dir / f"benchmark_{args.protocol}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
         )
 
-    ok = run_single_benchmark(args.protocol, url, args.duration, output_path)
+    ok = run_single_benchmark(args.protocol, url, args.duration, output_path, dash_url=dash_url)
     if not ok:
         sys.exit(1)
 
