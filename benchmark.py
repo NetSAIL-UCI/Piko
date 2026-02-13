@@ -1213,6 +1213,8 @@ Examples:
                        help="Path to a single trace file (e.g., traces/trace_12743_3g_tc.csv)")
     parser.add_argument("--trace-dir", type=str, default=None,
                        help="Path to a folder of trace files; runs benchmark on every *_tc.csv in the folder")
+    parser.add_argument("--results-dir", type=str, default=None,
+                       help="Custom results subdirectory (e.g., 2025-15-05-results)")
 
     args = parser.parse_args()
 
@@ -1233,7 +1235,10 @@ Examples:
     parsed = urlparse(args.url)
     dash_url = f"{parsed.scheme}://{parsed.hostname}:8080"
 
-    results_dir = Path(__file__).parent / "results"
+    if args.results_dir:
+        results_dir = Path(__file__).parent / "results" / args.results_dir
+    else:
+        results_dir = Path(__file__).parent / "results"
     results_dir.mkdir(parents=True, exist_ok=True)
 
     # ── Folder of traces ──────────────────────────────────────────────
