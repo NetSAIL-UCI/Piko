@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
     g++ \
     ffmpeg \
     curl \
+    iproute2 \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app

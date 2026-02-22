@@ -356,8 +356,18 @@ function cleanupClient(clientId) {
   }
 }
 
+function killFFmpeg() {
+  if (ffmpegProcess) {
+    console.log('Killing existing FFmpeg process');
+    ffmpegProcess.removeAllListeners('close');
+    ffmpegProcess.kill('SIGKILL');
+    ffmpegProcess = null;
+  }
+}
+
 // Start FFmpeg to produce video into mediasoup
 async function startProducer() {
+  killFFmpeg();
   // Find video file
   const videoFile = findVideoFile();
   if (!videoFile) {
@@ -380,14 +390,16 @@ async function startProducer() {
   console.log(`Video RTP: ${videoRtpPort}, RTCP: ${videoRtcpPort}`);
   console.log(`Audio RTP: ${audioRtpPort}, RTCP: ${audioRtcpPort}`);
   
-  // Create video producer
+  // Create video producer -- payloadType must NOT collide with the
+  // router's auto-assigned rtx payloadTypes.  The router assigns VP8
+  // at pt=100 and video/rtx at pt=101, so the producer must use 100.
   videoProducer = await videoTransport.produce({
     kind: 'video',
     rtpParameters: {
       codecs: [
         {
           mimeType: 'video/VP8',
-          payloadType: 101,
+          payloadType: 100,
           clockRate: 90000,
         },
       ],
@@ -395,14 +407,14 @@ async function startProducer() {
     },
   });
   
-  // Create audio producer
+  // audio/opus is at pt=106 in the router codec table
   audioProducer = await audioTransport.produce({
     kind: 'audio',
     rtpParameters: {
       codecs: [
         {
           mimeType: 'audio/opus',
-          payloadType: 100,
+          payloadType: 106,
           clockRate: 48000,
           channels: 2,
         },
@@ -446,21 +458,23 @@ function findVideoFile() {
 
 function startFFmpeg(videoFile, videoRtpPort, audioRtpPort) {
   const ffmpegArgs = [
-    '-re', // Real-time mode
-    '-stream_loop', '-1', // Loop indefinitely
+    '-re',
+    '-stream_loop', '-1',
     '-i', videoFile,
-    // Video output
     '-map', '0:v:0',
-    '-c:v', 'libvpx', // VP8 codec
+    '-c:v', 'libvpx',
     '-b:v', '2000k',
     '-deadline', 'realtime',
     '-cpu-used', '4',
+    '-payload_type', '100',
+    '-ssrc', '22222222',
     '-f', 'rtp',
     `rtp://127.0.0.1:${videoRtpPort}?pkt_size=1200`,
-    // Audio output
-    '-map', '0:a:0?', // Optional audio
+    '-map', '0:a:0?',
     '-c:a', 'libopus',
     '-b:a', '128k',
+    '-payload_type', '106',
+    '-ssrc', '11111111',
     '-f', 'rtp',
     `rtp://127.0.0.1:${audioRtpPort}?pkt_size=1200`,
   ];
@@ -486,10 +500,14 @@ function startFFmpeg(videoFile, videoRtpPort, audioRtpPort) {
   ffmpegProcess.on('close', (code) => {
     console.log(`FFmpeg exited with code ${code}`);
     ffmpegProcess = null;
-    // Restart after delay
+    // Only restart FFmpeg (not new transports/producers) after delay
     setTimeout(() => {
-      if (router && !ffmpegProcess) {
-        startProducer().catch(console.error);
+      if (router && !ffmpegProcess && producerTransport) {
+        const vPort = producerTransport.video.tuple.localPort;
+        const aPort = producerTransport.audio.tuple.localPort;
+        console.log(`Restarting FFmpeg on ports ${vPort}/${aPort}`);
+        const vFile = findVideoFile();
+        if (vFile) startFFmpeg(vFile, vPort, aPort);
       }
     }, 2000);
   });

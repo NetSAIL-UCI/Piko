@@ -396,6 +396,8 @@ class StreamingBenchmark:
         self.buffer_level_ms: float = 0
         self.segment_duration_ms: float = 4000
         self.buffer_target_ms: float = 30000
+        self.buffer_max_ms: float = 60000
+        self.is_startup: bool = True
         
         self.last_bitrate: Optional[int] = None
         self.max_bitrate: int = 3000
@@ -420,19 +422,24 @@ class StreamingBenchmark:
         """
         Simulate playback during download.
         Returns (stalled, stall_duration_ms)
+        
+        During startup (before the first segment is buffered), the download
+        time is part of the startup delay, not a rebuffering event.
         """
-        # While downloading, buffer drains at playback rate
         playback_during_download = download_time_ms
         
+        if self.is_startup:
+            self.is_startup = False
+            self.buffer_level_ms = self.segment_duration_ms
+            return False, 0
+        
         if self.buffer_level_ms >= playback_during_download:
-            # No stall - buffer had enough
             self.buffer_level_ms -= playback_during_download
             self.buffer_level_ms += self.segment_duration_ms
             return False, 0
         else:
-            # Stall occurred
             stall_duration = playback_during_download - self.buffer_level_ms
-            self.buffer_level_ms = self.segment_duration_ms  # Refilled after download
+            self.buffer_level_ms = self.segment_duration_ms
             return True, stall_duration
     
     def run(self) -> StreamingMetrics:
@@ -462,24 +469,26 @@ class StreamingBenchmark:
         # Initialize ABR
         abr = ThroughputBasedABR(representations, self.buffer_target_ms)
         
-        # Calculate segments
+        # Calculate segments using minimum count across all representations
+        # to avoid requesting segments that don't exist for higher-bitrate reps.
         total_duration = parser.get_duration_seconds()
         if self.max_duration:
             total_duration = min(total_duration, self.max_duration)
         
         rep = representations[0]
         if 'timeline' in rep:
-            segment_count = len(rep['timeline'])
+            per_rep_counts = [len(r['timeline']) for r in representations if 'timeline' in r]
+            segment_count = min(per_rep_counts) if per_rep_counts else len(rep['timeline'])
             if rep['timescale'] > 0:
                 self.segment_duration_ms = rep['timeline'][0]['d'] / rep['timescale'] * 1000
         elif rep.get('duration') and rep.get('timescale'):
             self.segment_duration_ms = rep['duration'] / rep['timescale'] * 1000
-            segment_count = int(total_duration * 1000 / self.segment_duration_ms) + 1
+            segment_count = int(total_duration * 1000 / self.segment_duration_ms)
         else:
-            segment_count = int(total_duration / 4) + 1
+            segment_count = int(total_duration / 4)
         
         if self.max_duration:
-            segment_count = min(segment_count, int(self.max_duration * 1000 / self.segment_duration_ms) + 1)
+            segment_count = min(segment_count, int(self.max_duration * 1000 / self.segment_duration_ms))
         
         print(f"\n[DURATION] {total_duration:.1f}s ({segment_count} segments @ {self.segment_duration_ms/1000:.1f}s each)")
         
@@ -511,6 +520,14 @@ class StreamingBenchmark:
         for i in progress:
             segment_number = start_number + i
             
+            # Buffer cap: pause fetching while buffer exceeds maximum,
+            # draining in real-time like a real player would.
+            while self.buffer_level_ms > self.buffer_max_ms:
+                wait_ms = self.buffer_level_ms - self.buffer_max_ms + self.segment_duration_ms
+                time.sleep(wait_ms / 1000)
+                self.buffer_level_ms -= wait_ms
+                self.metrics.total_playback_time_ms += wait_ms
+            
             # Select quality
             selected, quality_idx = abr.select_representation(self.buffer_level_ms)
             bitrate_kbps = selected['bandwidth'] // 1000
@@ -537,15 +554,16 @@ class StreamingBenchmark:
                 size_bytes = len(content)
                 throughput_kbps = (size_bytes * 8 / 1000) / (download_time_ms / 1000) if download_time_ms > 0 else 0
                 
-                # Track throughput and buffer samples
                 self.metrics.throughput_samples.append(throughput_kbps)
-                self.metrics.buffer_samples.append(self.buffer_level_ms)
                 
                 # Report to ABR
                 abr.report_download(size_bytes, download_time_ms)
                 
                 # Simulate playback
                 stalled, stall_duration = self.simulate_playback(download_time_ms)
+                
+                # Record buffer level AFTER playback simulation
+                self.metrics.buffer_samples.append(self.buffer_level_ms)
                 
                 if stalled:
                     self.metrics.rebuffer_count += 1
@@ -583,6 +601,7 @@ class StreamingBenchmark:
                                  suffix=f"| {bitrate_kbps}kbps | buf:{self.buffer_level_ms/1000:.1f}s | {status}")
                 
             except Exception as e:
+                self.metrics.failed_segments += 1
                 if not HAS_TQDM:
                     print(f"\n   [ERROR] Segment {segment_number}: {e}")
         
@@ -769,62 +788,19 @@ class WebRTCBenchmark:
             print("📡 Getting router capabilities...")
             rtp_capabilities = self._api_get('/rtpCapabilities')
             
-            # Step 2: Create WebRTC transport
-            print("🔌 Creating WebRTC transport...")
+            # Step 2: Create WebRTC transport on the server
+            print("\U0001f50c Creating WebRTC transport...")
             transport_info = self._api_post('/createTransport', {
                 'clientId': self.client_id
             })
             self.transport_id = transport_info['id']
             
-            # Step 3: Create RTCPeerConnection
-            print("🤝 Setting up peer connection...")
-            config = RTCConfiguration(iceServers=[])
-            self.pc = RTCPeerConnection(configuration=config)
+            ice_params = transport_info['iceParameters']
+            ice_candidates = transport_info['iceCandidates']
+            server_dtls = transport_info['dtlsParameters']
             
-            # Track stats
-            stats_task = None
-            video_track_received = asyncio.Event()
-            
-            @self.pc.on('track')
-            def on_track(track):
-                print(f"   Track received: {track.kind}")
-                if track.kind == 'video':
-                    video_track_received.set()
-                    # Consume the track (blackhole - just measure stats)
-                    asyncio.ensure_future(self._consume_track(track))
-            
-            @self.pc.on('connectionstatechange')
-            async def on_connection_state_change():
-                print(f"   Connection state: {self.pc.connectionState}")
-            
-            # Step 4: Create offer and connect
-            # Since we're receiving only, create a recvonly transceiver
-            self.pc.addTransceiver('video', direction='recvonly')
-            
-            # Create offer
-            offer = await self.pc.createOffer()
-            await self.pc.setLocalDescription(offer)
-            
-            # Step 5: Connect transport with our DTLS parameters
-            print("🔒 Connecting transport (DTLS)...")
-            dtls_params = {
-                'role': 'auto',
-                'fingerprints': [
-                    {
-                        'algorithm': fp.algorithm,
-                        'value': fp.value
-                    }
-                    for fp in self.pc.localDescription.sdp_fingerprints if hasattr(self.pc.localDescription, 'sdp_fingerprints')
-                ] if hasattr(self.pc.localDescription, 'sdp_fingerprints') else []
-            }
-            
-            # For mediasoup, we need to exchange SDP differently
-            # The client sends its RTP capabilities and gets consumer info
-            
-            # Step 6: Request to consume the video
-            print("📺 Requesting video stream...")
-            
-            # Build simplified RTP capabilities for mediasoup
+            # Step 3: Request to consume the video producer
+            print("\U0001f4fa Requesting video stream...")
             consumer_rtp_caps = {
                 'codecs': [
                     {
@@ -860,6 +836,7 @@ class WebRTCBenchmark:
                 'headerExtensions': [],
             }
             
+            consume_info = None
             try:
                 consume_info = self._api_post('/consume', {
                     'clientId': self.client_id,
@@ -871,11 +848,65 @@ class WebRTCBenchmark:
                 print(f"   [WARN] Could not create consumer: {e}")
                 print("   (Video producer may not be active yet)")
             
+            # Step 4: Build synthetic SDP from server transport params +
+            # consumer RTP params and establish the PeerConnection.
+            print("\U0001f91d Setting up peer connection...")
+            config = RTCConfiguration(iceServers=[])
+            self.pc = RTCPeerConnection(configuration=config)
+            
+            video_track_received = asyncio.Event()
+            
+            @self.pc.on('track')
+            def on_track(track):
+                print(f"   Track received: {track.kind}")
+                if track.kind == 'video':
+                    video_track_received.set()
+                    asyncio.ensure_future(self._consume_track(track))
+            
+            @self.pc.on('connectionstatechange')
+            async def on_connection_state_change():
+                print(f"   Connection state: {self.pc.connectionState}")
+            
+            if consume_info and 'rtpParameters' in consume_info:
+                remote_sdp = self._build_server_sdp(
+                    ice_params, ice_candidates, server_dtls,
+                    consume_info['rtpParameters'],
+                )
+                remote_offer = RTCSessionDescription(sdp=remote_sdp, type='offer')
+                await self.pc.setRemoteDescription(remote_offer)
+                
+                answer = await self.pc.createAnswer()
+                await self.pc.setLocalDescription(answer)
+                
+                # Extract local DTLS fingerprint and connect the server transport
+                print("\U0001f512 Connecting transport (DTLS)...")
+                local_fps = self._extract_fingerprints(self.pc.localDescription.sdp)
+                self._api_post('/connectTransport', {
+                    'clientId': self.client_id,
+                    'dtlsParameters': {
+                        'role': 'client',
+                        'fingerprints': local_fps,
+                    },
+                })
+                
+                # Resume consumer so media flows
+                try:
+                    self._api_post('/resumeConsumer', {'clientId': self.client_id})
+                except Exception:
+                    pass
+                
+                # Wait for the video track to arrive
+                try:
+                    await asyncio.wait_for(video_track_received.wait(), timeout=5.0)
+                    print("   Video track active")
+                except asyncio.TimeoutError:
+                    print("   [WARN] Timed out waiting for video track")
+            
             # Measure startup delay
             self.metrics.startup_delay_ms = (time.time() - startup_start) * 1000
             print(f"\n   Startup delay: {self.metrics.startup_delay_ms:.0f}ms\n")
             
-            # Step 7: Collect stats for duration
+            # Step 5: Collect stats for duration
             print(f"[STREAMING] Collecting metrics for {self.max_duration:.0f}s...\n")
             
             await self._collect_stats_for_duration()
@@ -896,6 +927,86 @@ class WebRTCBenchmark:
         
         return self.metrics
     
+    @staticmethod
+    def _build_server_sdp(ice_params, ice_candidates, dtls_params, rtp_params):
+        """Synthesize an SDP offer from mediasoup server transport+consumer params."""
+        codec = rtp_params['codecs'][0]
+        pt = codec['payloadType']
+        codec_name = codec['mimeType'].split('/')[1]
+        clock_rate = codec['clockRate']
+
+        ssrc = 0
+        cname = 'mediasoup'
+        if rtp_params.get('encodings'):
+            ssrc = rtp_params['encodings'][0].get('ssrc', 0)
+
+        ufrag = ice_params['usernameFragment']
+        pwd = ice_params['password']
+
+        fp = dtls_params['fingerprints'][-1]
+        fp_line = f"a=fingerprint:{fp['algorithm']} {fp['value']}"
+
+        cand_lines = []
+        for i, c in enumerate(ice_candidates):
+            proto = c.get('protocol', 'udp')
+            cand_lines.append(
+                f"a=candidate:{i} 1 {proto} {c['priority']} "
+                f"{c['ip']} {c['port']} typ host"
+            )
+
+        rtpmap = f"a=rtpmap:{pt} {codec_name}/{clock_rate}"
+        fb_lines = []
+        for fb in codec.get('rtcpFeedback', []):
+            param = f" {fb['parameter']}" if fb.get('parameter') else ''
+            fb_lines.append(f"a=rtcp-fb:{pt} {fb['type']}{param}")
+
+        fmtp_parts = []
+        for k, v in codec.get('parameters', {}).items():
+            fmtp_parts.append(f"{k}={v}")
+        fmtp_line = f"a=fmtp:{pt} {';'.join(fmtp_parts)}" if fmtp_parts else ''
+
+        port = ice_candidates[0]['port'] if ice_candidates else 9
+        ip = ice_candidates[0]['ip'] if ice_candidates else '127.0.0.1'
+
+        sdp_parts = [
+            "v=0",
+            "o=- 1 1 IN IP4 0.0.0.0",
+            "s=-",
+            "t=0 0",
+            "a=group:BUNDLE 0",
+            "a=msid-semantic: WMS *",
+            f"m=video {port} UDP/TLS/RTP/SAVPF {pt}",
+            f"c=IN IP4 {ip}",
+            "a=rtcp:9 IN IP4 0.0.0.0",
+            f"a=ice-ufrag:{ufrag}",
+            f"a=ice-pwd:{pwd}",
+            fp_line,
+            "a=setup:actpass",
+            "a=mid:0",
+            "a=sendonly",
+            "a=rtcp-mux",
+            "a=rtcp-rsize",
+            rtpmap,
+        ] + fb_lines
+
+        if fmtp_line:
+            sdp_parts.append(fmtp_line)
+
+        if ssrc:
+            sdp_parts.append(f"a=ssrc:{ssrc} cname:{cname}")
+
+        sdp_parts.extend(cand_lines)
+        return "\r\n".join(sdp_parts) + "\r\n"
+
+    @staticmethod
+    def _extract_fingerprints(sdp: str):
+        """Extract DTLS fingerprints from an SDP string."""
+        import re
+        fps = []
+        for m in re.finditer(r'a=fingerprint:(\S+)\s+(\S+)', sdp):
+            fps.append({'algorithm': m.group(1), 'value': m.group(2)})
+        return fps
+
     async def _consume_track(self, track):
         """Consume video track and count frames."""
         try:
@@ -934,36 +1045,48 @@ class WebRTCBenchmark:
                 if 'consumer' in stats and stats['consumer']:
                     consumer_stats = stats['consumer']
                     
-                    # Find the relevant stats entry
                     for stat_entry in consumer_stats:
-                        if isinstance(stat_entry, dict):
-                            # Bitrate calculation
-                            bytes_received = stat_entry.get('bytesReceived', 0) or stat_entry.get('bytesSent', 0)
-                            if bytes_received > prev_bytes:
-                                bitrate_bps = (bytes_received - prev_bytes) * 8 / elapsed
-                                bitrate_kbps = bitrate_bps / 1000
-                                self.metrics.bitrate_samples.append(int(bitrate_kbps))
-                                self.metrics.throughput_samples.append(bitrate_kbps)
-                                prev_bytes = bytes_received
-                            
-                            # Jitter
-                            jitter = stat_entry.get('jitter', 0)
-                            if jitter:
-                                self.jitter_samples.append(jitter * 1000)  # Convert to ms
-                            
-                            # Packet loss
-                            packets_lost = stat_entry.get('packetsLost', 0)
-                            packets_received = stat_entry.get('packetsReceived', 1)
-                            if packets_received > 0:
-                                loss_rate = packets_lost / (packets_received + packets_lost) * 100
-                                self.packet_loss_samples.append(loss_rate)
-                            
-                            # RTT (if available)
-                            rtt = stat_entry.get('roundTripTime', 0)
-                            if rtt:
-                                self.rtt_samples.append(rtt * 1000)  # Convert to ms
-                            
-                            break
+                        if not isinstance(stat_entry, dict):
+                            continue
+
+                        server_bitrate = stat_entry.get('bitrate', 0)
+                        byte_count = (
+                            stat_entry.get('byteCount', 0)
+                            or stat_entry.get('bytesSent', 0)
+                            or stat_entry.get('bytesReceived', 0)
+                        )
+
+                        if server_bitrate > 0:
+                            bitrate_kbps = server_bitrate / 1000
+                            self.metrics.bitrate_samples.append(int(bitrate_kbps))
+                            self.metrics.throughput_samples.append(bitrate_kbps)
+                        elif byte_count > prev_bytes:
+                            bitrate_bps = (byte_count - prev_bytes) * 8 / elapsed
+                            bitrate_kbps = bitrate_bps / 1000
+                            self.metrics.bitrate_samples.append(int(bitrate_kbps))
+                            self.metrics.throughput_samples.append(bitrate_kbps)
+
+                        prev_bytes = byte_count if byte_count > prev_bytes else prev_bytes
+
+                        jitter = stat_entry.get('jitter', 0)
+                        if jitter:
+                            self.jitter_samples.append(jitter * 1000)
+
+                        packets_lost = stat_entry.get('packetsLost', 0)
+                        packet_count = (
+                            stat_entry.get('packetCount', 0)
+                            or stat_entry.get('packetsReceived', 0)
+                        )
+                        total_packets = packet_count + packets_lost
+                        if total_packets > 0:
+                            loss_rate = packets_lost / total_packets * 100
+                            self.packet_loss_samples.append(loss_rate)
+
+                        rtt = stat_entry.get('roundTripTime', 0)
+                        if rtt:
+                            self.rtt_samples.append(rtt * 1000)
+
+                        break
                     
                     # Use simulated buffer level (WebRTC has jitter buffer, not playback buffer)
                     # Estimate based on jitter buffer delay
@@ -1112,8 +1235,12 @@ class WebRTCBenchmark:
         print(f"\n[SAVED] {filename}")
 
 
-def setup_trace(trace_path: Path) -> None:
-    """Copy a trace file to the shaper directory and restart the shaper."""
+def setup_trace(trace_path: Path, protocol: str = "dash") -> None:
+    """Copy a trace file to the shaper directory and restart the shaper.
+
+    For WebRTC, also starts a tc-trace replay inside the webrtc container
+    so that UDP/RTP traffic is shaped identically to the HTTP shaper path.
+    """
     shaper_trace = Path(__file__).parent / "shaper" / "trace" / "trace.csv"
     shaper_trace.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy(trace_path, shaper_trace)
@@ -1121,21 +1248,34 @@ def setup_trace(trace_path: Path) -> None:
 
     print("[SHAPER] Restarting...")
     subprocess.run(
-        ["docker", "compose", "restart", "shaper"],
+        ["sudo", "docker", "compose", "restart", "shaper"],
         capture_output=True,
         cwd=Path(__file__).parent,
     )
-    time.sleep(3)  # Wait for shaper to restart
+
+    if protocol == "webrtc":
+        print("[WEBRTC-SHAPER] Starting tc-trace on webrtc container...")
+        subprocess.run(
+            ["sudo", "docker", "exec", "netsail-webrtc",
+             "pkill", "-f", "tc-trace.py"],
+            capture_output=True,
+        )
+        time.sleep(0.5)
+        subprocess.Popen(
+            ["sudo", "docker", "exec", "netsail-webrtc",
+             "python3", "/app/tc-trace.py"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+
+    time.sleep(3)
 
 
 def resolve_url(base_url: str, protocol: str, shaped: bool) -> str:
     """Return the final URL after applying shaped-port mapping."""
     url = base_url
-    if shaped:
-        if protocol == "dash" and "8080" in url:
-            url = url.replace("8080", "9080")
-        elif protocol == "webrtc" and "3000" in url:
-            url = url.replace("3000", "9030")
+    if shaped and protocol == "dash" and "8080" in url:
+        url = url.replace("8080", "9080")
     return url
 
 
@@ -1265,7 +1405,7 @@ Examples:
             print(f"  [{idx}/{len(trace_files)}] {trace_path.name}")
             print(f"{'─' * 70}")
 
-            setup_trace(trace_path)
+            setup_trace(trace_path, protocol=args.protocol)
             url = resolve_url(args.url, args.protocol, shaped=True)
 
             trace_stem = trace_path.stem  # e.g. trace_12743_3g_tc
@@ -1296,7 +1436,7 @@ Examples:
             print(f"[ERROR] Trace file not found: {args.trace}")
             sys.exit(1)
 
-        setup_trace(trace_path)
+        setup_trace(trace_path, protocol=args.protocol)
         args.shaped = True
 
     url = resolve_url(args.url, args.protocol, args.shaped)

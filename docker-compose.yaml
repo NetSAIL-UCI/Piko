@@ -66,19 +66,20 @@ services:
     image: netsail/webrtc-server:latest
     container_name: netsail-webrtc
     volumes:
-      # Mount video content (same as DASH server)
       - ./content:/app/content:ro
+      - ./shaper/trace:/trace:ro
+      - ./shaper/tc-trace.py:/app/tc-trace.py:ro
     environment:
       PORT: "3000"
       HOST: "0.0.0.0"
       CONTENT_DIR: "/app/content"
       ANNOUNCED_IP: "192.168.100.30"
     ports:
-      # HTTP signaling port
       - "3000:3000"
-      # RTP ports for media
       - "10000-10100:10000-10100/udp"
       - "10000-10100:10000-10100/tcp"
+    cap_add:
+      - NET_ADMIN
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
       interval: 30s
