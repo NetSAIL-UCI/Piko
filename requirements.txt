@@ -6,3 +6,7 @@ tqdm>=4.64.0
 
 # Required for WebRTC benchmarking
 aiortc>=1.6.0
+
+# Required for DASH benchmarking (headless browser)
+# After pip install, also run: playwright install chromium
+playwright>=1.40.0

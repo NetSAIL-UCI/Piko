@@ -18,6 +18,7 @@ import argparse
 import json
 import time
 import sys
+import math
 import shutil
 import subprocess
 import requests
@@ -25,9 +26,8 @@ import xml.etree.ElementTree as ET
 import asyncio
 import uuid
 from dataclasses import dataclass, field
-from typing import List, Optional, Tuple
+from typing import List, Optional
 from datetime import datetime
-from collections import deque
 from pathlib import Path
 
 # Progress bar - fallback if tqdm not available
@@ -47,7 +47,7 @@ except ImportError:
 
 
 def print_progress(current: int, total: int, prefix: str = "", suffix: str = "", width: int = 40):
-    """Simple progress bar fallback."""
+    """Simple progress bar fallback (used by WebRTC benchmark)."""
     percent = current / total if total > 0 else 0
     filled = int(width * percent)
     bar = "█" * filled + "░" * (width - filled)
@@ -334,296 +334,195 @@ class DASHManifestParser:
         return 0
 
 
-class ThroughputBasedABR:
-    """Throughput-based ABR algorithm (similar to dash.js default)."""
-    
-    def __init__(self, representations: List[dict], buffer_target_ms: float = 30000):
-        self.representations = sorted(representations, key=lambda x: x['bandwidth'])
-        self.throughput_history: deque = deque(maxlen=5)
-        self.buffer_target_ms = buffer_target_ms
-        self.safety_factor = 0.9
-        self.current_index = 0  # Start at lowest
-    
-    def select_representation(self, buffer_level_ms: float) -> Tuple[dict, int]:
-        """Select quality based on throughput and buffer."""
-        if not self.throughput_history:
-            return self.representations[0], 0
-        
-        # Harmonic mean of recent throughput (more conservative)
-        harmonic_sum = sum(1/t for t in self.throughput_history if t > 0)
-        if harmonic_sum > 0:
-            avg_throughput_kbps = len(self.throughput_history) / harmonic_sum
-        else:
-            avg_throughput_kbps = 0
-        
-        safe_throughput_bps = avg_throughput_kbps * 1000 * self.safety_factor
-        
-        # Buffer-based adjustment
-        buffer_ratio = buffer_level_ms / self.buffer_target_ms
-        if buffer_ratio < 0.5:
-            # Low buffer - be more conservative
-            safe_throughput_bps *= 0.7
-        elif buffer_ratio > 1.5:
-            # High buffer - can be more aggressive
-            safe_throughput_bps *= 1.1
-        
-        # Select highest quality that fits
-        selected_index = 0
-        for i, rep in enumerate(self.representations):
-            if rep['bandwidth'] <= safe_throughput_bps:
-                selected_index = i
-        
-        self.current_index = selected_index
-        return self.representations[selected_index], selected_index
-    
-    def report_download(self, size_bytes: int, time_ms: float):
-        """Report completed download for throughput estimation."""
-        if time_ms > 0:
-            throughput_kbps = (size_bytes * 8 / 1000) / (time_ms / 1000)
-            self.throughput_history.append(throughput_kbps)
+class DASHJSBenchmark:
+    """DASH benchmark using a real dash.js player in a headless Chromium browser."""
 
-
-class StreamingBenchmark:
-    """DASH streaming performance benchmark runner."""
-    
     def __init__(self, base_url: str, max_duration: Optional[float] = None):
         self.base_url = base_url.rstrip('/')
         self.max_duration = max_duration
-        self.session = requests.Session()
         self.metrics = StreamingMetrics()
-        
-        # Playback simulation state
-        self.buffer_level_ms: float = 0
-        self.segment_duration_ms: float = 4000
-        self.buffer_target_ms: float = 30000
-        self.buffer_max_ms: float = 60000
-        self.is_startup: bool = True
-        
-        self.last_bitrate: Optional[int] = None
         self.max_bitrate: int = 3000
-    
-    def fetch_manifest(self) -> DASHManifestParser:
-        """Fetch and parse MPD manifest."""
-        url = f"{self.base_url}/manifest.mpd"
-        response = self.session.get(url, timeout=10)
-        response.raise_for_status()
-        return DASHManifestParser(response.text)
-    
-    def download_segment(self, url: str) -> Tuple[bytes, float]:
-        """Download segment and return content + time in ms."""
-        full_url = f"{self.base_url}/{url}"
-        start = time.time()
-        response = self.session.get(full_url, timeout=60)
-        response.raise_for_status()
-        elapsed_ms = (time.time() - start) * 1000
-        return response.content, elapsed_ms
-    
-    def simulate_playback(self, download_time_ms: float) -> Tuple[bool, float]:
-        """
-        Simulate playback during download.
-        Returns (stalled, stall_duration_ms)
-        
-        During startup (before the first segment is buffered), the download
-        time is part of the startup delay, not a rebuffering event.
-        """
-        playback_during_download = download_time_ms
-        
-        if self.is_startup:
-            self.is_startup = False
-            self.buffer_level_ms = self.segment_duration_ms
-            return False, 0
-        
-        if self.buffer_level_ms >= playback_during_download:
-            self.buffer_level_ms -= playback_during_download
-            self.buffer_level_ms += self.segment_duration_ms
-            return False, 0
-        else:
-            stall_duration = playback_during_download - self.buffer_level_ms
-            self.buffer_level_ms = self.segment_duration_ms
-            return True, stall_duration
-    
+
     def run(self) -> StreamingMetrics:
         """Run the benchmark."""
+        from playwright.sync_api import sync_playwright
+
         print("\n" + "=" * 70)
-        print("  DASH Streaming QoE Benchmark")
+        print("  DASH Streaming QoE Benchmark (dash.js / BOLA)")
         print("=" * 70)
         print(f"  Server: {self.base_url}")
         print("=" * 70 + "\n")
-        
-        # Fetch manifest
-        print("📡 Fetching manifest...")
-        startup_start = time.time()
-        parser = self.fetch_manifest()
-        representations = parser.get_representations()
-        
-        if not representations:
-            print("[ERROR] No video representations found")
-            return self.metrics
-        
-        self.max_bitrate = max(r['bandwidth'] // 1000 for r in representations)
-        
-        print(f"\n[QUALITY LEVELS] ({len(representations)})")
-        for rep in representations:
-            print(f"   • {rep['id']}: {rep['bandwidth']//1000:4} kbps @ {rep['width']}x{rep['height']}")
-        
-        # Initialize ABR
-        abr = ThroughputBasedABR(representations, self.buffer_target_ms)
-        
-        # Calculate segments using minimum count across all representations
-        # to avoid requesting segments that don't exist for higher-bitrate reps.
-        total_duration = parser.get_duration_seconds()
-        if self.max_duration:
-            total_duration = min(total_duration, self.max_duration)
-        
-        rep = representations[0]
-        if 'timeline' in rep:
-            per_rep_counts = [len(r['timeline']) for r in representations if 'timeline' in r]
-            segment_count = min(per_rep_counts) if per_rep_counts else len(rep['timeline'])
-            if rep['timescale'] > 0:
-                self.segment_duration_ms = rep['timeline'][0]['d'] / rep['timescale'] * 1000
-        elif rep.get('duration') and rep.get('timescale'):
-            self.segment_duration_ms = rep['duration'] / rep['timescale'] * 1000
-            segment_count = int(total_duration * 1000 / self.segment_duration_ms)
-        else:
-            segment_count = int(total_duration / 4)
-        
-        if self.max_duration:
-            segment_count = min(segment_count, int(self.max_duration * 1000 / self.segment_duration_ms))
-        
-        print(f"\n[DURATION] {total_duration:.1f}s ({segment_count} segments @ {self.segment_duration_ms/1000:.1f}s each)")
-        
-        # Download init segment
-        selected, _ = abr.select_representation(0)
-        init_url = selected['init'].replace('$RepresentationID$', selected['id'])
-        print(f"\n[INIT] Loading stream...")
-        
-        try:
-            _, init_time = self.download_segment(init_url)
-            self.metrics.startup_delay_ms = (time.time() - startup_start) * 1000
-        except Exception as e:
-            print(f"   [WARN] Init segment error: {e}")
-            self.metrics.startup_delay_ms = (time.time() - startup_start) * 1000
-        
-        print(f"   Startup delay: {self.metrics.startup_delay_ms:.0f}ms\n")
-        
-        # Progress bar setup
-        print("[DOWNLOAD] Fetching segments:\n")
-        
-        start_number = rep.get('startNumber', 1)
-        
-        if HAS_TQDM:
-            progress = tqdm(range(segment_count), desc="   Progress", unit="seg",
-                          bar_format="   {l_bar}{bar:40}{r_bar}")
-        else:
-            progress = range(segment_count)
-        
-        for i in progress:
-            segment_number = start_number + i
-            
-            # Buffer cap: pause fetching while buffer exceeds maximum,
-            # draining in real-time like a real player would.
-            while self.buffer_level_ms > self.buffer_max_ms:
-                wait_ms = self.buffer_level_ms - self.buffer_max_ms + self.segment_duration_ms
-                time.sleep(wait_ms / 1000)
-                self.buffer_level_ms -= wait_ms
-                self.metrics.total_playback_time_ms += wait_ms
-            
-            # Select quality
-            selected, quality_idx = abr.select_representation(self.buffer_level_ms)
-            bitrate_kbps = selected['bandwidth'] // 1000
-            
-            # Track bitrate switch
-            if self.last_bitrate is not None and self.last_bitrate != bitrate_kbps:
-                self.metrics.bitrate_switches += 1
-                self.metrics.switch_magnitude_total += abs(bitrate_kbps - self.last_bitrate)
-                if bitrate_kbps > self.last_bitrate:
-                    self.metrics.switch_up_count += 1
-                else:
-                    self.metrics.switch_down_count += 1
-            
-            self.last_bitrate = bitrate_kbps
-            self.metrics.bitrate_samples.append(bitrate_kbps)
-            
-            # Build segment URL
-            segment_url = selected['media'].replace('$RepresentationID$', selected['id'])
-            segment_url = segment_url.replace('$Number$', str(segment_number))
-            segment_url = segment_url.replace('$Number%05d$', f"{segment_number:05d}")
-            
+
+        buffer_samples: List[float] = []
+        throughput_samples: List[float] = []
+        request_start_times: Dict[int, float] = {}
+
+        with sync_playwright() as p:
+            browser = p.chromium.launch(
+                headless=True,
+                args=[
+                    '--autoplay-policy=no-user-gesture-required',
+                    '--mute-audio',
+                    '--no-sandbox',
+                ]
+            )
+            page = browser.new_page()
+
+            def is_media_request(url: str) -> bool:
+                return any(x in url for x in ['.m4s', '.mp4', '/segment', 'media='])
+
+            # Measure segment throughput using elapsed wall-clock time from
+            # request start to requestfinished. Playwright request.timing.responseEnd
+            # is often -1 during the response event, which would drop samples.
+            def on_request(request):
+                if is_media_request(request.url):
+                    request_start_times[id(request)] = time.perf_counter()
+
+            def on_request_finished(request):
+                if not is_media_request(request.url):
+                    return
+                try:
+                    response = request.response()
+                    if response is None:
+                        return
+
+                    start = request_start_times.pop(id(request), None)
+                    if start is None:
+                        return
+
+                    duration_s = time.perf_counter() - start
+                    if duration_s <= 0:
+                        return
+
+                    content_length = response.headers.get('content-length')
+                    if not content_length:
+                        return
+
+                    size_bytes = int(content_length)
+                    kbps = (size_bytes * 8 / 1000) / duration_s
+                    throughput_samples.append(kbps)
+                except Exception:
+                    pass
+
+            page.on('request', on_request)
+            page.on('requestfinished', on_request_finished)
+
+            print("[BROWSER] Launching headless Chromium...")
+            startup_start = time.time()
+            page.goto(self.base_url, timeout=30000, wait_until='domcontentloaded')
+
+            # Wait until dash.js signals it is playing
+            print("[BROWSER] Waiting for playback to start...")
             try:
-                content, download_time_ms = self.download_segment(segment_url)
-                size_bytes = len(content)
-                throughput_kbps = (size_bytes * 8 / 1000) / (download_time_ms / 1000) if download_time_ms > 0 else 0
-                
-                self.metrics.throughput_samples.append(throughput_kbps)
-                
-                # Report to ABR
-                abr.report_download(size_bytes, download_time_ms)
-                
-                # Simulate playback
-                stalled, stall_duration = self.simulate_playback(download_time_ms)
-                
-                # Record buffer level AFTER playback simulation
-                self.metrics.buffer_samples.append(self.buffer_level_ms)
-                
-                if stalled:
-                    self.metrics.rebuffer_count += 1
-                    self.metrics.rebuffer_time_ms += stall_duration
-                    self.metrics.rebuffer_durations.append(stall_duration)
-                
-                self.metrics.total_playback_time_ms += self.segment_duration_ms
-                
-                # Record segment metrics
-                seg_metrics = SegmentMetrics(
-                    segment_number=segment_number,
-                    timestamp=time.time(),
-                    bitrate_kbps=bitrate_kbps,
-                    resolution=f"{selected['width']}x{selected['height']}",
-                    size_bytes=size_bytes,
-                    download_time_ms=download_time_ms,
-                    throughput_kbps=throughput_kbps,
-                    buffer_level_ms=self.buffer_level_ms,
-                    stalled=stalled,
-                    stall_duration_ms=stall_duration
+                page.wait_for_function(
+                    "document.getElementById('status-text') && "
+                    "document.getElementById('status-text').textContent === 'Playing'",
+                    timeout=30000
                 )
-                self.metrics.segments.append(seg_metrics)
-                
-                # Update progress bar description
-                status = "STALL" if stalled else "OK"
-                if HAS_TQDM:
-                    progress.set_postfix({
-                        'bitrate': f"{bitrate_kbps}k",
-                        'buffer': f"{self.buffer_level_ms/1000:.1f}s",
-                        'status': status
-                    })
+            except Exception:
+                pass
+
+            self.metrics.startup_delay_ms = (time.time() - startup_start) * 1000
+            print(f"   Startup delay: {self.metrics.startup_delay_ms:.0f}ms\n")
+
+            # Poll buffer level while playback runs
+            print("[PLAYBACK] Collecting metrics...")
+            poll_interval = 0.5
+            elapsed = 0.0
+            last_print = 0.0
+
+            while True:
+                try:
+                    ended = page.evaluate("window.__playbackEnded")
+                except Exception:
+                    ended = False
+                if ended:
+                    break
+                if self.max_duration and elapsed >= self.max_duration:
+                    break
+
+                try:
+                    buf_ms = page.evaluate(
+                        "window.dashPlayer ? window.dashPlayer.getBufferLength('video') * 1000 : 0"
+                    )
+                    buffer_samples.append(float(buf_ms or 0))
+                except Exception:
+                    buffer_samples.append(0.0)
+
+                # Simple progress print every 10s
+                if elapsed - last_print >= 10:
+                    br_str = ""
+                    try:
+                        br = page.evaluate(
+                            "(() => { try { const r = window.dashPlayer.getCurrentRepresentationForType('video'); "
+                            "return r ? Math.round(r.bandwidth/1000) : 0; } catch(e) { return 0; } })()"
+                        )
+                        br_str = f" | bitrate: {br} kbps"
+                    except Exception:
+                        pass
+                    buf_s = buffer_samples[-1] / 1000 if buffer_samples else 0
+                    print(f"   t={elapsed:.0f}s | buffer: {buf_s:.1f}s{br_str}")
+                    last_print = elapsed
+
+                time.sleep(poll_interval)
+                elapsed += poll_interval
+
+            # Collect final accumulated metrics from JS globals
+            final = page.evaluate("""() => ({
+                bitrateHistory:    bitrateHistory.map(b => Math.round(b.bitrate / 1000)),
+                bitrateSwitches:   bitrateSwitchCount,
+                stallingMs:        totalStallingTime +
+                                   (isStalling && stallingStartTime
+                                     ? Date.now() - stallingStartTime : 0),
+                rebufferCount:     window.__rebufferCount,
+                rebufferDurations: window.__rebufferDurations,
+                playbackTimeMs:    (typeof video !== 'undefined' ? video.currentTime * 1000 : 0),
+            })""")
+
+            browser.close()
+
+        m = self.metrics
+        m.bitrate_samples        = [
+            int(br) for br in final['bitrateHistory']
+            if isinstance(br, (int, float)) and math.isfinite(br) and br > 0
+        ]
+        m.buffer_samples         = buffer_samples
+        m.throughput_samples     = throughput_samples
+        m.bitrate_switches       = final['bitrateSwitches']
+        m.rebuffer_count         = final['rebufferCount']
+        m.rebuffer_time_ms       = final['stallingMs']
+        m.rebuffer_durations     = final['rebufferDurations']
+        m.total_playback_time_ms = final['playbackTimeMs']
+
+        if m.bitrate_samples:
+            self.max_bitrate = max(m.bitrate_samples)
+
+        # Derive switch direction and magnitude from bitrate history
+        prev = None
+        for br in m.bitrate_samples:
+            if prev is not None and br != prev:
+                m.switch_magnitude_total += abs(br - prev)
+                if br > prev:
+                    m.switch_up_count += 1
                 else:
-                    print_progress(i + 1, segment_count, 
-                                 prefix="   Progress",
-                                 suffix=f"| {bitrate_kbps}kbps | buf:{self.buffer_level_ms/1000:.1f}s | {status}")
-                
-            except Exception as e:
-                self.metrics.failed_segments += 1
-                if not HAS_TQDM:
-                    print(f"\n   [ERROR] Segment {segment_number}: {e}")
-        
-        # Calculate final statistics
-        self.metrics.calculate_statistics(self.max_bitrate)
-        
-        return self.metrics
-    
+                    m.switch_down_count += 1
+            prev = br
+
+        m.calculate_statistics(self.max_bitrate)
+        return m
+
     def print_results(self):
         """Print formatted results."""
         m = self.metrics
-        
+
         print("\n" + "=" * 70)
-        print("  BENCHMARK RESULTS")
+        print("  BENCHMARK RESULTS (dash.js / BOLA)")
         print("=" * 70)
-        
-        # Timing
+
         print("\n  [TIMING]")
         print(f"      Startup delay:     {m.startup_delay_ms:,.0f} ms")
         print(f"      Playback time:     {m.total_playback_time_ms/1000:,.1f} s")
-        
-        # Bitrate
+
         print("\n  [BITRATE]")
         print(f"      Average:           {m.avg_bitrate_kbps:,.0f} kbps")
         print(f"      Min / Max:         {m.min_bitrate_kbps:,.0f} / {m.max_bitrate_kbps:,.0f} kbps")
@@ -631,14 +530,12 @@ class StreamingBenchmark:
         print(f"      Std deviation:     {m.bitrate_std_dev:,.1f} kbps")
         print(f"      Variance:          {m.bitrate_variance:,.1f}")
         print(f"      25th/75th %ile:    {m.bitrate_25th_percentile:,.0f} / {m.bitrate_75th_percentile:,.0f} kbps")
-        
-        # Switching
+
         print("\n  [SWITCHES]")
         print(f"      Total count:       {m.bitrate_switches}")
         print(f"      Up / Down:         {m.switch_up_count} / {m.switch_down_count}")
         print(f"      Avg magnitude:     {m.avg_switch_magnitude:,.0f} kbps")
-        
-        # Rebuffering
+
         print("\n  [REBUFFERING]")
         print(f"      Events:            {m.rebuffer_count}")
         print(f"      Total time:        {m.rebuffer_time_ms:,.0f} ms")
@@ -647,46 +544,32 @@ class StreamingBenchmark:
         if m.rebuffer_count > 0:
             print(f"      Avg duration:      {m.avg_rebuffer_duration_ms:,.0f} ms")
             print(f"      Max duration:      {m.max_rebuffer_duration_ms:,.0f} ms")
-        
-        # Throughput
+
         print("\n  [THROUGHPUT]")
         print(f"      Average:           {m.avg_throughput_kbps:,.0f} kbps")
         print(f"      Min / Max:         {m.min_throughput_kbps:,.0f} / {m.max_throughput_kbps:,.0f} kbps")
         print(f"      Std deviation:     {m.throughput_std_dev:,.1f} kbps")
-        
-        # Buffer
+
         print("\n  [BUFFER]")
         print(f"      Average level:     {m.avg_buffer_level_ms/1000:,.1f} s")
         print(f"      Min / Max:         {m.min_buffer_level_ms/1000:,.1f} / {m.max_buffer_level_ms/1000:,.1f} s")
-        
-        # Utilization
+
         print("\n  [UTILIZATION]")
         print(f"      Bandwidth:         {m.bandwidth_utilization*100:.1f}%")
-        
-        # Segments
-        print("\n  [SEGMENTS]")
-        print(f"      Total:             {m.total_segments}")
-        print(f"      Failed:            {m.failed_segments}")
-        
+
         print("\n" + "=" * 70)
-    
+
     def save_results(self, filename: str):
         """Save results to JSON."""
         results = {
             "timestamp": datetime.now().isoformat(),
             "server": self.base_url,
             "protocol": "dash",
-            "config": {
-                "segment_duration_ms": self.segment_duration_ms,
-                "buffer_target_ms": self.buffer_target_ms,
-                "max_bitrate_kbps": self.max_bitrate,
-            },
+            "abr": "bola",
             "metrics": self.metrics.to_dict()
         }
-        
         with open(filename, 'w') as f:
             json.dump(results, f, indent=2)
-        
         print(f"\n[SAVED] {filename}")
 
 
@@ -1283,7 +1166,7 @@ def run_single_benchmark(protocol: str, url: str, duration, output_path: str,
                          trace_name: str = None, dash_url: str = None):
     """Run a single benchmark and save results. Returns True on success."""
     if protocol == "dash":
-        benchmark = StreamingBenchmark(url, duration)
+        benchmark = DASHJSBenchmark(url, duration)
     else:
         if not HAS_AIORTC:
             print("[ERROR] WebRTC benchmark requires aiortc library")

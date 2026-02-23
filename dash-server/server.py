@@ -75,10 +75,10 @@ class DASHHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps(response).encode())
             return
         
-        # Serve index.html from app directory for root
-        if self.path == '/' or self.path == '/index.html':
-            self.path = '/index.html'
-            # Temporarily change directory to serve index.html from /app
+        # Serve static app files from /app directory
+        if self.path in ('/', '/index.html', '/dash.all.min.js'):
+            if self.path == '/':
+                self.path = '/index.html'
             old_dir = self.directory
             self.directory = '/app'
             super().do_GET()

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NetSail DASH Player</title>
-  <script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
+  <script src="/dash.all.min.js"></script>
   <style>
     * {
       margin: 0;
@@ -251,9 +251,24 @@
     // Initialize dash.js player
     const player = dashjs.MediaPlayer().create();
     const video = document.getElementById('video');
-    
+
+    // Allow slow/shaped networks: long segment timeout, start at lowest quality
+    player.updateSettings({
+      streaming: {
+        timeouts: { load: 120000 },
+        abr: { initialBitrate: { video: 400 } },
+      }
+    });
+
     player.initialize(video, manifestUrl, true);
-    
+
+    // Expose player and benchmark state for headless benchmarking (Playwright)
+    window.dashPlayer = player;
+    window.__playbackEnded = false;
+    window.__rebufferCount = 0;
+    window.__rebufferDurations = [];
+    window.__rebufferStart = null;
+
     // Metrics tracking variables
     let bitrateHistory = [];          // Array of {bitrate, timestamp} for average calculation
     let bitrateSwitchCount = 0;       // Number of bitrate switches
@@ -393,6 +408,8 @@
       if (!isStalling) {
         isStalling = true;
         stallingStartTime = Date.now();
+        window.__rebufferCount++;
+        window.__rebufferStart = Date.now();
       }
     });
     
@@ -404,6 +421,10 @@
         isStalling = false;
         stallingStartTime = null;
       }
+      if (window.__rebufferStart) {
+        window.__rebufferDurations.push(Date.now() - window.__rebufferStart);
+        window.__rebufferStart = null;
+      }
     });
     
     player.on(dashjs.MediaPlayer.events.ERROR, (e) => {
@@ -413,6 +434,7 @@
     
     player.on(dashjs.MediaPlayer.events.PLAYBACK_ENDED, () => {
       updateStatus('Playback ended');
+      window.__playbackEnded = true;
     });
   </script>
 </body>
