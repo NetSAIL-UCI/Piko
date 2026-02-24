@@ -359,6 +359,7 @@ class DASHJSBenchmark:
 
         with sync_playwright() as p:
             browser = p.chromium.launch(
+                channel="chrome",
                 headless=True,
                 args=[
                     '--autoplay-policy=no-user-gesture-required',
