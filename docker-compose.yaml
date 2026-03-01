@@ -73,7 +73,7 @@ services:
       PORT: "3000"
       HOST: "0.0.0.0"
       CONTENT_DIR: "/app/content"
-      ANNOUNCED_IP: "192.168.100.30"
+      ANNOUNCED_IP: "127.0.0.1"
     ports:
       - "3000:3000"
       - "10000-10100:10000-10100/udp"

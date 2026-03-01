@@ -15,7 +15,7 @@ Supports both DASH and WebRTC (mediasoup) protocols for comparison.
 """
 
 import argparse
-import json
+import json 
 import time
 import sys
 import math
@@ -342,6 +342,44 @@ class DASHJSBenchmark:
         self.max_duration = max_duration
         self.metrics = StreamingMetrics()
         self.max_bitrate: int = 3000
+        self.trace_bandwidth_samples: List[float] = []
+        self.trace_data: List[tuple] = []
+
+    def _load_trace(self) -> None:
+        """Load the active shaper trace file to look up available bandwidth."""
+        trace_path = Path(__file__).parent / "shaper" / "trace" / "trace.csv"
+        if not trace_path.exists():
+            return
+        try:
+            with open(trace_path, "r") as f:
+                has_bw = False
+                for i, line in enumerate(f):
+                    if i == 0:
+                        has_bw = "bandwidth" in line.strip().lower()
+                        continue
+                    parts = line.strip().split(",")
+                    if len(parts) >= 3:
+                        ts = float(parts[0])
+                        rtt = float(parts[2])
+                        bw = float(parts[3]) if has_bw and len(parts) >= 4 else None
+                        self.trace_data.append((ts, rtt, bw))
+            self.trace_data.sort(key=lambda x: x[0])
+            if self.trace_data and self.trace_data[0][2] is not None:
+                print(f"[TRACE] Loaded {len(self.trace_data)} entries with bandwidth")
+        except Exception as e:
+            print(f"   [WARN] Could not load trace: {e}")
+
+    def _trace_bandwidth_at(self, elapsed_s: float) -> Optional[float]:
+        """Return the trace bandwidth (kbps) for a given elapsed time."""
+        if not self.trace_data or self.trace_data[0][2] is None:
+            return None
+        bw = self.trace_data[0][2]
+        for ts, _rtt, bw_k in self.trace_data:
+            if ts > elapsed_s:
+                break
+            if bw_k is not None:
+                bw = bw_k
+        return bw
 
     def run(self) -> StreamingMetrics:
         """Run the benchmark."""
@@ -356,6 +394,9 @@ class DASHJSBenchmark:
         buffer_samples: List[float] = []
         throughput_samples: List[float] = []
         request_start_times: Dict[int, float] = {}
+
+        # Load trace for available-bandwidth reference
+        self._load_trace()
 
         with sync_playwright() as p:
             browser = p.chromium.launch(
@@ -410,6 +451,7 @@ class DASHJSBenchmark:
 
             print("[BROWSER] Launching headless Chromium...")
             startup_start = time.time()
+            bench_start = time.time()
             page.goto(self.base_url, timeout=30000, wait_until='domcontentloaded')
 
             # Wait until dash.js signals it is playing
@@ -462,8 +504,15 @@ class DASHJSBenchmark:
                     except Exception:
                         pass
                     buf_s = buffer_samples[-1] / 1000 if buffer_samples else 0
-                    print(f"   t={elapsed:.0f}s | buffer: {buf_s:.1f}s{br_str}")
+                    trace_bw = self._trace_bandwidth_at(elapsed)
+                    trace_str = f" | trace_bw: {trace_bw:.0f} kbps" if trace_bw is not None else ""
+                    print(f"   t={elapsed:.0f}s | buffer: {buf_s:.1f}s{br_str}{trace_str}")
                     last_print = elapsed
+
+                # Record trace available bandwidth
+                trace_bw = self._trace_bandwidth_at(elapsed)
+                if trace_bw is not None:
+                    self.trace_bandwidth_samples.append(trace_bw)
 
                 time.sleep(poll_interval)
                 elapsed += poll_interval
@@ -551,6 +600,18 @@ class DASHJSBenchmark:
         print(f"      Min / Max:         {m.min_throughput_kbps:,.0f} / {m.max_throughput_kbps:,.0f} kbps")
         print(f"      Std deviation:     {m.throughput_std_dev:,.1f} kbps")
 
+        # Trace available bandwidth
+        if self.trace_bandwidth_samples:
+            avg_trace = sum(self.trace_bandwidth_samples) / len(self.trace_bandwidth_samples)
+            min_trace = min(self.trace_bandwidth_samples)
+            max_trace = max(self.trace_bandwidth_samples)
+            print("\n  [AVAILABLE BW (trace)]")
+            print(f"      Average:           {avg_trace:,.0f} kbps")
+            print(f"      Min / Max:         {min_trace:,.0f} / {max_trace:,.0f} kbps")
+            if m.avg_throughput_kbps > 0:
+                util = m.avg_throughput_kbps / avg_trace * 100
+                print(f"      Utilisation:       {util:.1f}%")
+
         print("\n  [BUFFER]")
         print(f"      Average level:     {m.avg_buffer_level_ms/1000:,.1f} s")
         print(f"      Min / Max:         {m.min_buffer_level_ms/1000:,.1f} / {m.max_buffer_level_ms/1000:,.1f} s")
@@ -567,7 +628,11 @@ class DASHJSBenchmark:
             "server": self.base_url,
             "protocol": "dash",
             "abr": "bola",
-            "metrics": self.metrics.to_dict()
+            "metrics": self.metrics.to_dict(),
+            "trace_bandwidth": {
+                "samples": self.trace_bandwidth_samples,
+                "average_kbps": sum(self.trace_bandwidth_samples) / len(self.trace_bandwidth_samples) if self.trace_bandwidth_samples else 0,
+            },
         }
         with open(filename, 'w') as f:
             json.dump(results, f, indent=2)
@@ -601,7 +666,46 @@ class WebRTCBenchmark:
         self.jitter_samples: List[float] = []
         self.packet_loss_samples: List[float] = []
         self.rtt_samples: List[float] = []
+        self.trace_bandwidth_samples: List[float] = []  # Available BW from trace
+        self.trace_data: List[tuple] = []  # (timestamp, rtt, bw_kbps)
         
+    def _load_trace(self) -> None:
+        """Load the active shaper trace file to look up available bandwidth."""
+        trace_path = Path(__file__).parent / "shaper" / "trace" / "trace.csv"
+        if not trace_path.exists():
+            return
+        try:
+            with open(trace_path, "r") as f:
+                has_bw = False
+                for i, line in enumerate(f):
+                    if i == 0:
+                        has_bw = "bandwidth" in line.strip().lower()
+                        continue
+                    parts = line.strip().split(",")
+                    if len(parts) >= 3:
+                        ts = float(parts[0])
+                        rtt = float(parts[2])
+                        bw = float(parts[3]) if has_bw and len(parts) >= 4 else None
+                        self.trace_data.append((ts, rtt, bw))
+            self.trace_data.sort(key=lambda x: x[0])
+            if self.trace_data and self.trace_data[0][2] is not None:
+                print(f"[TRACE] Loaded {len(self.trace_data)} entries with bandwidth")
+        except Exception as e:
+            print(f"   [WARN] Could not load trace: {e}")
+
+    def _trace_bandwidth_at(self, elapsed_s: float) -> Optional[float]:
+        """Return the trace bandwidth (kbps) for a given elapsed time."""
+        if not self.trace_data or self.trace_data[0][2] is None:
+            return None
+        # Find the last trace entry at or before elapsed_s
+        bw = self.trace_data[0][2]
+        for ts, _rtt, bw_k in self.trace_data:
+            if ts > elapsed_s:
+                break
+            if bw_k is not None:
+                bw = bw_k
+        return bw
+
     def _api_get(self, endpoint: str) -> dict:
         """Make GET request to signaling server."""
         response = self.session.get(f"{self.base_url}{endpoint}", timeout=10)
@@ -664,6 +768,9 @@ class WebRTCBenchmark:
         
         startup_start = time.time()
         
+        # Load trace for available-bandwidth reference
+        self._load_trace()
+
         # Resolve stream duration from DASH manifest (matches DASH behaviour)
         self.max_duration = self._resolve_duration()
         
@@ -697,13 +804,22 @@ class WebRTCBenchmark:
                             {'type': 'nack', 'parameter': 'pli'},
                             {'type': 'ccm', 'parameter': 'fir'},
                             {'type': 'goog-remb'},
+                            {'type': 'transport-cc'},
                         ],
+                    },
+                    {
+                        'mimeType': 'video/rtx',
+                        'kind': 'video',
+                        'clockRate': 90000,
+                        'preferredPayloadType': 97,
+                        'parameters': {'apt': 96},
+                        'rtcpFeedback': [],
                     },
                     {
                         'mimeType': 'video/H264',
                         'kind': 'video',
                         'clockRate': 90000,
-                        'preferredPayloadType': 97,
+                        'preferredPayloadType': 98,
                         'parameters': {
                             'packetization-mode': 1,
                             'profile-level-id': '42e01f',
@@ -714,10 +830,33 @@ class WebRTCBenchmark:
                             {'type': 'nack', 'parameter': 'pli'},
                             {'type': 'ccm', 'parameter': 'fir'},
                             {'type': 'goog-remb'},
+                            {'type': 'transport-cc'},
                         ],
                     },
                 ],
-                'headerExtensions': [],
+                'headerExtensions': [
+                    {
+                        'kind': 'video',
+                        'uri': 'urn:ietf:params:rtp-hdrext:sdes:mid',
+                        'preferredId': 1,
+                        'preferredEncrypt': False,
+                        'direction': 'sendrecv',
+                    },
+                    {
+                        'kind': 'video',
+                        'uri': 'http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time',
+                        'preferredId': 4,
+                        'preferredEncrypt': False,
+                        'direction': 'sendrecv',
+                    },
+                    {
+                        'kind': 'video',
+                        'uri': 'http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01',
+                        'preferredId': 5,
+                        'preferredEncrypt': False,
+                        'direction': 'sendrecv',
+                    },
+                ],
             }
             
             consume_info = None
@@ -728,6 +867,14 @@ class WebRTCBenchmark:
                 })
                 self.consumer_id = consume_info['id']
                 print(f"   Consumer created: {self.consumer_id[:8]}...")
+                # Debug: show negotiated RTP params
+                rtp_p = consume_info.get('rtpParameters', {})
+                hdr_exts = rtp_p.get('headerExtensions', [])
+                print(f"   Header extensions: {[e.get('uri','').split('/')[-1] for e in hdr_exts]}")
+                codecs = rtp_p.get('codecs', [])
+                for c in codecs:
+                    fbs = [f['type'] + ((' ' + f['parameter']) if f.get('parameter') else '') for f in c.get('rtcpFeedback', [])]
+                    print(f"   Codec {c.get('mimeType')}: rtcpFeedback={fbs}")
             except Exception as e:
                 print(f"   [WARN] Could not create consumer: {e}")
                 print("   (Video producer may not be active yet)")
@@ -813,7 +960,12 @@ class WebRTCBenchmark:
     
     @staticmethod
     def _build_server_sdp(ice_params, ice_candidates, dtls_params, rtp_params):
-        """Synthesize an SDP offer from mediasoup server transport+consumer params."""
+        """Synthesize an SDP offer from mediasoup server transport+consumer params.
+
+        ICE candidate IPs from the server (e.g. Docker container IPs like
+        192.168.100.30) are rewritten to 127.0.0.1 so the benchmark client
+        can reach them through Docker's port-mapped range.
+        """
         codec = rtp_params['codecs'][0]
         pt = codec['payloadType']
         codec_name = codec['mimeType'].split('/')[1]
@@ -827,30 +979,58 @@ class WebRTCBenchmark:
         ufrag = ice_params['usernameFragment']
         pwd = ice_params['password']
 
-        fp = dtls_params['fingerprints'][-1]
+        # Prefer SHA-256 fingerprint (widely supported by WebRTC clients like aiortc)
+        fp = None
+        for f in dtls_params['fingerprints']:
+            if f['algorithm'] == 'sha-256':
+                fp = f
+                break
+        if fp is None:
+            fp = dtls_params['fingerprints'][-1]
         fp_line = f"a=fingerprint:{fp['algorithm']} {fp['value']}"
 
         cand_lines = []
         for i, c in enumerate(ice_candidates):
             proto = c.get('protocol', 'udp')
+            # Rewrite Docker-internal IPs to localhost for port-mapped access
+            cand_ip = '127.0.0.1' if c['ip'].startswith('192.168.') else c['ip']
             cand_lines.append(
                 f"a=candidate:{i} 1 {proto} {c['priority']} "
-                f"{c['ip']} {c['port']} typ host"
+                f"{cand_ip} {c['port']} typ host"
             )
 
-        rtpmap = f"a=rtpmap:{pt} {codec_name}/{clock_rate}"
-        fb_lines = []
-        for fb in codec.get('rtcpFeedback', []):
-            param = f" {fb['parameter']}" if fb.get('parameter') else ''
-            fb_lines.append(f"a=rtcp-fb:{pt} {fb['type']}{param}")
+        # Build codec lines for all codecs (VP8 + RTX, etc.)
+        codec_sdp_lines = []
+        payload_types = []
+        for c in rtp_params['codecs']:
+            c_pt = c['payloadType']
+            c_name = c['mimeType'].split('/')[1]
+            c_clock = c['clockRate']
+            payload_types.append(str(c_pt))
 
-        fmtp_parts = []
-        for k, v in codec.get('parameters', {}).items():
-            fmtp_parts.append(f"{k}={v}")
-        fmtp_line = f"a=fmtp:{pt} {';'.join(fmtp_parts)}" if fmtp_parts else ''
+            codec_sdp_lines.append(f"a=rtpmap:{c_pt} {c_name}/{c_clock}")
+
+            # RTCP feedback
+            for fb in c.get('rtcpFeedback', []):
+                param = f" {fb['parameter']}" if fb.get('parameter') else ''
+                codec_sdp_lines.append(f"a=rtcp-fb:{c_pt} {fb['type']}{param}")
+
+            # Format parameters
+            fmtp_parts = []
+            for k, v in c.get('parameters', {}).items():
+                fmtp_parts.append(f"{k}={v}")
+            if fmtp_parts:
+                codec_sdp_lines.append(f"a=fmtp:{c_pt} {';'.join(fmtp_parts)}")
+
+        pt_list = ' '.join(payload_types)
+
+        # Header extensions (critical for transport-cc BWE)
+        extmap_lines = []
+        for ext in rtp_params.get('headerExtensions', []):
+            extmap_lines.append(f"a=extmap:{ext['id']} {ext['uri']}")
 
         port = ice_candidates[0]['port'] if ice_candidates else 9
-        ip = ice_candidates[0]['ip'] if ice_candidates else '127.0.0.1'
+        ip = '127.0.0.1'  # Always use localhost for Docker port-mapped access
 
         sdp_parts = [
             "v=0",
@@ -859,7 +1039,7 @@ class WebRTCBenchmark:
             "t=0 0",
             "a=group:BUNDLE 0",
             "a=msid-semantic: WMS *",
-            f"m=video {port} UDP/TLS/RTP/SAVPF {pt}",
+            f"m=video {port} UDP/TLS/RTP/SAVPF {pt_list}",
             f"c=IN IP4 {ip}",
             "a=rtcp:9 IN IP4 0.0.0.0",
             f"a=ice-ufrag:{ufrag}",
@@ -870,11 +1050,7 @@ class WebRTCBenchmark:
             "a=sendonly",
             "a=rtcp-mux",
             "a=rtcp-rsize",
-            rtpmap,
-        ] + fb_lines
-
-        if fmtp_line:
-            sdp_parts.append(fmtp_line)
+        ] + extmap_lines + codec_sdp_lines
 
         if ssrc:
             sdp_parts.append(f"a=ssrc:{ssrc} cname:{cname}")
@@ -912,8 +1088,10 @@ class WebRTCBenchmark:
         else:
             progress = range(samples)
         
-        prev_bytes = 0
+        prev_consumer_bytes = 0
+        prev_transport_bytes = 0
         prev_time = start_time
+        bench_start = start_time
         
         for i in progress:
             await asyncio.sleep(sample_interval)
@@ -925,7 +1103,25 @@ class WebRTCBenchmark:
             try:
                 stats = self._api_get(f'/stats/{self.client_id}')
                 
-                # Extract consumer stats
+                # ── Throughput from transport stats (actual bytes on the wire) ──
+                bwe_kbps = 0
+                if 'transport' in stats and stats['transport']:
+                    for t_entry in stats['transport']:
+                        if not isinstance(t_entry, dict):
+                            continue
+                        transport_bytes = (
+                            t_entry.get('bytesReceived', 0)
+                            + t_entry.get('bytesSent', 0)
+                        )
+                        if transport_bytes > prev_transport_bytes and elapsed > 0:
+                            tp_bps = (transport_bytes - prev_transport_bytes) * 8 / elapsed
+                            self.metrics.throughput_samples.append(tp_bps / 1000)
+                        prev_transport_bytes = max(transport_bytes, prev_transport_bytes)
+                        # BWE estimate
+                        bwe_kbps = t_entry.get('availableOutgoingBitrate', 0) / 1000
+                        break
+                
+                # ── Bitrate from consumer stats (encoding/media bitrate) ──
                 if 'consumer' in stats and stats['consumer']:
                     consumer_stats = stats['consumer']
                     
@@ -943,14 +1139,12 @@ class WebRTCBenchmark:
                         if server_bitrate > 0:
                             bitrate_kbps = server_bitrate / 1000
                             self.metrics.bitrate_samples.append(int(bitrate_kbps))
-                            self.metrics.throughput_samples.append(bitrate_kbps)
-                        elif byte_count > prev_bytes:
-                            bitrate_bps = (byte_count - prev_bytes) * 8 / elapsed
+                        elif byte_count > prev_consumer_bytes:
+                            bitrate_bps = (byte_count - prev_consumer_bytes) * 8 / elapsed
                             bitrate_kbps = bitrate_bps / 1000
                             self.metrics.bitrate_samples.append(int(bitrate_kbps))
-                            self.metrics.throughput_samples.append(bitrate_kbps)
 
-                        prev_bytes = byte_count if byte_count > prev_bytes else prev_bytes
+                        prev_consumer_bytes = byte_count if byte_count > prev_consumer_bytes else prev_consumer_bytes
 
                         jitter = stat_entry.get('jitter', 0)
                         if jitter:
@@ -985,6 +1179,11 @@ class WebRTCBenchmark:
                 # This is normal if producer isn't streaming
                 pass
             
+            # Record trace available bandwidth at this point in time
+            trace_bw = self._trace_bandwidth_at(current_time - bench_start)
+            if trace_bw is not None:
+                self.trace_bandwidth_samples.append(trace_bw)
+
             # Track playback time
             self.metrics.total_playback_time_ms += sample_interval * 1000
             
@@ -1005,10 +1204,14 @@ class WebRTCBenchmark:
             # Update progress
             if HAS_TQDM:
                 bitrate_str = f"{self.metrics.bitrate_samples[-1]}k" if self.metrics.bitrate_samples else "N/A"
-                jitter_str = f"{self.jitter_samples[-1]:.1f}ms" if self.jitter_samples else "N/A"
+                tp_str = f"{self.metrics.throughput_samples[-1]:.0f}k" if self.metrics.throughput_samples else "N/A"
+                bwe_str = f"{bwe_kbps:.0f}k" if bwe_kbps else "N/A"
+                trace_str = f"{trace_bw:.0f}k" if trace_bw is not None else "N/A"
                 progress.set_postfix({
                     'bitrate': bitrate_str,
-                    'jitter': jitter_str,
+                    'throughput': tp_str,
+                    'bwe': bwe_str,
+                    'trace_bw': trace_str,
                 })
             else:
                 print_progress(i + 1, samples, 
@@ -1080,10 +1283,22 @@ class WebRTCBenchmark:
         
         # Throughput
         if m.throughput_samples:
-            print("\n  [THROUGHPUT]")
+            print("\n  [THROUGHPUT (measured)]")
             print(f"      Average:           {m.avg_throughput_kbps:,.0f} kbps")
             print(f"      Min / Max:         {m.min_throughput_kbps:,.0f} / {m.max_throughput_kbps:,.0f} kbps")
-        
+
+        # Trace available bandwidth
+        if self.trace_bandwidth_samples:
+            avg_trace = sum(self.trace_bandwidth_samples) / len(self.trace_bandwidth_samples)
+            min_trace = min(self.trace_bandwidth_samples)
+            max_trace = max(self.trace_bandwidth_samples)
+            print("\n  [AVAILABLE BW (trace)]")
+            print(f"      Average:           {avg_trace:,.0f} kbps")
+            print(f"      Min / Max:         {min_trace:,.0f} / {max_trace:,.0f} kbps")
+            if m.avg_throughput_kbps > 0:
+                util = m.avg_throughput_kbps / avg_trace * 100
+                print(f"      Utilisation:       {util:.1f}%")
+
         print("\n" + "=" * 70)
     
     def save_results(self, filename: str):
@@ -1109,6 +1324,10 @@ class WebRTCBenchmark:
                 "rtt": {
                     "samples": self.rtt_samples,
                     "average_ms": sum(self.rtt_samples) / len(self.rtt_samples) if self.rtt_samples else 0,
+                },
+                "trace_bandwidth": {
+                    "samples": self.trace_bandwidth_samples,
+                    "average_kbps": sum(self.trace_bandwidth_samples) / len(self.trace_bandwidth_samples) if self.trace_bandwidth_samples else 0,
                 },
             }
         }

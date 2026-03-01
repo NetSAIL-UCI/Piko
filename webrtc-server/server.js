@@ -73,7 +73,7 @@ const webRtcTransportOptions = {
   enableUdp: true,
   enableTcp: true,
   preferUdp: true,
-  initialAvailableOutgoingBitrate: 1000000, // 1 Mbps initial
+  initialAvailableOutgoingBitrate: 4500000, // 4.5 Mbps initial (matches DASH top ladder)
 };
 
 // Plain RTP transport options (for FFmpeg producer)
@@ -125,6 +125,7 @@ app.get('/qualities', (req, res) => {
       { id: 'low', maxBitrate: 500000, description: '500 kbps' },
       { id: 'medium', maxBitrate: 1500000, description: '1.5 Mbps' },
       { id: 'high', maxBitrate: 3000000, description: '3 Mbps' },
+      { id: 'max', maxBitrate: 4500000, description: '4.5 Mbps' },
     ],
     currentProducer: videoProducer ? {
       id: videoProducer.id,
@@ -324,6 +325,13 @@ app.get('/stats/:clientId', async (req, res) => {
     if (client.videoConsumer) {
       stats.consumer = await client.videoConsumer.getStats();
     }
+    // Include producer stats so we can see FFmpeg → SFU bitrate
+    if (videoProducer) {
+      stats.producer = await videoProducer.getStats();
+    }
+    if (producerTransport && producerTransport.video) {
+      stats.producerTransport = await producerTransport.video.getStats();
+    }
     
     res.json(stats);
   } catch (error) {
@@ -462,10 +470,16 @@ function startFFmpeg(videoFile, videoRtpPort, audioRtpPort) {
     '-stream_loop', '-1',
     '-i', videoFile,
     '-map', '0:v:0',
+    '-vf', 'scale=1280:720',
     '-c:v', 'libvpx',
-    '-b:v', '2000k',
+    '-b:v', '4500k',
+    '-minrate', '500k',
+    '-maxrate', '4500k',
+    '-bufsize', '9000k',
     '-deadline', 'realtime',
     '-cpu-used', '4',
+    '-g', '96',
+    '-keyint_min', '96',
     '-payload_type', '100',
     '-ssrc', '22222222',
     '-f', 'rtp',

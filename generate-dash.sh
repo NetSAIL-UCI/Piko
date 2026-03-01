@@ -75,6 +75,19 @@ echo ""
 #   - 480p @ 2000kbps  (high+)
 #   - 720p @ 3000kbps  (HD)
 #   - 720p @ 4500kbps  (HD+)
+#
+# Key settings for DASH compatibility:
+#   -profile:v high -level 3.1    → uniform codec string (avc1.64001f) so dash.js
+#                                    treats all representations as one AdaptationSet
+#   -g 96 -keyint_min 96          → keyframe every 96 frames (= 4s at 24fps),
+#                                    aligned with segment duration
+#   -sc_threshold 0               → disable scene-change keyframes so all streams
+#                                    have identical segment boundaries
+#   -adaptation_sets              → force all video streams into a single
+#                                    AdaptationSet (otherwise FFmpeg makes 10)
+
+# Shared encoder settings for segment-aligned, codec-consistent output
+X264_COMMON="-profile:v high -level 3.1 -preset fast -g 96 -keyint_min 96 -sc_threshold 0"
 
 ffmpeg -y -i "$INPUT_VIDEO" \
     -filter_complex "[0:v]split=10[v1][v2][v3][v4][v5][v6][v7][v8][v9][v10]; \
@@ -88,21 +101,22 @@ ffmpeg -y -i "$INPUT_VIDEO" \
         [v8]scale=854:480[v8out]; \
         [v9]scale=1280:720[v9out]; \
         [v10]scale=1280:720[v10out]" \
-    -map "[v1out]" -c:v:0 libx264 -b:v:0 100k -preset fast -g 48 -keyint_min 48 \
-    -map "[v2out]" -c:v:1 libx264 -b:v:1 200k -preset fast -g 48 -keyint_min 48 \
-    -map "[v3out]" -c:v:2 libx264 -b:v:2 400k -preset fast -g 48 -keyint_min 48 \
-    -map "[v4out]" -c:v:3 libx264 -b:v:3 600k -preset fast -g 48 -keyint_min 48 \
-    -map "[v5out]" -c:v:4 libx264 -b:v:4 800k -preset fast -g 48 -keyint_min 48 \
-    -map "[v6out]" -c:v:5 libx264 -b:v:5 1200k -preset fast -g 48 -keyint_min 48 \
-    -map "[v7out]" -c:v:6 libx264 -b:v:6 1500k -preset fast -g 48 -keyint_min 48 \
-    -map "[v8out]" -c:v:7 libx264 -b:v:7 2000k -preset fast -g 48 -keyint_min 48 \
-    -map "[v9out]" -c:v:8 libx264 -b:v:8 3000k -preset fast -g 48 -keyint_min 48 \
-    -map "[v10out]" -c:v:9 libx264 -b:v:9 4500k -preset fast -g 48 -keyint_min 48 \
+    -map "[v1out]"  -c:v:0 libx264 -b:v:0 100k  $X264_COMMON \
+    -map "[v2out]"  -c:v:1 libx264 -b:v:1 200k  $X264_COMMON \
+    -map "[v3out]"  -c:v:2 libx264 -b:v:2 400k  $X264_COMMON \
+    -map "[v4out]"  -c:v:3 libx264 -b:v:3 600k  $X264_COMMON \
+    -map "[v5out]"  -c:v:4 libx264 -b:v:4 800k  $X264_COMMON \
+    -map "[v6out]"  -c:v:5 libx264 -b:v:5 1200k $X264_COMMON \
+    -map "[v7out]"  -c:v:6 libx264 -b:v:6 1500k $X264_COMMON \
+    -map "[v8out]"  -c:v:7 libx264 -b:v:7 2000k $X264_COMMON \
+    -map "[v9out]"  -c:v:8 libx264 -b:v:8 3000k $X264_COMMON \
+    -map "[v10out]" -c:v:9 libx264 -b:v:9 4500k $X264_COMMON \
     -an \
     -f dash \
     -seg_duration "$SEGMENT_DURATION" \
     -use_timeline 1 \
     -use_template 1 \
+    -adaptation_sets "id=0,streams=0,1,2,3,4,5,6,7,8,9" \
     -init_seg_name 'init-stream$RepresentationID$.m4s' \
     -media_seg_name 'chunk-stream$RepresentationID$-$Number%05d$.m4s' \
     "$OUTPUT_DIR/manifest.mpd"

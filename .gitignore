@@ -40,6 +40,9 @@ tmp/
 *.tmp
 *.temp
 
+# FCC raw data (large tar.gz files and extracted data)
+traces/fcc/raw-2016/
+
 # Build artifacts
 *.o
 *.so
