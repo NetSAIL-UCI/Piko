@@ -68,10 +68,10 @@ python3 benchmark.py --url http://192.168.1.10:8080
 
 ```bash
 # Download all available network traces (3G + FCC broadband)
-python3 download_traces.py --all
+python3 scripts/download_traces.py --all
 
 # List available trace sets
-python3 download_traces.py --list
+python3 scripts/download_traces.py --list
 ```
 
 ## CLI Reference
