@@ -53,12 +53,6 @@ const routerOptions = {
         'level-asymmetry-allowed': 1,
       },
     },
-    {
-      kind: 'audio',
-      mimeType: 'audio/opus',
-      clockRate: 48000,
-      channels: 2,
-    },
   ],
 };
 
@@ -88,9 +82,8 @@ let worker = null;
 let router = null;
 let producerTransport = null;
 let videoProducer = null;
-let audioProducer = null;
 let ffmpegProcess = null;
-const consumers = new Map(); // clientId -> { transport, videoConsumer, audioConsumer }
+const consumers = new Map(); // clientId -> { transport, videoConsumer }
 
 // Express app
 const app = express();
@@ -150,11 +143,14 @@ app.post('/createTransport', async (req, res) => {
   try {
     const transport = await router.createWebRtcTransport(webRtcTransportOptions);
     
-    // Store transport for this client
-    if (!consumers.has(clientId)) {
-      consumers.set(clientId, { transport: null, videoConsumer: null, audioConsumer: null });
+    // Store transport for this client (close old transport if re-created)
+    if (consumers.has(clientId)) {
+      const existing = consumers.get(clientId);
+      if (existing.transport) {
+        existing.transport.close();
+      }
     }
-    consumers.get(clientId).transport = transport;
+    consumers.set(clientId, { transport, videoConsumer: null });
     
     // Handle transport close
     transport.on('dtlsstatechange', (dtlsState) => {
@@ -353,9 +349,6 @@ function cleanupClient(clientId) {
     if (client.videoConsumer) {
       client.videoConsumer.close();
     }
-    if (client.audioConsumer) {
-      client.audioConsumer.close();
-    }
     if (client.transport) {
       client.transport.close();
     }
@@ -387,16 +380,12 @@ async function startProducer() {
   
   // Create plain RTP transport for FFmpeg
   const videoTransport = await router.createPlainTransport(plainTransportOptions);
-  const audioTransport = await router.createPlainTransport(plainTransportOptions);
   
   // Get ports
   const videoRtpPort = videoTransport.tuple.localPort;
   const videoRtcpPort = videoTransport.rtcpTuple.localPort;
-  const audioRtpPort = audioTransport.tuple.localPort;
-  const audioRtcpPort = audioTransport.rtcpTuple.localPort;
   
   console.log(`Video RTP: ${videoRtpPort}, RTCP: ${videoRtcpPort}`);
-  console.log(`Audio RTP: ${audioRtpPort}, RTCP: ${audioRtcpPort}`);
   
   // Create video producer -- payloadType must NOT collide with the
   // router's auto-assigned rtx payloadTypes.  The router assigns VP8
@@ -415,29 +404,12 @@ async function startProducer() {
     },
   });
   
-  // audio/opus is at pt=106 in the router codec table
-  audioProducer = await audioTransport.produce({
-    kind: 'audio',
-    rtpParameters: {
-      codecs: [
-        {
-          mimeType: 'audio/opus',
-          payloadType: 106,
-          clockRate: 48000,
-          channels: 2,
-        },
-      ],
-      encodings: [{ ssrc: 11111111 }],
-    },
-  });
-  
-  producerTransport = { video: videoTransport, audio: audioTransport };
+  producerTransport = { video: videoTransport };
   
   console.log(`Video producer created: ${videoProducer.id}`);
-  console.log(`Audio producer created: ${audioProducer.id}`);
   
   // Start FFmpeg
-  startFFmpeg(videoFile, videoRtpPort, audioRtpPort);
+  startFFmpeg(videoFile, videoRtpPort);
 }
 
 function findVideoFile() {
@@ -445,30 +417,39 @@ function findVideoFile() {
   const extensions = ['.mp4', '.mkv', '.webm', '.avi'];
   
   // First check for original video file
-  for (const ext of extensions) {
-    const files = fs.readdirSync(CONTENT_DIR).filter(f => f.endsWith(ext));
-    if (files.length > 0) {
-      return path.join(CONTENT_DIR, files[0]);
+  try {
+    for (const ext of extensions) {
+      const files = fs.readdirSync(CONTENT_DIR).filter(f => f.endsWith(ext));
+      if (files.length > 0) {
+        return path.join(CONTENT_DIR, files[0]);
+      }
     }
+  } catch (err) {
+    console.warn(`Cannot read content directory ${CONTENT_DIR}: ${err.message}`);
   }
   
   // Check parent for source video
   const parentDir = path.dirname(CONTENT_DIR);
-  for (const ext of extensions) {
-    const files = fs.readdirSync(parentDir).filter(f => f.endsWith(ext) && !f.includes('segment'));
-    if (files.length > 0) {
-      return path.join(parentDir, files[0]);
+  try {
+    for (const ext of extensions) {
+      const files = fs.readdirSync(parentDir).filter(f => f.endsWith(ext) && !f.includes('segment'));
+      if (files.length > 0) {
+        return path.join(parentDir, files[0]);
+      }
     }
+  } catch (err) {
+    console.warn(`Cannot read parent directory ${parentDir}: ${err.message}`);
   }
   
   return null;
 }
 
-function startFFmpeg(videoFile, videoRtpPort, audioRtpPort) {
+function startFFmpeg(videoFile, videoRtpPort) {
   const ffmpegArgs = [
     '-re',
     '-stream_loop', '-1',
     '-i', videoFile,
+    '-an',
     '-map', '0:v:0',
     '-vf', 'scale=1280:720',
     '-c:v', 'libvpx',
@@ -484,13 +465,6 @@ function startFFmpeg(videoFile, videoRtpPort, audioRtpPort) {
     '-ssrc', '22222222',
     '-f', 'rtp',
     `rtp://127.0.0.1:${videoRtpPort}?pkt_size=1200`,
-    '-map', '0:a:0?',
-    '-c:a', 'libopus',
-    '-b:a', '128k',
-    '-payload_type', '106',
-    '-ssrc', '11111111',
-    '-f', 'rtp',
-    `rtp://127.0.0.1:${audioRtpPort}?pkt_size=1200`,
   ];
   
   console.log('Starting FFmpeg:', 'ffmpeg', ffmpegArgs.join(' '));
@@ -562,6 +536,8 @@ async function init() {
     console.log('  POST /connectTransport - Connect transport (DTLS)');
     console.log('  POST /consume          - Start consuming video');
     console.log('  POST /resumeConsumer   - Resume consumer');
+    console.log('  POST /setPreferredLayers - Set simulcast layers');
+    console.log('  POST /requestKeyFrame  - Request keyframe');
     console.log('  GET  /stats/:clientId  - Get consumer stats');
     console.log('  POST /disconnect       - Disconnect client');
     console.log('='.repeat(50));
