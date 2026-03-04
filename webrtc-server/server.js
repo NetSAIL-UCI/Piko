@@ -77,13 +77,23 @@ const plainTransportOptions = {
   comedia: true,
 };
 
+// Simulcast layer definitions (low → high = spatialLayer 0 → 2)
+const SIMULCAST_LAYERS = [
+  { ssrc: 22222220, resolution: '320x180',  bitrate: '500k',  maxBitrate: '500k',  bufsize: '1000k', label: 'low' },
+  { ssrc: 22222221, resolution: '640x360',  bitrate: '1500k', maxBitrate: '1500k', bufsize: '3000k', label: 'mid' },
+  { ssrc: 22222222, resolution: '1280x720', bitrate: '4500k', maxBitrate: '4500k', bufsize: '9000k', label: 'high' },
+];
+
 // Global state
 let worker = null;
 let router = null;
-let producerTransport = null;
-let videoProducer = null;
-let ffmpegProcess = null;
-const consumers = new Map(); // clientId -> { transport, videoConsumer }
+
+// One producer per simulcast layer
+// producers[i] = { transport, producer, ffmpeg } for SIMULCAST_LAYERS[i]
+const producers = [];
+const ffmpegProcesses = []; // one per simulcast layer
+const consumers = new Map(); // clientId -> { transport, videoConsumer, currentLayer }
+let layerSelectionInterval = null;
 
 // Express app
 const app = express();
@@ -96,7 +106,8 @@ app.get('/health', (req, res) => {
     status: 'healthy',
     timestamp: new Date().toISOString(),
     protocol: 'webrtc',
-    producerActive: videoProducer !== null,
+    producerActive: producers.length > 0 && producers.some(p => p.producer !== null),
+    activeProducers: producers.filter(p => p.producer !== null).length,
     consumers: consumers.size,
   });
 });
@@ -109,24 +120,49 @@ app.get('/rtpCapabilities', (req, res) => {
   res.json(router.rtpCapabilities);
 });
 
-// Get available quality levels
+// Get available quality levels (simulcast layers)
 app.get('/qualities', (req, res) => {
-  // WebRTC uses simulcast/SVC for adaptive quality
-  // Return available bitrate tiers
   res.json({
-    qualities: [
-      { id: 'low', maxBitrate: 500000, description: '500 kbps' },
-      { id: 'medium', maxBitrate: 1500000, description: '1.5 Mbps' },
-      { id: 'high', maxBitrate: 3000000, description: '3 Mbps' },
-      { id: 'max', maxBitrate: 4500000, description: '4.5 Mbps' },
-    ],
-    currentProducer: videoProducer ? {
-      id: videoProducer.id,
-      kind: videoProducer.kind,
-      paused: videoProducer.paused,
-    } : null,
+    simulcast: true,
+    layers: SIMULCAST_LAYERS.map((l, i) => ({
+      spatialLayer: i,
+      label: l.label,
+      resolution: l.resolution,
+      maxBitrate: parseInt(l.maxBitrate) * 1000,
+      producerActive: producers[i] ? producers[i].producer !== null : false,
+    })),
   });
 });
+
+// Get the best available producer matching the requested layer (or highest active)
+function getBestProducer(preferredLayer) {
+  // Try preferred layer first, then fall back to the highest active layer
+  if (preferredLayer !== undefined && producers[preferredLayer] && producers[preferredLayer].producer) {
+    return { producer: producers[preferredLayer].producer, layer: preferredLayer };
+  }
+  // Fallback: highest active layer
+  for (let i = producers.length - 1; i >= 0; i--) {
+    if (producers[i] && producers[i].producer) {
+      return { producer: producers[i].producer, layer: i };
+    }
+  }
+  return null;
+}
+
+// Select the best simulcast layer for a given BWE (bps)
+function selectLayerForBandwidth(bweBps) {
+  // Pick the highest layer whose maxBitrate fits within the BWE
+  // Use 90% of BWE as headroom
+  const usable = bweBps * 0.9;
+  let best = 0;
+  for (let i = 0; i < SIMULCAST_LAYERS.length; i++) {
+    const layerBitrate = parseInt(SIMULCAST_LAYERS[i].maxBitrate) * 1000;
+    if (layerBitrate <= usable && producers[i] && producers[i].producer) {
+      best = i;
+    }
+  }
+  return best;
+}
 
 // Create WebRTC transport for a consumer client
 app.post('/createTransport', async (req, res) => {
@@ -201,7 +237,9 @@ app.post('/consume', async (req, res) => {
     return res.status(400).json({ error: 'clientId and rtpCapabilities required' });
   }
   
-  if (!videoProducer) {
+  // Find the highest-layer active producer
+  const best = getBestProducer(SIMULCAST_LAYERS.length - 1);
+  if (!best) {
     return res.status(503).json({ error: 'No video producer available' });
   }
   
@@ -212,17 +250,21 @@ app.post('/consume', async (req, res) => {
 
   try {
     // Check if client can consume the producer
-    if (!router.canConsume({ producerId: videoProducer.id, rtpCapabilities })) {
+    if (!router.canConsume({ producerId: best.producer.id, rtpCapabilities })) {
       return res.status(400).json({ error: 'Cannot consume, incompatible RTP capabilities' });
     }
     
     const consumer = await client.transport.consume({
-      producerId: videoProducer.id,
+      producerId: best.producer.id,
       rtpCapabilities,
       paused: false,
     });
     
     client.videoConsumer = consumer;
+    client.currentLayer = best.layer;
+    client.rtpCapabilities = rtpCapabilities; // Store for layer switching
+    
+    console.log(`Consumer ${consumer.id} consuming layer ${best.layer} (${SIMULCAST_LAYERS[best.layer].label})`);
     
     // Handle consumer events
     consumer.on('transportclose', () => {
@@ -239,6 +281,8 @@ app.post('/consume', async (req, res) => {
       producerId: consumer.producerId,
       kind: consumer.kind,
       rtpParameters: consumer.rtpParameters,
+      layer: best.layer,
+      layerLabel: SIMULCAST_LAYERS[best.layer].label,
     });
   } catch (error) {
     console.error('Error creating consumer:', error);
@@ -264,26 +308,58 @@ app.post('/resumeConsumer', async (req, res) => {
   }
 });
 
-// Set preferred layers (for simulcast quality control)
+// Switch consumer to a different simulcast layer (producer)
 app.post('/setPreferredLayers', async (req, res) => {
-  const { clientId, spatialLayer, temporalLayer } = req.body;
+  const { clientId, spatialLayer } = req.body;
   
   const client = consumers.get(clientId);
   if (!client || !client.videoConsumer) {
     return res.status(404).json({ error: 'Consumer not found' });
   }
-
+  
+  const targetLayer = spatialLayer !== undefined ? spatialLayer : SIMULCAST_LAYERS.length - 1;
+  
   try {
-    await client.videoConsumer.setPreferredLayers({ 
-      spatialLayer: spatialLayer || 2, 
-      temporalLayer: temporalLayer || 2 
-    });
-    res.json({ success: true });
+    await switchConsumerLayer(clientId, client, targetLayer);
+    res.json({ success: true, layer: client.currentLayer, label: SIMULCAST_LAYERS[client.currentLayer].label });
   } catch (error) {
-    console.error('Error setting preferred layers:', error);
+    console.error('Error switching layer:', error);
     res.status(500).json({ error: error.message });
   }
 });
+
+// Switch a consumer to a different layer by re-consuming from a different producer
+async function switchConsumerLayer(clientId, client, targetLayer) {
+  if (targetLayer === client.currentLayer) return;
+  
+  const best = getBestProducer(targetLayer);
+  if (!best) return;
+  if (best.layer === client.currentLayer) return;
+  
+  // Close old consumer
+  if (client.videoConsumer) {
+    client.videoConsumer.close();
+  }
+  
+  // Create new consumer on the new producer
+  const consumer = await client.transport.consume({
+    producerId: best.producer.id,
+    rtpCapabilities: client.rtpCapabilities,
+    paused: false,
+  });
+  
+  client.videoConsumer = consumer;
+  client.currentLayer = best.layer;
+  
+  consumer.on('transportclose', () => {
+    console.log(`Consumer transport closed for client ${clientId}`);
+  });
+  consumer.on('producerclose', () => {
+    client.videoConsumer = null;
+  });
+  
+  console.log(`Client ${clientId} switched to layer ${best.layer} (${SIMULCAST_LAYERS[best.layer].label})`);
+}
 
 // Request keyframe
 app.post('/requestKeyFrame', async (req, res) => {
@@ -320,14 +396,19 @@ app.get('/stats/:clientId', async (req, res) => {
     }
     if (client.videoConsumer) {
       stats.consumer = await client.videoConsumer.getStats();
+      stats.currentLayer = client.currentLayer;
+      stats.currentLayerLabel = SIMULCAST_LAYERS[client.currentLayer] ? SIMULCAST_LAYERS[client.currentLayer].label : 'unknown';
     }
-    // Include producer stats so we can see FFmpeg → SFU bitrate
-    if (videoProducer) {
-      stats.producer = await videoProducer.getStats();
+    // Include producer stats for the current layer
+    if (producers[client.currentLayer] && producers[client.currentLayer].producer) {
+      stats.producer = await producers[client.currentLayer].producer.getStats();
     }
-    if (producerTransport && producerTransport.video) {
-      stats.producerTransport = await producerTransport.video.getStats();
-    }
+    // All producer scores
+    stats.producerScores = producers.map((p, i) => ({
+      layer: i,
+      label: SIMULCAST_LAYERS[i].label,
+      score: p.producer ? p.producer.score : null,
+    }));
     
     res.json(stats);
   } catch (error) {
@@ -358,58 +439,71 @@ function cleanupClient(clientId) {
 }
 
 function killFFmpeg() {
-  if (ffmpegProcess) {
-    console.log('Killing existing FFmpeg process');
-    ffmpegProcess.removeAllListeners('close');
-    ffmpegProcess.kill('SIGKILL');
-    ffmpegProcess = null;
+  if (ffmpegProcesses.length > 0) {
+    console.log(`Killing ${ffmpegProcesses.length} FFmpeg process(es)`);
+    for (const proc of ffmpegProcesses) {
+      proc.removeAllListeners('close');
+      proc.kill('SIGKILL');
+    }
+    ffmpegProcesses.length = 0;
   }
 }
 
-// Start FFmpeg to produce video into mediasoup
+// Start one PlainTransport + producer + FFmpeg per simulcast layer
 async function startProducer() {
   killFFmpeg();
-  // Find video file
+  // Close old producers/transports
+  for (const p of producers) {
+    if (p.producer) p.producer.close();
+    if (p.transport) p.transport.close();
+  }
+  producers.length = 0;
+  
   const videoFile = findVideoFile();
   if (!videoFile) {
     console.error('No video file found in content directory');
     return;
   }
   
-  console.log(`Starting producer from: ${videoFile}`);
+  console.log(`Starting producers from: ${videoFile}`);
+  console.log(`  Layers: ${SIMULCAST_LAYERS.map(l => `${l.label}(${l.resolution}@${l.bitrate})`).join(', ')}`);
   
-  // Create plain RTP transport for FFmpeg
-  const videoTransport = await router.createPlainTransport(plainTransportOptions);
+  // Create one PlainTransport + producer per layer
+  for (let i = 0; i < SIMULCAST_LAYERS.length; i++) {
+    const layer = SIMULCAST_LAYERS[i];
+    
+    const transport = await router.createPlainTransport(plainTransportOptions);
+    const rtpPort = transport.tuple.localPort;
+    const rtcpPort = transport.rtcpTuple.localPort;
+    
+    console.log(`  [${layer.label}] RTP: ${rtpPort}, RTCP: ${rtcpPort}`);
+    
+    const producer = await transport.produce({
+      kind: 'video',
+      rtpParameters: {
+        codecs: [
+          {
+            mimeType: 'video/VP8',
+            payloadType: 100,
+            clockRate: 90000,
+          },
+        ],
+        encodings: [{ ssrc: layer.ssrc }],
+      },
+    });
+    
+    console.log(`  [${layer.label}] Producer: ${producer.id}`);
+    
+    producers.push({ transport, producer, rtpPort });
+    
+    // Start FFmpeg for this layer
+    startLayerFFmpeg(videoFile, rtpPort, layer);
+  }
   
-  // Get ports
-  const videoRtpPort = videoTransport.tuple.localPort;
-  const videoRtcpPort = videoTransport.rtcpTuple.localPort;
+  console.log(`All ${SIMULCAST_LAYERS.length} producers created and FFmpeg started`);
   
-  console.log(`Video RTP: ${videoRtpPort}, RTCP: ${videoRtcpPort}`);
-  
-  // Create video producer -- payloadType must NOT collide with the
-  // router's auto-assigned rtx payloadTypes.  The router assigns VP8
-  // at pt=100 and video/rtx at pt=101, so the producer must use 100.
-  videoProducer = await videoTransport.produce({
-    kind: 'video',
-    rtpParameters: {
-      codecs: [
-        {
-          mimeType: 'video/VP8',
-          payloadType: 100,
-          clockRate: 90000,
-        },
-      ],
-      encodings: [{ ssrc: 22222222 }],
-    },
-  });
-  
-  producerTransport = { video: videoTransport };
-  
-  console.log(`Video producer created: ${videoProducer.id}`);
-  
-  // Start FFmpeg
-  startFFmpeg(videoFile, videoRtpPort);
+  // Start server-side BWE-driven layer selection loop
+  startLayerSelectionLoop();
 }
 
 function findVideoFile() {
@@ -444,65 +538,98 @@ function findVideoFile() {
   return null;
 }
 
-function startFFmpeg(videoFile, videoRtpPort) {
+function startLayerFFmpeg(videoFile, rtpPort, layer) {
   const ffmpegArgs = [
     '-re',
     '-stream_loop', '-1',
     '-i', videoFile,
     '-an',
     '-map', '0:v:0',
-    '-vf', 'scale=1280:720',
+    '-vf', `scale=${layer.resolution.replace('x', ':')}`,
     '-c:v', 'libvpx',
-    '-b:v', '4500k',
-    '-minrate', '500k',
-    '-maxrate', '4500k',
-    '-bufsize', '9000k',
+    '-b:v', layer.bitrate,
+    '-minrate', layer.bitrate,
+    '-maxrate', layer.maxBitrate,
+    '-bufsize', layer.bufsize,
     '-deadline', 'realtime',
     '-cpu-used', '4',
     '-g', '96',
     '-keyint_min', '96',
     '-payload_type', '100',
-    '-ssrc', '22222222',
+    '-ssrc', String(layer.ssrc),
     '-f', 'rtp',
-    `rtp://127.0.0.1:${videoRtpPort}?pkt_size=1200`,
+    `rtp://127.0.0.1:${rtpPort}?pkt_size=1200`,
   ];
   
-  console.log('Starting FFmpeg:', 'ffmpeg', ffmpegArgs.join(' '));
+  console.log(`Starting FFmpeg [${layer.label}]:`, 'ffmpeg', ffmpegArgs.join(' '));
   
-  ffmpegProcess = spawn('ffmpeg', ffmpegArgs, {
+  const proc = spawn('ffmpeg', ffmpegArgs, {
     stdio: ['ignore', 'pipe', 'pipe'],
   });
   
-  ffmpegProcess.stdout.on('data', (data) => {
-    // FFmpeg info output
-  });
+  proc._layerLabel = layer.label;
+  proc._rtpPort = rtpPort;
   
-  ffmpegProcess.stderr.on('data', (data) => {
+  proc.stdout.on('data', () => {});
+  
+  proc.stderr.on('data', (data) => {
     const line = data.toString();
-    // Only log errors, not progress
     if (line.includes('Error') || line.includes('error')) {
-      console.error('FFmpeg:', line.trim());
+      console.error(`FFmpeg [${layer.label}]:`, line.trim());
     }
   });
   
-  ffmpegProcess.on('close', (code) => {
-    console.log(`FFmpeg exited with code ${code}`);
-    ffmpegProcess = null;
-    // Only restart FFmpeg (not new transports/producers) after delay
+  proc.on('close', (code) => {
+    console.log(`FFmpeg [${layer.label}] exited with code ${code}`);
+    const idx = ffmpegProcesses.indexOf(proc);
+    if (idx !== -1) ffmpegProcesses.splice(idx, 1);
+    
+    // Restart this layer's FFmpeg after a delay
     setTimeout(() => {
-      if (router && !ffmpegProcess && producerTransport) {
-        const vPort = producerTransport.video.tuple.localPort;
-        const aPort = producerTransport.audio.tuple.localPort;
-        console.log(`Restarting FFmpeg on ports ${vPort}/${aPort}`);
+      if (router) {
         const vFile = findVideoFile();
-        if (vFile) startFFmpeg(vFile, vPort, aPort);
+        if (vFile) startLayerFFmpeg(vFile, rtpPort, layer);
       }
     }, 2000);
   });
   
-  ffmpegProcess.on('error', (error) => {
-    console.error('FFmpeg error:', error);
+  proc.on('error', (error) => {
+    console.error(`FFmpeg [${layer.label}] error:`, error);
   });
+  
+  ffmpegProcesses.push(proc);
+}
+
+// Periodically check each consumer's transport BWE and switch layers
+function startLayerSelectionLoop() {
+  if (layerSelectionInterval) clearInterval(layerSelectionInterval);
+  
+  layerSelectionInterval = setInterval(async () => {
+    for (const [clientId, client] of consumers) {
+      if (!client.transport || !client.videoConsumer) continue;
+      
+      try {
+        const stats = await client.transport.getStats();
+        let bwe = 0;
+        for (const entry of stats) {
+          if (entry.availableOutgoingBitrate) {
+            bwe = entry.availableOutgoingBitrate;
+            break;
+          }
+        }
+        
+        if (bwe > 0) {
+          const targetLayer = selectLayerForBandwidth(bwe);
+          if (targetLayer !== client.currentLayer) {
+            console.log(`BWE ${(bwe/1000).toFixed(0)}kbps -> switching ${clientId.slice(0,8)} from layer ${client.currentLayer} to ${targetLayer}`);
+            await switchConsumerLayer(clientId, client, targetLayer);
+          }
+        }
+      } catch (err) {
+        // Transport may have been closed
+      }
+    }
+  }, 2000); // Check every 2 seconds
 }
 
 // Initialize mediasoup
@@ -556,13 +683,21 @@ async function init() {
 process.on('SIGINT', () => {
   console.log('\nShutting down...');
   
-  if (ffmpegProcess) {
-    ffmpegProcess.kill('SIGTERM');
+  if (layerSelectionInterval) clearInterval(layerSelectionInterval);
+  
+  for (const proc of ffmpegProcesses) {
+    proc.kill('SIGTERM');
   }
+  ffmpegProcesses.length = 0;
   
   consumers.forEach((client, id) => {
     cleanupClient(id);
   });
+  
+  for (const p of producers) {
+    if (p.producer) p.producer.close();
+    if (p.transport) p.transport.close();
+  }
   
   if (router) {
     router.close();
