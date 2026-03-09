@@ -1338,7 +1338,7 @@ class WebRTCBenchmark:
         print(f"\n[SAVED] {filename}")
 
 
-def setup_trace(trace_path: Path, protocol: str = "dash") -> None:
+def setup_trace(trace_path: Path, protocol: str = "dash", skip_restart: bool = False) -> None:
     """Copy a trace file to the shaper directory and restart the shaper.
 
     For WebRTC, also starts a tc-trace replay inside the webrtc container
@@ -1349,12 +1349,15 @@ def setup_trace(trace_path: Path, protocol: str = "dash") -> None:
     shutil.copy(trace_path, shaper_trace)
     print(f"[TRACE] {trace_path.name}")
 
-    print("[SHAPER] Restarting...")
-    subprocess.run(
-        ["sudo", "docker", "compose", "restart", "shaper"],
-        capture_output=True,
-        cwd=Path(__file__).parent,
-    )
+    if skip_restart:
+        print("[SHAPER] Skipping restart (--no-shaper-restart)")
+    else:
+        print("[SHAPER] Restarting...")
+        subprocess.run(
+            ["sudo", "docker", "compose", "restart", "shaper"],
+            capture_output=True,
+            cwd=Path(__file__).parent,
+        )
 
     if protocol == "webrtc":
         print("[WEBRTC-SHAPER] Starting tc-trace on webrtc container...")
@@ -1458,6 +1461,8 @@ Examples:
                        help="Path to a folder of trace files; runs benchmark on every *_tc.csv in the folder")
     parser.add_argument("--results-dir", type=str, default=None,
                        help="Custom results subdirectory (e.g., 2025-15-05-results)")
+    parser.add_argument("--no-shaper-restart", action="store_true",
+                       help="Skip docker shaper restart (reuse running shaper)")
 
     args = parser.parse_args()
 
@@ -1508,7 +1513,7 @@ Examples:
             print(f"  [{idx}/{len(trace_files)}] {trace_path.name}")
             print(f"{'─' * 70}")
 
-            setup_trace(trace_path, protocol=args.protocol)
+            setup_trace(trace_path, protocol=args.protocol, skip_restart=args.no_shaper_restart)
             url = resolve_url(args.url, args.protocol, shaped=True)
 
             trace_stem = trace_path.stem  # e.g. trace_12743_3g_tc
@@ -1539,7 +1544,7 @@ Examples:
             print(f"[ERROR] Trace file not found: {args.trace}")
             sys.exit(1)
 
-        setup_trace(trace_path, protocol=args.protocol)
+        setup_trace(trace_path, protocol=args.protocol, skip_restart=args.no_shaper_restart)
         args.shaped = True
 
     url = resolve_url(args.url, args.protocol, args.shaped)

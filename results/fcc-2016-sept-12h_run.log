@@ -1,0 +1,348 @@
+
+======================================================================
+  BATCH RUN: 10 trace(s) from traces/fcc-2016-sept
+======================================================================
+
+
+──────────────────────────────────────────────────────────────────────
+  [1/10] fcc2016_sept_unit178682_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] fcc2016_sept_unit178682_tc.csv
+[SHAPER] Restarting...
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 1576 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 14573ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 4.2s | bitrate: 1500 kbps | trace_bw: 6985 kbps
+   t=20s | buffer: 7.0s | bitrate: 100 kbps | trace_bw: 7008 kbps
+   t=30s | buffer: 8.9s | bitrate: 1500 kbps | trace_bw: 6851 kbps
+   t=40s | buffer: 0.1s | bitrate: 800 kbps | trace_bw: 7036 kbps
+   t=50s | buffer: 0.1s | bitrate: 100 kbps | trace_bw: 6999 kbps
+   t=60s | buffer: 3.5s | bitrate: 200 kbps | trace_bw: 6948 kbps
+   t=70s | buffer: 0.1s | bitrate: 100 kbps | trace_bw: 6876 kbps
+   t=80s | buffer: 6.7s | bitrate: 100 kbps | trace_bw: 6987 kbps
+   t=90s | buffer: 12.6s | bitrate: 200 kbps | trace_bw: 7094 kbps
+   t=100s | buffer: 6.2s | bitrate: 100 kbps | trace_bw: 6906 kbps
+   t=110s | buffer: 8.1s | bitrate: 200 kbps | trace_bw: 6997 kbps
+   t=120s | buffer: 3.5s | bitrate: 100 kbps | trace_bw: 7055 kbps
+   t=130s | buffer: 9.4s | bitrate: 100 kbps | trace_bw: 6953 kbps
+   t=140s | buffer: 15.1s | bitrate: 100 kbps | trace_bw: 4193 kbps
+   t=150s | buffer: 4.9s | bitrate: 200 kbps | trace_bw: 6888 kbps
+   t=160s | buffer: 4.2s | bitrate: 100 kbps | trace_bw: 7029 kbps
+   t=170s | buffer: 10.1s | bitrate: 100 kbps | trace_bw: 6930 kbps
+   t=180s | buffer: 8.1s | bitrate: 200 kbps | trace_bw: 6941 kbps
+   t=190s | buffer: 1.9s | bitrate: 100 kbps | trace_bw: 6869 kbps
+   t=200s | buffer: 7.8s | bitrate: 100 kbps | trace_bw: 4365 kbps
+   t=210s | buffer: 9.7s | bitrate: 200 kbps | trace_bw: 6980 kbps
+   t=220s | buffer: 0.1s | bitrate: 100 kbps | trace_bw: 6985 kbps
+   t=230s | buffer: 7.5s | bitrate: 100 kbps | trace_bw: 7018 kbps
+   t=240s | buffer: 13.2s | bitrate: 200 kbps | trace_bw: 6953 kbps
+   t=250s | buffer: 3.1s | bitrate: 200 kbps | trace_bw: 7062 kbps
+   t=260s | buffer: 8.8s | bitrate: 100 kbps | trace_bw: 6978 kbps
+   t=270s | buffer: 10.9s | bitrate: 100 kbps | trace_bw: 6897 kbps
+   t=280s | buffer: 4.5s | bitrate: 200 kbps | trace_bw: 6802 kbps
+   t=290s | buffer: 3.9s | bitrate: 100 kbps | trace_bw: 7041 kbps
+   t=300s | buffer: 9.8s | bitrate: 100 kbps | trace_bw: 6017 kbps
+   t=310s | buffer: 7.5s | bitrate: 200 kbps | trace_bw: 6121 kbps
+   t=320s | buffer: 3.6s | bitrate: 100 kbps | trace_bw: 1798 kbps
+   t=330s | buffer: 9.5s | bitrate: 100 kbps | trace_bw: 6985 kbps
+   t=340s | buffer: 11.1s | bitrate: 100 kbps | trace_bw: 6985 kbps
+   t=350s | buffer: 5.0s | bitrate: 200 kbps | trace_bw: 6983 kbps
+   t=360s | buffer: 6.9s | bitrate: 1200 kbps | trace_bw: 6795 kbps
+   t=370s | buffer: 1.5s | bitrate: 800 kbps | trace_bw: 2697 kbps
+   t=380s | buffer: 7.4s | bitrate: 800 kbps | trace_bw: 2704 kbps
+   t=390s | buffer: 5.3s | bitrate: 200 kbps | trace_bw: 6983 kbps
+   t=400s | buffer: 3.2s | bitrate: 200 kbps | trace_bw: 6464 kbps
+   t=410s | buffer: 8.9s | bitrate: 200 kbps | trace_bw: 2646 kbps
+   t=420s | buffer: 14.7s | bitrate: 200 kbps | trace_bw: 6934 kbps
+   t=430s | buffer: 4.7s | bitrate: 400 kbps | trace_bw: 6960 kbps
+   t=440s | buffer: 3.5s | bitrate: 200 kbps | trace_bw: 2947 kbps
+   t=450s | buffer: 3.3s | bitrate: 100 kbps | trace_bw: 6946 kbps
+   t=460s | buffer: 1.2s | bitrate: 200 kbps | trace_bw: 6985 kbps
+   t=470s | buffer: 3.2s | bitrate: 400 kbps | trace_bw: 6950 kbps
+   t=480s | buffer: 0.1s | bitrate: 100 kbps | trace_bw: 7008 kbps
+   t=490s | buffer: 4.3s | bitrate: 400 kbps | trace_bw: 6971 kbps
+   t=500s | buffer: 2.3s | bitrate: 200 kbps | trace_bw: 7001 kbps
+   t=510s | buffer: 1.5s | bitrate: 200 kbps | trace_bw: 6985 kbps
+   t=520s | buffer: 7.1s | bitrate: 100 kbps | trace_bw: 6987 kbps
+   t=530s | buffer: 13.0s | bitrate: 100 kbps | trace_bw: 3547 kbps
+   t=540s | buffer: 14.9s | bitrate: 100 kbps | trace_bw: 5 kbps
+   t=550s | buffer: 8.8s | bitrate: 200 kbps | trace_bw: 227 kbps
+   t=560s | buffer: 4.1s | bitrate: 100 kbps | trace_bw: 188 kbps
+   t=570s | buffer: 9.9s | bitrate: 100 kbps | trace_bw: 7034 kbps
+   t=580s | buffer: 11.9s | bitrate: 100 kbps | trace_bw: 6971 kbps
+   t=590s | buffer: 5.8s | bitrate: 200 kbps | trace_bw: 6897 kbps
+   t=600s | buffer: 4.0s | bitrate: 100 kbps | trace_bw: 6990 kbps
+   t=610s | buffer: 6.3s | bitrate: 100 kbps | trace_bw: 6610 kbps
+   t=620s | buffer: 12.2s | bitrate: 200 kbps | trace_bw: 3336 kbps
+   t=630s | buffer: 2.1s | bitrate: 200 kbps | trace_bw: 3098 kbps
+   t=640s | buffer: 8.2s | bitrate: 200 kbps | trace_bw: 7031 kbps
+
+======================================================================
+  BENCHMARK RESULTS (dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     14,573 ms
+      Playback time:     596.5 s
+
+  [BITRATE]
+      Average:           205 kbps
+      Min / Max:         100 / 2,000 kbps
+      Median:            200 kbps
+      Std deviation:     203.0 kbps
+      Variance:          41,216.5
+      25th/75th %ile:    100 / 200 kbps
+
+  [SWITCHES]
+      Total count:       65
+      Up / Down:         32 / 33
+      Avg magnitude:     254 kbps
+
+  [REBUFFERING]
+      Events:            24
+      Total time:        63,393 ms
+      Ratio:             9.6072%
+      Frequency:         2.414 per minute
+      Avg duration:      2,641 ms
+      Max duration:      13,573 ms
+
+  [THROUGHPUT]
+      Average:           8,204 kbps
+      Min / Max:         4 / 333,512 kbps
+      Std deviation:     35,669.6 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           5,961 kbps
+      Min / Max:         5 / 7,094 kbps
+      Utilisation:       137.6%
+
+  [BUFFER]
+      Average level:     6.2 s
+      Min / Max:         0.1 / 16.7 s
+
+  [UTILIZATION]
+      Bandwidth:         2.5%
+
+======================================================================
+
+[SAVED] results/fcc-2016-sept-12h/benchmark_dash_fcc2016_sept_unit178682_tc_20260307_215942.json
+
+──────────────────────────────────────────────────────────────────────
+  [2/10] fcc2016_sept_unit241853_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] fcc2016_sept_unit241853_tc.csv
+[SHAPER] Restarting...
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 584 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 28353ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.1s | bitrate: 200 kbps | trace_bw: 6925 kbps
+   t=20s | buffer: 6.8s | bitrate: 800 kbps | trace_bw: 7018 kbps
+   t=30s | buffer: 0.4s | bitrate: 600 kbps | trace_bw: 6832 kbps
+   t=40s | buffer: 8.0s | bitrate: 800 kbps | trace_bw: 7015 kbps
+   t=50s | buffer: 13.9s | bitrate: 600 kbps | trace_bw: 7018 kbps
+   t=60s | buffer: 11.6s | bitrate: 100 kbps | trace_bw: 7022 kbps
+   t=70s | buffer: 9.4s | bitrate: 200 kbps | trace_bw: 7018 kbps
+   t=80s | buffer: 0.1s | bitrate: 100 kbps | trace_bw: 7018 kbps
+   t=90s | buffer: 8.2s | bitrate: 100 kbps | trace_bw: 7022 kbps
+   t=100s | buffer: 14.1s | bitrate: 100 kbps | trace_bw: 7018 kbps
+   t=110s | buffer: 11.8s | bitrate: 100 kbps | trace_bw: 6994 kbps
+   t=120s | buffer: 9.7s | bitrate: 200 kbps | trace_bw: 7022 kbps
+   t=130s | buffer: 0.1s | bitrate: 100 kbps | trace_bw: 7020 kbps
+   t=140s | buffer: 6.5s | bitrate: 100 kbps | trace_bw: 7018 kbps
+   t=150s | buffer: 12.1s | bitrate: 200 kbps | trace_bw: 7022 kbps
+   t=160s | buffer: 2.0s | bitrate: 200 kbps | trace_bw: 7018 kbps
+   t=170s | buffer: 5.3s | bitrate: 100 kbps | trace_bw: 7017 kbps
+   t=180s | buffer: 11.1s | bitrate: 100 kbps | trace_bw: 7022 kbps
+   t=190s | buffer: 9.1s | bitrate: 200 kbps | trace_bw: 7018 kbps
+   t=200s | buffer: 0.1s | bitrate: 100 kbps | trace_bw: 7018 kbps
+   t=210s | buffer: 7.3s | bitrate: 100 kbps | trace_bw: 7022 kbps
+   t=220s | buffer: 13.1s | bitrate: 200 kbps | trace_bw: 7019 kbps
+   t=230s | buffer: 2.8s | bitrate: 200 kbps | trace_bw: 7018 kbps
+   t=240s | buffer: 6.7s | bitrate: 100 kbps | trace_bw: 7020 kbps
+   t=250s | buffer: 8.6s | bitrate: 100 kbps | trace_bw: 7015 kbps
+   t=260s | buffer: 6.5s | bitrate: 200 kbps | trace_bw: 6997 kbps
+   t=270s | buffer: 2.3s | bitrate: 100 kbps | trace_bw: 7024 kbps
+   t=280s | buffer: 8.0s | bitrate: 100 kbps | trace_bw: 7010 kbps
+   t=290s | buffer: 9.9s | bitrate: 200 kbps | trace_bw: 7011 kbps
+   t=300s | buffer: 3.8s | bitrate: 100 kbps | trace_bw: 7022 kbps
+   t=310s | buffer: 5.7s | bitrate: 100 kbps | trace_bw: 7020 kbps
+   t=320s | buffer: 11.3s | bitrate: 200 kbps | trace_bw: 7018 kbps
+   t=330s | buffer: 1.2s | bitrate: 200 kbps | trace_bw: 7020 kbps
+   t=340s | buffer: 6.0s | bitrate: 100 kbps | trace_bw: 7018 kbps
+   t=350s | buffer: 11.9s | bitrate: 100 kbps | trace_bw: 7017 kbps
+   t=360s | buffer: 5.8s | bitrate: 400 kbps | trace_bw: 7020 kbps
+   t=370s | buffer: 15.7s | bitrate: 100 kbps | trace_bw: 7018 kbps
+   t=380s | buffer: 5.6s | bitrate: 600 kbps | trace_bw: 7020 kbps
+   t=390s | buffer: 15.5s | bitrate: 600 kbps | trace_bw: 7022 kbps
+   t=400s | buffer: 13.2s | bitrate: 1200 kbps | trace_bw: 7020 kbps
+   t=410s | buffer: 3.1s | bitrate: 200 kbps | trace_bw: 7018 kbps
+   t=420s | buffer: 0.1s | bitrate: 100 kbps | trace_bw: 7022 kbps
+   t=430s | buffer: 1.4s | bitrate: 200 kbps | trace_bw: 7020 kbps
+   t=440s | buffer: 4.9s | bitrate: 100 kbps | trace_bw: 7020 kbps
+   t=450s | buffer: 10.9s | bitrate: 100 kbps | trace_bw: 7022 kbps
+   t=460s | buffer: 4.8s | bitrate: 200 kbps | trace_bw: 7017 kbps
+   t=470s | buffer: 2.5s | bitrate: 100 kbps | trace_bw: 7018 kbps
+   t=480s | buffer: 4.4s | bitrate: 200 kbps | trace_bw: 7020 kbps
+   t=490s | buffer: 4.4s | bitrate: 100 kbps | trace_bw: 7018 kbps
+   t=500s | buffer: 14.0s | bitrate: 100 kbps | trace_bw: 7018 kbps
+   t=510s | buffer: 11.9s | bitrate: 200 kbps | trace_bw: 7012 kbps
+   t=520s | buffer: 1.8s | bitrate: 100 kbps | trace_bw: 6953 kbps
+   t=530s | buffer: 7.7s | bitrate: 100 kbps | trace_bw: 7013 kbps
+   t=540s | buffer: 13.7s | bitrate: 100 kbps | trace_bw: 7022 kbps
+   t=550s | buffer: 7.3s | bitrate: 200 kbps | trace_bw: 6895 kbps
+   t=560s | buffer: 4.0s | bitrate: 100 kbps | trace_bw: 6957 kbps
+   t=570s | buffer: 5.9s | bitrate: 100 kbps | trace_bw: 7027 kbps
+   t=580s | buffer: 7.8s | bitrate: 100 kbps | trace_bw: 7018 kbps
+   t=590s | buffer: 5.7s | bitrate: 200 kbps | trace_bw: 6960 kbps
+   t=600s | buffer: 3.1s | bitrate: 100 kbps | trace_bw: 7020 kbps
+   t=610s | buffer: 13.0s | bitrate: 100 kbps | trace_bw: 7018 kbps
+   t=620s | buffer: 10.9s | bitrate: 200 kbps | trace_bw: 7018 kbps
+   t=630s | buffer: 1.2s | bitrate: 100 kbps | trace_bw: 7022 kbps
+
+======================================================================
+  BENCHMARK RESULTS (dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     28,353 ms
+      Playback time:     596.5 s
+
+  [BITRATE]
+      Average:           192 kbps
+      Min / Max:         100 / 1,200 kbps
+      Median:            100 kbps
+      Std deviation:     190.2 kbps
+      Variance:          36,171.9
+      25th/75th %ile:    100 / 200 kbps
+
+  [SWITCHES]
+      Total count:       59
+      Up / Down:         29 / 30
+      Avg magnitude:     222 kbps
+
+  [REBUFFERING]
+      Events:            20
+      Total time:        47,939 ms
+      Ratio:             7.4394%
+      Frequency:         2.012 per minute
+      Avg duration:      2,397 ms
+      Max duration:      8,153 ms
+
+  [THROUGHPUT]
+      Average:           7,433 kbps
+      Min / Max:         5 / 965,304 kbps
+      Std deviation:     59,396.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           7,006 kbps
+      Min / Max:         6,753 / 7,027 kbps
+      Utilisation:       106.1%
+
+  [BUFFER]
+      Average level:     7.1 s
+      Min / Max:         0.1 / 16.4 s
+
+  [UTILIZATION]
+      Bandwidth:         2.6%
+
+======================================================================
+
+[SAVED] results/fcc-2016-sept-12h/benchmark_dash_fcc2016_sept_unit241853_tc_20260307_221059.json
+
+──────────────────────────────────────────────────────────────────────
+  [3/10] fcc2016_sept_unit26562_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] fcc2016_sept_unit26562_tc.csv
+[SHAPER] Restarting...
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 1967 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 33137ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 2.0s | bitrate: 200 kbps | trace_bw: 83588 kbps
+   t=20s | buffer: 3.9s | bitrate: 200 kbps | trace_bw: 99228 kbps
+   t=30s | buffer: 5.5s | bitrate: 200 kbps | trace_bw: 98085 kbps
+   t=40s | buffer: 3.4s | bitrate: 200 kbps | trace_bw: 99022 kbps
+   t=50s | buffer: 5.3s | bitrate: 800 kbps | trace_bw: 99130 kbps
+   t=60s | buffer: 11.2s | bitrate: 600 kbps | trace_bw: 95089 kbps
+   t=70s | buffer: 12.9s | bitrate: 600 kbps | trace_bw: 102382 kbps
+   t=80s | buffer: 14.8s | bitrate: 400 kbps | trace_bw: 88931 kbps
+   t=90s | buffer: 8.7s | bitrate: 400 kbps | trace_bw: 82433 kbps
+   t=100s | buffer: 2.6s | bitrate: 200 kbps | trace_bw: 96420 kbps
+   t=110s | buffer: 4.2s | bitrate: 200 kbps | trace_bw: 70250 kbps
+   t=120s | buffer: 2.2s | bitrate: 200 kbps | trace_bw: 83000 kbps
+   t=130s | buffer: 0.1s | bitrate: 100 kbps | trace_bw: 97263 kbps
+   t=140s | buffer: 4.1s | bitrate: 200 kbps | trace_bw: 99907 kbps
+   t=150s | buffer: 1.9s | bitrate: 200 kbps | trace_bw: 93617 kbps
+   t=160s | buffer: 7.8s | bitrate: 100 kbps | trace_bw: 99298 kbps
+   t=170s | buffer: 13.7s | bitrate: 100 kbps | trace_bw: 107267 kbps
+   t=180s | buffer: 15.4s | bitrate: 100 kbps | trace_bw: 105900 kbps
+   t=190s | buffer: 5.3s | bitrate: 200 kbps | trace_bw: 104457 kbps
+   t=200s | buffer: 3.4s | bitrate: 200 kbps | trace_bw: 103813 kbps
+   t=210s | buffer: 0.1s | bitrate: 100 kbps | trace_bw: 81783 kbps
+   t=220s | buffer: 7.2s | bitrate: 100 kbps | trace_bw: 103399 kbps
+   t=230s | buffer: 9.1s | bitrate: 100 kbps | trace_bw: 92208 kbps
+   t=240s | buffer: 6.7s | bitrate: 100 kbps | trace_bw: 104475 kbps
+   t=250s | buffer: 12.6s | bitrate: 100 kbps | trace_bw: 84845 kbps
+   t=260s | buffer: 6.6s | bitrate: 200 kbps | trace_bw: 91888 kbps
+   t=270s | buffer: 1.8s | bitrate: 100 kbps | trace_bw: 87695 kbps
+   t=280s | buffer: 7.7s | bitrate: 100 kbps | trace_bw: 83008 kbps
+   t=290s | buffer: 9.4s | bitrate: 200 kbps | trace_bw: 94456 kbps
+   t=300s | buffer: 3.3s | bitrate: 100 kbps | trace_bw: 93273 kbps
+   t=310s | buffer: 9.2s | bitrate: 100 kbps | trace_bw: 89749 kbps
+   t=320s | buffer: 11.1s | bitrate: 200 kbps | trace_bw: 102535 kbps
+   t=330s | buffer: 0.7s | bitrate: 200 kbps | trace_bw: 96155 kbps
+   t=340s | buffer: 5.3s | bitrate: 100 kbps | trace_bw: 97482 kbps
+   t=350s | buffer: 11.0s | bitrate: 100 kbps | trace_bw: 90996 kbps
+   t=360s | buffer: 4.9s | bitrate: 200 kbps | trace_bw: 94732 kbps
+   t=370s | buffer: 3.4s | bitrate: 100 kbps | trace_bw: 86341 kbps
+   t=380s | buffer: 13.3s | bitrate: 100 kbps | trace_bw: 89834 kbps
+   t=390s | buffer: 6.9s | bitrate: 200 kbps | trace_bw: 104061 kbps
+   t=400s | buffer: 12.8s | bitrate: 200 kbps | trace_bw: 100098 kbps
+   t=410s | buffer: 14.7s | bitrate: 200 kbps | trace_bw: 103466 kbps
+   t=420s | buffer: 16.4s | bitrate: 100 kbps | trace_bw: 64248 kbps
+   t=430s | buffer: 14.3s | bitrate: 100 kbps | trace_bw: 94713 kbps
+   t=440s | buffer: 12.2s | bitrate: 100 kbps | trace_bw: 101753 kbps
+   t=450s | buffer: 10.1s | bitrate: 100 kbps | trace_bw: 70382 kbps
+   t=460s | buffer: 12.0s | bitrate: 100 kbps | trace_bw: 104622 kbps
+   t=470s | buffer: 5.6s | bitrate: 200 kbps | trace_bw: 96801 kbps
+   t=480s | buffer: 7.7s | bitrate: 100 kbps | trace_bw: 98847 kbps
+   t=490s | buffer: 13.7s | bitrate: 100 kbps | trace_bw: 101735 kbps
+   t=500s | buffer: 11.4s | bitrate: 200 kbps | trace_bw: 102462 kbps
+   t=510s | buffer: 1.3s | bitrate: 100 kbps | trace_bw: 95555 kbps
+   t=520s | buffer: 11.2s | bitrate: 100 kbps | trace_bw: 102175 kbps
+   t=530s | buffer: 13.1s | bitrate: 100 kbps | trace_bw: 82657 kbps
+   t=540s | buffer: 6.7s | bitrate: 200 kbps | trace_bw: 77236 kbps
+   t=550s | buffer: 0.1s | bitrate: 100 kbps | trace_bw: 76006 kbps
+   t=560s | buffer: 6.2s | bitrate: 100 kbps | trace_bw: 68354 kbps
+   t=570s | buffer: 12.1s | bitrate: 100 kbps | trace_bw: 95103 kbps
+   t=580s | buffer: 6.0s | bitrate: 200 kbps | trace_bw: 83641 kbps
+   t=590s | buffer: 7.6s | bitrate: 100 kbps | trace_bw: 100907 kbps

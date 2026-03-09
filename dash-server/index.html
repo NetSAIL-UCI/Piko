@@ -269,6 +269,28 @@
     window.__rebufferDurations = [];
     window.__rebufferStart = null;
 
+    // Trace-driven bandwidth: benchmark.py injects the current trace BW
+    // so BOLA knows the real available bandwidth.
+    // BOLA stays active (autoSwitchBitrate = true). We cap maxBitrate to
+    // the trace BW so BOLA cannot overshoot and set bandwidthSafetyFactor
+    // to 1.0 so the throughput estimate is used without extra conservatism.
+    window.__traceBandwidthKbps = null;
+    window.__traceDebug = [];
+    window.__setTraceBandwidth = function(bwKbps) {
+      window.__traceBandwidthKbps = bwKbps;
+      if (!window.dashPlayer) return;
+      try {
+        window.dashPlayer.updateSettings({
+          streaming: { abr: {
+            maxBitrate: { video: Math.round(bwKbps) },
+            throughput: { bandwidthSafetyFactor: 1.0 }
+          }}
+        });
+      } catch(e) {
+        console.log('Trace BW error:', e);
+      }
+    };
+
     // Metrics tracking variables
     let bitrateHistory = [];          // Array of {bitrate, timestamp} for average calculation
     let bitrateSwitchCount = 0;       // Number of bitrate switches
