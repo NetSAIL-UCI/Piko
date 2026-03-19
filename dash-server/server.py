@@ -31,12 +31,14 @@ class DASHHandler(SimpleHTTPRequestHandler):
         """Return proper MIME types for DASH content."""
         if path.endswith('.mpd'):
             return 'application/dash+xml'
+        if path.endswith('.m3u8'):
+            return 'application/vnd.apple.mpegurl'
         if path.endswith('.m4s'):
             return 'video/iso.segment'
+        if path.endswith('.ts'):
+            return 'video/mp2t'
         if path.endswith('.mp4'):
             return 'video/mp4'
-        if path.endswith('.m4a'):
-            return 'audio/mp4'
         return super().guess_type(path)
     
     def end_headers(self):
@@ -48,9 +50,9 @@ class DASHHandler(SimpleHTTPRequestHandler):
         self.send_header('Access-Control-Expose-Headers', 'Content-Length, Content-Range')
         
         # Cache control for segments
-        if self.path.endswith('.m4s'):
+        if self.path.endswith('.m4s') or self.path.endswith('.ts'):
             self.send_header('Cache-Control', 'public, max-age=31536000')
-        elif self.path.endswith('.mpd'):
+        elif self.path.endswith('.mpd') or self.path.endswith('.m3u8'):
             self.send_header('Cache-Control', 'no-cache')
         
         super().end_headers()
@@ -76,7 +78,7 @@ class DASHHandler(SimpleHTTPRequestHandler):
             return
         
         # Serve static app files from /app directory
-        if self.path in ('/', '/index.html', '/dash.all.min.js'):
+        if self.path in ('/', '/index.html', '/hls.html', '/dash.all.min.js'):
             if self.path == '/':
                 self.path = '/index.html'
             old_dir = self.directory

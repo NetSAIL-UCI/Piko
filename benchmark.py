@@ -639,6 +639,305 @@ class DASHJSBenchmark:
         print(f"\n[SAVED] {filename}")
 
 
+class HLSBenchmark:
+    """HLS benchmark using hls.js player in a headless Chromium browser."""
+
+    def __init__(self, base_url: str, max_duration: Optional[float] = None):
+        self.base_url = base_url.rstrip('/')
+        self.player_url = f"{self.base_url}/hls.html"
+        self.max_duration = max_duration
+        self.metrics = StreamingMetrics()
+        self.max_bitrate: int = 3000
+        self.trace_bandwidth_samples: List[float] = []
+        self.trace_data: List[tuple] = []
+
+    def _load_trace(self) -> None:
+        """Load the active shaper trace file to look up available bandwidth."""
+        trace_path = Path(__file__).parent / "shaper" / "trace" / "trace.csv"
+        if not trace_path.exists():
+            return
+        try:
+            with open(trace_path, "r") as f:
+                has_bw = False
+                for i, line in enumerate(f):
+                    if i == 0:
+                        has_bw = "bandwidth" in line.strip().lower()
+                        continue
+                    parts = line.strip().split(",")
+                    if len(parts) >= 3:
+                        ts = float(parts[0])
+                        rtt = float(parts[2])
+                        bw = float(parts[3]) if has_bw and len(parts) >= 4 else None
+                        self.trace_data.append((ts, rtt, bw))
+            self.trace_data.sort(key=lambda x: x[0])
+            if self.trace_data and self.trace_data[0][2] is not None:
+                print(f"[TRACE] Loaded {len(self.trace_data)} entries with bandwidth")
+        except Exception as e:
+            print(f"   [WARN] Could not load trace: {e}")
+
+    def _trace_bandwidth_at(self, elapsed_s: float) -> Optional[float]:
+        """Return the trace bandwidth (kbps) for a given elapsed time."""
+        if not self.trace_data or self.trace_data[0][2] is None:
+            return None
+        bw = self.trace_data[0][2]
+        for ts, _rtt, bw_k in self.trace_data:
+            if ts > elapsed_s:
+                break
+            if bw_k is not None:
+                bw = bw_k
+        return bw
+
+    def run(self) -> StreamingMetrics:
+        """Run the HLS benchmark."""
+        from playwright.sync_api import sync_playwright
+
+        print("\n" + "=" * 70)
+        print("  HLS Streaming QoE Benchmark (hls.js)")
+        print("=" * 70)
+        print(f"  Server: {self.base_url}")
+        print("=" * 70 + "\n")
+
+        buffer_samples: List[float] = []
+        throughput_samples: List[float] = []
+        request_start_times: Dict[int, float] = {}
+
+        self._load_trace()
+
+        with sync_playwright() as p:
+            browser = p.chromium.launch(
+                channel="chrome",
+                headless=True,
+                args=[
+                    '--autoplay-policy=no-user-gesture-required',
+                    '--mute-audio',
+                    '--no-sandbox',
+                ]
+            )
+            page = browser.new_page()
+
+            def is_media_request(url: str) -> bool:
+                return any(x in url for x in ['.m4s', '.ts', '/hls/seg_', '/hls/init_'])
+
+            def on_request(request):
+                if is_media_request(request.url):
+                    request_start_times[id(request)] = time.perf_counter()
+
+            def on_request_finished(request):
+                if not is_media_request(request.url):
+                    return
+                try:
+                    response = request.response()
+                    if response is None:
+                        return
+
+                    start = request_start_times.pop(id(request), None)
+                    if start is None:
+                        return
+
+                    duration_s = time.perf_counter() - start
+                    if duration_s <= 0:
+                        return
+
+                    content_length = response.headers.get('content-length')
+                    if not content_length:
+                        return
+
+                    size_bytes = int(content_length)
+                    kbps = (size_bytes * 8 / 1000) / duration_s
+                    throughput_samples.append(kbps)
+                except Exception:
+                    pass
+
+            page.on('request', on_request)
+            page.on('requestfinished', on_request_finished)
+
+            print("[BROWSER] Launching headless Chromium...")
+            startup_start = time.time()
+            page.goto(self.player_url, timeout=30000, wait_until='domcontentloaded')
+
+            print("[BROWSER] Waiting for playback to start...")
+            try:
+                page.wait_for_function(
+                    "document.getElementById('status-text') && "
+                    "document.getElementById('status-text').textContent === 'Playing'",
+                    timeout=30000
+                )
+            except Exception:
+                pass
+
+            self.metrics.startup_delay_ms = (time.time() - startup_start) * 1000
+            print(f"   Startup delay: {self.metrics.startup_delay_ms:.0f}ms\n")
+
+            print("[PLAYBACK] Collecting metrics...")
+            poll_interval = 0.5
+            elapsed = 0.0
+            last_print = 0.0
+
+            while True:
+                try:
+                    ended = page.evaluate("window.__playbackEnded")
+                except Exception:
+                    ended = False
+                if ended:
+                    break
+                if self.max_duration and elapsed >= self.max_duration:
+                    break
+
+                try:
+                    buf_ms = page.evaluate("""() => {
+                        const v = document.getElementById('video');
+                        if (!v || !v.buffered || v.buffered.length === 0) return 0;
+                        const ct = v.currentTime || 0;
+                        for (let i = 0; i < v.buffered.length; i++) {
+                            const s = v.buffered.start(i);
+                            const e = v.buffered.end(i);
+                            if (s <= ct && ct <= e) return Math.max(0, (e - ct) * 1000);
+                        }
+                        return 0;
+                    }""")
+                    buffer_samples.append(float(buf_ms or 0))
+                except Exception:
+                    buffer_samples.append(0.0)
+
+                if elapsed - last_print >= 10:
+                    br_str = ""
+                    try:
+                        br = page.evaluate("Math.round(window.__hlsCurrentBitrateKbps || 0)")
+                        br_str = f" | bitrate: {br} kbps"
+                    except Exception:
+                        pass
+                    buf_s = buffer_samples[-1] / 1000 if buffer_samples else 0
+                    trace_bw = self._trace_bandwidth_at(elapsed)
+                    trace_str = f" | trace_bw: {trace_bw:.0f} kbps" if trace_bw is not None else ""
+                    print(f"   t={elapsed:.0f}s | buffer: {buf_s:.1f}s{br_str}{trace_str}")
+                    last_print = elapsed
+
+                trace_bw = self._trace_bandwidth_at(elapsed)
+                if trace_bw is not None:
+                    self.trace_bandwidth_samples.append(trace_bw)
+
+                time.sleep(poll_interval)
+                elapsed += poll_interval
+
+            final = page.evaluate("""() => ({
+                bitrateHistory:    bitrateHistory.map(b => Math.round(b.bitrate / 1000)),
+                bitrateSwitches:   bitrateSwitchCount,
+                stallingMs:        totalStallingTime +
+                                   (isStalling && stallingStartTime
+                                     ? Date.now() - stallingStartTime : 0),
+                rebufferCount:     window.__rebufferCount,
+                rebufferDurations: window.__rebufferDurations,
+                playbackTimeMs:    (typeof video !== 'undefined' ? video.currentTime * 1000 : 0),
+            })""")
+
+            browser.close()
+
+        m = self.metrics
+        m.bitrate_samples        = [
+            int(br) for br in final['bitrateHistory']
+            if isinstance(br, (int, float)) and math.isfinite(br) and br > 0
+        ]
+        m.buffer_samples         = buffer_samples
+        m.throughput_samples     = throughput_samples
+        m.bitrate_switches       = final['bitrateSwitches']
+        m.rebuffer_count         = final['rebufferCount']
+        m.rebuffer_time_ms       = final['stallingMs']
+        m.rebuffer_durations     = final['rebufferDurations']
+        m.total_playback_time_ms = final['playbackTimeMs']
+
+        if m.bitrate_samples:
+            self.max_bitrate = max(m.bitrate_samples)
+
+        prev = None
+        for br in m.bitrate_samples:
+            if prev is not None and br != prev:
+                m.switch_magnitude_total += abs(br - prev)
+                if br > prev:
+                    m.switch_up_count += 1
+                else:
+                    m.switch_down_count += 1
+            prev = br
+
+        m.calculate_statistics(self.max_bitrate)
+        return m
+
+    def print_results(self):
+        """Print formatted results."""
+        m = self.metrics
+
+        print("\n" + "=" * 70)
+        print("  BENCHMARK RESULTS (HLS / hls.js)")
+        print("=" * 70)
+
+        print("\n  [TIMING]")
+        print(f"      Startup delay:     {m.startup_delay_ms:,.0f} ms")
+        print(f"      Playback time:     {m.total_playback_time_ms/1000:,.1f} s")
+
+        print("\n  [BITRATE]")
+        print(f"      Average:           {m.avg_bitrate_kbps:,.0f} kbps")
+        print(f"      Min / Max:         {m.min_bitrate_kbps:,.0f} / {m.max_bitrate_kbps:,.0f} kbps")
+        print(f"      Median:            {m.bitrate_median:,.0f} kbps")
+        print(f"      Std deviation:     {m.bitrate_std_dev:,.1f} kbps")
+        print(f"      Variance:          {m.bitrate_variance:,.1f}")
+        print(f"      25th/75th %ile:    {m.bitrate_25th_percentile:,.0f} / {m.bitrate_75th_percentile:,.0f} kbps")
+
+        print("\n  [SWITCHES]")
+        print(f"      Total count:       {m.bitrate_switches}")
+        print(f"      Up / Down:         {m.switch_up_count} / {m.switch_down_count}")
+        print(f"      Avg magnitude:     {m.avg_switch_magnitude:,.0f} kbps")
+
+        print("\n  [REBUFFERING]")
+        print(f"      Events:            {m.rebuffer_count}")
+        print(f"      Total time:        {m.rebuffer_time_ms:,.0f} ms")
+        print(f"      Ratio:             {m.rebuffer_ratio*100:.4f}%")
+        print(f"      Frequency:         {m.rebuffer_frequency:.3f} per minute")
+        if m.rebuffer_count > 0:
+            print(f"      Avg duration:      {m.avg_rebuffer_duration_ms:,.0f} ms")
+            print(f"      Max duration:      {m.max_rebuffer_duration_ms:,.0f} ms")
+
+        print("\n  [THROUGHPUT]")
+        print(f"      Average:           {m.avg_throughput_kbps:,.0f} kbps")
+        print(f"      Min / Max:         {m.min_throughput_kbps:,.0f} / {m.max_throughput_kbps:,.0f} kbps")
+        print(f"      Std deviation:     {m.throughput_std_dev:,.1f} kbps")
+
+        if self.trace_bandwidth_samples:
+            avg_trace = sum(self.trace_bandwidth_samples) / len(self.trace_bandwidth_samples)
+            min_trace = min(self.trace_bandwidth_samples)
+            max_trace = max(self.trace_bandwidth_samples)
+            print("\n  [AVAILABLE BW (trace)]")
+            print(f"      Average:           {avg_trace:,.0f} kbps")
+            print(f"      Min / Max:         {min_trace:,.0f} / {max_trace:,.0f} kbps")
+            if m.avg_throughput_kbps > 0:
+                util = m.avg_throughput_kbps / avg_trace * 100
+                print(f"      Utilisation:       {util:.1f}%")
+
+        print("\n  [BUFFER]")
+        print(f"      Average level:     {m.avg_buffer_level_ms/1000:,.1f} s")
+        print(f"      Min / Max:         {m.min_buffer_level_ms/1000:,.1f} / {m.max_buffer_level_ms/1000:,.1f} s")
+
+        print("\n  [UTILIZATION]")
+        print(f"      Bandwidth:         {m.bandwidth_utilization*100:.1f}%")
+
+        print("\n" + "=" * 70)
+
+    def save_results(self, filename: str):
+        """Save results to JSON."""
+        results = {
+            "timestamp": datetime.now().isoformat(),
+            "server": self.base_url,
+            "protocol": "hls",
+            "abr": "hls.js-default",
+            "metrics": self.metrics.to_dict(),
+            "trace_bandwidth": {
+                "samples": self.trace_bandwidth_samples,
+                "average_kbps": sum(self.trace_bandwidth_samples) / len(self.trace_bandwidth_samples) if self.trace_bandwidth_samples else 0,
+            },
+        }
+        with open(filename, 'w') as f:
+            json.dump(results, f, indent=2)
+        print(f"\n[SAVED] {filename}")
+
+
 class WebRTCBenchmark:
     """WebRTC streaming performance benchmark using mediasoup server."""
     
@@ -1380,7 +1679,7 @@ def setup_trace(trace_path: Path, protocol: str = "dash", skip_restart: bool = F
 def resolve_url(base_url: str, protocol: str, shaped: bool) -> str:
     """Return the final URL after applying shaped-port mapping."""
     url = base_url
-    if shaped and protocol == "dash" and "8080" in url:
+    if shaped and protocol in ("dash", "hls") and "8080" in url:
         url = url.replace("8080", "9080")
     return url
 
@@ -1390,6 +1689,8 @@ def run_single_benchmark(protocol: str, url: str, duration, output_path: str,
     """Run a single benchmark and save results. Returns True on success."""
     if protocol == "dash":
         benchmark = DASHJSBenchmark(url, duration)
+    elif protocol == "hls":
+        benchmark = HLSBenchmark(url, duration)
     else:
         if not HAS_AIORTC:
             print("[ERROR] WebRTC benchmark requires aiortc library")
@@ -1427,7 +1728,7 @@ def collect_trace_files(directory: Path) -> List[Path]:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Streaming Benchmark Tool (DASH + WebRTC)",
+                description="Streaming Benchmark Tool (DASH + HLS + WebRTC)",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -1440,12 +1741,15 @@ Examples:
   # WebRTC with a folder of traces
   python benchmark.py -p webrtc --trace-dir traces/
 
+    # HLS with a folder of traces
+    python benchmark.py -p hls --trace-dir traces/
+
   # Direct (no shaping)
   python benchmark.py
   python benchmark.py -p webrtc --duration 60
         """
     )
-    parser.add_argument("--protocol", "-p", choices=["dash", "webrtc"], default="dash",
+    parser.add_argument("--protocol", "-p", choices=["dash", "hls", "webrtc"], default="dash",
                        help="Streaming protocol to benchmark (default: dash)")
     parser.add_argument("--url", default=None,
                        help="Base URL of server (default: auto-detect based on protocol)")
@@ -1473,7 +1777,7 @@ Examples:
 
     # Set default URL based on protocol
     if args.url is None:
-        if args.protocol == "dash":
+        if args.protocol in ("dash", "hls"):
             args.url = "http://localhost:8080"
         else:
             args.url = "http://localhost:3000"

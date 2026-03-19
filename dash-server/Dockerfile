@@ -11,6 +11,7 @@ WORKDIR /app
 # Copy server code
 COPY server.py .
 COPY index.html .
+COPY hls.html .
 COPY dash.all.min.js .
 
 # Create directories for video content

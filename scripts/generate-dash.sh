@@ -23,7 +23,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 echo -e "${GREEN}═══════════════════════════════════════════════════════════${NC}"
-echo -e "${GREEN}  NetSail DASH Content Generator${NC}"
+echo -e "${GREEN}  NetSail DASH + HLS Content Generator${NC}"
 echo -e "${GREEN}═══════════════════════════════════════════════════════════${NC}"
 echo ""
 
@@ -122,7 +122,49 @@ ffmpeg -y -i "$INPUT_VIDEO" \
     "$OUTPUT_DIR/manifest.mpd"
 
 echo ""
-echo -e "${GREEN}✓ DASH content generated successfully!${NC}"
+echo -e "${YELLOW}Generating HLS (video-only) with matching ladder...${NC}"
+echo ""
+
+HLS_DIR="$OUTPUT_DIR/hls"
+rm -rf "$HLS_DIR"
+mkdir -p "$HLS_DIR"
+
+ffmpeg -y -i "$INPUT_VIDEO" \
+    -filter_complex "[0:v]split=10[v1][v2][v3][v4][v5][v6][v7][v8][v9][v10]; \
+        [v1]scale=256:144[v1out]; \
+        [v2]scale=320:180[v2out]; \
+        [v3]scale=426:240[v3out]; \
+        [v4]scale=480:270[v4out]; \
+        [v5]scale=640:360[v5out]; \
+        [v6]scale=640:360[v6out]; \
+        [v7]scale=854:480[v7out]; \
+        [v8]scale=854:480[v8out]; \
+        [v9]scale=1280:720[v9out]; \
+        [v10]scale=1280:720[v10out]" \
+    -map "[v1out]"  -c:v:0 libx264 -b:v:0 100k  $X264_COMMON \
+    -map "[v2out]"  -c:v:1 libx264 -b:v:1 200k  $X264_COMMON \
+    -map "[v3out]"  -c:v:2 libx264 -b:v:2 400k  $X264_COMMON \
+    -map "[v4out]"  -c:v:3 libx264 -b:v:3 600k  $X264_COMMON \
+    -map "[v5out]"  -c:v:4 libx264 -b:v:4 800k  $X264_COMMON \
+    -map "[v6out]"  -c:v:5 libx264 -b:v:5 1200k $X264_COMMON \
+    -map "[v7out]"  -c:v:6 libx264 -b:v:6 1500k $X264_COMMON \
+    -map "[v8out]"  -c:v:7 libx264 -b:v:7 2000k $X264_COMMON \
+    -map "[v9out]"  -c:v:8 libx264 -b:v:8 3000k $X264_COMMON \
+    -map "[v10out]" -c:v:9 libx264 -b:v:9 4500k $X264_COMMON \
+    -an \
+    -f hls \
+    -hls_time "$SEGMENT_DURATION" \
+    -hls_playlist_type vod \
+    -hls_segment_type fmp4 \
+    -hls_fmp4_init_filename "init_%v.mp4" \
+    -hls_flags independent_segments \
+    -master_pl_name "master.m3u8" \
+    -hls_segment_filename "$HLS_DIR/seg_%v_%05d.m4s" \
+    -var_stream_map "v:0,name:144p v:1,name:180p v:2,name:240p v:3,name:270p v:4,name:360p_800 v:5,name:360p_1200 v:6,name:480p_1500 v:7,name:480p_2000 v:8,name:720p_3000 v:9,name:720p_4500" \
+    "$HLS_DIR/stream_%v.m3u8"
+
+echo ""
+echo -e "${GREEN}✓ DASH + HLS content generated successfully!${NC}"
 echo ""
 echo "Files created in $OUTPUT_DIR:"
 ls -lh "$OUTPUT_DIR" | head -20
@@ -130,4 +172,5 @@ echo ""
 echo -e "${GREEN}To serve this content:${NC}"
 echo "  docker-compose up -d"
 echo "  Open http://localhost:8080"
+echo "  HLS page: http://localhost:8080/hls.html"
 

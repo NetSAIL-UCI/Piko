@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NetSail HLS Player</title>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.20/dist/hls.min.js"></script>
+  <style>
+    body {
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      margin: 0;
+      padding: 24px;
+      background: #0f172a;
+      color: #e2e8f0;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    video {
+      width: 100%;
+      max-height: 560px;
+      background: black;
+      border-radius: 8px;
+    }
+    .row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .kv {
+      min-width: 180px;
+    }
+    .label {
+      color: #94a3b8;
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+    .value {
+      font-size: 18px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h2>NetSail HLS Player</h2>
+      <div class="label">Manifest</div>
+      <div id="manifest-url">/hls/master.m3u8</div>
+      <div class="label" style="margin-top:12px;">Status</div>
+      <div id="status-text" class="value">Initializing...</div>
+    </div>
+
+    <div class="card">
+      <video id="video" controls muted playsinline autoplay></video>
+    </div>
+
+    <div class="card row">
+      <div class="kv">
+        <div class="label">Buffer</div>
+        <div id="buffer" class="value">0.00s</div>
+      </div>
+      <div class="kv">
+        <div class="label">Bitrate</div>
+        <div id="bitrate" class="value">0 kbps</div>
+      </div>
+      <div class="kv">
+        <div class="label">Avg Bitrate</div>
+        <div id="avg-bitrate" class="value">0 kbps</div>
+      </div>
+      <div class="kv">
+        <div class="label">Rebuffers</div>
+        <div id="rebuffers" class="value">0</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const video = document.getElementById('video');
+    const manifestUrl = `${window.location.origin}/hls/master.m3u8`;
+
+    // Exposed globals used by benchmark.py
+    window.__playbackEnded = false;
+    window.__rebufferCount = 0;
+    window.__rebufferDurations = [];
+    window.__hlsCurrentBitrateKbps = 0;
+
+    // Metrics variables read by benchmark.py
+    let bitrateHistory = [];
+    let bitrateSwitchCount = 0;
+    let lastBitrate = null;
+    let totalStallingTime = 0;
+    let stallingStartTime = null;
+    let isStalling = false;
+
+    function setStatus(text) {
+      document.getElementById('status-text').textContent = text;
+    }
+
+    function getBufferedMs() {
+      if (!video || !video.buffered || video.buffered.length === 0) return 0;
+      const ct = video.currentTime || 0;
+      for (let i = 0; i < video.buffered.length; i++) {
+        const start = video.buffered.start(i);
+        const end = video.buffered.end(i);
+        if (start <= ct && ct <= end) {
+          return Math.max(0, (end - ct) * 1000);
+        }
+      }
+      return 0;
+    }
+
+    function recordBitrate(kbps) {
+      if (!kbps || kbps <= 0) return;
+      const bps = kbps * 1000;
+      bitrateHistory.push({ bitrate: bps, timestamp: Date.now() });
+      if (lastBitrate !== null && lastBitrate !== bps) {
+        bitrateSwitchCount++;
+      }
+      lastBitrate = bps;
+    }
+
+    function updateMetrics() {
+      const bufferMs = getBufferedMs();
+      document.getElementById('buffer').textContent = `${(bufferMs / 1000).toFixed(2)}s`;
+
+      const kbps = Math.round(window.__hlsCurrentBitrateKbps || 0);
+      document.getElementById('bitrate').textContent = `${kbps} kbps`;
+      if (kbps > 0) {
+        recordBitrate(kbps);
+      }
+
+      if (bitrateHistory.length > 0) {
+        const avgBps = bitrateHistory.reduce((acc, s) => acc + s.bitrate, 0) / bitrateHistory.length;
+        document.getElementById('avg-bitrate').textContent = `${Math.round(avgBps / 1000)} kbps`;
+      }
+      document.getElementById('rebuffers').textContent = String(window.__rebufferCount);
+    }
+
+    function onWaiting() {
+      setStatus('Buffering...');
+      if (!isStalling) {
+        isStalling = true;
+        stallingStartTime = Date.now();
+        window.__rebufferCount++;
+      }
+    }
+
+    function onPlaying() {
+      setStatus('Playing');
+      if (isStalling && stallingStartTime) {
+        const dur = Date.now() - stallingStartTime;
+        totalStallingTime += dur;
+        window.__rebufferDurations.push(dur);
+        isStalling = false;
+        stallingStartTime = null;
+      }
+    }
+
+    video.addEventListener('waiting', onWaiting);
+    video.addEventListener('playing', onPlaying);
+    video.addEventListener('ended', () => {
+      setStatus('Playback ended');
+      window.__playbackEnded = true;
+    });
+    video.addEventListener('error', () => setStatus('Error'));
+
+    if (window.Hls && Hls.isSupported()) {
+      const hls = new Hls({
+        enableWorker: true,
+        // EWMA throughput ABR (hls.js default family) with conservative selection.
+        abrEwmaFastVoD: 3.0,
+        abrEwmaSlowVoD: 9.0,
+        abrBandWidthFactor: 0.80,
+        abrBandWidthUpFactor: 0.70,
+        // Stall-protection behavior.
+        maxStarvationDelay: 4,
+        maxLoadingDelay: 4,
+        // Keep HLS buffering bounded for fairer comparison with DASH.
+        maxBufferLength: 20,
+        maxMaxBufferLength: 30,
+        maxBufferSize: 60 * 1000 * 1000,
+        backBufferLength: 20,
+      });
+      window.hlsPlayer = hls;
+      hls.loadSource(manifestUrl);
+      hls.attachMedia(video);
+
+      hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        video.play().catch(() => {});
+      });
+
+      hls.on(Hls.Events.LEVEL_SWITCHED, (_evt, data) => {
+        const level = hls.levels[data.level];
+        if (level && level.bitrate) {
+          window.__hlsCurrentBitrateKbps = level.bitrate / 1000;
+        }
+      });
+
+      hls.on(Hls.Events.FRAG_CHANGED, () => {
+        const lvl = hls.currentLevel;
+        if (lvl >= 0 && hls.levels[lvl] && hls.levels[lvl].bitrate) {
+          window.__hlsCurrentBitrateKbps = hls.levels[lvl].bitrate / 1000;
+        }
+      });
+
+      hls.on(Hls.Events.ERROR, () => {
+        setStatus('Error');
+      });
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = manifestUrl;
+      video.play().catch(() => {});
+    } else {
+      setStatus('HLS not supported in this browser');
+    }
+
+    setInterval(updateMetrics, 500);
+  </script>
+</body>
+</html>

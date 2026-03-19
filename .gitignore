@@ -2,6 +2,8 @@
 *.mp4
 *.m4s
 *.mpd
+*.m3u8
+content/
 
 # Results (keep structure, ignore data)
 results/*.json

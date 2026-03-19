@@ -149,6 +149,8 @@ function getBestProducer(preferredLayer) {
   return null;
 }
 
+
+//TODO decide to remove this 
 // Select the best simulcast layer for a given BWE (bps)
 function selectLayerForBandwidth(bweBps) {
   // Pick the highest layer whose maxBitrate fits within the BWE
