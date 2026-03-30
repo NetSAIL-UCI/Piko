@@ -1,0 +1,23 @@
+
+======================================================================
+  BATCH RUN: 7 trace(s) from traces/starlink-11-24
+======================================================================
+
+
+──────────────────────────────────────────────────────────────────────
+  [1/7] starlink-2025-11-24-19-00-00_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink-2025-11-24-19-00-00_tc.csv
+[SHAPER] Restarting...
+
+[ERROR] Benchmark failed: No module named 'playwright'
+Traceback (most recent call last):
+  File "benchmark.py", line 1864, in <module>
+    main()
+  File "benchmark.py", line 1823, in main
+    ok = run_single_benchmark(args.protocol, url, args.duration, output_path,
+  File "benchmark.py", line 1697, in run_single_benchmark
+    benchmark.run()
+  File "benchmark.py", line 698, in run
+    from playwright.sync_api import sync_playwright
+ModuleNotFoundError: No module named 'playwright'

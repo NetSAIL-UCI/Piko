@@ -437,10 +437,12 @@ class DASHJSBenchmark:
             # Poll buffer level and player throughput estimate while playback runs
             print("[PLAYBACK] Collecting metrics...")
             poll_interval = 0.5
-            elapsed = 0.0
+            playback_start = time.perf_counter()
             last_print = 0.0
 
             while True:
+                elapsed = time.perf_counter() - playback_start
+
                 try:
                     ended = page.evaluate("window.__playbackEnded")
                 except Exception:
@@ -515,9 +517,10 @@ class DASHJSBenchmark:
                     self.trace_bandwidth_samples.append(trace_bw)
 
                 time.sleep(poll_interval)
-                elapsed += poll_interval
 
-            # Collect final accumulated metrics from JS globals
+            # Pause video before reading final metrics to avoid overshoot
+            page.evaluate("if (typeof video !== 'undefined') video.pause()")
+
             final = page.evaluate("""() => ({
                 bitrateHistory:    bitrateHistory.map(b => Math.round(b.bitrate / 1000)),
                 bitrateSwitches:   bitrateSwitchCount,
@@ -738,10 +741,12 @@ class HLSBenchmark:
 
             print("[PLAYBACK] Collecting metrics...")
             poll_interval = 0.5
-            elapsed = 0.0
+            playback_start = time.perf_counter()
             last_print = 0.0
 
             while True:
+                elapsed = time.perf_counter() - playback_start
+
                 try:
                     ended = page.evaluate("window.__playbackEnded")
                 except Exception:
@@ -802,7 +807,8 @@ class HLSBenchmark:
                     self.trace_bandwidth_samples.append(trace_bw)
 
                 time.sleep(poll_interval)
-                elapsed += poll_interval
+
+            page.evaluate("if (typeof video !== 'undefined') video.pause()")
 
             final = page.evaluate("""() => ({
                 bitrateHistory:    bitrateHistory.map(b => Math.round(b.bitrate / 1000)),

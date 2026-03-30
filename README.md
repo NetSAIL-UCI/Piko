@@ -1,6 +1,6 @@
 # Streaming Benchmark
 
-Measure video streaming QoE (DASH & WebRTC) under emulated network conditions.
+Measure video streaming QoE (HLS, DASH & WebRTC) under emulated network conditions.
 
 ## Setup
 
@@ -8,50 +8,61 @@ Measure video streaming QoE (DASH & WebRTC) under emulated network conditions.
 # Install Python dependencies
 pip install -r requirements.txt
 
-# Start all services (DASH server, WebRTC server, network shaper)
+# Start all services (HLS/DASH server, WebRTC server, network shaper)
 docker compose up -d
 ```
 
 ## Run Benchmarks
 
-### Single trace
+### HLS Benchmarks
+
+```bash
+# HLS with a specific network trace
+python3 benchmark.py -p hls --trace traces/trace_12743_3g_tc.csv
+
+# HLS direct (no shaping)
+python3 benchmark.py -p hls
+
+# HLS with all traces in a folder
+python3 benchmark.py -p hls --trace-dir traces/
+```
+
+### DASH Benchmarks
 
 ```bash
 # DASH with a specific network trace
 python3 benchmark.py --trace traces/trace_12743_3g_tc.csv
 
-# WebRTC with a specific network trace
-python3 benchmark.py -p webrtc --trace traces/trace_12743_3g_tc.csv
+# DASH direct (no shaping)
+python3 benchmark.py
+
+# DASH with all traces in a folder
+python3 benchmark.py --trace-dir traces/
 ```
 
-### All traces in a folder
+### WebRTC Benchmarks
 
 ```bash
-# DASH — run every *_tc.csv trace in the folder
-python3 benchmark.py --trace-dir traces/
+# WebRTC with a specific network trace
+python3 benchmark.py -p webrtc --trace traces/trace_12743_3g_tc.csv
 
-# WebRTC — run every trace in the folder
+# WebRTC direct (60s)
+python3 benchmark.py -p webrtc --duration 60
+
+# WebRTC with all traces in a folder
 python3 benchmark.py -p webrtc --trace-dir traces/
 ```
 
-### Direct (no network shaping)
+### Protocol Comparison
 
 ```bash
-# DASH direct
-python3 benchmark.py
-
-# WebRTC direct (60 s)
-python3 benchmark.py -p webrtc --duration 60
+# Run same trace on all three protocols
+python3 benchmark.py -p hls --trace traces/trace_12743_3g_tc.csv -o hls.json
+python3 benchmark.py -p dash --trace traces/trace_12743_3g_tc.csv -o dash.json
+python3 benchmark.py -p webrtc --trace traces/trace_12743_3g_tc.csv -o webrtc.json
 ```
 
-### Shaped (no trace file, uses default shaper config)
-
-```bash
-python3 benchmark.py --shaped
-python3 benchmark.py -p webrtc --shaped
-```
-
-### Custom options
+### Custom Options
 
 ```bash
 # Limit test duration to 30 seconds
@@ -62,6 +73,9 @@ python3 benchmark.py --trace traces/trace_12743_3g_tc.csv -o my_result.json
 
 # Use a custom server URL
 python3 benchmark.py --url http://192.168.1.10:8080
+
+# Use shaped ports without trace file
+python3 benchmark.py --shaped
 ```
 
 ## Download Traces
@@ -79,10 +93,10 @@ python3 scripts/download_traces.py --list
 ```
 python3 benchmark.py [OPTIONS]
 
---protocol, -p   dash | webrtc           (default: dash)
+--protocol, -p   hls | dash | webrtc     (default: dash)
 --trace FILE     Single trace file       (auto-enables shaping)
 --trace-dir DIR  Folder of traces        (runs all *_tc.csv files)
---shaped         Use shaped ports        (9080 for DASH, 9030 for WebRTC)
+--shaped         Use shaped ports        (9080 for HLS/DASH, 9030 for WebRTC)
 --duration N     Limit test to N seconds
 -o FILE          Output JSON filename
 --url URL        Custom server URL
@@ -96,3 +110,10 @@ docker compose down             # Stop services
 docker compose logs -f          # View logs
 docker compose restart shaper   # Restart shaper after config change
 ```
+
+## Ports
+
+| Service | Direct | Shaped |
+|---------|--------|--------|
+| HLS/DASH Server | 8080 | 9080 |
+| WebRTC Server | 3000 | 9030 |

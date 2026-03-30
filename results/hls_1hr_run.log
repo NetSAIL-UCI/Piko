@@ -1,0 +1,202 @@
+=== Starting Starlink HLS (1hr) ===
+
+======================================================================
+  BATCH RUN: 7 trace(s) from traces/starlink-11-24
+======================================================================
+
+
+──────────────────────────────────────────────────────────────────────
+  [1/7] starlink-2025-11-24-19-00-00_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink-2025-11-24-19-00-00_tc.csv
+[SHAPER] Restarting...
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 11394 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 2266ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 220 kbps | tp: 1067 kbps | trace_bw: 37396 kbps
+   t=20s | buffer: 8.5s | bitrate: 660 kbps | tp: 424 kbps | trace_bw: 39589 kbps
+   t=31s | buffer: 30.2s | bitrate: 220 kbps | tp: 840 kbps | trace_bw: 36233 kbps
+   t=41s | buffer: 32.0s | bitrate: 220 kbps | tp: 927 kbps | trace_bw: 38351 kbps
+   t=51s | buffer: 25.8s | bitrate: 440 kbps | tp: 948 kbps | trace_bw: 78733 kbps
+   t=61s | buffer: 31.6s | bitrate: 440 kbps | tp: 1055 kbps | trace_bw: 77291 kbps
+   t=71s | buffer: 29.4s | bitrate: 440 kbps | tp: 1156 kbps | trace_bw: 12468 kbps
+   t=82s | buffer: 31.1s | bitrate: 660 kbps | tp: 1412 kbps | trace_bw: 61466 kbps
+   t=92s | buffer: 28.9s | bitrate: 660 kbps | tp: 1501 kbps | trace_bw: 45298 kbps
+   t=102s | buffer: 30.7s | bitrate: 660 kbps | tp: 1276 kbps | trace_bw: 18664 kbps
+   t=112s | buffer: 28.5s | bitrate: 880 kbps | tp: 1509 kbps | trace_bw: 41478 kbps
+   t=123s | buffer: 30.2s | bitrate: 880 kbps | tp: 1491 kbps | trace_bw: 32416 kbps
+   t=133s | buffer: 28.0s | bitrate: 880 kbps | tp: 1494 kbps | trace_bw: 32416 kbps
+   t=143s | buffer: 29.8s | bitrate: 880 kbps | tp: 1283 kbps | trace_bw: 32416 kbps
+   t=153s | buffer: 31.5s | bitrate: 880 kbps | tp: 1673 kbps | trace_bw: 32416 kbps
+   t=164s | buffer: 29.3s | bitrate: 880 kbps | tp: 1639 kbps | trace_bw: 32416 kbps
+   t=174s | buffer: 27.1s | bitrate: 880 kbps | tp: 720 kbps | trace_bw: 32416 kbps
+   t=184s | buffer: 28.8s | bitrate: 880 kbps | tp: 1336 kbps | trace_bw: 32416 kbps
+   t=194s | buffer: 26.6s | bitrate: 880 kbps | tp: 1398 kbps | trace_bw: 32416 kbps
+   t=204s | buffer: 28.4s | bitrate: 440 kbps | tp: 570 kbps | trace_bw: 32416 kbps
+   t=215s | buffer: 30.1s | bitrate: 880 kbps | tp: 518 kbps | trace_bw: 32416 kbps
+   t=225s | buffer: 31.9s | bitrate: 660 kbps | tp: 871 kbps | trace_bw: 32416 kbps
+   t=235s | buffer: 29.7s | bitrate: 440 kbps | tp: 964 kbps | trace_bw: 32416 kbps
+   t=245s | buffer: 31.4s | bitrate: 220 kbps | tp: 1124 kbps | trace_bw: 32416 kbps
+   t=256s | buffer: 29.2s | bitrate: 440 kbps | tp: 1240 kbps | trace_bw: 32416 kbps
+   t=266s | buffer: 31.0s | bitrate: 660 kbps | tp: 1402 kbps | trace_bw: 32416 kbps
+   t=276s | buffer: 28.8s | bitrate: 660 kbps | tp: 1458 kbps | trace_bw: 32416 kbps
+   t=286s | buffer: 26.5s | bitrate: 660 kbps | tp: 1612 kbps | trace_bw: 32416 kbps
+   t=297s | buffer: 32.3s | bitrate: 880 kbps | tp: 1754 kbps | trace_bw: 32416 kbps
+   t=307s | buffer: 30.1s | bitrate: 880 kbps | tp: 1760 kbps | trace_bw: 32416 kbps
+   t=317s | buffer: 27.8s | bitrate: 880 kbps | tp: 1221 kbps | trace_bw: 32416 kbps
+   t=327s | buffer: 29.6s | bitrate: 880 kbps | tp: 1545 kbps | trace_bw: 32416 kbps
+   t=337s | buffer: 27.4s | bitrate: 880 kbps | tp: 1531 kbps | trace_bw: 32416 kbps
+   t=348s | buffer: 29.2s | bitrate: 880 kbps | tp: 1393 kbps | trace_bw: 32416 kbps
+   t=358s | buffer: 30.9s | bitrate: 880 kbps | tp: 890 kbps | trace_bw: 32416 kbps
+   t=368s | buffer: 28.7s | bitrate: 880 kbps | tp: 1019 kbps | trace_bw: 32416 kbps
+   t=378s | buffer: 30.5s | bitrate: 880 kbps | tp: 1356 kbps | trace_bw: 32416 kbps
+   t=389s | buffer: 28.3s | bitrate: 660 kbps | tp: 998 kbps | trace_bw: 32416 kbps
+   t=399s | buffer: 26.0s | bitrate: 660 kbps | tp: 1260 kbps | trace_bw: 32416 kbps
+   t=409s | buffer: 27.8s | bitrate: 880 kbps | tp: 1413 kbps | trace_bw: 32416 kbps
+   t=419s | buffer: 25.6s | bitrate: 660 kbps | tp: 736 kbps | trace_bw: 32416 kbps
+   t=430s | buffer: 19.3s | bitrate: 880 kbps | tp: 426 kbps | trace_bw: 32416 kbps
+   t=440s | buffer: 33.1s | bitrate: 880 kbps | tp: 355 kbps | trace_bw: 32416 kbps
+   t=450s | buffer: 30.9s | bitrate: 220 kbps | tp: 499 kbps | trace_bw: 32416 kbps
+   t=460s | buffer: 32.7s | bitrate: 110 kbps | tp: 576 kbps | trace_bw: 32416 kbps
+   t=470s | buffer: 30.4s | bitrate: 110 kbps | tp: 619 kbps | trace_bw: 32416 kbps
+   t=481s | buffer: 32.2s | bitrate: 220 kbps | tp: 699 kbps | trace_bw: 32416 kbps
+   t=491s | buffer: 30.0s | bitrate: 220 kbps | tp: 788 kbps | trace_bw: 32416 kbps
+   t=501s | buffer: 27.8s | bitrate: 220 kbps | tp: 943 kbps | trace_bw: 32416 kbps
+   t=511s | buffer: 29.5s | bitrate: 440 kbps | tp: 804 kbps | trace_bw: 32416 kbps
+   t=522s | buffer: 31.3s | bitrate: 440 kbps | tp: 1147 kbps | trace_bw: 32416 kbps
+   t=532s | buffer: 29.1s | bitrate: 440 kbps | tp: 1199 kbps | trace_bw: 32416 kbps
+   t=542s | buffer: 30.9s | bitrate: 440 kbps | tp: 1377 kbps | trace_bw: 32416 kbps
+   t=552s | buffer: 32.6s | bitrate: 660 kbps | tp: 1147 kbps | trace_bw: 32416 kbps
+   t=562s | buffer: 30.4s | bitrate: 880 kbps | tp: 1217 kbps | trace_bw: 32416 kbps
+   t=573s | buffer: 24.6s | bitrate: 880 kbps | tp: 1289 kbps | trace_bw: 32416 kbps
+   t=583s | buffer: 14.4s | bitrate: 660 kbps | tp: 1289 kbps | trace_bw: 32416 kbps
+   t=593s | buffer: 4.2s | bitrate: 660 kbps | tp: 1289 kbps | trace_bw: 32416 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     2,266 ms
+      Playback time:     596.5 s
+
+  [BITRATE]
+      Average:           633 kbps
+      Min / Max:         110 / 880 kbps
+      Median:            660 kbps
+      Std deviation:     253.0 kbps
+      Variance:          64,008.0
+      25th/75th %ile:    440 / 880 kbps
+
+  [SWITCHES]
+      Total count:       36
+      Up / Down:         20 / 16
+      Avg magnitude:     257 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        2,409 ms
+      Ratio:             0.4022%
+      Frequency:         0.201 per minute
+      Avg duration:      1,204 ms
+      Max duration:      1,635 ms
+
+  [THROUGHPUT]
+      Average:           1,143 kbps
+      Median:            1,217 kbps
+      Min / Max:         131 / 1,870 kbps
+      Std deviation:     363.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           35,803 kbps
+      Min / Max:         0 / 108,710 kbps
+      Utilisation:       3.4%
+
+  [BUFFER]
+      Average level:     27.7 s
+      Min / Max:         0.0 / 33.6 s
+
+  [UTILIZATION]
+      Bandwidth:         52.0%
+
+======================================================================
+
+[SAVED] results/benchmark_hls_starlink-2025-11-24-19-00-00_tc_20260330_114042.json
+
+──────────────────────────────────────────────────────────────────────
+  [2/7] starlink-2025-11-24-19-10-00_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink-2025-11-24-19-10-00_tc.csv
+[SHAPER] Restarting...
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 11905 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 2264ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 1.9s | bitrate: 110 kbps | tp: 1873 kbps | trace_bw: 52117 kbps
+   t=20s | buffer: 7.7s | bitrate: 880 kbps | tp: 1027 kbps | trace_bw: 61091 kbps
+   t=31s | buffer: 13.5s | bitrate: 660 kbps | tp: 1139 kbps | trace_bw: 49475 kbps
+   t=41s | buffer: 19.3s | bitrate: 660 kbps | tp: 1170 kbps | trace_bw: 82499 kbps
+   t=51s | buffer: 29.0s | bitrate: 660 kbps | tp: 1257 kbps | trace_bw: 68232 kbps
+   t=61s | buffer: 30.8s | bitrate: 880 kbps | tp: 1146 kbps | trace_bw: 45117 kbps
+   t=72s | buffer: 28.6s | bitrate: 660 kbps | tp: 1301 kbps | trace_bw: 35970 kbps
+   t=82s | buffer: 30.3s | bitrate: 880 kbps | tp: 1214 kbps | trace_bw: 65016 kbps
+   t=92s | buffer: 28.1s | bitrate: 880 kbps | tp: 1021 kbps | trace_bw: 28813 kbps
+   t=102s | buffer: 29.8s | bitrate: 880 kbps | tp: 1168 kbps | trace_bw: 19602 kbps
+   t=113s | buffer: 27.6s | bitrate: 880 kbps | tp: 900 kbps | trace_bw: 14754 kbps
+   t=123s | buffer: 29.3s | bitrate: 660 kbps | tp: 616 kbps | trace_bw: 30727 kbps
+   t=133s | buffer: 31.1s | bitrate: 660 kbps | tp: 951 kbps | trace_bw: 30727 kbps
+   t=143s | buffer: 28.9s | bitrate: 660 kbps | tp: 1002 kbps | trace_bw: 30727 kbps
+   t=154s | buffer: 30.6s | bitrate: 440 kbps | tp: 998 kbps | trace_bw: 30727 kbps
+   t=164s | buffer: 32.4s | bitrate: 440 kbps | tp: 1174 kbps | trace_bw: 30727 kbps
+   t=174s | buffer: 30.2s | bitrate: 660 kbps | tp: 948 kbps | trace_bw: 30727 kbps
+   t=184s | buffer: 27.9s | bitrate: 660 kbps | tp: 569 kbps | trace_bw: 30727 kbps
+   t=194s | buffer: 21.7s | bitrate: 660 kbps | tp: 246 kbps | trace_bw: 30727 kbps
+   t=205s | buffer: 15.5s | bitrate: 660 kbps | tp: 104 kbps | trace_bw: 30727 kbps
+   t=215s | buffer: 17.2s | bitrate: 440 kbps | tp: 86 kbps | trace_bw: 30727 kbps
+   t=225s | buffer: 31.0s | bitrate: 110 kbps | tp: 274 kbps | trace_bw: 30727 kbps
+   t=235s | buffer: 32.8s | bitrate: 110 kbps | tp: 376 kbps | trace_bw: 30727 kbps
+   t=246s | buffer: 30.5s | bitrate: 110 kbps | tp: 478 kbps | trace_bw: 30727 kbps
+   t=256s | buffer: 32.3s | bitrate: 110 kbps | tp: 454 kbps | trace_bw: 30727 kbps
+   t=266s | buffer: 30.1s | bitrate: 220 kbps | tp: 467 kbps | trace_bw: 30727 kbps
+   t=276s | buffer: 31.8s | bitrate: 220 kbps | tp: 535 kbps | trace_bw: 30727 kbps
+   t=287s | buffer: 29.6s | bitrate: 220 kbps | tp: 630 kbps | trace_bw: 30727 kbps
+   t=297s | buffer: 31.4s | bitrate: 220 kbps | tp: 951 kbps | trace_bw: 30727 kbps
+   t=307s | buffer: 29.1s | bitrate: 220 kbps | tp: 1131 kbps | trace_bw: 30727 kbps
+   t=317s | buffer: 30.9s | bitrate: 440 kbps | tp: 1378 kbps | trace_bw: 30727 kbps
+   t=327s | buffer: 28.7s | bitrate: 440 kbps | tp: 1457 kbps | trace_bw: 30727 kbps
+   t=338s | buffer: 26.4s | bitrate: 660 kbps | tp: 1191 kbps | trace_bw: 30727 kbps
+   t=348s | buffer: 32.2s | bitrate: 880 kbps | tp: 626 kbps | trace_bw: 30727 kbps
+   t=358s | buffer: 30.0s | bitrate: 880 kbps | tp: 688 kbps | trace_bw: 30727 kbps
+   t=368s | buffer: 27.7s | bitrate: 440 kbps | tp: 756 kbps | trace_bw: 30727 kbps
+   t=379s | buffer: 29.5s | bitrate: 440 kbps | tp: 856 kbps | trace_bw: 30727 kbps
+   t=389s | buffer: 31.2s | bitrate: 440 kbps | tp: 1085 kbps | trace_bw: 30727 kbps
+   t=399s | buffer: 29.0s | bitrate: 440 kbps | tp: 1381 kbps | trace_bw: 30727 kbps
+   t=409s | buffer: 26.8s | bitrate: 440 kbps | tp: 1444 kbps | trace_bw: 30727 kbps
+   t=420s | buffer: 32.5s | bitrate: 660 kbps | tp: 1349 kbps | trace_bw: 30727 kbps
+   t=430s | buffer: 30.3s | bitrate: 880 kbps | tp: 1354 kbps | trace_bw: 30727 kbps
+   t=440s | buffer: 28.0s | bitrate: 880 kbps | tp: 585 kbps | trace_bw: 30727 kbps
+   t=450s | buffer: 29.8s | bitrate: 660 kbps | tp: 392 kbps | trace_bw: 30727 kbps
+   t=461s | buffer: 31.5s | bitrate: 880 kbps | tp: 310 kbps | trace_bw: 30727 kbps
+   t=471s | buffer: 29.3s | bitrate: 440 kbps | tp: 275 kbps | trace_bw: 30727 kbps
+   t=481s | buffer: 31.0s | bitrate: 220 kbps | tp: 212 kbps | trace_bw: 30727 kbps
+   t=491s | buffer: 32.8s | bitrate: 220 kbps | tp: 243 kbps | trace_bw: 30727 kbps
+   t=502s | buffer: 30.6s | bitrate: 110 kbps | tp: 366 kbps | trace_bw: 30727 kbps

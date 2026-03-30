@@ -1,11 +1,11 @@
 # ============================================================================
-# NetSail - Streaming Testbed with Network Emulation (DASH + WebRTC)
+# NetSail - Streaming Testbed with Network Emulation (HLS/DASH + WebRTC)
 # ============================================================================
 #
 # Services:
-#   - dash-server:   DASH video streaming server (Python)
-#   - webrtc-server: WebRTC streaming server using mediasoup (Node.js)
-#   - shaper:        Network emulator with tc/netem (applies to traffic)
+#   - hls-dash-server: HLS/DASH video streaming server (Python)
+#   - webrtc-server:   WebRTC streaming server using mediasoup (Node.js)
+#   - shaper:          Network emulator with tc/netem (applies to traffic)
 #
 # Quick Start:
 #   docker-compose up -d
@@ -22,16 +22,16 @@
 
 services:
   # --------------------------------------------------------------------------
-  # DASH Streaming Server
+  # HLS/DASH Streaming Server
   # --------------------------------------------------------------------------
-  # Serves DASH video content (MPD manifest + video segments)
+  # Serves HLS and DASH video content (MPD/m3u8 manifest + video segments)
   # 
-  dash-server:
+  hls-dash-server:
     build:
-      context: ./dash-server
+      context: ./hls-dash-server
       dockerfile: Dockerfile
-    image: netsail/dash-server:latest
-    container_name: netsail-dash-server
+    image: netsail/hls-dash-server:latest
+    container_name: netsail-hls-dash-server
     volumes:
       # Mount your DASH content here (manifest.mpd + segments)
       # Generate content with: cd Benchmarking/scripts && ./generate-dash.sh
@@ -126,7 +126,7 @@ services:
     cap_add:
       - NET_ADMIN
     depends_on:
-      - dash-server
+      - hls-dash-server
       - webrtc-server
     restart: unless-stopped
     networks:

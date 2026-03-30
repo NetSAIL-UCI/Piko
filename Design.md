@@ -1,15 +1,50 @@
 # NetSail Streaming Benchmark
 
 ## Purpose
-Measure video streaming quality (QoE) under realistic network conditions. Compare DASH vs WebRTC protocols.
+Measure video streaming quality (QoE) under realistic network conditions. Compare HLS, DASH, and WebRTC protocols.
 
 ## Architecture
 ```
-Client (benchmark.py) → Traffic Shaper → Server (DASH/WebRTC)
+┌─────────────────────────────────────────────────────────────────┐
+│                         Docker Network                           │
+│                      192.168.100.0/24                            │
+│                                                                  │
+│  ┌──────────────────┐     ┌──────────────────────────────────┐  │
+│  │  Traffic Shaper  │     │     HLS/DASH Server              │  │
+│  │  (192.168.100.10)│────▶│     (192.168.100.20)             │  │
+│  │                  │     │                                   │  │
+│  │  - tc/netem      │     │  - Python HTTP server            │  │
+│  │  - nginx proxy   │     │  - Serves .m3u8 / .mpd           │  │
+│  │  - trace replay  │     │  - Serves .ts / .m4s segments    │  │
+│  │                  │     │                                   │  │
+│  │  Port 9080 ──────┼─────┼▶ Port 8080                       │  │
+│  └──────────────────┘     └──────────────────────────────────┘  │
+│           │                                                      │
+│           │               ┌──────────────────────────────────┐  │
+│           │               │     WebRTC Server                │  │
+│           └──────────────▶│     (192.168.100.30)             │  │
+│                           │                                   │  │
+│  Port 9030 ───────────────│  - Node.js + mediasoup           │  │
+│                           │  - RTP/UDP streaming             │  │
+│                           │  - Server-side ABR               │  │
+│                           │                                   │  │
+│                           │  Port 3000                       │  │
+│                           └──────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────┘
+                              ▲
+                              │
+                    ┌─────────┴─────────┐
+                    │   benchmark.py    │
+                    │   (Client)        │
+                    │                   │
+                    │  - Fetches video  │
+                    │  - Measures QoE   │
+                    │  - Simulates ABR  │
+                    └───────────────────┘
 ```
 
 ## Components
-- **DASH Server**: Python HTTP server serving video segments (manifest.mpd + .m4s files)
+- **HLS/DASH Server**: Python HTTP server serving video segments (.m3u8/.mpd manifests + .ts/.m4s files)
 - **WebRTC Server**: Node.js mediasoup server for real-time streaming
 - **Traffic Shaper**: Linux tc/netem applying network traces (delay, loss, bandwidth limits)
 - **Benchmark Client**: Downloads segments, simulates playback, measures metrics
@@ -21,7 +56,7 @@ Client (benchmark.py) → Traffic Shaper → Server (DASH/WebRTC)
 - **Throughput**: Measured network capacity
 
 ## How It Works
-1. Client fetches video manifest
+1. Client fetches video manifest (HLS .m3u8 or DASH .mpd)
 2. ABR algorithm selects quality based on throughput + buffer level
 3. Client downloads segments through shaper (network conditions applied)
 4. Playback is simulated, stalls detected when buffer empties
