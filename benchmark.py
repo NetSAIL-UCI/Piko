@@ -108,6 +108,7 @@ class StreamingMetrics:
     # Throughput metrics
     throughput_samples: List[float] = field(default_factory=list)
     avg_throughput_kbps: float = 0
+    median_throughput_kbps: float = 0
     min_throughput_kbps: float = 0
     max_throughput_kbps: float = 0
     throughput_std_dev: float = 0
@@ -174,12 +175,14 @@ class StreamingMetrics:
         
         # Throughput statistics
         if self.throughput_samples:
-            self.avg_throughput_kbps = sum(self.throughput_samples) / len(self.throughput_samples)
-            self.min_throughput_kbps = min(self.throughput_samples)
-            self.max_throughput_kbps = max(self.throughput_samples)
-            if len(self.throughput_samples) > 1:
+            sorted_tp = sorted(self.throughput_samples)
+            self.avg_throughput_kbps = sum(sorted_tp) / len(sorted_tp)
+            self.median_throughput_kbps = sorted_tp[len(sorted_tp) // 2]
+            self.min_throughput_kbps = sorted_tp[0]
+            self.max_throughput_kbps = sorted_tp[-1]
+            if len(sorted_tp) > 1:
                 tp_mean = self.avg_throughput_kbps
-                self.throughput_variance = sum((x - tp_mean) ** 2 for x in self.throughput_samples) / len(self.throughput_samples)
+                self.throughput_variance = sum((x - tp_mean) ** 2 for x in sorted_tp) / len(sorted_tp)
                 self.throughput_std_dev = self.throughput_variance ** 0.5
         
         # Buffer statistics
@@ -188,9 +191,9 @@ class StreamingMetrics:
             self.min_buffer_level_ms = min(self.buffer_samples)
             self.max_buffer_level_ms = max(self.buffer_samples)
         
-        # Bandwidth utilization
-        if self.avg_throughput_kbps > 0:
-            self.bandwidth_utilization = self.avg_bitrate_kbps / self.avg_throughput_kbps
+        # Bandwidth utilization (use median to resist outliers)
+        if self.median_throughput_kbps > 0:
+            self.bandwidth_utilization = self.avg_bitrate_kbps / self.median_throughput_kbps
         
         # Total segments
         self.total_segments = len(self.segments)
@@ -228,6 +231,7 @@ class StreamingMetrics:
             },
             "throughput": {
                 "average_kbps": round(self.avg_throughput_kbps, 2),
+                "median_kbps": round(self.median_throughput_kbps, 2),
                 "min_kbps": round(self.min_throughput_kbps, 2),
                 "max_kbps": round(self.max_throughput_kbps, 2),
                 "std_dev": round(self.throughput_std_dev, 2),
@@ -393,7 +397,6 @@ class DASHJSBenchmark:
 
         buffer_samples: List[float] = []
         throughput_samples: List[float] = []
-        request_start_times: Dict[int, float] = {}
 
         # Load trace for available-bandwidth reference
         self._load_trace()
@@ -406,48 +409,11 @@ class DASHJSBenchmark:
                     '--autoplay-policy=no-user-gesture-required',
                     '--mute-audio',
                     '--no-sandbox',
+                    '--crash-dumps-dir=/tmp/ajhunjh1_tmp/crashpad',
+                    '--disable-crash-reporter',
                 ]
             )
             page = browser.new_page()
-
-            def is_media_request(url: str) -> bool:
-                return any(x in url for x in ['.m4s', '.mp4', '/segment', 'media='])
-
-            # Measure segment throughput using elapsed wall-clock time from
-            # request start to requestfinished. Playwright request.timing.responseEnd
-            # is often -1 during the response event, which would drop samples.
-            def on_request(request):
-                if is_media_request(request.url):
-                    request_start_times[id(request)] = time.perf_counter()
-
-            def on_request_finished(request):
-                if not is_media_request(request.url):
-                    return
-                try:
-                    response = request.response()
-                    if response is None:
-                        return
-
-                    start = request_start_times.pop(id(request), None)
-                    if start is None:
-                        return
-
-                    duration_s = time.perf_counter() - start
-                    if duration_s <= 0:
-                        return
-
-                    content_length = response.headers.get('content-length')
-                    if not content_length:
-                        return
-
-                    size_bytes = int(content_length)
-                    kbps = (size_bytes * 8 / 1000) / duration_s
-                    throughput_samples.append(kbps)
-                except Exception:
-                    pass
-
-            page.on('request', on_request)
-            page.on('requestfinished', on_request_finished)
 
             print("[BROWSER] Launching headless Chromium...")
             startup_start = time.time()
@@ -468,7 +434,7 @@ class DASHJSBenchmark:
             self.metrics.startup_delay_ms = (time.time() - startup_start) * 1000
             print(f"   Startup delay: {self.metrics.startup_delay_ms:.0f}ms\n")
 
-            # Poll buffer level while playback runs
+            # Poll buffer level and player throughput estimate while playback runs
             print("[PLAYBACK] Collecting metrics...")
             poll_interval = 0.5
             elapsed = 0.0
@@ -492,7 +458,40 @@ class DASHJSBenchmark:
                 except Exception:
                     buffer_samples.append(0.0)
 
-                # Simple progress print every 10s
+                # Read dash.js internal EWMA throughput estimate (kbps).
+                # getAverageThroughput returns the smoothed estimate the ABR
+                # algorithm uses for quality decisions.  Fall back to computing
+                # from the last completed HTTP request timing.
+                try:
+                    tp_kbps = page.evaluate("""(() => {
+                        const p = window.dashPlayer;
+                        if (!p) return 0;
+                        if (typeof p.getAverageThroughput === 'function') {
+                            const t = p.getAverageThroughput('video');
+                            if (t && isFinite(t) && t > 0) return t;
+                        }
+                        try {
+                            const dm = p.getDashMetrics();
+                            if (!dm) return 0;
+                            const reqs = dm.getHttpRequests('video');
+                            if (!reqs || reqs.length === 0) return 0;
+                            for (let i = reqs.length - 1; i >= 0; i--) {
+                                const r = reqs[i];
+                                if (r._tfinish && r.trequest && r.trace && r.trace.length) {
+                                    const bytes = r.trace.reduce((s, t) => s + t.b[0], 0);
+                                    const ms = r._tfinish.getTime() - r.trequest.getTime();
+                                    if (ms > 0) return (bytes * 8) / ms;
+                                }
+                            }
+                        } catch(e) {}
+                        return 0;
+                    })()""")
+                    if tp_kbps and tp_kbps > 0:
+                        throughput_samples.append(float(tp_kbps))
+                except Exception:
+                    pass
+
+                # Progress print every 10s
                 if elapsed - last_print >= 10:
                     br_str = ""
                     try:
@@ -503,10 +502,11 @@ class DASHJSBenchmark:
                         br_str = f" | bitrate: {br} kbps"
                     except Exception:
                         pass
+                    tp_str = f" | tp: {throughput_samples[-1]:.0f} kbps" if throughput_samples else ""
                     buf_s = buffer_samples[-1] / 1000 if buffer_samples else 0
                     trace_bw = self._trace_bandwidth_at(elapsed)
                     trace_str = f" | trace_bw: {trace_bw:.0f} kbps" if trace_bw is not None else ""
-                    print(f"   t={elapsed:.0f}s | buffer: {buf_s:.1f}s{br_str}{trace_str}")
+                    print(f"   t={elapsed:.0f}s | buffer: {buf_s:.1f}s{br_str}{tp_str}{trace_str}")
                     last_print = elapsed
 
                 # Record trace available bandwidth
@@ -597,6 +597,7 @@ class DASHJSBenchmark:
 
         print("\n  [THROUGHPUT]")
         print(f"      Average:           {m.avg_throughput_kbps:,.0f} kbps")
+        print(f"      Median:            {m.median_throughput_kbps:,.0f} kbps")
         print(f"      Min / Max:         {m.min_throughput_kbps:,.0f} / {m.max_throughput_kbps:,.0f} kbps")
         print(f"      Std deviation:     {m.throughput_std_dev:,.1f} kbps")
 
@@ -608,8 +609,8 @@ class DASHJSBenchmark:
             print("\n  [AVAILABLE BW (trace)]")
             print(f"      Average:           {avg_trace:,.0f} kbps")
             print(f"      Min / Max:         {min_trace:,.0f} / {max_trace:,.0f} kbps")
-            if m.avg_throughput_kbps > 0:
-                util = m.avg_throughput_kbps / avg_trace * 100
+            if m.median_throughput_kbps > 0:
+                util = m.median_throughput_kbps / avg_trace * 100
                 print(f"      Utilisation:       {util:.1f}%")
 
         print("\n  [BUFFER]")
@@ -623,6 +624,7 @@ class DASHJSBenchmark:
 
     def save_results(self, filename: str):
         """Save results to JSON."""
+        avg_trace = sum(self.trace_bandwidth_samples) / len(self.trace_bandwidth_samples) if self.trace_bandwidth_samples else 0
         results = {
             "timestamp": datetime.now().isoformat(),
             "server": self.base_url,
@@ -631,7 +633,8 @@ class DASHJSBenchmark:
             "metrics": self.metrics.to_dict(),
             "trace_bandwidth": {
                 "samples": self.trace_bandwidth_samples,
-                "average_kbps": sum(self.trace_bandwidth_samples) / len(self.trace_bandwidth_samples) if self.trace_bandwidth_samples else 0,
+                "average_kbps": avg_trace,
+                "utilisation": self.metrics.median_throughput_kbps / avg_trace if avg_trace > 0 else 0,
             },
         }
         with open(filename, 'w') as f:
@@ -699,7 +702,6 @@ class HLSBenchmark:
 
         buffer_samples: List[float] = []
         throughput_samples: List[float] = []
-        request_start_times: Dict[int, float] = {}
 
         self._load_trace()
 
@@ -711,45 +713,11 @@ class HLSBenchmark:
                     '--autoplay-policy=no-user-gesture-required',
                     '--mute-audio',
                     '--no-sandbox',
+                    '--crash-dumps-dir=/tmp/ajhunjh1_tmp/crashpad',
+                    '--disable-crash-reporter',
                 ]
             )
             page = browser.new_page()
-
-            def is_media_request(url: str) -> bool:
-                return any(x in url for x in ['.m4s', '.ts', '/hls/seg_', '/hls/init_'])
-
-            def on_request(request):
-                if is_media_request(request.url):
-                    request_start_times[id(request)] = time.perf_counter()
-
-            def on_request_finished(request):
-                if not is_media_request(request.url):
-                    return
-                try:
-                    response = request.response()
-                    if response is None:
-                        return
-
-                    start = request_start_times.pop(id(request), None)
-                    if start is None:
-                        return
-
-                    duration_s = time.perf_counter() - start
-                    if duration_s <= 0:
-                        return
-
-                    content_length = response.headers.get('content-length')
-                    if not content_length:
-                        return
-
-                    size_bytes = int(content_length)
-                    kbps = (size_bytes * 8 / 1000) / duration_s
-                    throughput_samples.append(kbps)
-                except Exception:
-                    pass
-
-            page.on('request', on_request)
-            page.on('requestfinished', on_request_finished)
 
             print("[BROWSER] Launching headless Chromium...")
             startup_start = time.time()
@@ -799,6 +767,22 @@ class HLSBenchmark:
                 except Exception:
                     buffer_samples.append(0.0)
 
+                # Read hls.js internal EWMA bandwidth estimate (bps -> kbps).
+                # This is the smoothed throughput estimate that drives ABR
+                # level selection in hls.js.
+                try:
+                    tp_kbps = page.evaluate("""(() => {
+                        const h = window.hlsPlayer;
+                        if (!h) return 0;
+                        const bps = h.bandwidthEstimate;
+                        if (bps && isFinite(bps) && bps > 0) return bps / 1000;
+                        return 0;
+                    })()""")
+                    if tp_kbps and tp_kbps > 0:
+                        throughput_samples.append(float(tp_kbps))
+                except Exception:
+                    pass
+
                 if elapsed - last_print >= 10:
                     br_str = ""
                     try:
@@ -806,10 +790,11 @@ class HLSBenchmark:
                         br_str = f" | bitrate: {br} kbps"
                     except Exception:
                         pass
+                    tp_str = f" | tp: {throughput_samples[-1]:.0f} kbps" if throughput_samples else ""
                     buf_s = buffer_samples[-1] / 1000 if buffer_samples else 0
                     trace_bw = self._trace_bandwidth_at(elapsed)
                     trace_str = f" | trace_bw: {trace_bw:.0f} kbps" if trace_bw is not None else ""
-                    print(f"   t={elapsed:.0f}s | buffer: {buf_s:.1f}s{br_str}{trace_str}")
+                    print(f"   t={elapsed:.0f}s | buffer: {buf_s:.1f}s{br_str}{tp_str}{trace_str}")
                     last_print = elapsed
 
                 trace_bw = self._trace_bandwidth_at(elapsed)
@@ -897,6 +882,7 @@ class HLSBenchmark:
 
         print("\n  [THROUGHPUT]")
         print(f"      Average:           {m.avg_throughput_kbps:,.0f} kbps")
+        print(f"      Median:            {m.median_throughput_kbps:,.0f} kbps")
         print(f"      Min / Max:         {m.min_throughput_kbps:,.0f} / {m.max_throughput_kbps:,.0f} kbps")
         print(f"      Std deviation:     {m.throughput_std_dev:,.1f} kbps")
 
@@ -907,8 +893,8 @@ class HLSBenchmark:
             print("\n  [AVAILABLE BW (trace)]")
             print(f"      Average:           {avg_trace:,.0f} kbps")
             print(f"      Min / Max:         {min_trace:,.0f} / {max_trace:,.0f} kbps")
-            if m.avg_throughput_kbps > 0:
-                util = m.avg_throughput_kbps / avg_trace * 100
+            if m.median_throughput_kbps > 0:
+                util = m.median_throughput_kbps / avg_trace * 100
                 print(f"      Utilisation:       {util:.1f}%")
 
         print("\n  [BUFFER]")
@@ -922,6 +908,7 @@ class HLSBenchmark:
 
     def save_results(self, filename: str):
         """Save results to JSON."""
+        avg_trace = sum(self.trace_bandwidth_samples) / len(self.trace_bandwidth_samples) if self.trace_bandwidth_samples else 0
         results = {
             "timestamp": datetime.now().isoformat(),
             "server": self.base_url,
@@ -930,7 +917,8 @@ class HLSBenchmark:
             "metrics": self.metrics.to_dict(),
             "trace_bandwidth": {
                 "samples": self.trace_bandwidth_samples,
-                "average_kbps": sum(self.trace_bandwidth_samples) / len(self.trace_bandwidth_samples) if self.trace_bandwidth_samples else 0,
+                "average_kbps": avg_trace,
+                "utilisation": self.metrics.median_throughput_kbps / avg_trace if avg_trace > 0 else 0,
             },
         }
         with open(filename, 'w') as f:
@@ -1584,6 +1572,7 @@ class WebRTCBenchmark:
         if m.throughput_samples:
             print("\n  [THROUGHPUT (measured)]")
             print(f"      Average:           {m.avg_throughput_kbps:,.0f} kbps")
+            print(f"      Median:            {m.median_throughput_kbps:,.0f} kbps")
             print(f"      Min / Max:         {m.min_throughput_kbps:,.0f} / {m.max_throughput_kbps:,.0f} kbps")
 
         # Trace available bandwidth
@@ -1594,8 +1583,8 @@ class WebRTCBenchmark:
             print("\n  [AVAILABLE BW (trace)]")
             print(f"      Average:           {avg_trace:,.0f} kbps")
             print(f"      Min / Max:         {min_trace:,.0f} / {max_trace:,.0f} kbps")
-            if m.avg_throughput_kbps > 0:
-                util = m.avg_throughput_kbps / avg_trace * 100
+            if m.median_throughput_kbps > 0:
+                util = m.median_throughput_kbps / avg_trace * 100
                 print(f"      Utilisation:       {util:.1f}%")
 
         print("\n" + "=" * 70)
