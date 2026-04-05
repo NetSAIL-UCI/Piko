@@ -4,6 +4,7 @@
 #
 # Services:
 #   - hls-dash-server: HLS/DASH video streaming server (Python)
+#   - lldash-server:   LL-DASH video streaming server (Python)
 #   - webrtc-server:   WebRTC streaming server using mediasoup (Node.js)
 #   - shaper:          Network emulator with tc/netem (applies to traffic)
 #
@@ -14,6 +15,9 @@
 #   DASH:
 #     - Direct server (no shaping):  http://localhost:8080
 #     - Via shaper (shaped traffic): http://localhost:9080
+#   LL-DASH:
+#     - Direct server (no shaping):  http://localhost:8081
+#     - Via shaper (shaped traffic): http://localhost:9081
 #   WebRTC:
 #     - Direct server (no shaping):  http://localhost:3000
 #     - Via shaper (shaped traffic): http://localhost:9030
@@ -52,6 +56,35 @@ services:
     networks:
       netsail:
         ipv4_address: 192.168.100.20
+
+  # --------------------------------------------------------------------------
+  # LL-DASH Streaming Server
+  # --------------------------------------------------------------------------
+  # Serves LL-DASH player and DASH/CMAF artifacts for low-latency experiments
+  #
+  lldash-server:
+    build:
+      context: ./lldash-server
+      dockerfile: Dockerfile
+    image: netsail/lldash-server:latest
+    container_name: netsail-lldash-server
+    volumes:
+      - ./content:/app/content:ro
+    environment:
+      PORT: "8081"
+      HOST: "0.0.0.0"
+      CONTENT_DIR: "/app/content"
+    ports:
+      - "8081:8081"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      netsail:
+        ipv4_address: 192.168.100.21
 
   # --------------------------------------------------------------------------
   # WebRTC Streaming Server (mediasoup)
@@ -120,6 +153,8 @@ services:
     ports:
       # Access DASH server through shaper (traffic shaped)
       - "9080:80"
+      # Access LL-DASH server through shaper (traffic shaped)
+      - "9081:8081"
       - "9443:443"
       # Access WebRTC server through shaper (traffic shaped)
       - "9030:8030"
@@ -127,6 +162,7 @@ services:
       - NET_ADMIN
     depends_on:
       - hls-dash-server
+      - lldash-server
       - webrtc-server
     restart: unless-stopped
     networks:

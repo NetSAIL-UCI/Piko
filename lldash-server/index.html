@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NetSail LL-DASH Player</title>
+  <script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
+  <style>
+    :root {
+      --bg: #0a1118;
+      --panel: #12202d;
+      --accent: #2dd4bf;
+      --muted: #94a3b8;
+      --text: #e2e8f0;
+      --ok: #22c55e;
+      --warn: #f59e0b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+      background: radial-gradient(circle at 20% 20%, #153047, var(--bg));
+      color: var(--text);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .wrap { max-width: 980px; margin: 0 auto; }
+    h1 { font-size: 1.5rem; letter-spacing: 0.08em; margin: 0 0 6px; color: var(--accent); }
+    p { margin: 0 0 16px; color: var(--muted); }
+    .panel {
+      border: 1px solid #234;
+      background: linear-gradient(160deg, rgba(16, 38, 54, 0.8), rgba(11, 24, 34, 0.85));
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    video { width: 100%; display: block; background: #000; }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      padding: 12px;
+    }
+    .m {
+      padding: 10px;
+      border-radius: 8px;
+      background: rgba(11, 24, 34, 0.9);
+      border: 1px solid #203446;
+    }
+    .k { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .v { font-size: 1.2rem; color: var(--accent); margin-top: 4px; }
+    .status {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border-top: 1px solid #203446;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 99px;
+      background: var(--ok);
+      display: inline-block;
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>NetSail LL-DASH</h1>
+    <p>Dedicated low-latency DASH test page. Use <code>?mpd=/manifest_ll.mpd</code> to select a manifest.</p>
+
+    <div class="panel">
+      <video id="video" controls autoplay muted playsinline></video>
+      <div class="metrics">
+        <div class="m"><div class="k">Buffer</div><div class="v" id="buffer">0.00 s</div></div>
+        <div class="m"><div class="k">Latency</div><div class="v" id="latency">-- s</div></div>
+        <div class="m"><div class="k">Bitrate</div><div class="v" id="bitrate">-- kbps</div></div>
+        <div class="m"><div class="k">Stalls</div><div class="v" id="stalls">0</div></div>
+      </div>
+      <div class="status">
+        <div><span class="dot"></span><span id="state">Initializing...</span></div>
+        <div id="manifestLbl"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const qs = new URLSearchParams(window.location.search);
+    const mpd = qs.get('mpd') || '/manifest_ll.mpd';
+    document.getElementById('manifestLbl').textContent = mpd;
+
+    const video = document.getElementById('video');
+    const player = dashjs.MediaPlayer().create();
+    window.dashPlayer = player;
+
+    let stalls = 0;
+    let stalledAt = null;
+
+    player.updateSettings({
+      streaming: {
+        lowLatencyEnabled: true,
+        delay: {
+          liveDelayFragmentCount: 4,
+          useSuggestedPresentationDelay: false,
+        },
+        buffer: {
+          fastSwitchEnabled: true,
+          bufferTimeAtTopQuality: 6,
+          bufferTimeDefault: 5,
+        },
+        abr: {
+          initialBitrate: { video: 400 },
+          autoSwitchBitrate: { video: true },
+        },
+      }
+    });
+
+    player.initialize(video, mpd, true);
+
+    function setState(text) {
+      document.getElementById('state').textContent = text;
+    }
+
+    player.on(dashjs.MediaPlayer.events.STREAM_INITIALIZED, () => setState('Stream initialized'));
+    player.on(dashjs.MediaPlayer.events.PLAYBACK_PLAYING, () => setState('Playing'));
+    player.on(dashjs.MediaPlayer.events.PLAYBACK_WAITING, () => {
+      setState('Buffering');
+      if (stalledAt === null) {
+        stalledAt = Date.now();
+        stalls += 1;
+        document.getElementById('stalls').textContent = String(stalls);
+      }
+    });
+    player.on(dashjs.MediaPlayer.events.PLAYBACK_ERROR, () => setState('Playback error'));
+
+    setInterval(() => {
+      const b = player.getBufferLength('video') || 0;
+      document.getElementById('buffer').textContent = `${b.toFixed(2)} s`;
+
+      let latency = null;
+      if (typeof player.getCurrentLiveLatency === 'function') {
+        latency = player.getCurrentLiveLatency();
+      }
+      document.getElementById('latency').textContent = latency && isFinite(latency)
+        ? `${latency.toFixed(2)} s`
+        : '-- s';
+
+      const rep = player.getCurrentRepresentationForType('video');
+      document.getElementById('bitrate').textContent = rep ? `${Math.round(rep.bandwidth / 1000)} kbps` : '-- kbps';
+
+      if (stalledAt !== null && !video.paused && video.readyState >= 3) {
+        stalledAt = null;
+        setState('Playing');
+      }
+    }, 500);
+  </script>
+</body>
+</html>

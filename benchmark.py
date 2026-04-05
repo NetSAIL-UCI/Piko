@@ -341,13 +341,16 @@ class DASHManifestParser:
 class DASHJSBenchmark:
     """DASH benchmark using a real dash.js player in a headless Chromium browser."""
 
-    def __init__(self, base_url: str, max_duration: Optional[float] = None):
+    def __init__(self, base_url: str, max_duration: Optional[float] = None,
+                 protocol_name: str = "dash", abr_name: str = "bola"):
         self.base_url = base_url.rstrip('/')
         self.max_duration = max_duration
         self.metrics = StreamingMetrics()
         self.max_bitrate: int = 3000
         self.trace_bandwidth_samples: List[float] = []
         self.trace_data: List[tuple] = []
+        self.protocol_name = protocol_name
+        self.abr_name = abr_name
 
     def _load_trace(self) -> None:
         """Load the active shaper trace file to look up available bandwidth."""
@@ -390,7 +393,7 @@ class DASHJSBenchmark:
         from playwright.sync_api import sync_playwright
 
         print("\n" + "=" * 70)
-        print("  DASH Streaming QoE Benchmark (dash.js / BOLA)")
+        print(f"  {self.protocol_name.upper()} Streaming QoE Benchmark (dash.js / BOLA)")
         print("=" * 70)
         print(f"  Server: {self.base_url}")
         print("=" * 70 + "\n")
@@ -569,7 +572,7 @@ class DASHJSBenchmark:
         m = self.metrics
 
         print("\n" + "=" * 70)
-        print("  BENCHMARK RESULTS (dash.js / BOLA)")
+        print(f"  BENCHMARK RESULTS ({self.protocol_name.upper()} / dash.js / BOLA)")
         print("=" * 70)
 
         print("\n  [TIMING]")
@@ -631,8 +634,8 @@ class DASHJSBenchmark:
         results = {
             "timestamp": datetime.now().isoformat(),
             "server": self.base_url,
-            "protocol": "dash",
-            "abr": "bola",
+            "protocol": self.protocol_name,
+            "abr": self.abr_name,
             "metrics": self.metrics.to_dict(),
             "trace_bandwidth": {
                 "samples": self.trace_bandwidth_samples,
@@ -1676,6 +1679,8 @@ def resolve_url(base_url: str, protocol: str, shaped: bool) -> str:
     url = base_url
     if shaped and protocol in ("dash", "hls") and "8080" in url:
         url = url.replace("8080", "9080")
+    if shaped and protocol == "lldash" and "8081" in url:
+        url = url.replace("8081", "9081")
     return url
 
 
@@ -1683,7 +1688,9 @@ def run_single_benchmark(protocol: str, url: str, duration, output_path: str,
                          trace_name: str = None, dash_url: str = None):
     """Run a single benchmark and save results. Returns True on success."""
     if protocol == "dash":
-        benchmark = DASHJSBenchmark(url, duration)
+        benchmark = DASHJSBenchmark(url, duration, protocol_name="dash")
+    elif protocol == "lldash":
+        benchmark = DASHJSBenchmark(url, duration, protocol_name="lldash")
     elif protocol == "hls":
         benchmark = HLSBenchmark(url, duration)
     else:
@@ -1723,7 +1730,7 @@ def collect_trace_files(directory: Path) -> List[Path]:
 
 def main():
     parser = argparse.ArgumentParser(
-                description="Streaming Benchmark Tool (DASH + HLS + WebRTC)",
+                description="Streaming Benchmark Tool (DASH + LL-DASH + HLS + WebRTC)",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -1744,7 +1751,7 @@ Examples:
   python benchmark.py -p webrtc --duration 60
         """
     )
-    parser.add_argument("--protocol", "-p", choices=["dash", "hls", "webrtc"], default="dash",
+    parser.add_argument("--protocol", "-p", choices=["dash", "lldash", "hls", "webrtc"], default="dash",
                        help="Streaming protocol to benchmark (default: dash)")
     parser.add_argument("--url", default=None,
                        help="Base URL of server (default: auto-detect based on protocol)")
@@ -1753,7 +1760,7 @@ Examples:
     parser.add_argument("--output", "-o", default=None,
                        help="Output JSON file (ignored when using --trace-dir)")
     parser.add_argument("--shaped", action="store_true",
-                       help="Use shaped port (9080 for DASH, 9030 for WebRTC)")
+                       help="Use shaped port (9080 for DASH/HLS, 9081 for LL-DASH, 9030 for WebRTC)")
     parser.add_argument("--trace", type=str, default=None,
                        help="Path to a single trace file (e.g., traces/trace_12743_3g_tc.csv)")
     parser.add_argument("--trace-dir", type=str, default=None,
@@ -1774,6 +1781,9 @@ Examples:
     if args.url is None:
         if args.protocol in ("dash", "hls"):
             args.url = "http://localhost:8080"
+        elif args.protocol == "lldash":
+            # Default LL-DASH player route; override with --url when needed.
+            args.url = "http://localhost:8081/?mpd=/manifest.mpd"
         else:
             args.url = "http://localhost:3000"
 

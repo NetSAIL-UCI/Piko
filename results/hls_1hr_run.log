@@ -200,3 +200,63 @@
    t=481s | buffer: 31.0s | bitrate: 220 kbps | tp: 212 kbps | trace_bw: 30727 kbps
    t=491s | buffer: 32.8s | bitrate: 220 kbps | tp: 243 kbps | trace_bw: 30727 kbps
    t=502s | buffer: 30.6s | bitrate: 110 kbps | tp: 366 kbps | trace_bw: 30727 kbps
+   t=512s | buffer: 32.3s | bitrate: 110 kbps | tp: 575 kbps | trace_bw: 30727 kbps
+   t=522s | buffer: 30.1s | bitrate: 110 kbps | tp: 772 kbps | trace_bw: 30727 kbps
+   t=532s | buffer: 31.9s | bitrate: 220 kbps | tp: 1088 kbps | trace_bw: 30727 kbps
+   t=542s | buffer: 25.6s | bitrate: 220 kbps | tp: 518 kbps | trace_bw: 30727 kbps
+   t=553s | buffer: 31.4s | bitrate: 440 kbps | tp: 299 kbps | trace_bw: 30727 kbps
+   t=563s | buffer: 29.1s | bitrate: 660 kbps | tp: 307 kbps | trace_bw: 30727 kbps
+   t=573s | buffer: 27.3s | bitrate: 220 kbps | tp: 250 kbps | trace_bw: 30727 kbps
+   t=583s | buffer: 17.1s | bitrate: 220 kbps | tp: 250 kbps | trace_bw: 30727 kbps
+   t=594s | buffer: 6.8s | bitrate: 220 kbps | tp: 250 kbps | trace_bw: 30727 kbps
+node:internal/modules/cjs/loader:1225
+  const err = new Error(message);
+              ^
+
+Error: Cannot find module './../../package.json'
+Require stack:
+- /srv/disk00/ajhunjh1/Benchmarking/venv/lib/python3.8/site-packages/playwright/driver/package/lib/utils/userAgent.js
+- /srv/disk00/ajhunjh1/Benchmarking/venv/lib/python3.8/site-packages/playwright/driver/package/lib/utils/index.js
+- /srv/disk00/ajhunjh1/Benchmarking/venv/lib/python3.8/site-packages/playwright/driver/package/lib/cli/programWithTestStub.js
+- /srv/disk00/ajhunjh1/Benchmarking/venv/lib/python3.8/site-packages/playwright/driver/package/cli.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1225:15)
+    at Module._load (node:internal/modules/cjs/loader:1051:27)
+    at Module.require (node:internal/modules/cjs/loader:1311:19)
+    at require (node:internal/modules/helpers:179:18)
+    at getPlaywrightVersion (/srv/disk00/ajhunjh1/Benchmarking/venv/lib/python3.8/site-packages/playwright/driver/package/lib/utils/userAgent.js:91:54)
+    at HarTracer.stop (/srv/disk00/ajhunjh1/Benchmarking/venv/lib/python3.8/site-packages/playwright/driver/package/lib/server/har/harTracer.js:417:50)
+    at Tracing.abort (/srv/disk00/ajhunjh1/Benchmarking/venv/lib/python3.8/site-packages/playwright/driver/package/lib/server/trace/recorder/tracing.js:203:21)
+    at CRBrowserContext._didCloseInternal (/srv/disk00/ajhunjh1/Benchmarking/venv/lib/python3.8/site-packages/playwright/driver/package/lib/server/browserContext.js:199:18)
+    at CRBrowserContext._browserClosed (/srv/disk00/ajhunjh1/Benchmarking/venv/lib/python3.8/site-packages/playwright/driver/package/lib/server/browserContext.js:189:10)
+    at CRBrowser._didClose (/srv/disk00/ajhunjh1/Benchmarking/venv/lib/python3.8/site-packages/playwright/driver/package/lib/server/browser.js:128:52) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/srv/disk00/ajhunjh1/Benchmarking/venv/lib/python3.8/site-packages/playwright/driver/package/lib/utils/userAgent.js',
+    '/srv/disk00/ajhunjh1/Benchmarking/venv/lib/python3.8/site-packages/playwright/driver/package/lib/utils/index.js',
+    '/srv/disk00/ajhunjh1/Benchmarking/venv/lib/python3.8/site-packages/playwright/driver/package/lib/cli/programWithTestStub.js',
+    '/srv/disk00/ajhunjh1/Benchmarking/venv/lib/python3.8/site-packages/playwright/driver/package/cli.js'
+  ]
+}
+
+Node.js v20.18.0
+
+[ERROR] Benchmark failed: Browser.close: Connection closed while reading from the driver
+Traceback (most recent call last):
+  File "benchmark.py", line 1864, in <module>
+    main()
+  File "benchmark.py", line 1823, in main
+    ok = run_single_benchmark(args.protocol, url, args.duration, output_path,
+  File "benchmark.py", line 1697, in run_single_benchmark
+    benchmark.run()
+  File "benchmark.py", line 824, in run
+    browser.close()
+  File "/srv/disk00/ajhunjh1/Benchmarking/venv/lib/python3.8/site-packages/playwright/sync_api/_generated.py", line 14213, in close
+  File "/srv/disk00/ajhunjh1/Benchmarking/venv/lib/python3.8/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+  File "/srv/disk00/ajhunjh1/Benchmarking/venv/lib/python3.8/site-packages/playwright/_impl/_browser.py", line 192, in close
+  File "/srv/disk00/ajhunjh1/Benchmarking/venv/lib/python3.8/site-packages/playwright/_impl/_browser.py", line 189, in close
+  File "/srv/disk00/ajhunjh1/Benchmarking/venv/lib/python3.8/site-packages/playwright/_impl/_connection.py", line 59, in send
+  File "/srv/disk00/ajhunjh1/Benchmarking/venv/lib/python3.8/site-packages/playwright/_impl/_connection.py", line 520, in wrap_api_call
+Exception: Browser.close: Connection closed while reading from the driver
+=== Starting FCC HLS (1hr) ===
+bash: line 6: /srv/disk00/ajhunjh1/Benchmarking/venv/bin/python3: No such file or directory
+=== All benchmarks complete ===

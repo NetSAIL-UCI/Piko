@@ -1,0 +1,88 @@
+
+======================================================================
+  BATCH RUN: 11 trace(s) from traces/hsdpa
+======================================================================
+
+
+──────────────────────────────────────────────────────────────────────
+  [1/11] hsdpa_bus_ljansbakken_oslo_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_bus_ljansbakken_oslo_tc.csv
+[SHAPER] Restarting...
+[sudo] password for ajhunjh1: 
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 4445 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1027ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.9s | bitrate: 4500 kbps | tp: 9940 kbps | trace_bw: 1182 kbps
+   t=20s | buffer: 15.7s | bitrate: 3000 kbps | tp: 10395 kbps | trace_bw: 113 kbps
+   t=31s | buffer: 13.6s | bitrate: 3000 kbps | tp: 9113 kbps | trace_bw: 2407 kbps
+   t=41s | buffer: 15.2s | bitrate: 3000 kbps | tp: 6240 kbps | trace_bw: 2464 kbps
+   t=51s | buffer: 13.1s | bitrate: 3000 kbps | tp: 5695 kbps | trace_bw: 2480 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,027 ms
+      Playback time:     60.3 s
+
+  [BITRATE]
+      Average:           3,475 kbps
+      Min / Max:         800 / 4,500 kbps
+      Median:            3,000 kbps
+      Std deviation:     722.6 kbps
+      Variance:          522,198.1
+      25th/75th %ile:    3,000 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       4
+      Up / Down:         2 / 2
+      Avg magnitude:     2,600 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        238 ms
+      Ratio:             0.3931%
+      Frequency:         1.990 per minute
+      Avg duration:      119 ms
+      Max duration:      223 ms
+
+  [THROUGHPUT]
+      Average:           8,497 kbps
+      Median:            9,113 kbps
+      Min / Max:         5,399 / 13,969 kbps
+      Std deviation:     2,191.7 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,903 kbps
+      Min / Max:         9 / 3,711 kbps
+      Utilisation:       478.8%
+
+  [BUFFER]
+      Average level:     12.2 s
+      Min / Max:         0.5 / 16.7 s
+
+  [UTILIZATION]
+      Bandwidth:         38.1%
+
+======================================================================
+
+[SAVED] results/dash_vs_lldash_20260405/benchmark_dash_hsdpa_bus_ljansbakken_oslo_tc_20260405_133156.json
+
+──────────────────────────────────────────────────────────────────────
+  [2/11] hsdpa_car_aarnes_elverum_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_car_aarnes_elverum_tc.csv
+[SHAPER] Restarting...
+[sudo] password for ajhunjh1: 

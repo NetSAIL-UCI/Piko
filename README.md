@@ -116,4 +116,14 @@ docker compose restart shaper   # Restart shaper after config change
 | Service | Direct | Shaped |
 |---------|--------|--------|
 | HLS/DASH Server | 8080 | 9080 |
+| LL-DASH Server | 8081 | 9081 |
 | WebRTC Server | 3000 | 9030 |
+
+## LL-DASH Service
+
+The repository now includes a dedicated LL-DASH module under `lldash-server/`.
+
+- Direct player URL: `http://localhost:8081`
+- Shaped player URL: `http://localhost:9081`
+- Default manifest path in the LL player: `/manifest_ll.mpd`
+- Override manifest from URL: `http://localhost:8081/?mpd=/manifest.mpd`
