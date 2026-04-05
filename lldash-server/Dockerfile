@@ -8,6 +8,7 @@ WORKDIR /app
 
 COPY server.py .
 COPY index.html .
+COPY dash.all.min.js .
 
 RUN mkdir -p /app/content
 

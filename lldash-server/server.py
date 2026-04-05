@@ -106,10 +106,16 @@ class LLDASHHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps(response).encode())
             return
 
-        if self.path in ('/', '/index.html'):
+        path_base = self.path.split('?')[0]
+        if path_base in ('/', '/index.html', '/dash.all.min.js'):
+            # Preserve query string for index so JS can read ?mpd= param,
+            # but serve the file from /app not CONTENT_DIR.
+            if path_base == '/':
+                self.path = '/index.html' + (self.path[1:] if '?' in self.path else '')
+            else:
+                self.path = path_base
             old_dir = self.directory
             self.directory = '/app'
-            self.path = '/index.html'
             super().do_GET()
             self.directory = old_dir
             return

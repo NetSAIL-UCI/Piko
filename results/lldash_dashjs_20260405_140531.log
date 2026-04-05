@@ -1,0 +1,72 @@
+[TRACE] hsdpa_bus_ljansbakken_oslo_tc.csv
+[SHAPER] Restarting...
+[sudo] password for ajhunjh1: 
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:9081/?mpd=/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 4445 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 951ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 3.9s | bitrate: 100 kbps | tp: 12937 kbps | trace_bw: 1182 kbps
+   t=20s | buffer: 2.5s | bitrate: 100 kbps | tp: 10480 kbps | trace_bw: 113 kbps
+   t=31s | buffer: 0.3s | bitrate: 1200 kbps | tp: 10386 kbps | trace_bw: 2407 kbps
+   t=41s | buffer: 2.9s | bitrate: 100 kbps | tp: 9697 kbps | trace_bw: 2464 kbps
+   t=51s | buffer: 1.0s | bitrate: 100 kbps | tp: 9033 kbps | trace_bw: 2480 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     951 ms
+      Playback time:     55.6 s
+
+  [BITRATE]
+      Average:           431 kbps
+      Min / Max:         100 / 4,500 kbps
+      Median:            100 kbps
+      Std deviation:     914.4 kbps
+      Variance:          836,038.5
+      25th/75th %ile:    100 / 400 kbps
+
+  [SWITCHES]
+      Total count:       23
+      Up / Down:         12 / 11
+      Avg magnitude:     1,213 kbps
+
+  [REBUFFERING]
+      Events:            12
+      Total time:        4,962 ms
+      Ratio:             8.1989%
+      Frequency:         12.959 per minute
+      Avg duration:      414 ms
+      Max duration:      1,687 ms
+
+  [THROUGHPUT]
+      Average:           11,190 kbps
+      Median:            10,386 kbps
+      Min / Max:         7,368 / 17,900 kbps
+      Std deviation:     2,754.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,901 kbps
+      Min / Max:         9 / 3,711 kbps
+      Utilisation:       546.4%
+
+  [BUFFER]
+      Average level:     2.1 s
+      Min / Max:         0.1 / 4.1 s
+
+  [UTILIZATION]
+      Bandwidth:         4.2%
+
+======================================================================
+
+[SAVED] results/benchmark_lldash_20260405_140535.json

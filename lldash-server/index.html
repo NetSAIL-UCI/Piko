@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NetSail LL-DASH Player</title>
-  <script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
+  <script src="/dash.all.min.js"></script>
   <style>
     :root {
       --bg: #0a1118;
@@ -69,7 +69,7 @@
 <body>
   <div class="wrap">
     <h1>NetSail LL-DASH</h1>
-    <p>Dedicated low-latency DASH test page. Use <code>?mpd=/manifest_ll.mpd</code> to select a manifest.</p>
+    <p>Low-latency DASH · dash.js · lowLatencyEnabled</p>
 
     <div class="panel">
       <video id="video" controls autoplay muted playsinline></video>
@@ -80,23 +80,49 @@
         <div class="m"><div class="k">Stalls</div><div class="v" id="stalls">0</div></div>
       </div>
       <div class="status">
-        <div><span class="dot"></span><span id="state">Initializing...</span></div>
+        <div><span class="dot"></span><span id="status-text">Initializing...</span></div>
         <div id="manifestLbl"></div>
       </div>
     </div>
   </div>
 
   <script>
-    const qs = new URLSearchParams(window.location.search);
-    const mpd = qs.get('mpd') || '/manifest_ll.mpd';
+    const qs  = new URLSearchParams(window.location.search);
+    const mpd = qs.get('mpd') || '/manifest.mpd';
     document.getElementById('manifestLbl').textContent = mpd;
 
-    const video = document.getElementById('video');
+    const video  = document.getElementById('video');
     const player = dashjs.MediaPlayer().create();
-    window.dashPlayer = player;
 
-    let stalls = 0;
-    let stalledAt = null;
+    // Expose for Playwright polling
+    window.dashPlayer = player;
+    window.__playbackEnded     = false;
+    window.__rebufferCount     = 0;
+    window.__rebufferDurations = [];
+    window.__rebufferStart     = null;
+
+    // Benchmark state variables
+    let bitrateHistory     = [];
+    let bitrateSwitchCount = 0;
+    let lastBitrate        = null;
+    let totalStallingTime  = 0;
+    let stallingStartTime  = null;
+    let isStalling         = false;
+
+    // Trace-driven bandwidth cap (injected by benchmark.py)
+    window.__traceBandwidthKbps = null;
+    window.__setTraceBandwidth  = function(bwKbps) {
+      window.__traceBandwidthKbps = bwKbps;
+      if (!window.dashPlayer) return;
+      try {
+        window.dashPlayer.updateSettings({
+          streaming: { abr: {
+            maxBitrate: { video: Math.round(bwKbps) },
+            throughput: { bandwidthSafetyFactor: 1.0 },
+          }}
+        });
+      } catch(e) {}
+    };
 
     player.updateSettings({
       streaming: {
@@ -114,45 +140,83 @@
           initialBitrate: { video: 400 },
           autoSwitchBitrate: { video: true },
         },
+        timeouts: { load: 120000 },
       }
     });
 
     player.initialize(video, mpd, true);
 
-    function setState(text) {
-      document.getElementById('state').textContent = text;
+    function updateStatus(text) {
+      document.getElementById('status-text').textContent = text;
     }
 
-    player.on(dashjs.MediaPlayer.events.STREAM_INITIALIZED, () => setState('Stream initialized'));
-    player.on(dashjs.MediaPlayer.events.PLAYBACK_PLAYING, () => setState('Playing'));
-    player.on(dashjs.MediaPlayer.events.PLAYBACK_WAITING, () => {
-      setState('Buffering');
-      if (stalledAt === null) {
-        stalledAt = Date.now();
-        stalls += 1;
-        document.getElementById('stalls').textContent = String(stalls);
+    player.on(dashjs.MediaPlayer.events.CAN_PLAY, () => updateStatus('Playing'));
+    player.on(dashjs.MediaPlayer.events.PLAYBACK_PLAYING, () => {
+      updateStatus('Playing');
+      if (isStalling && stallingStartTime) {
+        totalStallingTime += Date.now() - stallingStartTime;
+        isStalling = false;
+        stallingStartTime = null;
+      }
+      if (window.__rebufferStart) {
+        window.__rebufferDurations.push(Date.now() - window.__rebufferStart);
+        window.__rebufferStart = null;
       }
     });
-    player.on(dashjs.MediaPlayer.events.PLAYBACK_ERROR, () => setState('Playback error'));
+    player.on(dashjs.MediaPlayer.events.PLAYBACK_WAITING, () => {
+      updateStatus('Buffering...');
+      if (!isStalling) {
+        isStalling = true;
+        stallingStartTime = Date.now();
+        window.__rebufferCount++;
+        window.__rebufferStart = Date.now();
+      }
+    });
+    player.on(dashjs.MediaPlayer.events.PLAYBACK_ENDED, () => {
+      updateStatus('Playback ended');
+      window.__playbackEnded = true;
+    });
+    player.on(dashjs.MediaPlayer.events.ERROR, e => {
+      updateStatus('Error: ' + (e.error?.message || 'Unknown'));
+    });
 
     setInterval(() => {
+      // Buffer
       const b = player.getBufferLength('video') || 0;
       document.getElementById('buffer').textContent = `${b.toFixed(2)} s`;
 
+      // Live latency
       let latency = null;
       if (typeof player.getCurrentLiveLatency === 'function') {
         latency = player.getCurrentLiveLatency();
       }
-      document.getElementById('latency').textContent = latency && isFinite(latency)
-        ? `${latency.toFixed(2)} s`
-        : '-- s';
+      document.getElementById('latency').textContent =
+        latency && isFinite(latency) ? `${latency.toFixed(2)} s` : '-- s';
 
+      // Bitrate + switch tracking
       const rep = player.getCurrentRepresentationForType('video');
-      document.getElementById('bitrate').textContent = rep ? `${Math.round(rep.bandwidth / 1000)} kbps` : '-- kbps';
+      if (rep && rep.bandwidth) {
+        const bps = rep.bandwidth;
+        document.getElementById('bitrate').textContent =
+          `${Math.round(bps / 1000)} kbps`;
+        bitrateHistory.push({ bitrate: bps, timestamp: Date.now() });
+        if (lastBitrate !== null && lastBitrate !== bps) {
+          bitrateSwitchCount++;
+          document.getElementById('stalls').textContent = bitrateSwitchCount;
+        }
+        lastBitrate = bps;
+      }
 
-      if (stalledAt !== null && !video.paused && video.readyState >= 3) {
-        stalledAt = null;
-        setState('Playing');
+      // Recover from stall if playing
+      if (isStalling && stallingStartTime && !video.paused && video.readyState >= 3) {
+        totalStallingTime += Date.now() - stallingStartTime;
+        isStalling = false;
+        stallingStartTime = null;
+        if (window.__rebufferStart) {
+          window.__rebufferDurations.push(Date.now() - window.__rebufferStart);
+          window.__rebufferStart = null;
+        }
+        updateStatus('Playing');
       }
     }, 500);
   </script>

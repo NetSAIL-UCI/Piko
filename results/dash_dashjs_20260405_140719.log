@@ -1,0 +1,71 @@
+[TRACE] hsdpa_bus_ljansbakken_oslo_tc.csv
+[SHAPER] Restarting...
+[sudo] password for ajhunjh1: 
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 4445 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 424ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 1182 kbps
+   t=20s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 113 kbps
+   t=31s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 2407 kbps
+   t=41s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 2464 kbps
+   t=51s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 2480 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     424 ms
+      Playback time:     55.5 s
+
+  [BITRATE]
+      Average:           4,500 kbps
+      Min / Max:         4,500 / 4,500 kbps
+      Median:            4,500 kbps
+      Std deviation:     0.0 kbps
+      Variance:          0.0
+      25th/75th %ile:    4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        4,857 ms
+      Ratio:             8.0418%
+      Frequency:         1.080 per minute
+      Avg duration:      4,857 ms
+      Max duration:      4,857 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,915 kbps
+      Min / Max:         9 / 3,711 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/benchmark_dash_20260405_140723.json
