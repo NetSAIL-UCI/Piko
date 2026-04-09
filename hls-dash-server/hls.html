@@ -216,6 +216,19 @@
       hls.on(Hls.Events.ERROR, () => {
         setStatus('Error');
       });
+
+      // Throughput tracking via stable public event
+      window.__throughputSamples = [];
+      hls.on(Hls.Events.FRAG_LOADED, (_evt, data) => {
+        const stats = data.frag.stats;
+        if (stats) {
+          const bytes = stats.total || 0;
+          const ms = (stats.loading.end || 0) - (stats.loading.start || 0);
+          if (ms > 0 && bytes > 0) {
+            window.__throughputSamples.push((bytes * 8) / ms);
+          }
+        }
+      });
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
       video.src = manifestUrl;
       video.play().catch(() => {});

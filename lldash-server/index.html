@@ -180,6 +180,19 @@
       updateStatus('Error: ' + (e.error?.message || 'Unknown'));
     });
 
+    // Throughput tracking via stable public event
+    window.__throughputSamples = [];
+    player.on(dashjs.MediaPlayer.events.FRAGMENT_LOADING_COMPLETED, e => {
+      const req = e.request;
+      if (req && req.mediaType === 'video' && req.type === 'MediaSegment') {
+        const bytes = req.bytesLoaded || 0;
+        const ms = req.requestEndDate - req.requestStartDate;
+        if (ms > 0 && bytes > 0) {
+          window.__throughputSamples.push((bytes * 8) / ms);
+        }
+      }
+    });
+
     setInterval(() => {
       // Buffer
       const b = player.getBufferLength('video') || 0;

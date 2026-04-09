@@ -463,33 +463,14 @@ class DASHJSBenchmark:
                 except Exception:
                     buffer_samples.append(0.0)
 
-                # Read dash.js internal EWMA throughput estimate (kbps).
-                # getAverageThroughput returns the smoothed estimate the ABR
-                # algorithm uses for quality decisions.  Fall back to computing
-                # from the last completed HTTP request timing.
+                # Read throughput from the player-instrumented window global.
+                # The player HTML fires FRAGMENT_LOADING_COMPLETED / FRAG_LOADED
+                # and pushes (bytes*8/ms) into window.__throughputSamples.
                 try:
                     tp_kbps = page.evaluate("""(() => {
-                        const p = window.dashPlayer;
-                        if (!p) return 0;
-                        if (typeof p.getAverageThroughput === 'function') {
-                            const t = p.getAverageThroughput('video');
-                            if (t && isFinite(t) && t > 0) return t;
-                        }
-                        try {
-                            const dm = p.getDashMetrics();
-                            if (!dm) return 0;
-                            const reqs = dm.getHttpRequests('video');
-                            if (!reqs || reqs.length === 0) return 0;
-                            for (let i = reqs.length - 1; i >= 0; i--) {
-                                const r = reqs[i];
-                                if (r._tfinish && r.trequest && r.trace && r.trace.length) {
-                                    const bytes = r.trace.reduce((s, t) => s + t.b[0], 0);
-                                    const ms = r._tfinish.getTime() - r.trequest.getTime();
-                                    if (ms > 0) return (bytes * 8) / ms;
-                                }
-                            }
-                        } catch(e) {}
-                        return 0;
+                        const s = window.__throughputSamples;
+                        if (!s || s.length === 0) return 0;
+                        return s[s.length - 1];
                     })()""")
                     if tp_kbps and tp_kbps > 0:
                         throughput_samples.append(float(tp_kbps))
@@ -777,16 +758,14 @@ class HLSBenchmark:
                 except Exception:
                     buffer_samples.append(0.0)
 
-                # Read hls.js internal EWMA bandwidth estimate (bps -> kbps).
-                # This is the smoothed throughput estimate that drives ABR
-                # level selection in hls.js.
+                # Read throughput from the player-instrumented window global.
+                # hls.html fires FRAG_LOADED and pushes (bytes*8/ms) into
+                # window.__throughputSamples on every completed segment.
                 try:
                     tp_kbps = page.evaluate("""(() => {
-                        const h = window.hlsPlayer;
-                        if (!h) return 0;
-                        const bps = h.bandwidthEstimate;
-                        if (bps && isFinite(bps) && bps > 0) return bps / 1000;
-                        return 0;
+                        const s = window.__throughputSamples;
+                        if (!s || s.length === 0) return 0;
+                        return s[s.length - 1];
                     })()""")
                     if tp_kbps and tp_kbps > 0:
                         throughput_samples.append(float(tp_kbps))
