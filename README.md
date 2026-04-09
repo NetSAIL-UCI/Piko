@@ -1,7 +1,7 @@
 # Streaming Benchmark
 
 Measure video streaming QoE (HLS, DASH & WebRTC) under emulated network conditions.
-
+[View the NetSAIL System Diagram (PDF)](./Netsail%20diagram.pdf)
 ## Setup
 
 ```bash
