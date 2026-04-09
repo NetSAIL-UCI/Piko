@@ -94,7 +94,17 @@ class Handler(BaseHTTPRequestHandler):
         self.wfile.write(data)
 
     def _serve_json(self, obj):
-        data = json.dumps(obj).encode()
+        # Replace NaN/Infinity with null so browsers can parse the JSON
+        import math
+        def sanitize(o):
+            if isinstance(o, float) and (math.isnan(o) or math.isinf(o)):
+                return None
+            if isinstance(o, dict):
+                return {k: sanitize(v) for k, v in o.items()}
+            if isinstance(o, list):
+                return [sanitize(v) for v in o]
+            return o
+        data = json.dumps(sanitize(obj)).encode()
         self.send_response(200)
         self.send_header('Content-Type', 'application/json')
         self.send_header('Access-Control-Allow-Origin', '*')
@@ -103,7 +113,8 @@ class Handler(BaseHTTPRequestHandler):
         self.wfile.write(data)
 
     def log_message(self, fmt, *args):
-        pass  # suppress per-request logs
+        import sys
+        print(f"[REQ] {self.address_string()} {fmt % args}", file=sys.stderr, flush=True)
 
 
 def main():
