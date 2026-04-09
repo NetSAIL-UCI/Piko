@@ -421,7 +421,7 @@ class DASHJSBenchmark:
             print("[BROWSER] Launching headless Chromium...")
             startup_start = time.time()
             bench_start = time.time()
-            page.goto(self.base_url, timeout=30000, wait_until='domcontentloaded')
+            page.goto(self.base_url, timeout=120000, wait_until='domcontentloaded')
 
             # Wait until dash.js signals it is playing
             print("[BROWSER] Waiting for playback to start...")
@@ -653,7 +653,9 @@ class HLSBenchmark:
 
     def __init__(self, base_url: str, max_duration: Optional[float] = None):
         self.base_url = base_url.rstrip('/')
-        self.player_url = f"{self.base_url}/hls.html"
+        # If the URL already points directly at the player page (contains hls.html),
+        # use it as-is; otherwise append the default path.
+        self.player_url = self.base_url if '/hls.html' in self.base_url else f"{self.base_url}/hls.html"
         self.max_duration = max_duration
         self.metrics = StreamingMetrics()
         self.max_bitrate: int = 3000
@@ -727,7 +729,7 @@ class HLSBenchmark:
 
             print("[BROWSER] Launching headless Chromium...")
             startup_start = time.time()
-            page.goto(self.player_url, timeout=30000, wait_until='domcontentloaded')
+            page.goto(self.player_url, timeout=120000, wait_until='domcontentloaded')
 
             print("[BROWSER] Waiting for playback to start...")
             try:
@@ -1677,10 +1679,11 @@ def setup_trace(trace_path: Path, protocol: str = "dash", skip_restart: bool = F
 def resolve_url(base_url: str, protocol: str, shaped: bool) -> str:
     """Return the final URL after applying shaped-port mapping."""
     url = base_url
-    if shaped and protocol in ("dash", "hls") and "8080" in url:
+    if shaped and protocol == "dash" and "8080" in url:
         url = url.replace("8080", "9080")
-    if shaped and protocol == "lldash" and "8081" in url:
-        url = url.replace("8081", "9081")
+    # hls: page loads direct (8080), manifest already points at shaped port (9080)
+    # lldash: page loads direct (8081), MPD already points at shaped port (9081)
+    # — no remapping needed.
     return url
 
 
@@ -1779,11 +1782,15 @@ Examples:
 
     # Set default URL based on protocol
     if args.url is None:
-        if args.protocol in ("dash", "hls"):
+        if args.protocol == "dash":
             args.url = "http://localhost:8080"
+        elif args.protocol == "hls":
+            # Page from direct port, media from shaped port (avoids page-load timeout on low-BW traces)
+            args.url = "http://localhost:8080/hls.html?manifest=http://localhost:9080/hls/master.m3u8"
         elif args.protocol == "lldash":
-            # Default LL-DASH player route; override with --url when needed.
-            args.url = "http://localhost:8081/?mpd=/manifest.mpd"
+            # Load player page directly (bypass shaper so assets load fast).
+            # The MPD URL points to the shaped port so only segments are shaped.
+            args.url = "http://localhost:8081/?mpd=http://localhost:9081/manifest.mpd"
         else:
             args.url = "http://localhost:3000"
 

@@ -78,9 +78,12 @@ class DASHHandler(SimpleHTTPRequestHandler):
             return
         
         # Serve static app files from /app directory
-        if self.path in ('/', '/index.html', '/hls.html', '/dash.all.min.js'):
-            if self.path == '/':
+        path_base = self.path.split('?')[0]
+        if path_base in ('/', '/index.html', '/hls.html', '/dash.all.min.js', '/hls.min.js'):
+            if path_base == '/':
                 self.path = '/index.html'
+            else:
+                self.path = path_base
             old_dir = self.directory
             self.directory = '/app'
             super().do_GET()

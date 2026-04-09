@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NetSail · Streaming Benchmark Analytics</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <style>
+    :root {
+      --bg:      #080e14;
+      --surface: #0d1821;
+      --card:    #111c27;
+      --border:  #1e3148;
+      --text:    #cdd8e3;
+      --muted:   #4e6a85;
+      --accent:  #38bdf8;
+
+      --dash:    #3b82f6;
+      --lldash:  #2dd4bf;
+      --hls:     #fb923c;
+      --webrtc:  #a78bfa;
+
+      --good:    #22c55e;
+      --warn:    #f59e0b;
+      --bad:     #ef4444;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 32px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .logo { font-size: 1.1rem; font-weight: 700; color: var(--accent); letter-spacing: .06em; }
+    .logo span { color: var(--muted); font-weight: 400; }
+    #last-updated { font-size: .75rem; color: var(--muted); }
+
+    /* ── Nav tabs ── */
+    nav {
+      display: flex;
+      gap: 2px;
+      padding: 0 32px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .tab {
+      padding: 12px 20px;
+      font-size: .82rem;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color .15s, border-color .15s;
+    }
+    .tab:hover { color: var(--text); }
+    .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    /* ── Filter bar ── */
+    #filters {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding: 14px 32px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    #filters label { font-size: .75rem; color: var(--muted); }
+    .proto-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 99px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      font-size: .78rem;
+      transition: background .15s, border-color .15s;
+      user-select: none;
+    }
+    .proto-pill.active { border-color: currentColor; background: color-mix(in srgb, currentColor 12%, transparent); }
+    .proto-pill .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+    .sep { width: 1px; height: 20px; background: var(--border); }
+    select {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: .78rem;
+      cursor: pointer;
+    }
+    select:focus { outline: none; border-color: var(--accent); }
+    #result-count { margin-left: auto; font-size: .75rem; color: var(--muted); }
+
+    /* ── Main layout ── */
+    main { padding: 28px 32px; }
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ── Summary cards ── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+    }
+    .card-label { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
+    .card-value { font-size: 1.7rem; font-weight: 700; line-height: 1; }
+    .card-sub { font-size: .72rem; color: var(--muted); margin-top: 4px; }
+    .card-proto-row { display: flex; gap: 12px; margin-top: 10px; flex-wrap: wrap; }
+    .card-proto-item { font-size: .78rem; }
+    .card-proto-item .val { font-weight: 600; }
+
+    /* ── Section headers ── */
+    .section-title {
+      font-size: .78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--muted);
+      margin-bottom: 14px;
+      margin-top: 28px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    /* ── Chart grid ── */
+    .chart-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+      gap: 16px;
+    }
+    .chart-grid.wide { grid-template-columns: 1fr; }
+    .chart-grid.three { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+
+    .chart-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .chart-title {
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .chart-desc { font-size: .72rem; color: var(--muted); margin-bottom: 16px; }
+    .chart-wrap { position: relative; }
+    .chart-wrap canvas { max-height: 280px; }
+    .chart-wrap.tall canvas { max-height: 360px; }
+    .chart-wrap.radar canvas { max-height: 320px; }
+
+    /* ── Table ── */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: .78rem; }
+    thead { background: var(--surface); }
+    th {
+      padding: 10px 14px;
+      text-align: left;
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    th:hover { color: var(--text); }
+    th .sort-icon { opacity: .4; margin-left: 4px; }
+    th.sorted .sort-icon { opacity: 1; color: var(--accent); }
+    td {
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    tr:hover td { background: rgba(255,255,255,.02); }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 99px;
+      font-size: .7rem;
+      font-weight: 600;
+    }
+    .pill-dash    { background: color-mix(in srgb, var(--dash) 18%, transparent);   color: var(--dash);   border: 1px solid var(--dash); }
+    .pill-lldash  { background: color-mix(in srgb, var(--lldash) 18%, transparent); color: var(--lldash); border: 1px solid var(--lldash); }
+    .pill-hls     { background: color-mix(in srgb, var(--hls) 18%, transparent);    color: var(--hls);    border: 1px solid var(--hls); }
+    .pill-webrtc  { background: color-mix(in srgb, var(--webrtc) 18%, transparent); color: var(--webrtc); border: 1px solid var(--webrtc); }
+    .val-good { color: var(--good); }
+    .val-bad  { color: var(--bad); }
+    .val-warn { color: var(--warn); }
+
+    /* ── Empty state ── */
+    .empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 260px;
+      color: var(--muted);
+      font-size: .9rem;
+      gap: 8px;
+    }
+    .empty big { font-size: 2.5rem; }
+
+    /* ── Loading ── */
+    #loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      flex-direction: column;
+      gap: 14px;
+      color: var(--muted);
+    }
+    .spinner {
+      width: 36px; height: 36px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Heatmap ── */
+    .heatmap-table { width: 100%; border-collapse: collapse; font-size: .75rem; }
+    .heatmap-table th, .heatmap-table td {
+      padding: 8px 12px; border: 1px solid var(--border); text-align: center; white-space: nowrap;
+    }
+    .heatmap-table th { background: var(--surface); color: var(--muted); font-size: .7rem; text-transform: uppercase; letter-spacing: .05em; }
+    .heatmap-table .row-label { text-align: left; color: var(--muted); font-size: .7rem; }
+    .hm-cell { border-radius: 4px; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+<div id="loading">
+  <div class="spinner"></div>
+  <span>Loading results…</span>
+</div>
+
+<div id="app" style="display:none">
+  <header>
+    <div class="logo">NetSail <span>· Streaming Benchmark Analytics</span></div>
+    <span id="last-updated"></span>
+  </header>
+
+  <nav>
+    <div class="tab active" data-tab="overview">Overview</div>
+    <div class="tab" data-tab="traces">Trace Breakdown</div>
+    <div class="tab" data-tab="scatter">QoE Analysis</div>
+    <div class="tab" data-tab="heatmap">Heatmap</div>
+    <div class="tab" data-tab="webrtc">WebRTC Network</div>
+    <div class="tab" data-tab="table">Data Table</div>
+  </nav>
+
+  <div id="filters">
+    <label>PROTOCOL</label>
+    <div id="proto-pills"></div>
+    <div class="sep"></div>
+    <label>TRACE SET</label>
+    <select id="subdir-select"><option value="">All</option></select>
+    <span id="result-count"></span>
+  </div>
+
+  <main>
+    <!-- ── OVERVIEW ── -->
+    <div class="page active" id="page-overview">
+      <div id="summary-cards" class="cards"></div>
+
+      <div class="section-title">Protocol Comparison · Normalized</div>
+      <div class="chart-grid">
+        <div class="chart-card">
+          <div class="chart-title">Multi-Metric Radar</div>
+          <div class="chart-desc">Higher = better (all axes normalized 0–1). Bitrate ↑ startup↑ buffer↑ rebuffer↓ switches↓.</div>
+          <div class="chart-wrap radar"><canvas id="chart-radar"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Avg Bitrate vs Rebuffer Ratio</div>
+          <div class="chart-desc">Ideal: top-left (high bitrate, low rebuffering). Each point = one trace run.</div>
+          <div class="chart-wrap"><canvas id="chart-overview-scatter"></canvas></div>
+        </div>
+      </div>
+
+      <div class="section-title">Aggregate Distributions</div>
+      <div class="chart-grid three">
+        <div class="chart-card">
+          <div class="chart-title">Rebuffer Ratio Distribution</div>
+          <div class="chart-desc">Box: 25–75th %ile. Whiskers: min/max. Lower = better.</div>
+          <div class="chart-wrap"><canvas id="chart-rebuf-box"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Avg Bitrate Distribution</div>
+          <div class="chart-desc">Across all traces per protocol. Higher = better.</div>
+          <div class="chart-wrap"><canvas id="chart-bitrate-box"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Startup Delay Distribution</div>
+          <div class="chart-desc">Time from page load to first playback. Lower = better.</div>
+          <div class="chart-wrap"><canvas id="chart-startup-box"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TRACES ── -->
+    <div class="page" id="page-traces">
+      <div class="section-title">Per-Trace Metrics</div>
+      <div class="chart-grid">
+        <div class="chart-card">
+          <div class="chart-title">Rebuffer Ratio by Trace</div>
+          <div class="chart-desc">% of playback time spent rebuffering. Lower = better.</div>
+          <div class="chart-wrap tall"><canvas id="chart-rebuf-trace"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Avg Bitrate by Trace</div>
+          <div class="chart-desc">Average video quality selected. Higher = better.</div>
+          <div class="chart-wrap tall"><canvas id="chart-bitrate-trace"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Bitrate Switches by Trace</div>
+          <div class="chart-desc">Number of ABR quality changes. Fewer = more stable.</div>
+          <div class="chart-wrap tall"><canvas id="chart-switches-trace"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Avg Buffer Level by Trace</div>
+          <div class="chart-desc">Seconds of buffered video during playback. More headroom = more resilient.</div>
+          <div class="chart-wrap tall"><canvas id="chart-buffer-trace"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Throughput Utilization by Trace</div>
+          <div class="chart-desc">Measured throughput as % of available trace bandwidth. Higher = more efficient.</div>
+          <div class="chart-wrap tall"><canvas id="chart-util-trace"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Startup Delay by Trace</div>
+          <div class="chart-desc">Milliseconds to first frame. Lower = better.</div>
+          <div class="chart-wrap tall"><canvas id="chart-startup-trace"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SCATTER ── -->
+    <div class="page" id="page-scatter">
+      <div class="section-title">QoE Frontier Analysis</div>
+      <div class="chart-grid">
+        <div class="chart-card">
+          <div class="chart-title">Bitrate vs Rebuffer Ratio</div>
+          <div class="chart-desc">QoE frontier: top-left is optimal. Each point = one trace run.</div>
+          <div class="chart-wrap tall"><canvas id="chart-qoe-scatter"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Bitrate Switches vs Avg Bitrate</div>
+          <div class="chart-desc">Stability vs quality. Ideal: bottom-right (high bitrate, few switches).</div>
+          <div class="chart-wrap tall"><canvas id="chart-switch-scatter"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Buffer Level vs Rebuffer Events</div>
+          <div class="chart-desc">Buffer headroom vs rebuffer frequency. Ideal: top-left.</div>
+          <div class="chart-wrap tall"><canvas id="chart-buf-scatter"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Available BW vs Achieved Bitrate</div>
+          <div class="chart-desc">How well each protocol utilizes available bandwidth.</div>
+          <div class="chart-wrap tall"><canvas id="chart-bw-scatter"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── HEATMAP ── -->
+    <div class="page" id="page-heatmap">
+      <div class="section-title">Performance Heatmap · Protocol × Trace</div>
+      <div class="chart-card">
+        <div class="chart-title">Rebuffer Ratio %</div>
+        <div class="chart-desc">Red = high rebuffering (bad). Green = low rebuffering (good).</div>
+        <div class="table-wrap" id="heatmap-rebuf"></div>
+      </div>
+      <div style="height:16px"></div>
+      <div class="chart-card">
+        <div class="chart-title">Avg Bitrate (kbps)</div>
+        <div class="chart-desc">Green = higher bitrate (better quality). Red = lower bitrate.</div>
+        <div class="table-wrap" id="heatmap-bitrate"></div>
+      </div>
+      <div style="height:16px"></div>
+      <div class="chart-card">
+        <div class="chart-title">Bitrate Switches</div>
+        <div class="chart-desc">Green = fewer switches (stable). Red = many switches (unstable).</div>
+        <div class="table-wrap" id="heatmap-switches"></div>
+      </div>
+    </div>
+
+    <!-- ── WEBRTC ── -->
+    <div class="page" id="page-webrtc">
+      <div class="section-title">WebRTC Network Metrics · Per Trace</div>
+      <div class="chart-grid">
+        <div class="chart-card">
+          <div class="chart-title">Round-Trip Time (RTT) by Trace</div>
+          <div class="chart-desc">Average RTCP RTT measured during WebRTC session. Lower = better network conditions.</div>
+          <div class="chart-wrap tall"><canvas id="chart-rtt-trace"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Packet Loss % by Trace</div>
+          <div class="chart-desc">Average packet loss during WebRTC streaming. 0% = perfect delivery.</div>
+          <div class="chart-wrap tall"><canvas id="chart-ploss-trace"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">RTT vs Avg Bitrate (WebRTC)</div>
+          <div class="chart-desc">How network RTT correlates with achieved video bitrate across traces.</div>
+          <div class="chart-wrap tall"><canvas id="chart-rtt-bitrate"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Available BW vs Achieved Bitrate (WebRTC)</div>
+          <div class="chart-desc">Trace bandwidth vs WebRTC throughput. Closer to diagonal = better utilization.</div>
+          <div class="chart-wrap tall"><canvas id="chart-webrtc-bw"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TABLE ── -->
+    <div class="page" id="page-table">
+      <div class="chart-card">
+        <div class="table-wrap">
+          <table id="data-table">
+            <thead>
+              <tr>
+                <th data-col="protocol">Protocol <span class="sort-icon">↕</span></th>
+                <th data-col="trace">Trace <span class="sort-icon">↕</span></th>
+                <th data-col="startup">Startup (ms) <span class="sort-icon">↕</span></th>
+                <th data-col="avg_bitrate">Avg Bitrate <span class="sort-icon">↕</span></th>
+                <th data-col="median_bitrate">Median Bitrate <span class="sort-icon">↕</span></th>
+                <th data-col="switches">Switches <span class="sort-icon">↕</span></th>
+                <th data-col="rebuf_ratio">Rebuf % <span class="sort-icon">↕</span></th>
+                <th data-col="rebuf_events">Rebuf Events <span class="sort-icon">↕</span></th>
+                <th data-col="avg_buffer">Avg Buffer <span class="sort-icon">↕</span></th>
+                <th data-col="throughput">Throughput <span class="sort-icon">↕</span></th>
+                <th data-col="utilization">Util % <span class="sort-icon">↕</span></th>
+                <th data-col="rtt_ms">RTT (ms) <span class="sort-icon">↕</span></th>
+                <th data-col="packet_loss">Pkt Loss % <span class="sort-icon">↕</span></th>
+              </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+// Constants
+// ─────────────────────────────────────────────
+const PROTO_COLORS = {
+  dash:   '#3b82f6',
+  lldash: '#2dd4bf',
+  hls:    '#fb923c',
+  webrtc: '#a78bfa',
+};
+const PROTO_LABELS = { dash: 'DASH', lldash: 'LL-DASH', hls: 'HLS', webrtc: 'WebRTC' };
+const CHART_DEFAULTS = {
+  color: '#cdd8e3',
+  plugins: { legend: { labels: { color: '#cdd8e3', boxWidth: 12, font: { size: 11 } } } },
+  scales: {
+    x: { ticks: { color: '#4e6a85', font: { size: 10 } }, grid: { color: '#1e3148' } },
+    y: { ticks: { color: '#4e6a85', font: { size: 10 } }, grid: { color: '#1e3148' } },
+  }
+};
+
+function protoColor(p, alpha = 1) {
+  const hex = PROTO_COLORS[p] || '#888';
+  if (alpha === 1) return hex;
+  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+// ─────────────────────────────────────────────
+// State
+// ─────────────────────────────────────────────
+let allResults = [];
+let activeProtos = new Set();
+let activeSubdir = '';
+let sortCol = 'protocol', sortDir = 1;
+const charts = {};
+
+// ─────────────────────────────────────────────
+// Data helpers
+// ─────────────────────────────────────────────
+function filtered() {
+  return allResults.filter(r => {
+    if (activeProtos.size && !activeProtos.has(r._protocol)) return false;
+    if (activeSubdir && r._subdir !== activeSubdir) return false;
+    return true;
+  });
+}
+
+function m(r) {
+  const raw = r.metrics || {};
+  return {
+    avg_bitrate_kbps:     (raw.bitrate?.average_kbps)              || 0,
+    bitrate_median:       (raw.bitrate?.median_kbps)               || 0,
+    rebuffer_ratio:       (raw.rebuffering?.ratio)                 || 0,
+    rebuffer_count:       (raw.rebuffering?.count)                 || 0,
+    bitrate_switches:     (raw.switching?.total_count)             || 0,
+    startup_delay_ms:     (raw.timing?.startup_delay_ms)           || 0,
+    avg_buffer_level_ms:  (raw.buffer?.average_ms)                 || 0,
+    avg_throughput_kbps:  (raw.throughput?.average_kbps)           || 0,
+    bandwidth_utilization:(raw.utilization?.bandwidth_utilization) || 0,
+  };
+}
+
+// Trace bandwidth: DASH stores at root, WebRTC stores in webrtc_specific
+function tb(r) {
+  return r.trace_bandwidth || r.webrtc_specific?.trace_bandwidth || {};
+}
+
+// WebRTC-specific network metrics (null for non-WebRTC)
+function wm(r) {
+  const ws = r.webrtc_specific || {};
+  return {
+    rtt_ms:          ws.rtt?.average_ms          || 0,
+    jitter_ms:       ws.jitter?.average_ms        || 0,
+    packet_loss_pct: ws.packet_loss?.average_percent || 0,
+  };
+}
+
+function groupBy(arr, key) {
+  const out = {};
+  arr.forEach(r => { (out[r[key]] = out[r[key]] || []).push(r); });
+  return out;
+}
+
+function mean(arr) { return arr.length ? arr.reduce((a,b)=>a+b,0)/arr.length : 0; }
+function med(arr)  {
+  if (!arr.length) return 0;
+  const s = [...arr].sort((a,b)=>a-b);
+  const mid = Math.floor(s.length/2);
+  return s.length%2 ? s[mid] : (s[mid-1]+s[mid])/2;
+}
+function pct(arr, p) {
+  if (!arr.length) return 0;
+  const s = [...arr].sort((a,b)=>a-b);
+  const i = (p/100)*(s.length-1);
+  const lo = Math.floor(i), hi = Math.ceil(i);
+  return s[lo] + (s[hi]-s[lo])*(i-lo);
+}
+function minMax(arr) { return [Math.min(...arr), Math.max(...arr)]; }
+
+function shortTrace(t) {
+  return t.replace('hsdpa_','').replace('_tc','').replace(/_/g,' ');
+}
+
+// ─────────────────────────────────────────────
+// Chart factory helpers
+// ─────────────────────────────────────────────
+function makeChart(id, type, data, options) {
+  if (charts[id]) charts[id].destroy();
+  const ctx = document.getElementById(id);
+  if (!ctx) return;
+  charts[id] = new Chart(ctx, {
+    type,
+    data,
+    options: Chart.helpers.merge({
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: { legend: { labels: { color: '#cdd8e3', boxWidth: 12, font: { size: 11 } } } },
+    }, options || {})
+  });
+}
+
+function groupedBarOpts(yLabel, stacked=false) {
+  return {
+    scales: {
+      x: { stacked, ticks: { color: '#4e6a85', font: { size: 9 }, maxRotation: 40 }, grid: { color: '#1e3148' } },
+      y: { stacked, ticks: { color: '#4e6a85', font: { size: 10 } }, grid: { color: '#1e3148' },
+           title: { display: !!yLabel, text: yLabel, color: '#4e6a85', font: { size: 10 } } }
+    }
+  };
+}
+
+// ─────────────────────────────────────────────
+// Overview tab
+// ─────────────────────────────────────────────
+function renderOverview() {
+  const data = filtered();
+  const byProto = groupBy(data, '_protocol');
+  const protocols = Object.keys(byProto).sort();
+
+  // Summary cards
+  const container = document.getElementById('summary-cards');
+  container.innerHTML = '';
+
+  const globalMetrics = [
+    { label: 'Total Runs', val: data.length, unit: '', cls: '' },
+    { label: 'Protocols', val: protocols.length, unit: '', cls: '' },
+    { label: 'Traces', val: new Set(data.map(r=>r._trace)).size, unit: '', cls: '' },
+  ];
+  globalMetrics.forEach(({ label, val }) => {
+    const c = document.createElement('div');
+    c.className = 'card';
+    c.innerHTML = `<div class="card-label">${label}</div><div class="card-value" style="color:var(--accent)">${val}</div>`;
+    container.appendChild(c);
+  });
+
+  protocols.forEach(p => {
+    const runs = byProto[p];
+    const avgBr   = mean(runs.map(r => m(r).avg_bitrate_kbps || 0));
+    const rebuf   = mean(runs.map(r => (m(r).rebuffer_ratio || 0) * 100));
+    const startup = mean(runs.map(r => m(r).startup_delay_ms || 0));
+    const c = document.createElement('div');
+    c.className = 'card';
+    c.style.borderColor = protoColor(p, 0.4);
+    let extraRow = '';
+    if (p === 'webrtc') {
+      const avgRtt = mean(runs.map(r => wm(r).rtt_ms));
+      const avgPL  = mean(runs.map(r => wm(r).packet_loss_pct));
+      extraRow = `
+        <div class="card-proto-row" style="margin-top:6px">
+          <div class="card-proto-item"><div class="val">${Math.round(avgRtt)}ms</div><div style="color:var(--muted);font-size:.68rem">avg RTT</div></div>
+          <div class="card-proto-item"><div class="val ${avgPL>1?'val-bad':avgPL>0.1?'val-warn':'val-good'}">${avgPL.toFixed(2)}%</div><div style="color:var(--muted);font-size:.68rem">pkt loss</div></div>
+        </div>`;
+    }
+    c.innerHTML = `
+      <div class="card-label" style="color:${protoColor(p)}">${PROTO_LABELS[p] || p}</div>
+      <div class="card-value" style="color:${protoColor(p)}">${Math.round(avgBr).toLocaleString()} <small style="font-size:.8rem;font-weight:400">kbps</small></div>
+      <div class="card-sub">avg bitrate · ${runs.length} runs</div>
+      <div class="card-proto-row">
+        <div class="card-proto-item"><div class="val ${rebuf>5?'val-bad':rebuf>2?'val-warn':'val-good'}">${rebuf.toFixed(1)}%</div><div style="color:var(--muted);font-size:.68rem">rebuf</div></div>
+        <div class="card-proto-item"><div class="val">${Math.round(startup).toLocaleString()}ms</div><div style="color:var(--muted);font-size:.68rem">startup</div></div>
+      </div>${extraRow}`;
+    container.appendChild(c);
+  });
+
+  // Radar chart
+  const radarMetrics = ['Bitrate','Buffer','Low Rebuf','Startup Fast','Low Switches'];
+  const radarDatasets = protocols.map(p => {
+    const runs = byProto[p];
+    const allBr     = data.map(r => m(r).avg_bitrate_kbps || 0);
+    const allBuf    = data.map(r => (m(r).avg_buffer_level_ms || 0) / 1000);
+    const allRebuf  = data.map(r => (m(r).rebuffer_ratio || 0));
+    const allStart  = data.map(r => m(r).startup_delay_ms || 0);
+    const allSwitch = data.map(r => m(r).bitrate_switches || 0);
+
+    const normalize = (val, arr, invert=false) => {
+      const [lo, hi] = minMax(arr);
+      if (hi === lo) return 0.5;
+      const n = (val - lo) / (hi - lo);
+      return invert ? 1 - n : n;
+    };
+
+    const brVal  = mean(runs.map(r => m(r).avg_bitrate_kbps || 0));
+    const bufVal = mean(runs.map(r => (m(r).avg_buffer_level_ms || 0) / 1000));
+    const rebVal = mean(runs.map(r => m(r).rebuffer_ratio || 0));
+    const stVal  = mean(runs.map(r => m(r).startup_delay_ms || 0));
+    const swVal  = mean(runs.map(r => m(r).bitrate_switches || 0));
+
+    return {
+      label: PROTO_LABELS[p] || p,
+      data: [
+        normalize(brVal,  allBr,     false),
+        normalize(bufVal, allBuf,    false),
+        normalize(rebVal, allRebuf,  true),
+        normalize(stVal,  allStart,  true),
+        normalize(swVal,  allSwitch, true),
+      ].map(v => Math.round(v * 100)),
+      borderColor: protoColor(p),
+      backgroundColor: protoColor(p, 0.1),
+      pointBackgroundColor: protoColor(p),
+    };
+  });
+
+  makeChart('chart-radar', 'radar', { labels: radarMetrics, datasets: radarDatasets }, {
+    scales: {
+      r: {
+        min: 0, max: 100,
+        ticks: { display: false },
+        grid: { color: '#1e3148' },
+        pointLabels: { color: '#cdd8e3', font: { size: 11 } },
+        angleLines: { color: '#1e3148' },
+      }
+    }
+  });
+
+  // Overview scatter
+  const scatterDatasets = protocols.map(p => ({
+    label: PROTO_LABELS[p] || p,
+    data: byProto[p].map(r => ({
+      x: (m(r).rebuffer_ratio || 0) * 100,
+      y: m(r).avg_bitrate_kbps || 0,
+      trace: r._trace,
+    })),
+    backgroundColor: protoColor(p, 0.7),
+    pointRadius: 7,
+    pointHoverRadius: 9,
+  }));
+
+  makeChart('chart-overview-scatter', 'scatter', { datasets: scatterDatasets }, {
+    scales: {
+      x: { title: { display: true, text: 'Rebuffer Ratio (%)', color: '#4e6a85', font:{size:10} },
+           ticks: { color: '#4e6a85', font:{size:10} }, grid: { color: '#1e3148' } },
+      y: { title: { display: true, text: 'Avg Bitrate (kbps)', color: '#4e6a85', font:{size:10} },
+           ticks: { color: '#4e6a85', font:{size:10} }, grid: { color: '#1e3148' } },
+    },
+    plugins: {
+      tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${shortTrace(ctx.raw.trace || '')} — ${ctx.raw.y.toFixed(0)} kbps, ${ctx.raw.x.toFixed(2)}%` } }
+    }
+  });
+
+  // Box-like bar charts (min/25/med/75/max via floating bars)
+  ['rebuf', 'bitrate', 'startup'].forEach(metric => {
+    const getVal = r => metric === 'rebuf'   ? (m(r).rebuffer_ratio || 0) * 100
+                      : metric === 'bitrate' ? (m(r).avg_bitrate_kbps || 0)
+                                             : (m(r).startup_delay_ms || 0);
+    const lower = [], upper = [], medVals = [];
+    protocols.forEach(p => {
+      const vals = (byProto[p] || []).map(r => getVal(r));
+      lower.push(pct(vals, 25));
+      upper.push(pct(vals, 75));
+      medVals.push(med(vals));
+    });
+
+    makeChart(`chart-${metric}-box`, 'bar', {
+      labels: protocols.map(p => PROTO_LABELS[p] || p),
+      datasets: [
+        { label: '25–75th %ile', data: protocols.map((_,i) => [lower[i], upper[i]]),
+          backgroundColor: protocols.map(p => protoColor(p, 0.3)),
+          borderColor: protocols.map(p => protoColor(p)),
+          borderWidth: 1.5, borderSkipped: false },
+        { label: 'Median', data: medVals, type: 'line',
+          borderColor: '#cdd8e3', pointBackgroundColor: protocols.map(p => protoColor(p)),
+          pointRadius: 5, borderDash: [3,3] },
+      ]
+    }, {
+      ...groupedBarOpts(
+        metric === 'rebuf'   ? 'Rebuffer Ratio (%)' :
+        metric === 'bitrate' ? 'Avg Bitrate (kbps)' : 'Startup Delay (ms)'
+      ),
+      plugins: { legend: { labels: { color: '#cdd8e3', boxWidth: 12, font: { size: 11 } } } }
+    });
+  });
+}
+
+// ─────────────────────────────────────────────
+// Trace breakdown tab
+// ─────────────────────────────────────────────
+function renderTraces() {
+  const data = filtered();
+  const byProto = groupBy(data, '_protocol');
+  const protocols = Object.keys(byProto).sort();
+  const traces = [...new Set(data.map(r => r._trace))].sort();
+
+  const traceLabels = traces.map(shortTrace);
+
+  const configs = [
+    { id: 'chart-rebuf-trace',   fn: r => (m(r).rebuffer_ratio || 0) * 100, yLabel: 'Rebuffer Ratio (%)' },
+    { id: 'chart-bitrate-trace', fn: r => m(r).avg_bitrate_kbps || 0,        yLabel: 'Avg Bitrate (kbps)' },
+    { id: 'chart-switches-trace',fn: r => m(r).bitrate_switches || 0,         yLabel: 'Switches' },
+    { id: 'chart-buffer-trace',  fn: r => (m(r).avg_buffer_level_ms || 0)/1000, yLabel: 'Avg Buffer (s)' },
+    { id: 'chart-util-trace',    fn: r => (tb(r).utilisation || m(r).bandwidth_utilization || 0) * 100, yLabel: 'Utilization (%)' },
+    { id: 'chart-startup-trace', fn: r => m(r).startup_delay_ms || 0,         yLabel: 'Startup (ms)' },
+  ];
+
+  configs.forEach(({ id, fn, yLabel }) => {
+    const datasets = protocols.map(p => {
+      const byTrace = groupBy(byProto[p] || [], '_trace');
+      return {
+        label: PROTO_LABELS[p] || p,
+        data: traces.map(t => {
+          const runs = byTrace[t] || [];
+          return runs.length ? mean(runs.map(fn)) : null;
+        }),
+        backgroundColor: protoColor(p, 0.7),
+        borderColor: protoColor(p),
+        borderWidth: 1.5,
+        spanGaps: false,
+      };
+    });
+
+    makeChart(id, 'bar', { labels: traceLabels, datasets }, {
+      ...groupedBarOpts(yLabel),
+      plugins: { legend: { labels: { color: '#cdd8e3', boxWidth: 12, font: { size: 11 } } } }
+    });
+  });
+}
+
+// ─────────────────────────────────────────────
+// Scatter / QoE tab
+// ─────────────────────────────────────────────
+function renderScatter() {
+  const data = filtered();
+  const byProto = groupBy(data, '_protocol');
+  const protocols = Object.keys(byProto).sort();
+
+  const scatterConfigs = [
+    { id: 'chart-qoe-scatter',
+      xFn: r => (m(r).rebuffer_ratio || 0) * 100, xLabel: 'Rebuffer Ratio (%)',
+      yFn: r => m(r).avg_bitrate_kbps || 0,        yLabel: 'Avg Bitrate (kbps)' },
+    { id: 'chart-switch-scatter',
+      xFn: r => m(r).bitrate_switches || 0,         xLabel: 'Bitrate Switches',
+      yFn: r => m(r).avg_bitrate_kbps || 0,         yLabel: 'Avg Bitrate (kbps)' },
+    { id: 'chart-buf-scatter',
+      xFn: r => m(r).rebuffer_count || 0,           xLabel: 'Rebuffer Events',
+      yFn: r => (m(r).avg_buffer_level_ms || 0)/1000,yLabel: 'Avg Buffer (s)' },
+    { id: 'chart-bw-scatter',
+      xFn: r => tb(r).average_kbps || 0, xLabel: 'Available BW (kbps)',
+      yFn: r => m(r).avg_bitrate_kbps || 0,            yLabel: 'Avg Bitrate (kbps)' },
+  ];
+
+  scatterConfigs.forEach(({ id, xFn, xLabel, yFn, yLabel }) => {
+    const datasets = protocols.map(p => ({
+      label: PROTO_LABELS[p] || p,
+      data: (byProto[p] || []).map(r => ({ x: xFn(r), y: yFn(r), trace: r._trace })),
+      backgroundColor: protoColor(p, 0.75),
+      pointRadius: 7,
+      pointHoverRadius: 9,
+    }));
+
+    makeChart(id, 'scatter', { datasets }, {
+      scales: {
+        x: { title: { display: true, text: xLabel, color: '#4e6a85', font:{size:10} },
+             ticks: { color: '#4e6a85', font:{size:10} }, grid: { color: '#1e3148' } },
+        y: { title: { display: true, text: yLabel, color: '#4e6a85', font:{size:10} },
+             ticks: { color: '#4e6a85', font:{size:10} }, grid: { color: '#1e3148' } },
+      },
+      plugins: {
+        legend: { labels: { color: '#cdd8e3', boxWidth: 12, font: { size: 11 } } },
+        tooltip: { callbacks: {
+          label: ctx => `${ctx.dataset.label}: ${shortTrace(ctx.raw.trace||'')} — (${ctx.raw.x.toFixed(2)}, ${ctx.raw.y.toFixed(1)})`
+        }}
+      }
+    });
+  });
+}
+
+// ─────────────────────────────────────────────
+// Heatmap tab
+// ─────────────────────────────────────────────
+function renderHeatmap() {
+  const data = filtered();
+  const byProto = groupBy(data, '_protocol');
+  const protocols = Object.keys(byProto).sort();
+  const traces = [...new Set(data.map(r => r._trace))].sort();
+
+  function buildHeatmap(containerId, fn, formatFn, colorFn) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    // Build value matrix
+    const matrix = {};
+    protocols.forEach(p => {
+      matrix[p] = {};
+      const byTrace = groupBy(byProto[p] || [], '_trace');
+      traces.forEach(t => {
+        const runs = byTrace[t] || [];
+        matrix[p][t] = runs.length ? mean(runs.map(fn)) : null;
+      });
+    });
+
+    // All values for normalization
+    const allVals = Object.values(matrix).flatMap(row => Object.values(row).filter(v => v !== null));
+    const lo = Math.min(...allVals), hi = Math.max(...allVals);
+
+    let html = `<table class="heatmap-table"><thead><tr><th>Trace</th>`;
+    protocols.forEach(p => html += `<th style="color:${protoColor(p)}">${PROTO_LABELS[p]||p}</th>`);
+    html += '</tr></thead><tbody>';
+
+    traces.forEach(t => {
+      html += `<tr><td class="row-label">${shortTrace(t)}</td>`;
+      protocols.forEach(p => {
+        const v = matrix[p][t];
+        if (v === null) { html += `<td style="color:#4e6a85">—</td>`; return; }
+        const { bg, fg } = colorFn(v, lo, hi);
+        html += `<td class="hm-cell" style="background:${bg};color:${fg}">${formatFn(v)}</td>`;
+      });
+      html += '</tr>';
+    });
+    html += '</tbody></table>';
+    container.innerHTML = html;
+  }
+
+  // Rebuffer: red=bad, green=good (invert)
+  buildHeatmap('heatmap-rebuf',
+    r => (m(r).rebuffer_ratio || 0) * 100,
+    v => v.toFixed(2) + '%',
+    (v, lo, hi) => {
+      const n = hi > lo ? (v - lo) / (hi - lo) : 0;
+      const r = Math.round(n * 200 + 40), g = Math.round((1-n) * 160 + 40);
+      return { bg: `rgba(${r},${g},60,0.35)`, fg: '#cdd8e3' };
+    });
+
+  // Bitrate: green=good
+  buildHeatmap('heatmap-bitrate',
+    r => m(r).avg_bitrate_kbps || 0,
+    v => Math.round(v).toLocaleString(),
+    (v, lo, hi) => {
+      const n = hi > lo ? (v - lo) / (hi - lo) : 0;
+      const g = Math.round(n * 160 + 40), r = Math.round((1-n) * 160 + 40);
+      return { bg: `rgba(${r},${g},60,0.35)`, fg: '#cdd8e3' };
+    });
+
+  // Switches: red=bad (invert)
+  buildHeatmap('heatmap-switches',
+    r => m(r).bitrate_switches || 0,
+    v => Math.round(v),
+    (v, lo, hi) => {
+      const n = hi > lo ? (v - lo) / (hi - lo) : 0;
+      const r = Math.round(n * 200 + 40), g = Math.round((1-n) * 160 + 40);
+      return { bg: `rgba(${r},${g},60,0.35)`, fg: '#cdd8e3' };
+    });
+}
+
+// ─────────────────────────────────────────────
+// Data table
+// ─────────────────────────────────────────────
+function renderTable() {
+  const data = filtered();
+  const rows = data.map(r => ({
+    protocol: r._protocol,
+    trace: r._trace,
+    startup: m(r).startup_delay_ms || 0,
+    avg_bitrate: m(r).avg_bitrate_kbps || 0,
+    median_bitrate: m(r).bitrate_median || 0,
+    switches: m(r).bitrate_switches || 0,
+    rebuf_ratio: (m(r).rebuffer_ratio || 0) * 100,
+    rebuf_events: m(r).rebuffer_count || 0,
+    avg_buffer: (m(r).avg_buffer_level_ms || 0) / 1000,
+    throughput: m(r).avg_throughput_kbps || 0,
+    utilization: (tb(r).utilisation || m(r).bandwidth_utilization || 0) * 100,
+    rtt_ms: wm(r).rtt_ms,
+    packet_loss: wm(r).packet_loss_pct,
+    _raw: r,
+  }));
+
+  rows.sort((a, b) => {
+    const av = a[sortCol], bv = b[sortCol];
+    return typeof av === 'string' ? av.localeCompare(bv) * sortDir : (av - bv) * sortDir;
+  });
+
+  const tbody = document.getElementById('table-body');
+  tbody.innerHTML = rows.map(row => `
+    <tr>
+      <td><span class="badge pill-${row.protocol}">${PROTO_LABELS[row.protocol]||row.protocol}</span></td>
+      <td style="color:var(--muted)">${shortTrace(row.trace)}</td>
+      <td>${Math.round(row.startup).toLocaleString()}</td>
+      <td>${Math.round(row.avg_bitrate).toLocaleString()} kbps</td>
+      <td>${Math.round(row.median_bitrate).toLocaleString()} kbps</td>
+      <td>${row.switches}</td>
+      <td class="${row.rebuf_ratio > 5 ? 'val-bad' : row.rebuf_ratio > 2 ? 'val-warn' : 'val-good'}">${row.rebuf_ratio.toFixed(2)}%</td>
+      <td>${row.rebuf_events}</td>
+      <td>${row.avg_buffer.toFixed(1)} s</td>
+      <td>${Math.round(row.throughput).toLocaleString()} kbps</td>
+      <td>${row.utilization.toFixed(1)}%</td>
+      <td style="color:var(--muted)">${row.rtt_ms ? Math.round(row.rtt_ms) : '—'}</td>
+      <td style="color:var(--muted)">${row.packet_loss ? row.packet_loss.toFixed(2) + '%' : '—'}</td>
+    </tr>`).join('');
+}
+
+// ─────────────────────────────────────────────
+// WebRTC Network tab
+// ─────────────────────────────────────────────
+function renderWebRTC() {
+  const data = filtered().filter(r => r._protocol === 'webrtc');
+  if (!data.length) {
+    ['chart-rtt-trace','chart-ploss-trace','chart-rtt-bitrate','chart-webrtc-bw'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.parentElement.innerHTML = '<div style="color:var(--muted);padding:40px;text-align:center">No WebRTC data loaded</div>';
+    });
+    return;
+  }
+
+  const traces = [...new Set(data.map(r => r._trace))].sort();
+  const traceLabels = traces.map(shortTrace);
+  const color = PROTO_COLORS.webrtc;
+
+  // RTT by trace
+  makeChart('chart-rtt-trace', 'bar', {
+    labels: traceLabels,
+    datasets: [{
+      label: 'Avg RTT (ms)',
+      data: traces.map(t => {
+        const runs = data.filter(r => r._trace === t);
+        return runs.length ? mean(runs.map(r => wm(r).rtt_ms)) : null;
+      }),
+      backgroundColor: color + 'bb',
+      borderColor: color,
+      borderWidth: 1.5,
+    }]
+  }, groupedBarOpts('RTT (ms)'));
+
+  // Packet loss by trace
+  makeChart('chart-ploss-trace', 'bar', {
+    labels: traceLabels,
+    datasets: [{
+      label: 'Avg Packet Loss (%)',
+      data: traces.map(t => {
+        const runs = data.filter(r => r._trace === t);
+        return runs.length ? mean(runs.map(r => wm(r).packet_loss_pct)) : null;
+      }),
+      backgroundColor: '#ef4444bb',
+      borderColor: '#ef4444',
+      borderWidth: 1.5,
+    }]
+  }, groupedBarOpts('Packet Loss (%)'));
+
+  // RTT vs bitrate scatter
+  makeChart('chart-rtt-bitrate', 'scatter', {
+    datasets: [{
+      label: 'WebRTC',
+      data: data.map(r => ({ x: wm(r).rtt_ms, y: m(r).avg_bitrate_kbps, trace: r._trace })),
+      backgroundColor: color + 'bb',
+      pointRadius: 7, pointHoverRadius: 9,
+    }]
+  }, {
+    scales: {
+      x: { title: { display: true, text: 'Avg RTT (ms)', color: '#4e6a85', font:{size:10} },
+           ticks: { color: '#4e6a85' }, grid: { color: '#1e3148' } },
+      y: { title: { display: true, text: 'Avg Bitrate (kbps)', color: '#4e6a85', font:{size:10} },
+           ticks: { color: '#4e6a85' }, grid: { color: '#1e3148' } },
+    },
+    plugins: {
+      legend: { labels: { color: '#cdd8e3', boxWidth: 12, font:{size:11} } },
+      tooltip: { callbacks: { label: ctx => `${shortTrace(ctx.raw.trace||'')} — RTT ${ctx.raw.x.toFixed(0)}ms, ${ctx.raw.y.toFixed(0)} kbps` } }
+    }
+  });
+
+  // Available BW vs achieved bitrate (WebRTC)
+  makeChart('chart-webrtc-bw', 'scatter', {
+    datasets: [{
+      label: 'WebRTC',
+      data: data.map(r => ({ x: tb(r).average_kbps || 0, y: m(r).avg_bitrate_kbps, trace: r._trace })),
+      backgroundColor: color + 'bb',
+      pointRadius: 7, pointHoverRadius: 9,
+    }]
+  }, {
+    scales: {
+      x: { title: { display: true, text: 'Avg Trace BW (kbps)', color: '#4e6a85', font:{size:10} },
+           ticks: { color: '#4e6a85' }, grid: { color: '#1e3148' } },
+      y: { title: { display: true, text: 'Achieved Bitrate (kbps)', color: '#4e6a85', font:{size:10} },
+           ticks: { color: '#4e6a85' }, grid: { color: '#1e3148' } },
+    },
+    plugins: {
+      legend: { labels: { color: '#cdd8e3', boxWidth: 12, font:{size:11} } },
+      tooltip: { callbacks: { label: ctx => `${shortTrace(ctx.raw.trace||'')} — BW ${ctx.raw.x.toFixed(0)}kbps → ${ctx.raw.y.toFixed(0)} kbps` } }
+    }
+  });
+}
+
+// ─────────────────────────────────────────────
+// Render current tab
+// ─────────────────────────────────────────────
+function renderActiveTab() {
+  const active = document.querySelector('.tab.active')?.dataset.tab;
+  if (active === 'overview') renderOverview();
+  else if (active === 'traces') renderTraces();
+  else if (active === 'scatter') renderScatter();
+  else if (active === 'heatmap') renderHeatmap();
+  else if (active === 'webrtc') renderWebRTC();
+  else if (active === 'table') renderTable();
+}
+
+// ─────────────────────────────────────────────
+// UI wiring
+// ─────────────────────────────────────────────
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('page-' + tab.dataset.tab)?.classList.add('active');
+    renderActiveTab();
+  });
+});
+
+document.getElementById('subdir-select').addEventListener('change', e => {
+  activeSubdir = e.target.value;
+  updateResultCount();
+  renderActiveTab();
+});
+
+document.querySelectorAll('th[data-col]').forEach(th => {
+  th.addEventListener('click', () => {
+    const col = th.dataset.col;
+    if (sortCol === col) sortDir *= -1;
+    else { sortCol = col; sortDir = 1; }
+    document.querySelectorAll('th[data-col]').forEach(t => t.classList.remove('sorted'));
+    th.classList.add('sorted');
+    th.querySelector('.sort-icon').textContent = sortDir === 1 ? '↑' : '↓';
+    renderTable();
+  });
+});
+
+function updateResultCount() {
+  const n = filtered().length;
+  document.getElementById('result-count').textContent = `${n} run${n!==1?'s':''}`;
+}
+
+// ─────────────────────────────────────────────
+// Bootstrap
+// ─────────────────────────────────────────────
+async function init() {
+  try {
+    const res = await fetch('/api/results');
+    allResults = await res.json();
+  } catch(e) {
+    document.getElementById('loading').innerHTML =
+      '<div class="empty"><big>⚠</big><span>Could not load results from /api/results</span></div>';
+    return;
+  }
+
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+
+  // Protocol pills
+  const protocols = [...new Set(allResults.map(r => r._protocol))].sort();
+  protocols.forEach(p => { activeProtos.add(p); });
+
+  const pillsContainer = document.getElementById('proto-pills');
+  protocols.forEach(p => {
+    const pill = document.createElement('div');
+    pill.className = 'proto-pill active';
+    pill.style.color = protoColor(p);
+    pill.dataset.proto = p;
+    pill.innerHTML = `<span class="dot"></span>${PROTO_LABELS[p]||p}`;
+    pill.addEventListener('click', () => {
+      if (activeProtos.has(p)) {
+        if (activeProtos.size === 1) return; // keep at least one
+        activeProtos.delete(p);
+        pill.classList.remove('active');
+      } else {
+        activeProtos.add(p);
+        pill.classList.add('active');
+      }
+      updateResultCount();
+      renderActiveTab();
+    });
+    pillsContainer.appendChild(pill);
+  });
+
+  // Subdir select
+  const subdirs = [...new Set(allResults.map(r => r._subdir).filter(Boolean))].sort();
+  const sel = document.getElementById('subdir-select');
+  subdirs.forEach(s => {
+    const opt = document.createElement('option');
+    opt.value = s; opt.textContent = s;
+    sel.appendChild(opt);
+  });
+
+  // Timestamp
+  if (allResults.length) {
+    const latest = allResults.map(r => r._ts).sort().pop();
+    document.getElementById('last-updated').textContent = `Latest run: ${latest?.replace(/_/g,' ') || '—'}`;
+  }
+
+  updateResultCount();
+  renderOverview();
+}
+
+init();
+</script>
+</body>
+</html>

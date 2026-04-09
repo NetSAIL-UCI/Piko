@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NetSail HLS Player</title>
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.20/dist/hls.min.js"></script>
+  <script src="/hls.min.js"></script>
   <style>
     body {
       font-family: 'JetBrains Mono', 'Fira Code', monospace;
@@ -85,7 +85,8 @@
 
   <script>
     const video = document.getElementById('video');
-    const manifestUrl = `${window.location.origin}/hls/master.m3u8`;
+    const qs = new URLSearchParams(window.location.search);
+    const manifestUrl = qs.get('manifest') || `${window.location.origin}/hls/master.m3u8`;
 
     // Exposed globals used by benchmark.py
     window.__playbackEnded = false;

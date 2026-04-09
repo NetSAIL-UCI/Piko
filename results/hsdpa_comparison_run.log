@@ -1,0 +1,3464 @@
+
+======================================================================
+  BATCH RUN: 11 trace(s) from traces/hsdpa
+======================================================================
+
+
+──────────────────────────────────────────────────────────────────────
+  [1/11] hsdpa_bus_ljansbakken_oslo_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_bus_ljansbakken_oslo_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 4445 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 879ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 1182 kbps
+   t=20s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 113 kbps
+   t=31s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 2407 kbps
+   t=41s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 2464 kbps
+   t=51s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 2480 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     879 ms
+      Playback time:     52.6 s
+
+  [BITRATE]
+      Average:           1,724 kbps
+      Min / Max:         1,200 / 4,500 kbps
+      Median:            1,500 kbps
+      Std deviation:     470.6 kbps
+      Variance:          221,491.7
+      25th/75th %ile:    1,500 / 2,000 kbps
+
+  [SWITCHES]
+      Total count:       4
+      Up / Down:         2 / 2
+      Avg magnitude:     1,275 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        7,831 ms
+      Ratio:             12.9629%
+      Frequency:         1.141 per minute
+      Avg duration:      7,831 ms
+      Max duration:      7,831 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,923 kbps
+      Min / Max:         9 / 3,711 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_dash_hsdpa_bus_ljansbakken_oslo_tc_20260408_145654.json
+
+──────────────────────────────────────────────────────────────────────
+  [2/11] hsdpa_car_aarnes_elverum_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_car_aarnes_elverum_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 5579 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 734ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 2000 kbps
+   t=20s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 1487 kbps
+   t=31s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 2762 kbps
+   t=41s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 2207 kbps
+   t=51s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 4253 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     734 ms
+      Playback time:     29.5 s
+
+  [BITRATE]
+      Average:           760 kbps
+      Min / Max:         200 / 4,500 kbps
+      Median:            600 kbps
+      Std deviation:     707.6 kbps
+      Variance:          500,740.4
+      25th/75th %ile:    200 / 1,200 kbps
+
+  [SWITCHES]
+      Total count:       4
+      Up / Down:         0 / 4
+      Avg magnitude:     1,075 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        30,909 ms
+      Ratio:             51.1713%
+      Frequency:         4.069 per minute
+      Avg duration:      15,454 ms
+      Max duration:      18,713 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           2,644 kbps
+      Min / Max:         227 / 4,478 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_dash_hsdpa_car_aarnes_elverum_tc_20260408_145758.json
+
+──────────────────────────────────────────────────────────────────────
+  [3/11] hsdpa_car_oslo_grimstad_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_car_oslo_grimstad_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 8865 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 877ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 1401 kbps
+   t=20s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 1979 kbps
+   t=31s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 2078 kbps
+   t=41s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 786 kbps
+   t=51s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 2183 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     877 ms
+      Playback time:     49.8 s
+
+  [BITRATE]
+      Average:           778 kbps
+      Min / Max:         100 / 4,500 kbps
+      Median:            400 kbps
+      Std deviation:     1,198.4 kbps
+      Variance:          1,436,113.7
+      25th/75th %ile:    200 / 600 kbps
+
+  [SWITCHES]
+      Total count:       5
+      Up / Down:         4 / 1
+      Avg magnitude:     1,020 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        10,620 ms
+      Ratio:             17.5858%
+      Frequency:         1.206 per minute
+      Avg duration:      10,620 ms
+      Max duration:      10,620 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,932 kbps
+      Min / Max:         786 / 3,027 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_dash_hsdpa_car_oslo_grimstad_tc_20260408_145903.json
+
+──────────────────────────────────────────────────────────────────────
+  [4/11] hsdpa_car_snaroya_smestad_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_car_snaroya_smestad_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 1987 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 846ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 726 kbps
+   t=20s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 907 kbps
+   t=31s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 892 kbps
+   t=41s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 1051 kbps
+   t=51s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 2065 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     846 ms
+      Playback time:     52.0 s
+
+  [BITRATE]
+      Average:           773 kbps
+      Min / Max:         200 / 4,500 kbps
+      Median:            600 kbps
+      Std deviation:     945.0 kbps
+      Variance:          893,057.9
+      25th/75th %ile:    400 / 800 kbps
+
+  [SWITCHES]
+      Total count:       4
+      Up / Down:         3 / 1
+      Avg magnitude:     1,225 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        8,321 ms
+      Ratio:             13.7832%
+      Frequency:         1.153 per minute
+      Avg duration:      8,321 ms
+      Max duration:      8,321 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,203 kbps
+      Min / Max:         411 / 2,746 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_dash_hsdpa_car_snaroya_smestad_tc_20260408_150008.json
+
+──────────────────────────────────────────────────────────────────────
+  [5/11] hsdpa_ferry_nesoddtangen_oslo_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_ferry_nesoddtangen_oslo_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 13922 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 740ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 2716 kbps
+   t=20s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 3001 kbps
+   t=31s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 2755 kbps
+   t=41s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 1474 kbps
+   t=51s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 1688 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     740 ms
+      Playback time:     49.7 s
+
+  [BITRATE]
+      Average:           1,020 kbps
+      Min / Max:         800 / 4,500 kbps
+      Median:            800 kbps
+      Std deviation:     491.3 kbps
+      Variance:          241,424.8
+      25th/75th %ile:    800 / 1,200 kbps
+
+  [SWITCHES]
+      Total count:       3
+      Up / Down:         1 / 2
+      Avg magnitude:     1,500 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        10,668 ms
+      Ratio:             17.6712%
+      Frequency:         1.207 per minute
+      Avg duration:      10,668 ms
+      Max duration:      10,668 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           2,411 kbps
+      Min / Max:         970 / 3,138 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_dash_hsdpa_ferry_nesoddtangen_oslo_tc_20260408_150112.json
+
+──────────────────────────────────────────────────────────────────────
+  [6/11] hsdpa_metro_kalbakken_jernbanetorget_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_metro_kalbakken_jernbanetorget_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 12655 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 756ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 2065 kbps
+   t=20s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 2323 kbps
+   t=31s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 2154 kbps
+   t=41s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 1824 kbps
+   t=51s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 1411 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     756 ms
+      Playback time:     50.1 s
+
+  [BITRATE]
+      Average:           857 kbps
+      Min / Max:         600 / 4,500 kbps
+      Median:            800 kbps
+      Std deviation:     585.8 kbps
+      Variance:          343,111.8
+      25th/75th %ile:    800 / 800 kbps
+
+  [SWITCHES]
+      Total count:       4
+      Up / Down:         1 / 3
+      Avg magnitude:     1,075 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        10,244 ms
+      Ratio:             16.9696%
+      Frequency:         1.197 per minute
+      Avg duration:      10,244 ms
+      Max duration:      10,244 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,804 kbps
+      Min / Max:         803 / 2,336 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_dash_hsdpa_metro_kalbakken_jernbanetorget_tc_20260408_150217.json
+
+──────────────────────────────────────────────────────────────────────
+  [7/11] hsdpa_train_oslo_vestby_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_train_oslo_vestby_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 4090 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 757ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 295 kbps
+   t=20s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 478 kbps
+   t=31s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 340 kbps
+   t=41s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 455 kbps
+   t=51s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 615 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     757 ms
+      Playback time:     48.2 s
+
+  [BITRATE]
+      Average:           565 kbps
+      Min / Max:         200 / 4,500 kbps
+      Median:            400 kbps
+      Std deviation:     745.8 kbps
+      Variance:          556,150.5
+      25th/75th %ile:    200 / 600 kbps
+
+  [SWITCHES]
+      Total count:       3
+      Up / Down:         0 / 3
+      Avg magnitude:     1,433 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        12,237 ms
+      Ratio:             20.2628%
+      Frequency:         1.246 per minute
+      Avg duration:      12,237 ms
+      Max duration:      12,237 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           566 kbps
+      Min / Max:         53 / 1,781 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_dash_hsdpa_train_oslo_vestby_tc_20260408_150322.json
+
+──────────────────────────────────────────────────────────────────────
+  [8/11] hsdpa_train_vestby_oslo_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_train_vestby_oslo_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 4965 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 961ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 2381 kbps
+   t=21s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 2203 kbps
+   t=31s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 2885 kbps
+   t=41s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 2654 kbps
+   t=51s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 3787 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     961 ms
+      Playback time:     44.9 s
+
+  [BITRATE]
+      Average:           647 kbps
+      Min / Max:         200 / 4,500 kbps
+      Median:            400 kbps
+      Std deviation:     968.8 kbps
+      Variance:          938,524.7
+      25th/75th %ile:    200 / 600 kbps
+
+  [SWITCHES]
+      Total count:       3
+      Up / Down:         2 / 1
+      Avg magnitude:     1,567 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        15,469 ms
+      Ratio:             25.6071%
+      Frequency:         1.335 per minute
+      Avg duration:      15,469 ms
+      Max duration:      15,469 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           2,607 kbps
+      Min / Max:         809 / 4,012 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_dash_hsdpa_train_vestby_oslo_tc_20260408_150426.json
+
+──────────────────────────────────────────────────────────────────────
+  [9/11] hsdpa_tram_jernbanetorget_ljabru_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_tram_jernbanetorget_ljabru_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 9435 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 759ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 962 kbps
+   t=20s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 807 kbps
+   t=31s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 392 kbps
+   t=41s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 1082 kbps
+   t=51s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 453 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     759 ms
+      Playback time:     48.9 s
+
+  [BITRATE]
+      Average:           727 kbps
+      Min / Max:         400 / 4,500 kbps
+      Median:            600 kbps
+      Std deviation:     712.8 kbps
+      Variance:          508,099.2
+      25th/75th %ile:    400 / 800 kbps
+
+  [SWITCHES]
+      Total count:       4
+      Up / Down:         2 / 2
+      Avg magnitude:     1,175 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        11,482 ms
+      Ratio:             19.0142%
+      Frequency:         1.227 per minute
+      Avg duration:      11,482 ms
+      Max duration:      11,482 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           704 kbps
+      Min / Max:         63 / 1,670 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_dash_hsdpa_tram_jernbanetorget_ljabru_tc_20260408_150531.json
+
+──────────────────────────────────────────────────────────────────────
+  [10/11] hsdpa_tram_jernbanetorget_universitetssykehuset_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_tram_jernbanetorget_universitetssykehuset_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 1369 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 757ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 657 kbps
+   t=20s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 542 kbps
+   t=31s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 281 kbps
+   t=41s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 260 kbps
+   t=51s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 1786 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     757 ms
+      Playback time:     47.6 s
+
+  [BITRATE]
+      Average:           847 kbps
+      Min / Max:         400 / 4,500 kbps
+      Median:            600 kbps
+      Std deviation:     825.3 kbps
+      Variance:          681,169.3
+      25th/75th %ile:    400 / 1,200 kbps
+
+  [SWITCHES]
+      Total count:       4
+      Up / Down:         2 / 2
+      Avg magnitude:     1,425 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        12,763 ms
+      Ratio:             21.1522%
+      Frequency:         2.522 per minute
+      Avg duration:      10,714 ms
+      Max duration:      10,714 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           827 kbps
+      Min / Max:         2 / 2,163 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_dash_hsdpa_tram_jernbanetorget_universitetssykehuset_tc_20260408_150636.json
+
+──────────────────────────────────────────────────────────────────────
+  [11/11] hsdpa_tram_ljabru_jernbanetorget_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_tram_ljabru_jernbanetorget_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 18317 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 761ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 1032 kbps
+   t=20s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 1269 kbps
+   t=31s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 1356 kbps
+   t=41s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 648 kbps
+   t=51s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 681 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     761 ms
+      Playback time:     49.4 s
+
+  [BITRATE]
+      Average:           827 kbps
+      Min / Max:         200 / 4,500 kbps
+      Median:            400 kbps
+      Std deviation:     1,065.2 kbps
+      Variance:          1,134,545.5
+      25th/75th %ile:    400 / 800 kbps
+
+  [SWITCHES]
+      Total count:       3
+      Up / Down:         2 / 1
+      Avg magnitude:     1,633 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        10,981 ms
+      Ratio:             18.1821%
+      Frequency:         1.214 per minute
+      Avg duration:      10,981 ms
+      Max duration:      10,981 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,032 kbps
+      Min / Max:         347 / 1,886 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_dash_hsdpa_tram_ljabru_jernbanetorget_tc_20260408_150740.json
+
+======================================================================
+  BATCH COMPLETE: 11/11 succeeded
+  Results saved to: results/hsdpa_comparison/
+======================================================================
+
+
+======================================================================
+  BATCH RUN: 11 trace(s) from traces/hsdpa
+======================================================================
+
+
+──────────────────────────────────────────────────────────────────────
+  [1/11] hsdpa_bus_ljansbakken_oslo_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_bus_ljansbakken_oslo_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:9081/?mpd=/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 4445 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 8294ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.1s | bitrate: 100 kbps | tp: 1151 kbps | trace_bw: 1182 kbps
+   t=20s | buffer: 3.1s | bitrate: 100 kbps | tp: 1066 kbps | trace_bw: 113 kbps
+   t=31s | buffer: 1.2s | bitrate: 100 kbps | tp: 1144 kbps | trace_bw: 2407 kbps
+   t=41s | buffer: 3.4s | bitrate: 100 kbps | tp: 1122 kbps | trace_bw: 2464 kbps
+   t=51s | buffer: 1.8s | bitrate: 100 kbps | tp: 1198 kbps | trace_bw: 2480 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     8,294 ms
+      Playback time:     51.5 s
+
+  [BITRATE]
+      Average:           241 kbps
+      Min / Max:         100 / 1,200 kbps
+      Median:            100 kbps
+      Std deviation:     338.2 kbps
+      Variance:          114,356.8
+      25th/75th %ile:    100 / 100 kbps
+
+  [SWITCHES]
+      Total count:       4
+      Up / Down:         2 / 2
+      Avg magnitude:     525 kbps
+
+  [REBUFFERING]
+      Events:            8
+      Total time:        10,315 ms
+      Ratio:             16.6748%
+      Frequency:         9.312 per minute
+      Avg duration:      1,289 ms
+      Max duration:      7,065 ms
+
+  [THROUGHPUT]
+      Average:           1,174 kbps
+      Median:            1,144 kbps
+      Min / Max:         989 / 1,427 kbps
+      Std deviation:     132.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,903 kbps
+      Min / Max:         9 / 3,711 kbps
+      Utilisation:       60.1%
+
+  [BUFFER]
+      Average level:     2.0 s
+      Min / Max:         0.1 / 4.3 s
+
+  [UTILIZATION]
+      Bandwidth:         21.1%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_lldash_hsdpa_bus_ljansbakken_oslo_tc_20260408_150845.json
+
+──────────────────────────────────────────────────────────────────────
+  [2/11] hsdpa_car_aarnes_elverum_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_car_aarnes_elverum_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:9081/?mpd=/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 5579 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 6629ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 3.9s | bitrate: 100 kbps | tp: 1551 kbps | trace_bw: 2000 kbps
+   t=20s | buffer: 4.1s | bitrate: 100 kbps | tp: 1462 kbps | trace_bw: 1487 kbps
+   t=31s | buffer: 3.0s | bitrate: 100 kbps | tp: 1497 kbps | trace_bw: 2762 kbps
+   t=41s | buffer: 1.4s | bitrate: 100 kbps | tp: 1363 kbps | trace_bw: 2207 kbps
+   t=51s | buffer: 3.1s | bitrate: 100 kbps | tp: 1453 kbps | trace_bw: 4253 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     6,629 ms
+      Playback time:     50.1 s
+
+  [BITRATE]
+      Average:           267 kbps
+      Min / Max:         100 / 1,500 kbps
+      Median:            100 kbps
+      Std deviation:     413.9 kbps
+      Variance:          171,327.9
+      25th/75th %ile:    100 / 100 kbps
+
+  [SWITCHES]
+      Total count:       10
+      Up / Down:         5 / 5
+      Avg magnitude:     330 kbps
+
+  [REBUFFERING]
+      Events:            8
+      Total time:        11,382 ms
+      Ratio:             18.5114%
+      Frequency:         9.580 per minute
+      Avg duration:      1,423 ms
+      Max duration:      6,180 ms
+
+  [THROUGHPUT]
+      Average:           1,526 kbps
+      Median:            1,481 kbps
+      Min / Max:         1,319 / 1,900 kbps
+      Std deviation:     173.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           2,627 kbps
+      Min / Max:         227 / 4,478 kbps
+      Utilisation:       56.4%
+
+  [BUFFER]
+      Average level:     2.0 s
+      Min / Max:         0.1 / 4.4 s
+
+  [UTILIZATION]
+      Bandwidth:         18.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_lldash_hsdpa_car_aarnes_elverum_tc_20260408_150957.json
+
+──────────────────────────────────────────────────────────────────────
+  [3/11] hsdpa_car_oslo_grimstad_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_car_oslo_grimstad_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:9081/?mpd=/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 8865 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 7599ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 1.2s | bitrate: 100 kbps | tp: 1407 kbps | trace_bw: 1401 kbps
+   t=20s | buffer: 3.1s | bitrate: 100 kbps | tp: 1471 kbps | trace_bw: 1979 kbps
+   t=31s | buffer: 1.7s | bitrate: 100 kbps | tp: 1660 kbps | trace_bw: 2078 kbps
+   t=41s | buffer: 4.0s | bitrate: 100 kbps | tp: 1724 kbps | trace_bw: 786 kbps
+   t=51s | buffer: 2.3s | bitrate: 100 kbps | tp: 1530 kbps | trace_bw: 2183 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     7,599 ms
+      Playback time:     54.4 s
+
+  [BITRATE]
+      Average:           168 kbps
+      Min / Max:         100 / 800 kbps
+      Median:            100 kbps
+      Std deviation:     176.0 kbps
+      Variance:          30,976.0
+      25th/75th %ile:    100 / 100 kbps
+
+  [SWITCHES]
+      Total count:       8
+      Up / Down:         4 / 4
+      Avg magnitude:     212 kbps
+
+  [REBUFFERING]
+      Events:            9
+      Total time:        7,875 ms
+      Ratio:             12.6370%
+      Frequency:         9.919 per minute
+      Avg duration:      875 ms
+      Max duration:      3,463 ms
+
+  [THROUGHPUT]
+      Average:           1,483 kbps
+      Median:            1,530 kbps
+      Min / Max:         1,039 / 1,757 kbps
+      Std deviation:     210.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,923 kbps
+      Min / Max:         786 / 3,027 kbps
+      Utilisation:       79.6%
+
+  [BUFFER]
+      Average level:     2.0 s
+      Min / Max:         0.1 / 4.2 s
+
+  [UTILIZATION]
+      Bandwidth:         11.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_lldash_hsdpa_car_oslo_grimstad_tc_20260408_151108.json
+
+──────────────────────────────────────────────────────────────────────
+  [4/11] hsdpa_car_snaroya_smestad_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_car_snaroya_smestad_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:9081/?mpd=/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 1987 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+
+[ERROR] Benchmark failed: Page.goto: Timeout 30000ms exceeded.
+Call log:
+navigating to "http://localhost:9081/?mpd=/manifest.mpd", waiting until "domcontentloaded"
+
+Traceback (most recent call last):
+  File "benchmark.py", line 1874, in <module>
+    main()
+  File "benchmark.py", line 1833, in main
+    ok = run_single_benchmark(args.protocol, url, args.duration, output_path,
+  File "benchmark.py", line 1704, in run_single_benchmark
+    benchmark.run()
+  File "benchmark.py", line 424, in run
+    page.goto(self.base_url, timeout=30000, wait_until='domcontentloaded')
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/sync_api/_generated.py", line 9002, in goto
+    self._sync(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_page.py", line 553, in goto
+    return await self._main_frame.goto(**locals_to_params(locals()))
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_frame.py", line 145, in goto
+    await self._channel.send("goto", locals_to_params(locals()))
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_connection.py", line 59, in send
+    return await self._connection.wrap_api_call(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_connection.py", line 520, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Page.goto: Timeout 30000ms exceeded.
+Call log:
+navigating to "http://localhost:9081/?mpd=/manifest.mpd", waiting until "domcontentloaded"
+
+
+======================================================================
+  BATCH RUN: 11 trace(s) from traces/hsdpa
+======================================================================
+
+
+──────────────────────────────────────────────────────────────────────
+  [1/11] hsdpa_bus_ljansbakken_oslo_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_bus_ljansbakken_oslo_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:9081/?mpd=/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 4445 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 101678ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 2.9s | bitrate: 400 kbps | tp: 106 kbps | trace_bw: 1182 kbps
+   t=20s | buffer: 2.2s | bitrate: 100 kbps | tp: 43 kbps | trace_bw: 113 kbps
+   t=31s | buffer: 1.5s | bitrate: 100 kbps | tp: 67 kbps | trace_bw: 2407 kbps
+   t=41s | buffer: 0.1s | bitrate: 100 kbps | tp: 89 kbps | trace_bw: 2464 kbps
+   t=51s | buffer: 1.3s | bitrate: 100 kbps | tp: 114 kbps | trace_bw: 2480 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     101,678 ms
+      Playback time:     27.4 s
+
+  [BITRATE]
+      Average:           240 kbps
+      Min / Max:         100 / 400 kbps
+      Median:            100 kbps
+      Std deviation:     149.7 kbps
+      Variance:          22,400.0
+      25th/75th %ile:    100 / 400 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         0 / 1
+      Avg magnitude:     300 kbps
+
+  [REBUFFERING]
+      Events:            7
+      Total time:        62,236 ms
+      Ratio:             69.4277%
+      Frequency:         15.325 per minute
+      Avg duration:      8,891 ms
+      Max duration:      38,182 ms
+
+  [THROUGHPUT]
+      Average:           80 kbps
+      Median:            90 kbps
+      Min / Max:         28 / 114 kbps
+      Std deviation:     28.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,920 kbps
+      Min / Max:         9 / 3,711 kbps
+      Utilisation:       4.7%
+
+  [BUFFER]
+      Average level:     nan s
+      Min / Max:         nan / nan s
+
+  [UTILIZATION]
+      Bandwidth:         266.7%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_lldash_hsdpa_bus_ljansbakken_oslo_tc_20260408_195154.json
+
+──────────────────────────────────────────────────────────────────────
+  [2/11] hsdpa_car_aarnes_elverum_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_car_aarnes_elverum_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:9081/?mpd=/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 5579 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+
+[ERROR] Benchmark failed: Page.goto: Timeout 120000ms exceeded.
+Call log:
+navigating to "http://localhost:9081/?mpd=/manifest.mpd", waiting until "domcontentloaded"
+
+Traceback (most recent call last):
+  File "benchmark.py", line 1874, in <module>
+    main()
+  File "benchmark.py", line 1833, in main
+    ok = run_single_benchmark(args.protocol, url, args.duration, output_path,
+  File "benchmark.py", line 1704, in run_single_benchmark
+    benchmark.run()
+  File "benchmark.py", line 424, in run
+    page.goto(self.base_url, timeout=120000, wait_until='domcontentloaded')
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/sync_api/_generated.py", line 9002, in goto
+    self._sync(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_page.py", line 553, in goto
+    return await self._main_frame.goto(**locals_to_params(locals()))
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_frame.py", line 145, in goto
+    await self._channel.send("goto", locals_to_params(locals()))
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_connection.py", line 59, in send
+    return await self._connection.wrap_api_call(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_connection.py", line 520, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Page.goto: Timeout 120000ms exceeded.
+Call log:
+navigating to "http://localhost:9081/?mpd=/manifest.mpd", waiting until "domcontentloaded"
+
+
+======================================================================
+  BATCH RUN: 11 trace(s) from traces/hsdpa
+======================================================================
+
+
+──────────────────────────────────────────────────────────────────────
+  [1/11] hsdpa_bus_ljansbakken_oslo_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_bus_ljansbakken_oslo_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8081/?mpd=http://localhost:9081/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 4445 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 30153ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: nans | bitrate: 0 kbps | trace_bw: 1182 kbps
+   t=20s | buffer: nans | bitrate: 0 kbps | trace_bw: 113 kbps
+   t=31s | buffer: nans | bitrate: 0 kbps | trace_bw: 2407 kbps
+   t=41s | buffer: nans | bitrate: 0 kbps | trace_bw: 2464 kbps
+   t=51s | buffer: nans | bitrate: 0 kbps | trace_bw: 2480 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     30,153 ms
+      Playback time:     0.0 s
+
+  [BITRATE]
+      Average:           0 kbps
+      Min / Max:         0 / 0 kbps
+      Median:            0 kbps
+      Std deviation:     0.0 kbps
+      Variance:          0.0
+      25th/75th %ile:    0 / 0 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+      Frequency:         0.000 per minute
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,901 kbps
+      Min / Max:         9 / 3,711 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_lldash_hsdpa_bus_ljansbakken_oslo_tc_20260408_195740.json
+
+──────────────────────────────────────────────────────────────────────
+  [2/11] hsdpa_car_aarnes_elverum_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_car_aarnes_elverum_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8081/?mpd=http://localhost:9081/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 5579 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 30147ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: nans | bitrate: 0 kbps | trace_bw: 2000 kbps
+   t=20s | buffer: nans | bitrate: 0 kbps | trace_bw: 1487 kbps
+   t=31s | buffer: nans | bitrate: 0 kbps | trace_bw: 2762 kbps
+   t=41s | buffer: nans | bitrate: 0 kbps | trace_bw: 2207 kbps
+   t=51s | buffer: nans | bitrate: 0 kbps | trace_bw: 4253 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     30,147 ms
+      Playback time:     0.0 s
+
+  [BITRATE]
+      Average:           0 kbps
+      Min / Max:         0 / 0 kbps
+      Median:            0 kbps
+      Std deviation:     0.0 kbps
+      Variance:          0.0
+      25th/75th %ile:    0 / 0 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+      Frequency:         0.000 per minute
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           2,627 kbps
+      Min / Max:         227 / 4,478 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_lldash_hsdpa_car_aarnes_elverum_tc_20260408_195914.json
+
+──────────────────────────────────────────────────────────────────────
+  [3/11] hsdpa_car_oslo_grimstad_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_car_oslo_grimstad_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8081/?mpd=http://localhost:9081/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 8865 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 30149ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: nans | bitrate: 0 kbps | trace_bw: 1401 kbps
+   t=20s | buffer: nans | bitrate: 0 kbps | trace_bw: 1979 kbps
+   t=31s | buffer: nans | bitrate: 0 kbps | trace_bw: 2078 kbps
+   t=41s | buffer: nans | bitrate: 0 kbps | trace_bw: 786 kbps
+   t=51s | buffer: nans | bitrate: 0 kbps | trace_bw: 2183 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     30,149 ms
+      Playback time:     0.0 s
+
+  [BITRATE]
+      Average:           0 kbps
+      Min / Max:         0 / 0 kbps
+      Median:            0 kbps
+      Std deviation:     0.0 kbps
+      Variance:          0.0
+      25th/75th %ile:    0 / 0 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+      Frequency:         0.000 per minute
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,920 kbps
+      Min / Max:         786 / 3,027 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_lldash_hsdpa_car_oslo_grimstad_tc_20260408_200048.json
+
+──────────────────────────────────────────────────────────────────────
+  [4/11] hsdpa_car_snaroya_smestad_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_car_snaroya_smestad_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8081/?mpd=http://localhost:9081/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 1987 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 30155ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: nans | bitrate: 0 kbps | trace_bw: 726 kbps
+   t=20s | buffer: nans | bitrate: 0 kbps | trace_bw: 907 kbps
+   t=31s | buffer: nans | bitrate: 0 kbps | trace_bw: 892 kbps
+   t=41s | buffer: nans | bitrate: 0 kbps | trace_bw: 1051 kbps
+   t=51s | buffer: nans | bitrate: 0 kbps | trace_bw: 2065 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     30,155 ms
+      Playback time:     0.0 s
+
+  [BITRATE]
+      Average:           0 kbps
+      Min / Max:         0 / 0 kbps
+      Median:            0 kbps
+      Std deviation:     0.0 kbps
+      Variance:          0.0
+      25th/75th %ile:    0 / 0 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+      Frequency:         0.000 per minute
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,202 kbps
+      Min / Max:         411 / 2,746 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_lldash_hsdpa_car_snaroya_smestad_tc_20260408_200222.json
+
+──────────────────────────────────────────────────────────────────────
+  [5/11] hsdpa_ferry_nesoddtangen_oslo_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_ferry_nesoddtangen_oslo_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8081/?mpd=http://localhost:9081/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 13922 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 30158ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: nans | bitrate: 0 kbps | trace_bw: 2716 kbps
+   t=20s | buffer: nans | bitrate: 0 kbps | trace_bw: 3001 kbps
+   t=31s | buffer: nans | bitrate: 0 kbps | trace_bw: 2755 kbps
+   t=41s | buffer: nans | bitrate: 0 kbps | trace_bw: 1474 kbps
+   t=51s | buffer: nans | bitrate: 0 kbps | trace_bw: 1688 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     30,158 ms
+      Playback time:     0.0 s
+
+  [BITRATE]
+      Average:           0 kbps
+      Min / Max:         0 / 0 kbps
+      Median:            0 kbps
+      Std deviation:     0.0 kbps
+      Variance:          0.0
+      25th/75th %ile:    0 / 0 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+      Frequency:         0.000 per minute
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           2,412 kbps
+      Min / Max:         970 / 3,138 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_lldash_hsdpa_ferry_nesoddtangen_oslo_tc_20260408_200356.json
+
+──────────────────────────────────────────────────────────────────────
+  [6/11] hsdpa_metro_kalbakken_jernbanetorget_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_metro_kalbakken_jernbanetorget_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8081/?mpd=http://localhost:9081/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 12655 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 30158ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: nans | bitrate: 0 kbps | trace_bw: 2065 kbps
+   t=20s | buffer: nans | bitrate: 0 kbps | trace_bw: 2323 kbps
+   t=31s | buffer: nans | bitrate: 0 kbps | trace_bw: 2154 kbps
+   t=41s | buffer: nans | bitrate: 0 kbps | trace_bw: 1824 kbps
+   t=51s | buffer: nans | bitrate: 0 kbps | trace_bw: 1411 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     30,158 ms
+      Playback time:     0.0 s
+
+  [BITRATE]
+      Average:           0 kbps
+      Min / Max:         0 / 0 kbps
+      Median:            0 kbps
+      Std deviation:     0.0 kbps
+      Variance:          0.0
+      25th/75th %ile:    0 / 0 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+      Frequency:         0.000 per minute
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,801 kbps
+      Min / Max:         803 / 2,336 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_lldash_hsdpa_metro_kalbakken_jernbanetorget_tc_20260408_200530.json
+
+──────────────────────────────────────────────────────────────────────
+  [7/11] hsdpa_train_oslo_vestby_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_train_oslo_vestby_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8081/?mpd=http://localhost:9081/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 4090 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 30165ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: nans | bitrate: 0 kbps | trace_bw: 295 kbps
+   t=20s | buffer: nans | bitrate: 0 kbps | trace_bw: 478 kbps
+   t=31s | buffer: nans | bitrate: 0 kbps | trace_bw: 340 kbps
+   t=41s | buffer: nans | bitrate: 0 kbps | trace_bw: 455 kbps
+   t=51s | buffer: nans | bitrate: 0 kbps | trace_bw: 615 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     30,165 ms
+      Playback time:     0.0 s
+
+  [BITRATE]
+      Average:           0 kbps
+      Min / Max:         0 / 0 kbps
+      Median:            0 kbps
+      Std deviation:     0.0 kbps
+      Variance:          0.0
+      25th/75th %ile:    0 / 0 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+      Frequency:         0.000 per minute
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           566 kbps
+      Min / Max:         53 / 1,781 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_lldash_hsdpa_train_oslo_vestby_tc_20260408_200704.json
+
+──────────────────────────────────────────────────────────────────────
+  [8/11] hsdpa_train_vestby_oslo_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_train_vestby_oslo_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8081/?mpd=http://localhost:9081/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 4965 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 30153ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: nans | bitrate: 0 kbps | trace_bw: 2381 kbps
+   t=20s | buffer: nans | bitrate: 0 kbps | trace_bw: 2203 kbps
+   t=31s | buffer: nans | bitrate: 0 kbps | trace_bw: 2885 kbps
+   t=41s | buffer: nans | bitrate: 0 kbps | trace_bw: 2654 kbps
+   t=51s | buffer: nans | bitrate: 0 kbps | trace_bw: 3787 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     30,153 ms
+      Playback time:     0.0 s
+
+  [BITRATE]
+      Average:           0 kbps
+      Min / Max:         0 / 0 kbps
+      Median:            0 kbps
+      Std deviation:     0.0 kbps
+      Variance:          0.0
+      25th/75th %ile:    0 / 0 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+      Frequency:         0.000 per minute
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           2,606 kbps
+      Min / Max:         809 / 4,012 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_lldash_hsdpa_train_vestby_oslo_tc_20260408_200838.json
+
+──────────────────────────────────────────────────────────────────────
+  [9/11] hsdpa_tram_jernbanetorget_ljabru_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_tram_jernbanetorget_ljabru_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8081/?mpd=http://localhost:9081/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 9435 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 30155ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: nans | bitrate: 0 kbps | trace_bw: 962 kbps
+   t=20s | buffer: nans | bitrate: 0 kbps | trace_bw: 807 kbps
+   t=31s | buffer: nans | bitrate: 0 kbps | trace_bw: 392 kbps
+   t=41s | buffer: nans | bitrate: 0 kbps | trace_bw: 1082 kbps
+   t=51s | buffer: nans | bitrate: 0 kbps | trace_bw: 453 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     30,155 ms
+      Playback time:     0.0 s
+
+  [BITRATE]
+      Average:           0 kbps
+      Min / Max:         0 / 0 kbps
+      Median:            0 kbps
+      Std deviation:     0.0 kbps
+      Variance:          0.0
+      25th/75th %ile:    0 / 0 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+      Frequency:         0.000 per minute
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           710 kbps
+      Min / Max:         63 / 1,670 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_lldash_hsdpa_tram_jernbanetorget_ljabru_tc_20260408_201012.json
+
+──────────────────────────────────────────────────────────────────────
+  [10/11] hsdpa_tram_jernbanetorget_universitetssykehuset_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_tram_jernbanetorget_universitetssykehuset_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8081/?mpd=http://localhost:9081/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 1369 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 30158ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: nans | bitrate: 0 kbps | trace_bw: 657 kbps
+   t=20s | buffer: nans | bitrate: 0 kbps | trace_bw: 542 kbps
+   t=31s | buffer: nans | bitrate: 0 kbps | trace_bw: 281 kbps
+   t=41s | buffer: nans | bitrate: 0 kbps | trace_bw: 260 kbps
+   t=51s | buffer: nans | bitrate: 0 kbps | trace_bw: 1786 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     30,158 ms
+      Playback time:     0.0 s
+
+  [BITRATE]
+      Average:           0 kbps
+      Min / Max:         0 / 0 kbps
+      Median:            0 kbps
+      Std deviation:     0.0 kbps
+      Variance:          0.0
+      25th/75th %ile:    0 / 0 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+      Frequency:         0.000 per minute
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           827 kbps
+      Min / Max:         2 / 2,163 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_lldash_hsdpa_tram_jernbanetorget_universitetssykehuset_tc_20260408_201146.json
+
+──────────────────────────────────────────────────────────────────────
+  [11/11] hsdpa_tram_ljabru_jernbanetorget_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_tram_ljabru_jernbanetorget_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8081/?mpd=http://localhost:9081/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 18317 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 30160ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: nans | bitrate: 0 kbps | trace_bw: 1032 kbps
+   t=20s | buffer: nans | bitrate: 0 kbps | trace_bw: 1269 kbps
+   t=31s | buffer: nans | bitrate: 0 kbps | trace_bw: 1356 kbps
+   t=41s | buffer: nans | bitrate: 0 kbps | trace_bw: 648 kbps
+   t=51s | buffer: nans | bitrate: 0 kbps | trace_bw: 681 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     30,160 ms
+      Playback time:     0.0 s
+
+  [BITRATE]
+      Average:           0 kbps
+      Min / Max:         0 / 0 kbps
+      Median:            0 kbps
+      Std deviation:     0.0 kbps
+      Variance:          0.0
+      25th/75th %ile:    0 / 0 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+      Frequency:         0.000 per minute
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,039 kbps
+      Min / Max:         347 / 1,886 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_lldash_hsdpa_tram_ljabru_jernbanetorget_tc_20260408_201319.json
+
+======================================================================
+  BATCH COMPLETE: 11/11 succeeded
+  Results saved to: results/hsdpa_comparison/
+======================================================================
+
+
+======================================================================
+  BATCH RUN: 11 trace(s) from traces/hsdpa
+======================================================================
+
+
+──────────────────────────────────────────────────────────────────────
+  [1/11] hsdpa_bus_ljansbakken_oslo_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_bus_ljansbakken_oslo_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 4445 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 33743ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 1182 kbps
+   t=20s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 113 kbps
+   t=31s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 2407 kbps
+   t=41s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 2464 kbps
+   t=51s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 2480 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     33,743 ms
+      Playback time:     0.0 s
+
+  [BITRATE]
+      Average:           0 kbps
+      Min / Max:         0 / 0 kbps
+      Median:            0 kbps
+      Std deviation:     0.0 kbps
+      Variance:          0.0
+      25th/75th %ile:    0 / 0 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        88,657 ms
+      Ratio:             0.0000%
+      Frequency:         0.000 per minute
+      Avg duration:      0 ms
+      Max duration:      0 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,901 kbps
+      Min / Max:         9 / 3,711 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_hls_hsdpa_bus_ljansbakken_oslo_tc_20260408_201454.json
+
+──────────────────────────────────────────────────────────────────────
+  [2/11] hsdpa_car_aarnes_elverum_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_car_aarnes_elverum_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 5579 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 31445ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 3.6s | bitrate: 110 kbps | tp: 56 kbps | trace_bw: 2000 kbps
+   t=20s | buffer: 1.9s | bitrate: 110 kbps | tp: 62 kbps | trace_bw: 1487 kbps
+   t=31s | buffer: 1.0s | bitrate: 110 kbps | tp: 60 kbps | trace_bw: 2762 kbps
+   t=41s | buffer: 0.0s | bitrate: 110 kbps | tp: 60 kbps | trace_bw: 2207 kbps
+   t=51s | buffer: 0.1s | bitrate: 110 kbps | tp: 14 kbps | trace_bw: 4253 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     31,445 ms
+      Playback time:     21.3 s
+
+  [BITRATE]
+      Average:           165 kbps
+      Min / Max:         110 / 440 kbps
+      Median:            110 kbps
+      Std deviation:     122.6 kbps
+      Variance:          15,024.8
+      25th/75th %ile:    110 / 110 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         0 / 1
+      Avg magnitude:     330 kbps
+
+  [REBUFFERING]
+      Events:            6
+      Total time:        65,348 ms
+      Ratio:             75.3947%
+      Frequency:         16.880 per minute
+      Avg duration:      10,891 ms
+      Max duration:      25,698 ms
+
+  [THROUGHPUT]
+      Average:           51 kbps
+      Median:            60 kbps
+      Min / Max:         14 / 73 kbps
+      Std deviation:     21.2 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           2,627 kbps
+      Min / Max:         227 / 4,478 kbps
+      Utilisation:       2.3%
+
+  [BUFFER]
+      Average level:     0.8 s
+      Min / Max:         0.0 / 4.0 s
+
+  [UTILIZATION]
+      Bandwidth:         273.1%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_hls_hsdpa_car_aarnes_elverum_tc_20260408_201631.json
+
+──────────────────────────────────────────────────────────────────────
+  [3/11] hsdpa_car_oslo_grimstad_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_car_oslo_grimstad_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 8865 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 32838ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 440 kbps | tp: 64 kbps | trace_bw: 1401 kbps
+   t=20s | buffer: 0.0s | bitrate: 440 kbps | tp: 64 kbps | trace_bw: 1979 kbps
+   t=31s | buffer: 0.1s | bitrate: 110 kbps | tp: 17 kbps | trace_bw: 2078 kbps
+   t=41s | buffer: 0.0s | bitrate: 110 kbps | tp: 17 kbps | trace_bw: 786 kbps
+   t=51s | buffer: 0.0s | bitrate: 110 kbps | tp: 17 kbps | trace_bw: 2183 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     32,838 ms
+      Playback time:     15.6 s
+
+  [BITRATE]
+      Average:           249 kbps
+      Min / Max:         110 / 440 kbps
+      Median:            110 kbps
+      Std deviation:     163.0 kbps
+      Variance:          26,553.7
+      25th/75th %ile:    110 / 440 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         0 / 1
+      Avg magnitude:     330 kbps
+
+  [REBUFFERING]
+      Events:            5
+      Total time:        74,071 ms
+      Ratio:             82.5832%
+      Frequency:         19.204 per minute
+      Avg duration:      14,814 ms
+      Max duration:      29,178 ms
+
+  [THROUGHPUT]
+      Average:           40 kbps
+      Median:            20 kbps
+      Min / Max:         17 / 64 kbps
+      Std deviation:     22.6 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,919 kbps
+      Min / Max:         786 / 3,027 kbps
+      Utilisation:       1.0%
+
+  [BUFFER]
+      Average level:     0.7 s
+      Min / Max:         0.0 / 5.5 s
+
+  [UTILIZATION]
+      Bandwidth:         1236.9%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_hls_hsdpa_car_oslo_grimstad_tc_20260408_201807.json
+
+──────────────────────────────────────────────────────────────────────
+  [4/11] hsdpa_car_snaroya_smestad_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_car_snaroya_smestad_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 1987 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 30783ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 1.7s | bitrate: 110 kbps | tp: 73 kbps | trace_bw: 726 kbps
+   t=20s | buffer: 3.4s | bitrate: 110 kbps | tp: 108 kbps | trace_bw: 907 kbps
+   t=31s | buffer: 5.2s | bitrate: 110 kbps | tp: 129 kbps | trace_bw: 892 kbps
+   t=41s | buffer: 11.0s | bitrate: 110 kbps | tp: 132 kbps | trace_bw: 1051 kbps
+   t=51s | buffer: 12.8s | bitrate: 110 kbps | tp: 124 kbps | trace_bw: 2065 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     30,783 ms
+      Playback time:     56.5 s
+
+  [BITRATE]
+      Average:           136 kbps
+      Min / Max:         110 / 440 kbps
+      Median:            110 kbps
+      Std deviation:     89.0 kbps
+      Variance:          7,918.6
+      25th/75th %ile:    110 / 110 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         0 / 1
+      Avg magnitude:     330 kbps
+
+  [REBUFFERING]
+      Events:            3
+      Total time:        33,602 ms
+      Ratio:             37.2963%
+      Frequency:         3.186 per minute
+      Avg duration:      11,201 ms
+      Max duration:      33,199 ms
+
+  [THROUGHPUT]
+      Average:           135 kbps
+      Median:            123 kbps
+      Min / Max:         56 / 500 kbps
+      Std deviation:     94.5 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,200 kbps
+      Min / Max:         411 / 2,746 kbps
+      Utilisation:       10.3%
+
+  [BUFFER]
+      Average level:     7.0 s
+      Min / Max:         0.0 / 14.7 s
+
+  [UTILIZATION]
+      Bandwidth:         110.4%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_hls_hsdpa_car_snaroya_smestad_tc_20260408_201943.json
+
+──────────────────────────────────────────────────────────────────────
+  [5/11] hsdpa_ferry_nesoddtangen_oslo_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_ferry_nesoddtangen_oslo_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 13922 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 16632ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.8s | bitrate: 110 kbps | tp: 152 kbps | trace_bw: 2716 kbps
+   t=20s | buffer: 7.6s | bitrate: 110 kbps | tp: 138 kbps | trace_bw: 3001 kbps
+   t=31s | buffer: 5.4s | bitrate: 110 kbps | tp: 80 kbps | trace_bw: 2755 kbps
+   t=41s | buffer: 3.4s | bitrate: 110 kbps | tp: 65 kbps | trace_bw: 1474 kbps
+   t=51s | buffer: 0.1s | bitrate: 110 kbps | tp: 64 kbps | trace_bw: 1688 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     16,632 ms
+      Playback time:     48.1 s
+
+  [BITRATE]
+      Average:           132 kbps
+      Min / Max:         110 / 440 kbps
+      Median:            110 kbps
+      Std deviation:     82.3 kbps
+      Variance:          6,776.0
+      25th/75th %ile:    110 / 110 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         0 / 1
+      Avg magnitude:     330 kbps
+
+  [REBUFFERING]
+      Events:            4
+      Total time:        28,282 ms
+      Ratio:             37.0434%
+      Frequency:         4.993 per minute
+      Avg duration:      6,191 ms
+      Max duration:      15,815 ms
+
+  [THROUGHPUT]
+      Average:           103 kbps
+      Median:            109 kbps
+      Min / Max:         64 / 156 kbps
+      Std deviation:     36.1 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           2,412 kbps
+      Min / Max:         970 / 3,138 kbps
+      Utilisation:       4.5%
+
+  [BUFFER]
+      Average level:     3.4 s
+      Min / Max:         0.0 / 9.2 s
+
+  [UTILIZATION]
+      Bandwidth:         120.7%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_hls_hsdpa_ferry_nesoddtangen_oslo_tc_20260408_202118.json
+
+──────────────────────────────────────────────────────────────────────
+  [6/11] hsdpa_metro_kalbakken_jernbanetorget_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_metro_kalbakken_jernbanetorget_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 12655 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 26161ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.1s | bitrate: 110 kbps | tp: 100 kbps | trace_bw: 2065 kbps
+   t=20s | buffer: 2.5s | bitrate: 110 kbps | tp: 79 kbps | trace_bw: 2323 kbps
+   t=31s | buffer: 3.4s | bitrate: 110 kbps | tp: 60 kbps | trace_bw: 2154 kbps
+   t=41s | buffer: 0.0s | bitrate: 110 kbps | tp: 60 kbps | trace_bw: 1824 kbps
+   t=51s | buffer: 2.4s | bitrate: 110 kbps | tp: 60 kbps | trace_bw: 1411 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     26,161 ms
+      Playback time:     38.9 s
+
+  [BITRATE]
+      Average:           138 kbps
+      Min / Max:         110 / 440 kbps
+      Median:            110 kbps
+      Std deviation:     91.2 kbps
+      Variance:          8,318.8
+      25th/75th %ile:    110 / 110 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         0 / 1
+      Avg magnitude:     330 kbps
+
+  [REBUFFERING]
+      Events:            7
+      Total time:        41,856 ms
+      Ratio:             51.8455%
+      Frequency:         10.804 per minute
+      Avg duration:      5,979 ms
+      Max duration:      19,883 ms
+
+  [THROUGHPUT]
+      Average:           74 kbps
+      Median:            73 kbps
+      Min / Max:         49 / 100 kbps
+      Std deviation:     16.4 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,803 kbps
+      Min / Max:         803 / 2,336 kbps
+      Utilisation:       4.0%
+
+  [BUFFER]
+      Average level:     1.6 s
+      Min / Max:         0.0 / 5.8 s
+
+  [UTILIZATION]
+      Bandwidth:         189.1%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_hls_hsdpa_metro_kalbakken_jernbanetorget_tc_20260408_202238.json
+
+──────────────────────────────────────────────────────────────────────
+  [7/11] hsdpa_train_oslo_vestby_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_train_oslo_vestby_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 4090 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 34740ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 1.8s | bitrate: 110 kbps | tp: 105 kbps | trace_bw: 295 kbps
+   t=20s | buffer: 1.3s | bitrate: 110 kbps | tp: 92 kbps | trace_bw: 478 kbps
+   t=31s | buffer: 0.0s | bitrate: 110 kbps | tp: 92 kbps | trace_bw: 340 kbps
+   t=41s | buffer: 0.0s | bitrate: 110 kbps | tp: 25 kbps | trace_bw: 455 kbps
+   t=51s | buffer: 0.1s | bitrate: 110 kbps | tp: 48 kbps | trace_bw: 615 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     34,740 ms
+      Playback time:     32.0 s
+
+  [BITRATE]
+      Average:           132 kbps
+      Min / Max:         110 / 440 kbps
+      Median:            110 kbps
+      Std deviation:     82.3 kbps
+      Variance:          6,776.0
+      25th/75th %ile:    110 / 110 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         0 / 1
+      Avg magnitude:     330 kbps
+
+  [REBUFFERING]
+      Events:            6
+      Total time:        54,082 ms
+      Ratio:             62.8486%
+      Frequency:         11.261 per minute
+      Avg duration:      10,503 ms
+      Max duration:      25,416 ms
+
+  [THROUGHPUT]
+      Average:           70 kbps
+      Median:            91 kbps
+      Min / Max:         25 / 105 kbps
+      Std deviation:     28.8 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           566 kbps
+      Min / Max:         53 / 1,781 kbps
+      Utilisation:       16.1%
+
+  [BUFFER]
+      Average level:     1.2 s
+      Min / Max:         0.0 / 4.9 s
+
+  [UTILIZATION]
+      Bandwidth:         144.5%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_hls_hsdpa_train_oslo_vestby_tc_20260408_202408.json
+
+──────────────────────────────────────────────────────────────────────
+  [8/11] hsdpa_train_vestby_oslo_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_train_vestby_oslo_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:9080
+======================================================================
+
+[TRACE] Loaded 4965 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+
+[ERROR] Benchmark failed: Page.goto: Timeout 30000ms exceeded.
+Call log:
+navigating to "http://localhost:9080/hls.html", waiting until "domcontentloaded"
+
+Traceback (most recent call last):
+  File "benchmark.py", line 1875, in <module>
+    main()
+  File "benchmark.py", line 1834, in main
+    ok = run_single_benchmark(args.protocol, url, args.duration, output_path,
+  File "benchmark.py", line 1704, in run_single_benchmark
+    benchmark.run()
+  File "benchmark.py", line 730, in run
+    page.goto(self.player_url, timeout=30000, wait_until='domcontentloaded')
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/sync_api/_generated.py", line 9002, in goto
+    self._sync(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_page.py", line 553, in goto
+    return await self._main_frame.goto(**locals_to_params(locals()))
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_frame.py", line 145, in goto
+    await self._channel.send("goto", locals_to_params(locals()))
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_connection.py", line 59, in send
+    return await self._connection.wrap_api_call(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_connection.py", line 520, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Page.goto: Timeout 30000ms exceeded.
+Call log:
+navigating to "http://localhost:9080/hls.html", waiting until "domcontentloaded"
+
+
+======================================================================
+  BATCH RUN: 11 trace(s) from traces/hsdpa
+======================================================================
+
+
+──────────────────────────────────────────────────────────────────────
+  [1/11] hsdpa_bus_ljansbakken_oslo_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_bus_ljansbakken_oslo_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:9080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 4445 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 30040ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 1182 kbps
+   t=20s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 113 kbps
+   t=31s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 2407 kbps
+   t=41s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 2464 kbps
+   t=51s | buffer: 0.0s | bitrate: 0 kbps | trace_bw: 2480 kbps
+
+[ERROR] Benchmark failed: Page.evaluate: ReferenceError: bitrateHistory is not defined
+    at eval (eval at evaluate (:234:30), <anonymous>:2:36)
+    at UtilityScript.evaluate (<anonymous>:241:19)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+Traceback (most recent call last):
+  File "benchmark.py", line 1879, in <module>
+    main()
+  File "benchmark.py", line 1838, in main
+    ok = run_single_benchmark(args.protocol, url, args.duration, output_path,
+  File "benchmark.py", line 1705, in run_single_benchmark
+    benchmark.run()
+  File "benchmark.py", line 816, in run
+    final = page.evaluate("""() => ({
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/sync_api/_generated.py", line 8514, in evaluate
+    self._sync(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_page.py", line 469, in evaluate
+    return await self._main_frame.evaluate(expression, arg)
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_frame.py", line 278, in evaluate
+    await self._channel.send(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_connection.py", line 59, in send
+    return await self._connection.wrap_api_call(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_connection.py", line 520, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.Error: Page.evaluate: ReferenceError: bitrateHistory is not defined
+    at eval (eval at evaluate (:234:30), <anonymous>:2:36)
+    at UtilityScript.evaluate (<anonymous>:241:19)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+
+======================================================================
+  BATCH RUN: 11 trace(s) from traces/hsdpa
+======================================================================
+
+
+──────────────────────────────────────────────────────────────────────
+  [1/11] hsdpa_bus_ljansbakken_oslo_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_bus_ljansbakken_oslo_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:9080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 4445 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 30131ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 1182 kbps
+   t=20s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 113 kbps
+   t=31s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 2407 kbps
+   t=41s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 2464 kbps
+   t=51s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 2480 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     30,131 ms
+      Playback time:     0.0 s
+
+  [BITRATE]
+      Average:           0 kbps
+      Min / Max:         0 / 0 kbps
+      Median:            0 kbps
+      Std deviation:     0.0 kbps
+      Variance:          0.0
+      25th/75th %ile:    0 / 0 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+      Frequency:         0.000 per minute
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,920 kbps
+      Min / Max:         9 / 3,711 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_hls_hsdpa_bus_ljansbakken_oslo_tc_20260408_203301.json
+
+──────────────────────────────────────────────────────────────────────
+  [2/11] hsdpa_car_aarnes_elverum_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_car_aarnes_elverum_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:9080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 5579 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 30130ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 2000 kbps
+   t=20s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 1487 kbps
+   t=31s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 2762 kbps
+   t=41s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 2207 kbps
+   t=51s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 4253 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     30,130 ms
+      Playback time:     0.0 s
+
+  [BITRATE]
+      Average:           0 kbps
+      Min / Max:         0 / 0 kbps
+      Median:            0 kbps
+      Std deviation:     0.0 kbps
+      Variance:          0.0
+      25th/75th %ile:    0 / 0 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+      Frequency:         0.000 per minute
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           2,634 kbps
+      Min / Max:         227 / 4,478 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_hls_hsdpa_car_aarnes_elverum_tc_20260408_203435.json
+
+──────────────────────────────────────────────────────────────────────
+  [3/11] hsdpa_car_oslo_grimstad_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_car_oslo_grimstad_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:9080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 8865 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 30133ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 1401 kbps
+   t=20s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 1979 kbps
+   t=31s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 2078 kbps
+   t=41s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 786 kbps
+   t=51s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 2183 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     30,133 ms
+      Playback time:     0.0 s
+
+  [BITRATE]
+      Average:           0 kbps
+      Min / Max:         0 / 0 kbps
+      Median:            0 kbps
+      Std deviation:     0.0 kbps
+      Variance:          0.0
+      25th/75th %ile:    0 / 0 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+      Frequency:         0.000 per minute
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,923 kbps
+      Min / Max:         786 / 3,027 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_hls_hsdpa_car_oslo_grimstad_tc_20260408_203609.json
+
+──────────────────────────────────────────────────────────────────────
+  [4/11] hsdpa_car_snaroya_smestad_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_car_snaroya_smestad_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:9080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 1987 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 30135ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 726 kbps
+   t=20s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 907 kbps
+   t=31s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 892 kbps
+   t=41s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 1051 kbps
+   t=51s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 2065 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     30,135 ms
+      Playback time:     0.0 s
+
+  [BITRATE]
+      Average:           0 kbps
+      Min / Max:         0 / 0 kbps
+      Median:            0 kbps
+      Std deviation:     0.0 kbps
+      Variance:          0.0
+      25th/75th %ile:    0 / 0 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+      Frequency:         0.000 per minute
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,202 kbps
+      Min / Max:         411 / 2,746 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_hls_hsdpa_car_snaroya_smestad_tc_20260408_203743.json
+
+──────────────────────────────────────────────────────────────────────
+  [5/11] hsdpa_ferry_nesoddtangen_oslo_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_ferry_nesoddtangen_oslo_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:9080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 13922 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 30134ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 2716 kbps
+   t=20s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 3001 kbps
+   t=31s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 2755 kbps
+   t=41s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 1474 kbps
+   t=51s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 1688 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     30,134 ms
+      Playback time:     0.0 s
+
+  [BITRATE]
+      Average:           0 kbps
+      Min / Max:         0 / 0 kbps
+      Median:            0 kbps
+      Std deviation:     0.0 kbps
+      Variance:          0.0
+      25th/75th %ile:    0 / 0 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+      Frequency:         0.000 per minute
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           2,412 kbps
+      Min / Max:         970 / 3,138 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_hls_hsdpa_ferry_nesoddtangen_oslo_tc_20260408_203917.json
+
+──────────────────────────────────────────────────────────────────────
+  [6/11] hsdpa_metro_kalbakken_jernbanetorget_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_metro_kalbakken_jernbanetorget_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:9080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 12655 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 30129ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 2065 kbps
+   t=20s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 2323 kbps
+   t=31s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 2154 kbps
+   t=41s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 1824 kbps
+   t=51s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 1411 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     30,129 ms
+      Playback time:     0.0 s
+
+  [BITRATE]
+      Average:           0 kbps
+      Min / Max:         0 / 0 kbps
+      Median:            0 kbps
+      Std deviation:     0.0 kbps
+      Variance:          0.0
+      25th/75th %ile:    0 / 0 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+      Frequency:         0.000 per minute
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,800 kbps
+      Min / Max:         803 / 2,336 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_hls_hsdpa_metro_kalbakken_jernbanetorget_tc_20260408_204051.json
+
+──────────────────────────────────────────────────────────────────────
+  [7/11] hsdpa_train_oslo_vestby_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_train_oslo_vestby_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:9080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 4090 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 30126ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 295 kbps
+   t=20s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 478 kbps
+   t=31s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 340 kbps
+   t=41s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 455 kbps
+   t=51s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 615 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     30,126 ms
+      Playback time:     0.0 s
+
+  [BITRATE]
+      Average:           0 kbps
+      Min / Max:         0 / 0 kbps
+      Median:            0 kbps
+      Std deviation:     0.0 kbps
+      Variance:          0.0
+      25th/75th %ile:    0 / 0 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+      Frequency:         0.000 per minute
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           567 kbps
+      Min / Max:         53 / 1,781 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_hls_hsdpa_train_oslo_vestby_tc_20260408_204225.json
+
+──────────────────────────────────────────────────────────────────────
+  [8/11] hsdpa_train_vestby_oslo_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_train_vestby_oslo_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:9080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 4965 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 30130ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 2381 kbps
+   t=20s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 2203 kbps
+   t=31s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 2885 kbps
+   t=41s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 2654 kbps
+   t=51s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 3787 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     30,130 ms
+      Playback time:     0.0 s
+
+  [BITRATE]
+      Average:           0 kbps
+      Min / Max:         0 / 0 kbps
+      Median:            0 kbps
+      Std deviation:     0.0 kbps
+      Variance:          0.0
+      25th/75th %ile:    0 / 0 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+      Frequency:         0.000 per minute
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           2,606 kbps
+      Min / Max:         809 / 4,012 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_hls_hsdpa_train_vestby_oslo_tc_20260408_204359.json
+
+──────────────────────────────────────────────────────────────────────
+  [9/11] hsdpa_tram_jernbanetorget_ljabru_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_tram_jernbanetorget_ljabru_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:9080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 9435 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 30120ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 962 kbps
+   t=20s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 807 kbps
+   t=31s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 392 kbps
+   t=41s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 1082 kbps
+   t=51s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 453 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     30,120 ms
+      Playback time:     0.0 s
+
+  [BITRATE]
+      Average:           0 kbps
+      Min / Max:         0 / 0 kbps
+      Median:            0 kbps
+      Std deviation:     0.0 kbps
+      Variance:          0.0
+      25th/75th %ile:    0 / 0 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+      Frequency:         0.000 per minute
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           704 kbps
+      Min / Max:         63 / 1,670 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_hls_hsdpa_tram_jernbanetorget_ljabru_tc_20260408_204533.json
+
+──────────────────────────────────────────────────────────────────────
+  [10/11] hsdpa_tram_jernbanetorget_universitetssykehuset_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_tram_jernbanetorget_universitetssykehuset_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:9080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 1369 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 30139ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 657 kbps
+   t=20s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 542 kbps
+   t=31s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 281 kbps
+   t=41s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 260 kbps
+   t=51s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 1786 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     30,139 ms
+      Playback time:     0.0 s
+
+  [BITRATE]
+      Average:           0 kbps
+      Min / Max:         0 / 0 kbps
+      Median:            0 kbps
+      Std deviation:     0.0 kbps
+      Variance:          0.0
+      25th/75th %ile:    0 / 0 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+      Frequency:         0.000 per minute
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           827 kbps
+      Min / Max:         2 / 2,163 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_hls_hsdpa_tram_jernbanetorget_universitetssykehuset_tc_20260408_204707.json
+
+──────────────────────────────────────────────────────────────────────
+  [11/11] hsdpa_tram_ljabru_jernbanetorget_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] hsdpa_tram_ljabru_jernbanetorget_tc.csv
+[SHAPER] Skipping restart (--no-shaper-restart)
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:9080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 18317 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 30131ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 1032 kbps
+   t=20s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 1269 kbps
+   t=31s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 1356 kbps
+   t=41s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 648 kbps
+   t=51s | buffer: 0.0s | bitrate: 0 kbps | tp: 500 kbps | trace_bw: 681 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     30,131 ms
+      Playback time:     0.0 s
+
+  [BITRATE]
+      Average:           0 kbps
+      Min / Max:         0 / 0 kbps
+      Median:            0 kbps
+      Std deviation:     0.0 kbps
+      Variance:          0.0
+      25th/75th %ile:    0 / 0 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+      Frequency:         0.000 per minute
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,038 kbps
+      Min / Max:         347 / 1,886 kbps
+
+  [BUFFER]
+      Average level:     0.0 s
+      Min / Max:         0.0 / 0.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/hsdpa_comparison/benchmark_hls_hsdpa_tram_ljabru_jernbanetorget_tc_20260408_204841.json
+
+======================================================================
+  BATCH COMPLETE: 11/11 succeeded
+  Results saved to: results/hsdpa_comparison/
+======================================================================
+
