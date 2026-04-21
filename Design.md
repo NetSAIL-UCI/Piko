@@ -45,9 +45,24 @@ Measure video streaming quality (QoE) under realistic network conditions. Compar
 
 ## Components
 - **HLS/DASH Server**: Python HTTP server serving video segments (.m3u8/.mpd manifests + .ts/.m4s files)
-- **WebRTC Server**: Node.js mediasoup server for real-time streaming
+- **WebRTC Server**: Node.js mediasoup server for real-time streaming with 6-layer simulcast
 - **Traffic Shaper**: Linux tc/netem applying network traces (delay, loss, bandwidth limits)
 - **Benchmark Client**: Downloads segments, simulates playback, measures metrics
+
+## WebRTC Quality Ladder
+6-layer simulcast aligned with the Pensieve (SIGCOMM '17) bitrate ladder,
+matching the quality levels used in our DASH/HLS benchmarks for apples-to-apples QoE comparison:
+
+| Layer | Resolution | Bitrate |
+|-------|------------|---------|
+| 0     | 426x240    | 300 kbps  |
+| 1     | 640x360    | 750 kbps  |
+| 2     | 854x480    | 1200 kbps |
+| 3     | 1024x576   | 1850 kbps |
+| 4     | 1280x720   | 2850 kbps |
+| 5     | 1920x1080  | 4300 kbps |
+
+Server-driven ABR switches spatial layers based on transport-wide congestion-control feedback.
 
 ## Key Metrics
 - **Bitrate**: Average video quality (kbps)
