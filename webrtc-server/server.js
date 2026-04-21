@@ -77,11 +77,15 @@ const plainTransportOptions = {
   comedia: true,
 };
 
-// Simulcast layer definitions (low → high = spatialLayer 0 → 2)
+// Simulcast layer definitions (low → high = spatialLayer 0 → 5)
+// 6-layer ladder aligned with SOTA research (Pensieve SIGCOMM '17): 300, 750, 1200, 1850, 2850, 4300 kbps
 const SIMULCAST_LAYERS = [
-  { ssrc: 22222220, resolution: '320x180',  bitrate: '500k',  maxBitrate: '500k',  bufsize: '1000k', label: 'low' },
-  { ssrc: 22222221, resolution: '640x360',  bitrate: '1500k', maxBitrate: '1500k', bufsize: '3000k', label: 'mid' },
-  { ssrc: 22222222, resolution: '1280x720', bitrate: '4500k', maxBitrate: '4500k', bufsize: '9000k', label: 'high' },
+  { ssrc: 22222220, resolution: '426x240',   bitrate: '300k',  maxBitrate: '300k',  bufsize: '600k',  label: '240p' },
+  { ssrc: 22222221, resolution: '640x360',   bitrate: '750k',  maxBitrate: '750k',  bufsize: '1500k', label: '360p' },
+  { ssrc: 22222222, resolution: '854x480',   bitrate: '1200k', maxBitrate: '1200k', bufsize: '2400k', label: '480p' },
+  { ssrc: 22222223, resolution: '1024x576',  bitrate: '1850k', maxBitrate: '1850k', bufsize: '3700k', label: '576p' },
+  { ssrc: 22222224, resolution: '1280x720',  bitrate: '2850k', maxBitrate: '2850k', bufsize: '5700k', label: '720p' },
+  { ssrc: 22222225, resolution: '1920x1080', bitrate: '4300k', maxBitrate: '4300k', bufsize: '8600k', label: '1080p' },
 ];
 
 // Global state
@@ -150,7 +154,6 @@ function getBestProducer(preferredLayer) {
 }
 
 
-//TODO decide to remove this 
 // Select the best simulcast layer for a given BWE (bps)
 function selectLayerForBandwidth(bweBps) {
   // Pick the highest layer whose maxBitrate fits within the BWE
@@ -164,6 +167,67 @@ function selectLayerForBandwidth(bweBps) {
     }
   }
   return best;
+}
+
+// Per-client ABR state for hysteresis
+// clientId -> { smoothBwe, upgradeCooldownUntil, consecutiveUpCount, consecutiveDownCount }
+const abrState = new Map();
+
+const ABR_EMA_ALPHA_UP   = 0.15; // slow rise — smooth out BW spikes
+const ABR_EMA_ALPHA_DOWN = 0.50; // fast drop — react quickly to congestion
+const ABR_UPGRADE_COOLDOWN_MS   = 8000; // wait this long after a downgrade before upgrading
+const ABR_CONSECUTIVE_UP_NEEDED = 3;    // need N consecutive intervals above threshold to upgrade
+const ABR_CONSECUTIVE_DOWN_NEEDED = 2;  // need N consecutive intervals below threshold to downgrade
+
+// Hysteresis-aware layer selection. Mutates abrState[clientId].
+// Returns the layer to switch to, or client.currentLayer if no switch yet.
+function selectLayerHysteresis(clientId, rawBweBps, currentLayer, now) {
+  if (!abrState.has(clientId)) {
+    abrState.set(clientId, {
+      smoothBwe: rawBweBps,
+      upgradeCooldownUntil: 0,
+      consecutiveUpCount: 0,
+      consecutiveDownCount: 0,
+    });
+  }
+  const s = abrState.get(clientId);
+
+  // Asymmetric EMA: slow on rises, fast on drops
+  const alpha = rawBweBps < s.smoothBwe ? ABR_EMA_ALPHA_DOWN : ABR_EMA_ALPHA_UP;
+  s.smoothBwe = alpha * rawBweBps + (1 - alpha) * s.smoothBwe;
+
+  const targetRaw = selectLayerForBandwidth(s.smoothBwe);
+
+  if (targetRaw > currentLayer) {
+    // Potential upgrade
+    if (now < s.upgradeCooldownUntil) {
+      // Still in cooldown after last downgrade — suppress upgrade
+      s.consecutiveUpCount = 0;
+      return currentLayer;
+    }
+    s.consecutiveUpCount++;
+    s.consecutiveDownCount = 0;
+    if (s.consecutiveUpCount >= ABR_CONSECUTIVE_UP_NEEDED) {
+      s.consecutiveUpCount = 0;
+      return targetRaw;
+    }
+    return currentLayer;
+  } else if (targetRaw < currentLayer) {
+    // Potential downgrade
+    s.consecutiveDownCount++;
+    s.consecutiveUpCount = 0;
+    if (s.consecutiveDownCount >= ABR_CONSECUTIVE_DOWN_NEEDED) {
+      s.consecutiveDownCount = 0;
+      s.upgradeCooldownUntil = now + ABR_UPGRADE_COOLDOWN_MS; // impose cooldown after downgrade
+      return targetRaw;
+    }
+    return currentLayer;
+  } else {
+    // No change
+    s.consecutiveUpCount = 0;
+    s.consecutiveDownCount = 0;
+    return currentLayer;
+  }
 }
 
 // Create WebRTC transport for a consumer client
@@ -381,6 +445,27 @@ app.post('/requestKeyFrame', async (req, res) => {
   }
 });
 
+// Start/restart tc-trace.py shaping inside the container.
+// Called by benchmark.py instead of 'sudo docker exec' (which requires a TTY).
+let _tcTraceProc = null;
+app.post('/startShaping', (_req, res) => {
+  // Kill any existing tc-trace process
+  if (_tcTraceProc) {
+    try { _tcTraceProc.kill('SIGTERM'); } catch (_) {}
+    _tcTraceProc = null;
+  }
+  // Allow a brief settle before relaunching
+  setTimeout(() => {
+    _tcTraceProc = spawn('python3', ['/app/tc-trace.py'], {
+      detached: true,
+      stdio: 'ignore',
+    });
+    _tcTraceProc.unref();
+    console.log('[SHAPING] tc-trace.py started (pid:', _tcTraceProc.pid, ')');
+  }, 300);
+  res.json({ success: true, message: 'tc-trace.py starting' });
+});
+
 // Get consumer stats
 app.get('/stats/:clientId', async (req, res) => {
   const { clientId } = req.params;
@@ -436,6 +521,7 @@ function cleanupClient(clientId) {
       client.transport.close();
     }
     consumers.delete(clientId);
+    abrState.delete(clientId);
     console.log(`Cleaned up client ${clientId}`);
   }
 }
@@ -621,9 +707,10 @@ function startLayerSelectionLoop() {
         }
         
         if (bwe > 0) {
-          const targetLayer = selectLayerForBandwidth(bwe);
+          const targetLayer = selectLayerHysteresis(clientId, bwe, client.currentLayer, Date.now());
           if (targetLayer !== client.currentLayer) {
-            console.log(`BWE ${(bwe/1000).toFixed(0)}kbps -> switching ${clientId.slice(0,8)} from layer ${client.currentLayer} to ${targetLayer}`);
+            const s = abrState.get(clientId);
+            console.log(`BWE raw=${(bwe/1000).toFixed(0)}kbps smooth=${s ? (s.smoothBwe/1000).toFixed(0) : '?'}kbps -> switching ${clientId.slice(0,8)} from layer ${client.currentLayer} to ${targetLayer}`);
             await switchConsumerLayer(clientId, client, targetLayer);
           }
         }
