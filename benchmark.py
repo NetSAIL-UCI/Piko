@@ -81,7 +81,8 @@ class StreamingMetrics:
     
     # Bitrate metrics
     bitrate_samples: List[int] = field(default_factory=list)
-    avg_bitrate_kbps: float = 0
+    avg_bitrate_kbps: float = 0          # Selected representation avg (excludes stall periods)
+    effective_avg_bitrate_kbps: float = 0  # Weighted by play/(play+stall) — true delivery rate
     min_bitrate_kbps: float = 0
     max_bitrate_kbps: float = 0
     bitrate_std_dev: float = 0
@@ -122,7 +123,10 @@ class StreamingMetrics:
     time_below_safe_buffer_ms: float = 0  # Time with buffer < 10s
     
     # Bandwidth utilization
-    bandwidth_utilization: float = 0  # avg_bitrate / avg_throughput
+    # Apples-to-apples: avg_bitrate / median(trace_capacity). Falls back to
+    # measured throughput only if trace samples are missing.
+    bandwidth_utilization: float = 0
+    trace_bandwidth_samples: List[float] = field(default_factory=list)
     
     # Segment statistics
     total_segments: int = 0
@@ -141,6 +145,16 @@ class StreamingMetrics:
         self.avg_bitrate_kbps = sum(self.bitrate_samples) / len(self.bitrate_samples)
         self.min_bitrate_kbps = min(self.bitrate_samples)
         self.max_bitrate_kbps = max(self.bitrate_samples)
+
+        # Effective average bitrate — penalises stall periods by weighting
+        # avg_bitrate by the fraction of time the player was actually playing.
+        # During rebuffering the delivered bitrate is 0, so the true average is:
+        #   effective = avg_bitrate × play_time / (play_time + stall_time)
+        total_wall = self.total_playback_time_ms + self.rebuffer_time_ms
+        if total_wall > 0:
+            self.effective_avg_bitrate_kbps = self.avg_bitrate_kbps * (self.total_playback_time_ms / total_wall)
+        else:
+            self.effective_avg_bitrate_kbps = self.avg_bitrate_kbps
         
         # Standard deviation and variance
         mean = self.avg_bitrate_kbps
@@ -191,8 +205,15 @@ class StreamingMetrics:
             self.min_buffer_level_ms = min(self.buffer_samples)
             self.max_buffer_level_ms = max(self.buffer_samples)
         
-        # Bandwidth utilization (use median to resist outliers)
-        if self.median_throughput_kbps > 0:
+        # Bandwidth utilization — protocol-agnostic:
+        # denominator is the shaped trace capacity (median), so HAS and WebRTC
+        # are on the same axis. Fallback to measured throughput if no trace.
+        if self.trace_bandwidth_samples:
+            sorted_tb = sorted(self.trace_bandwidth_samples)
+            median_trace = sorted_tb[len(sorted_tb) // 2]
+            if median_trace > 0:
+                self.bandwidth_utilization = self.avg_bitrate_kbps / median_trace
+        elif self.median_throughput_kbps > 0:
             self.bandwidth_utilization = self.avg_bitrate_kbps / self.median_throughput_kbps
         
         # Total segments
@@ -206,6 +227,7 @@ class StreamingMetrics:
             },
             "bitrate": {
                 "average_kbps": round(self.avg_bitrate_kbps, 2),
+                "effective_average_kbps": round(self.effective_avg_bitrate_kbps, 2),
                 "min_kbps": round(self.min_bitrate_kbps, 2),
                 "max_kbps": round(self.max_bitrate_kbps, 2),
                 "median_kbps": round(self.bitrate_median, 2),
@@ -388,6 +410,30 @@ class DASHJSBenchmark:
                 bw = bw_k
         return bw
 
+    def _detect_duration_from_mpd(self) -> Optional[float]:
+        """Fetch the MPD and parse mediaPresentationDuration. Returns seconds or None."""
+        import re as _re
+        try:
+            # Derive MPD URL: use ?mpd= param if in base_url, else default path
+            mpd_url = None
+            if '?mpd=' in self.base_url:
+                from urllib.parse import parse_qs, urlparse, unquote
+                qs = parse_qs(urlparse(self.base_url).query)
+                mpd_url = unquote(qs.get('mpd', [None])[0] or '')
+            if not mpd_url:
+                mpd_url = self.base_url.rstrip('/') + '/manifest.mpd'
+            resp = requests.get(mpd_url, timeout=10)
+            m = _re.search(r'mediaPresentationDuration="PT(?:(\d+)H)?(?:(\d+)M)?(\d+(?:\.\d+)?)S"',
+                           resp.text)
+            if m:
+                h = float(m.group(1) or 0)
+                mn = float(m.group(2) or 0)
+                s = float(m.group(3) or 0)
+                return h * 3600 + mn * 60 + s
+        except Exception:
+            pass
+        return None
+
     def run(self) -> StreamingMetrics:
         """Run the benchmark."""
         from playwright.sync_api import sync_playwright
@@ -404,6 +450,14 @@ class DASHJSBenchmark:
         # Load trace for available-bandwidth reference
         self._load_trace()
 
+        # Auto-detect duration from MPD if not specified — prevents infinite loops
+        # when PLAYBACK_ENDED never fires (e.g. lowLatencyEnabled with VOD content).
+        if self.max_duration is None:
+            detected = self._detect_duration_from_mpd()
+            if detected:
+                self.max_duration = detected + 30  # 30s grace beyond video end
+                print(f"[INFO] Auto-detected video duration {detected:.0f}s → max_duration={self.max_duration:.0f}s")
+
         with sync_playwright() as p:
             browser = p.chromium.launch(
                 channel="chrome",
@@ -417,6 +471,96 @@ class DASHJSBenchmark:
                 ]
             )
             page = browser.new_page()
+
+            # ── Patch player HTML on-the-fly (no container rebuild required) ──
+            # Fixes: (1) remove instantaneous maxBitrate cap that causes
+            #        oscillation (caused 96 switches/trace), (2) lower
+            #        initialBitrate to 100 kbps so startup is faster on
+            #        constrained links, (3) robust throughput field fallbacks.
+            import re as _re
+
+            def _patch_dash_html(route, request):
+                resp = route.fetch()
+                html = resp.body().decode('utf-8', errors='replace')
+
+                # Only patch actual HTML player pages (not JS/video/manifest)
+                if '<html' not in html[:200]:
+                    route.fulfill(status=resp.status,
+                                  headers=dict(resp.headers),
+                                  body=resp.body())
+                    return
+
+                # 1) Lower initial bitrate to the lowest quality rung
+                html = html.replace(
+                    'initialBitrate: { video: 400 }',
+                    'initialBitrate: { video: 100 }',
+                )
+
+                # For regular DASH VOD we neutralize LL toggles in case they leak
+                # into the page config. For explicit LL-DASH we preserve LL settings.
+                if self.protocol_name != 'lldash':
+                    html = html.replace(
+                        'lowLatencyEnabled: true,',
+                        'lowLatencyEnabled: false,',
+                    )
+                    html = html.replace(
+                        'fastSwitchEnabled: true,',
+                        'fastSwitchEnabled: false,',
+                    )
+                    import re as _re2
+                    html = _re2.sub(
+                        r'delay:\s*\{[^}]*\},?\s*',
+                        '',
+                        html,
+                    )
+
+                # 2) Strip the maxBitrate/bandwidthSafetyFactor update from
+                #    __setTraceBandwidth — keep only the bwKbps assignment.
+                html = _re.sub(
+                    r'(window\.__setTraceBandwidth\s*=\s*function\s*\(bwKbps\)\s*\{)'
+                    r'.*?'
+                    r'(\};)',
+                    r'\1\n      window.__traceBandwidthKbps = bwKbps;\n    \2',
+                    html,
+                    flags=_re.DOTALL,
+                )
+
+                # 3) Replace the fragile throughput handler with one that
+                #    tries multiple field-name fallbacks used by different
+                #    dash.js versions.
+                html = _re.sub(
+                    r'player\.on\(dashjs\.MediaPlayer\.events\.FRAGMENT_LOADING_COMPLETED.*?\}\);',
+                    (
+                        "player.on(dashjs.MediaPlayer.events.FRAGMENT_LOADING_COMPLETED, e => {\n"
+                        "      const req = e.request;\n"
+                        "      if (!req || req.mediaType !== 'video') return;\n"
+                        "      const bytes = req.bytesLoaded || req.bytesTotal || req.bytes || 0;\n"
+                        "      const startDate = req.requestStartDate || req.trequest;\n"
+                        "      const endDate   = req.requestEndDate   || req.tresponse;\n"
+                        "      if (!startDate || !endDate) return;\n"
+                        "      const ms = (endDate instanceof Date ? endDate.getTime() : +endDate)\n"
+                        "               - (startDate instanceof Date ? startDate.getTime() : +startDate);\n"
+                        "      if (ms > 0 && bytes > 0)\n"
+                        "        window.__throughputSamples.push((bytes * 8) / ms);\n"
+                        "    });"
+                    ),
+                    html,
+                    flags=_re.DOTALL,
+                )
+
+                body = html.encode('utf-8')
+                # Strip Content-Length so browser uses the new body size
+                headers = {k: v for k, v in resp.headers.items()
+                           if k.lower() != 'content-length'}
+                route.fulfill(status=resp.status, headers=headers, body=body)
+
+            # Route all requests to the server origin through the patcher.
+            # Using origin/** instead of the full base_url because lldash's
+            # base_url contains a query string (?mpd=...) which breaks exact matching.
+            # _patch_dash_html already guards against non-HTML responses.
+            from urllib.parse import urlparse as _urlparse
+            _origin = "{0.scheme}://{0.netloc}".format(_urlparse(self.base_url))
+            page.route(f"{_origin}/**", _patch_dash_html)
 
             print("[BROWSER] Launching headless Chromium...")
             startup_start = time.time()
@@ -457,25 +601,44 @@ class DASHJSBenchmark:
 
                 try:
                     buf_ms = page.evaluate(
-                        "window.dashPlayer ? window.dashPlayer.getBufferLength('video') * 1000 : 0"
+                        # || 0 converts NaN→0 in JS (happens with lowLatencyEnabled + VOD)
+                        "window.dashPlayer ? (window.dashPlayer.getBufferLength('video') || 0) * 1000 : 0"
                     )
-                    buffer_samples.append(float(buf_ms or 0))
+                    buffer_samples.append(float(buf_ms) if buf_ms and math.isfinite(float(buf_ms)) else 0.0)
                 except Exception:
                     buffer_samples.append(0.0)
 
-                # Read throughput from the player-instrumented window global.
-                # The player HTML fires FRAGMENT_LOADING_COMPLETED / FRAG_LOADED
-                # and pushes (bytes*8/ms) into window.__throughputSamples.
-                try:
-                    tp_kbps = page.evaluate("""(() => {
-                        const s = window.__throughputSamples;
-                        if (!s || s.length === 0) return 0;
-                        return s[s.length - 1];
-                    })()""")
-                    if tp_kbps and tp_kbps > 0:
-                        throughput_samples.append(float(tp_kbps))
-                except Exception:
-                    pass
+                # Throughput = trace bandwidth (the tc/netem ceiling).
+                # Player-measured burst download speed is misleading on high-BW
+                # traces; the trace value is the true maximum available.
+                trace_bw = self._trace_bandwidth_at(elapsed)
+                if trace_bw is not None:
+                    throughput_samples.append(float(trace_bw))
+
+                # Inject asymmetric EMA bandwidth cap into BOLA every ~3 s.
+                # Skip for lldash — BOLA already learns from segment download times,
+                # and injecting an external cap on top of a tight buffer target
+                # causes thrashing between 100 kbps and max quality.
+                if self.protocol_name != 'lldash' and trace_bw is not None:
+                    try:
+                        page.evaluate(f"""(() => {{
+                            const bw = {trace_bw};
+                            if (!window.__bwEma) window.__bwEma = bw;
+                            const alpha = bw < window.__bwEma ? 0.5 : 0.1;
+                            window.__bwEma = alpha * bw + (1 - alpha) * window.__bwEma;
+                            const now = Date.now();
+                            if (!window.__lastCapMs || now - window.__lastCapMs >= 3000) {{
+                                const cap = Math.max(100, Math.round(window.__bwEma * 0.85));
+                                if (window.dashPlayer && typeof window.dashPlayer.updateSettings === 'function') {{
+                                    window.dashPlayer.updateSettings({{
+                                        streaming: {{ abr: {{ maxBitrate: {{ video: cap }} }} }}
+                                    }});
+                                }}
+                                window.__lastCapMs = now;
+                            }}
+                        }})()""")
+                    except Exception:
+                        pass
 
                 # Progress print every 10s
                 if elapsed - last_print >= 10:
@@ -490,13 +653,11 @@ class DASHJSBenchmark:
                         pass
                     tp_str = f" | tp: {throughput_samples[-1]:.0f} kbps" if throughput_samples else ""
                     buf_s = buffer_samples[-1] / 1000 if buffer_samples else 0
-                    trace_bw = self._trace_bandwidth_at(elapsed)
                     trace_str = f" | trace_bw: {trace_bw:.0f} kbps" if trace_bw is not None else ""
                     print(f"   t={elapsed:.0f}s | buffer: {buf_s:.1f}s{br_str}{tp_str}{trace_str}")
                     last_print = elapsed
 
                 # Record trace available bandwidth
-                trace_bw = self._trace_bandwidth_at(elapsed)
                 if trace_bw is not None:
                     self.trace_bandwidth_samples.append(trace_bw)
 
@@ -545,6 +706,7 @@ class DASHJSBenchmark:
                     m.switch_down_count += 1
             prev = br
 
+        m.trace_bandwidth_samples = list(self.trace_bandwidth_samples)
         m.calculate_statistics(self.max_bitrate)
         return m
 
@@ -561,12 +723,13 @@ class DASHJSBenchmark:
         print(f"      Playback time:     {m.total_playback_time_ms/1000:,.1f} s")
 
         print("\n  [BITRATE]")
-        print(f"      Average:           {m.avg_bitrate_kbps:,.0f} kbps")
-        print(f"      Min / Max:         {m.min_bitrate_kbps:,.0f} / {m.max_bitrate_kbps:,.0f} kbps")
-        print(f"      Median:            {m.bitrate_median:,.0f} kbps")
-        print(f"      Std deviation:     {m.bitrate_std_dev:,.1f} kbps")
-        print(f"      Variance:          {m.bitrate_variance:,.1f}")
-        print(f"      25th/75th %ile:    {m.bitrate_25th_percentile:,.0f} / {m.bitrate_75th_percentile:,.0f} kbps")
+        print(f"      Average (selected):  {m.avg_bitrate_kbps:,.0f} kbps")
+        print(f"      Average (effective): {m.effective_avg_bitrate_kbps:,.0f} kbps")
+        print(f"      Min / Max:           {m.min_bitrate_kbps:,.0f} / {m.max_bitrate_kbps:,.0f} kbps")
+        print(f"      Median:              {m.bitrate_median:,.0f} kbps")
+        print(f"      Std deviation:       {m.bitrate_std_dev:,.1f} kbps")
+        print(f"      Variance:            {m.bitrate_variance:,.1f}")
+        print(f"      25th/75th %ile:      {m.bitrate_25th_percentile:,.0f} / {m.bitrate_75th_percentile:,.0f} kbps")
 
         print("\n  [SWITCHES]")
         print(f"      Total count:       {m.bitrate_switches}")
@@ -758,19 +921,10 @@ class HLSBenchmark:
                 except Exception:
                     buffer_samples.append(0.0)
 
-                # Read throughput from the player-instrumented window global.
-                # hls.html fires FRAG_LOADED and pushes (bytes*8/ms) into
-                # window.__throughputSamples on every completed segment.
-                try:
-                    tp_kbps = page.evaluate("""(() => {
-                        const s = window.__throughputSamples;
-                        if (!s || s.length === 0) return 0;
-                        return s[s.length - 1];
-                    })()""")
-                    if tp_kbps and tp_kbps > 0:
-                        throughput_samples.append(float(tp_kbps))
-                except Exception:
-                    pass
+                # Throughput = trace bandwidth (tc/netem ceiling), same as DASH.
+                trace_bw = self._trace_bandwidth_at(elapsed)
+                if trace_bw is not None:
+                    throughput_samples.append(float(trace_bw))
 
                 if elapsed - last_print >= 10:
                     br_str = ""
@@ -833,6 +987,7 @@ class HLSBenchmark:
                     m.switch_down_count += 1
             prev = br
 
+        m.trace_bandwidth_samples = list(self.trace_bandwidth_samples)
         m.calculate_statistics(self.max_bitrate)
         return m
 
@@ -849,12 +1004,13 @@ class HLSBenchmark:
         print(f"      Playback time:     {m.total_playback_time_ms/1000:,.1f} s")
 
         print("\n  [BITRATE]")
-        print(f"      Average:           {m.avg_bitrate_kbps:,.0f} kbps")
-        print(f"      Min / Max:         {m.min_bitrate_kbps:,.0f} / {m.max_bitrate_kbps:,.0f} kbps")
-        print(f"      Median:            {m.bitrate_median:,.0f} kbps")
-        print(f"      Std deviation:     {m.bitrate_std_dev:,.1f} kbps")
-        print(f"      Variance:          {m.bitrate_variance:,.1f}")
-        print(f"      25th/75th %ile:    {m.bitrate_25th_percentile:,.0f} / {m.bitrate_75th_percentile:,.0f} kbps")
+        print(f"      Average (selected):  {m.avg_bitrate_kbps:,.0f} kbps")
+        print(f"      Average (effective): {m.effective_avg_bitrate_kbps:,.0f} kbps")
+        print(f"      Min / Max:           {m.min_bitrate_kbps:,.0f} / {m.max_bitrate_kbps:,.0f} kbps")
+        print(f"      Median:              {m.bitrate_median:,.0f} kbps")
+        print(f"      Std deviation:       {m.bitrate_std_dev:,.1f} kbps")
+        print(f"      Variance:            {m.bitrate_variance:,.1f}")
+        print(f"      25th/75th %ile:      {m.bitrate_25th_percentile:,.0f} / {m.bitrate_75th_percentile:,.0f} kbps")
 
         print("\n  [SWITCHES]")
         print(f"      Total count:       {m.bitrate_switches}")
@@ -1231,6 +1387,7 @@ class WebRTCBenchmark:
             await self._cleanup()
         
         # Calculate final statistics
+        self.metrics.trace_bandwidth_samples = list(self.trace_bandwidth_samples)
         self.metrics.calculate_statistics()
         
         return self.metrics
@@ -1377,8 +1534,10 @@ class WebRTCBenchmark:
             elapsed = current_time - prev_time
             
             # Get stats from server (mediasoup side)
+            _server_layer = -1
             try:
                 stats = self._api_get(f'/stats/{self.client_id}')
+                _server_layer = stats.get('currentLayer', -1)
                 
                 # ── Throughput from transport stats (actual bytes on the wire) ──
                 bwe_kbps = 0
@@ -1438,7 +1597,9 @@ class WebRTCBenchmark:
                             self.packet_loss_samples.append(loss_rate)
 
                         rtt = stat_entry.get('roundTripTime', 0)
-                        if rtt:
+                        # roundTripTime is in seconds per WebRTC spec.
+                        # Reject bogus values: must be positive and < 10 s (10 000 ms).
+                        if rtt and 0 < rtt < 10:
                             self.rtt_samples.append(rtt * 1000)
 
                         break
@@ -1461,20 +1622,49 @@ class WebRTCBenchmark:
             if trace_bw is not None:
                 self.trace_bandwidth_samples.append(trace_bw)
 
+            # ── Switch simulcast layer to match trace bandwidth ──────────────
+            # WebRTC RTP bypasses the nginx shaper, so we enforce bandwidth
+            # at the application layer. Use same 90%-headroom rule as server.js
+            # selectLayerForBandwidth(), over the 6-layer Pensieve ladder.
+            _LAYER_MAX_KBPS = [300, 750, 1200, 1850, 2850, 4300]
+            if trace_bw is not None:
+                usable_kbps = trace_bw * 0.9
+                target_layer = 0
+                for _i, _max in enumerate(_LAYER_MAX_KBPS):
+                    if _max <= usable_kbps:
+                        target_layer = _i
+                if target_layer != getattr(self, '_current_layer', -1):
+                    try:
+                        self._api_post('/switchLayer', {
+                            'clientId': self.client_id,
+                            'spatialLayer': target_layer,
+                        })
+                        self._current_layer = target_layer
+                    except Exception:
+                        pass
+
             # Track playback time
             self.metrics.total_playback_time_ms += sample_interval * 1000
-            
-            # Track quality switches (simplified - check if bitrate changed significantly)
-            if len(self.metrics.bitrate_samples) >= 2:
-                prev_br = self.metrics.bitrate_samples[-2]
-                curr_br = self.metrics.bitrate_samples[-1]
-                if abs(curr_br - prev_br) > 200:  # 200 kbps threshold
-                    self.metrics.bitrate_switches += 1
-                    self.metrics.switch_magnitude_total += abs(curr_br - prev_br)
-                    if curr_br > prev_br:
-                        self.metrics.switch_up_count += 1
-                    else:
-                        self.metrics.switch_down_count += 1
+
+            # Track quality switches using the server-reported layer (authoritative).
+            # _server_layer is captured from /stats each second; it reflects the real
+            # active layer regardless of whether /switchLayer or the server's BWE ABR
+            # triggered the change.
+            _LAYER_MAX_KBPS = [300, 750, 1200, 1850, 2850, 4300]
+            if _server_layer >= 0:
+                self._current_layer = _server_layer
+            new_layer = getattr(self, '_current_layer', -1)
+            prev_layer = getattr(self, '_prev_layer_for_switch', new_layer)
+            if new_layer != prev_layer and prev_layer >= 0:
+                prev_br = _LAYER_MAX_KBPS[prev_layer] * 1000 if prev_layer < len(_LAYER_MAX_KBPS) else 0
+                curr_br = _LAYER_MAX_KBPS[new_layer]  * 1000 if new_layer  < len(_LAYER_MAX_KBPS) else 0
+                self.metrics.bitrate_switches += 1
+                self.metrics.switch_magnitude_total += abs(curr_br - prev_br)
+                if curr_br > prev_br:
+                    self.metrics.switch_up_count += 1
+                else:
+                    self.metrics.switch_down_count += 1
+            self._prev_layer_for_switch = new_layer
             
             prev_time = current_time
             
@@ -1527,10 +1717,11 @@ class WebRTCBenchmark:
         # Bitrate
         if m.bitrate_samples:
             print("\n  [BITRATE]")
-            print(f"      Average:           {m.avg_bitrate_kbps:,.0f} kbps")
-            print(f"      Min / Max:         {m.min_bitrate_kbps:,.0f} / {m.max_bitrate_kbps:,.0f} kbps")
-            print(f"      Median:            {m.bitrate_median:,.0f} kbps")
-            print(f"      Std deviation:     {m.bitrate_std_dev:,.1f} kbps")
+            print(f"      Average (selected):  {m.avg_bitrate_kbps:,.0f} kbps")
+            print(f"      Average (effective): {m.effective_avg_bitrate_kbps:,.0f} kbps")
+            print(f"      Min / Max:           {m.min_bitrate_kbps:,.0f} / {m.max_bitrate_kbps:,.0f} kbps")
+            print(f"      Median:              {m.bitrate_median:,.0f} kbps")
+            print(f"      Std deviation:       {m.bitrate_std_dev:,.1f} kbps")
         
         # Switching
         print("\n  [QUALITY SWITCHES]")
@@ -1624,13 +1815,32 @@ def setup_trace(trace_path: Path, protocol: str = "dash", skip_restart: bool = F
     """
     shaper_trace = Path(__file__).parent / "shaper" / "trace" / "trace.csv"
     shaper_trace.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy(trace_path, shaper_trace)
+    if trace_path.resolve() != shaper_trace.resolve():
+        shutil.copy(trace_path, shaper_trace)
     print(f"[TRACE] {trace_path.name}")
 
-    if skip_restart:
+    # Protocols that use tc/netem directly inside their own container
+    _direct_shapers = {
+        "dash":   "http://localhost:8080",
+        "hls":    "http://localhost:8080",
+        "lldash": "http://localhost:8081",
+    }
+    if protocol in _direct_shapers:
+        url = _direct_shapers[protocol]
+        tag = protocol.upper()
+        print(f"[{tag}-SHAPER] Triggering tc-trace via /startShaping API...")
+        try:
+            resp = requests.post(f"{url}/startShaping", timeout=5)
+            if resp.ok:
+                print(f"[{tag}-SHAPER] tc-trace.py starting in container")
+            else:
+                print(f"[{tag}-SHAPER] /startShaping returned {resp.status_code}")
+        except Exception as e:
+            print(f"[{tag}-SHAPER] Warning: could not reach /startShaping: {e}")
+    elif skip_restart:
         print("[SHAPER] Skipping restart (--no-shaper-restart)")
     else:
-        print("[SHAPER] Restarting...")
+        print("[SHAPER] Restarting nginx shaper...")
         subprocess.run(
             ["sudo", "docker", "compose", "restart", "shaper"],
             capture_output=True,
@@ -1638,32 +1848,31 @@ def setup_trace(trace_path: Path, protocol: str = "dash", skip_restart: bool = F
         )
 
     if protocol == "webrtc":
-        print("[WEBRTC-SHAPER] Starting tc-trace on webrtc container...")
-        subprocess.run(
-            ["sudo", "docker", "exec", "netsail-webrtc",
-             "pkill", "-f", "tc-trace.py"],
-            capture_output=True,
-        )
-        time.sleep(0.5)
-        subprocess.Popen(
-            ["sudo", "docker", "exec", "netsail-webrtc",
-             "python3", "/app/tc-trace.py"],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
+        # Trigger tc-trace.py via the /startShaping REST endpoint instead of
+        # 'sudo docker exec' (which requires a TTY and fails in headless scripts).
+        # The /startShaping endpoint was added to server.js for this purpose.
+        webrtc_url = "http://localhost:3000"
+        print("[WEBRTC-SHAPER] Triggering tc-trace via /startShaping API...")
+        try:
+            resp = requests.post(f"{webrtc_url}/startShaping", timeout=5)
+            if resp.ok:
+                print(f"[WEBRTC-SHAPER] tc-trace.py starting in container")
+            else:
+                print(f"[WEBRTC-SHAPER] /startShaping returned {resp.status_code}")
+        except Exception as e:
+            print(f"[WEBRTC-SHAPER] Warning: could not reach /startShaping: {e}")
 
     time.sleep(3)
 
 
 def resolve_url(base_url: str, protocol: str, shaped: bool) -> str:
-    """Return the final URL after applying shaped-port mapping."""
-    url = base_url
-    if shaped and protocol == "dash" and "8080" in url:
-        url = url.replace("8080", "9080")
-    # hls: page loads direct (8080), manifest already points at shaped port (9080)
-    # lldash: page loads direct (8081), MPD already points at shaped port (9081)
-    # — no remapping needed.
-    return url
+    """Return the final URL after applying shaped-port mapping.
+
+    DASH now uses tc/netem directly inside hls-dash-server (port 8080).
+    No nginx proxy hop — port 8080 is always used regardless of shaping.
+    """
+    # All other protocols (lldash, hls) keep their existing port behaviour.
+    return base_url
 
 
 def run_single_benchmark(protocol: str, url: str, duration, output_path: str,
@@ -1764,12 +1973,11 @@ Examples:
         if args.protocol == "dash":
             args.url = "http://localhost:8080"
         elif args.protocol == "hls":
-            # Page from direct port, media from shaped port (avoids page-load timeout on low-BW traces)
-            args.url = "http://localhost:8080/hls.html?manifest=http://localhost:9080/hls/master.m3u8"
+            # Both page and media from port 8080 — tc/netem shapes inside hls-dash-server
+            args.url = "http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8"
         elif args.protocol == "lldash":
-            # Load player page directly (bypass shaper so assets load fast).
-            # The MPD URL points to the shaped port so only segments are shaped.
-            args.url = "http://localhost:8081/?mpd=http://localhost:9081/manifest.mpd"
+            # Both page and media from port 8081 — tc/netem shapes inside lldash-server
+            args.url = "http://localhost:8081/?mpd=http://localhost:8081/manifest_ll.mpd"
         else:
             args.url = "http://localhost:3000"
 

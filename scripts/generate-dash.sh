@@ -15,6 +15,8 @@ set -e
 INPUT_VIDEO="${1:-../BigBuckBunny_320x180.mp4}"
 OUTPUT_DIR="${2:-../../content}"
 SEGMENT_DURATION="${3:-4}"
+FFMPEG_BIN="${FFMPEG_BIN:-ffmpeg}"
+FFPROBE_BIN="${FFPROBE_BIN:-ffprobe}"
 
 # Colors for output
 RED='\033[0;31m'
@@ -28,7 +30,7 @@ echo -e "${GREEN}═════════════════════
 echo ""
 
 # Check for FFmpeg
-if ! command -v ffmpeg &> /dev/null; then
+if ! command -v "$FFMPEG_BIN" &> /dev/null; then
     echo -e "${RED}Error: FFmpeg is not installed.${NC}"
     echo ""
     echo "Install with:"
@@ -57,7 +59,7 @@ echo ""
 
 # Get video info
 echo -e "${YELLOW}Video Info:${NC}"
-ffprobe -v quiet -show_format -show_streams "$INPUT_VIDEO" 2>/dev/null | grep -E "^(duration|width|height|bit_rate|codec_name)=" | head -10
+"$FFPROBE_BIN" -v quiet -show_format -show_streams "$INPUT_VIDEO" 2>/dev/null | grep -E "^(duration|width|height|bit_rate|codec_name)=" | head -10
 echo ""
 
 # Generate DASH content with multiple bitrates for ABR (video only)
@@ -89,7 +91,7 @@ echo ""
 # Shared encoder settings for segment-aligned, codec-consistent output
 X264_COMMON="-profile:v high -level 3.1 -preset fast -g 96 -keyint_min 96 -sc_threshold 0"
 
-ffmpeg -y -i "$INPUT_VIDEO" \
+"$FFMPEG_BIN" -y -i "$INPUT_VIDEO" \
     -filter_complex "[0:v]split=10[v1][v2][v3][v4][v5][v6][v7][v8][v9][v10]; \
         [v1]scale=256:144[v1out]; \
         [v2]scale=320:180[v2out]; \
@@ -122,6 +124,52 @@ ffmpeg -y -i "$INPUT_VIDEO" \
     "$OUTPUT_DIR/manifest.mpd"
 
 echo ""
+echo -e "${YELLOW}Generating LL-DASH (CMAF chunks)...${NC}"
+echo ""
+
+# LL-DASH output:
+#   - 1s segments with 200ms CMAF fragments
+#   - separate filenames to avoid clobbering regular DASH assets
+#   - streaming mode for moof-per-frame chunking
+"$FFMPEG_BIN" -y -i "$INPUT_VIDEO" \
+    -filter_complex "[0:v]split=10[v1][v2][v3][v4][v5][v6][v7][v8][v9][v10]; \
+        [v1]scale=256:144[v1out]; \
+        [v2]scale=320:180[v2out]; \
+        [v3]scale=426:240[v3out]; \
+        [v4]scale=480:270[v4out]; \
+        [v5]scale=640:360[v5out]; \
+        [v6]scale=640:360[v6out]; \
+        [v7]scale=854:480[v7out]; \
+        [v8]scale=854:480[v8out]; \
+        [v9]scale=1280:720[v9out]; \
+        [v10]scale=1280:720[v10out]" \
+    -map "[v1out]"  -c:v:0 libx264 -b:v:0 100k  $X264_COMMON \
+    -map "[v2out]"  -c:v:1 libx264 -b:v:1 200k  $X264_COMMON \
+    -map "[v3out]"  -c:v:2 libx264 -b:v:2 400k  $X264_COMMON \
+    -map "[v4out]"  -c:v:3 libx264 -b:v:3 600k  $X264_COMMON \
+    -map "[v5out]"  -c:v:4 libx264 -b:v:4 800k  $X264_COMMON \
+    -map "[v6out]"  -c:v:5 libx264 -b:v:5 1200k $X264_COMMON \
+    -map "[v7out]"  -c:v:6 libx264 -b:v:6 1500k $X264_COMMON \
+    -map "[v8out]"  -c:v:7 libx264 -b:v:7 2000k $X264_COMMON \
+    -map "[v9out]"  -c:v:8 libx264 -b:v:8 3000k $X264_COMMON \
+    -map "[v10out]" -c:v:9 libx264 -b:v:9 4500k $X264_COMMON \
+    -an \
+    -f dash \
+    -ldash 1 \
+    -streaming 1 \
+    -seg_duration 1 \
+    -frag_type duration \
+    -frag_duration 0.2 \
+    -use_timeline 0 \
+    -use_template 1 \
+    -window_size 10 \
+    -extra_window_size 10 \
+    -adaptation_sets "id=0,streams=0,1,2,3,4,5,6,7,8,9" \
+    -init_seg_name 'll-init-stream$RepresentationID$.m4s' \
+    -media_seg_name 'll-chunk-stream$RepresentationID$-$Number%05d$.m4s' \
+    "$OUTPUT_DIR/manifest_ll.mpd"
+
+echo ""
 echo -e "${YELLOW}Generating HLS (video-only) with matching ladder...${NC}"
 echo ""
 
@@ -129,7 +177,7 @@ HLS_DIR="$OUTPUT_DIR/hls"
 rm -rf "$HLS_DIR"
 mkdir -p "$HLS_DIR"
 
-ffmpeg -y -i "$INPUT_VIDEO" \
+"$FFMPEG_BIN" -y -i "$INPUT_VIDEO" \
     -filter_complex "[0:v]split=10[v1][v2][v3][v4][v5][v6][v7][v8][v9][v10]; \
         [v1]scale=256:144[v1out]; \
         [v2]scale=320:180[v2out]; \

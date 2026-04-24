@@ -256,7 +256,10 @@
     player.updateSettings({
       streaming: {
         timeouts: { load: 120000 },
-        abr: { initialBitrate: { video: 400 } },
+        abr: {
+          initialBitrate: { video: 100 },       // Start at lowest rung to minimize startup stall
+          autoSwitchBitrate: { video: true },    // Let BOLA switch freely
+        },
       }
     });
 
@@ -269,26 +272,14 @@
     window.__rebufferDurations = [];
     window.__rebufferStart = null;
 
-    // Trace-driven bandwidth: benchmark.py injects the current trace BW
-    // so BOLA knows the real available bandwidth.
-    // BOLA stays active (autoSwitchBitrate = true). We cap maxBitrate to
-    // the trace BW so BOLA cannot overshoot and set bandwidthSafetyFactor
-    // to 1.0 so the throughput estimate is used without extra conservatism.
+    // Trace-driven bandwidth: benchmark.py injects the current trace BW for reference.
+    // We only record it — we do NOT cap maxBitrate dynamically because updating
+    // maxBitrate every second with instantaneous trace BW causes wild oscillation
+    // (BOLA oscillated 96 times in a 5-min trace when capped at instantaneous BW).
+    // BOLA is already aware of real bandwidth through segment download timing.
     window.__traceBandwidthKbps = null;
-    window.__traceDebug = [];
     window.__setTraceBandwidth = function(bwKbps) {
       window.__traceBandwidthKbps = bwKbps;
-      if (!window.dashPlayer) return;
-      try {
-        window.dashPlayer.updateSettings({
-          streaming: { abr: {
-            maxBitrate: { video: Math.round(bwKbps) },
-            throughput: { bandwidthSafetyFactor: 1.0 }
-          }}
-        });
-      } catch(e) {
-        console.log('Trace BW error:', e);
-      }
     };
 
     // Metrics tracking variables
@@ -459,16 +450,24 @@
       window.__playbackEnded = true;
     });
 
-    // Throughput tracking via stable public event
+    // Throughput tracking via stable public event.
+    // bytesLoaded may be missing in some dash.js builds; fall back to bytesTotal/bytes.
+    // requestEndDate and requestFirstByteDate are Date objects so subtraction gives ms.
     window.__throughputSamples = [];
     player.on(dashjs.MediaPlayer.events.FRAGMENT_LOADING_COMPLETED, e => {
       const req = e.request;
-      if (req && req.mediaType === 'video' && req.type === 'MediaSegment') {
-        const bytes = req.bytesLoaded || 0;
-        const ms = req.requestEndDate - req.requestStartDate;
-        if (ms > 0 && bytes > 0) {
-          window.__throughputSamples.push((bytes * 8) / ms);
-        }
+      if (!req) return;
+      if (req.mediaType !== 'video') return;
+      // Accept MediaSegment and regular index requests (type can vary by build)
+      const bytes = req.bytesLoaded || req.bytesTotal || req.bytes || 0;
+      const startDate = req.requestStartDate || req.trequest;
+      const endDate   = req.requestEndDate   || req.tresponse;
+      if (!startDate || !endDate) return;
+      const ms = (endDate instanceof Date ? endDate.getTime() : endDate)
+               - (startDate instanceof Date ? startDate.getTime() : startDate);
+      if (ms > 0 && bytes > 0) {
+        // (bytes × 8) / ms  =  kbps  (since 1 kbps = 1 bit/ms)
+        window.__throughputSamples.push((bytes * 8) / ms);
       }
     });
   </script>

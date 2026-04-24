@@ -40,13 +40,25 @@ services:
       # Mount your DASH content here (manifest.mpd + segments)
       # Generate content with: cd Benchmarking/scripts && ./generate-dash.sh
       - ./content:/app/content:ro
+      # Network trace file (same trace used by WebRTC shaper)
+      - ./shaper/trace:/trace:ro
+      # tc-trace.py script for direct tc/netem shaping (no nginx proxy)
+      - ./shaper/tc-trace.py:/app/tc-trace.py:ro
     environment:
       PORT: "8080"
       HOST: "0.0.0.0"
       CONTENT_DIR: "/app/content"
     ports:
-      # Direct access (bypasses traffic shaping)
+      # Direct access — tc/netem shaping applied inside this container
       - "8080:8080"
+    cap_add:
+      - NET_ADMIN
+    # Auto-start tc-trace.py alongside the Python server so HTTP traffic is
+    # shaped by tc/netem directly (no nginx proxy hop).
+    # benchmark.py can also POST /startShaping to restart it mid-run.
+    command: >
+      sh -c "python3 /app/tc-trace.py &
+             python3 server.py"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 30s
@@ -70,12 +82,19 @@ services:
     container_name: netsail-lldash-server
     volumes:
       - ./content:/app/content:ro
+      - ./shaper/trace:/trace:ro
+      - ./shaper/tc-trace.py:/app/tc-trace.py:ro
     environment:
       PORT: "8081"
       HOST: "0.0.0.0"
       CONTENT_DIR: "/app/content"
     ports:
       - "8081:8081"
+    cap_add:
+      - NET_ADMIN
+    command: >
+      sh -c "python3 /app/tc-trace.py &
+             python3 server.py"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
       interval: 30s
@@ -113,6 +132,12 @@ services:
       - "10000-10100:10000-10100/tcp"
     cap_add:
       - NET_ADMIN
+    # Auto-start tc-trace.py alongside the node server so RTP/UDP traffic is
+    # shaped by the same trace as the nginx shaper, without needing 'sudo docker exec'.
+    # benchmark.py can also call POST /startShaping to restart it mid-run.
+    command: >
+      sh -c "python3 /app/tc-trace.py &
+             node server.js"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
       interval: 30s

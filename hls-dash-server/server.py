@@ -11,6 +11,8 @@ A simple HTTP server optimized for serving DASH video content with:
 
 import os
 import json
+import subprocess
+import threading
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from datetime import datetime
 
@@ -18,6 +20,29 @@ from datetime import datetime
 PORT = int(os.getenv("PORT", 8080))
 HOST = os.getenv("HOST", "0.0.0.0")
 CONTENT_DIR = os.getenv("CONTENT_DIR", "/app/content")
+
+_tc_trace_proc = None
+
+
+def _do_start_shaping():
+    """Kill any existing tc-trace.py and spawn a fresh one (runs in background thread)."""
+    global _tc_trace_proc
+    # Kill any running instance (including the one auto-started by the container command)
+    subprocess.run(["pkill", "-f", "tc-trace.py"], capture_output=True)
+    _tc_trace_proc = None
+    _tc_trace_proc = subprocess.Popen(
+        ["python3", "/app/tc-trace.py"],
+        start_new_session=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+    print(f"[SHAPING] tc-trace.py started (pid: {_tc_trace_proc.pid})")
+
+
+def start_shaping():
+    """Schedule tc-trace.py restart after a short delay so the HTTP response
+    is sent before tc tears down eth0 (which would break the connection)."""
+    threading.Timer(0.3, _do_start_shaping).start()
 
 
 class DASHHandler(SimpleHTTPRequestHandler):
@@ -60,6 +85,18 @@ class DASHHandler(SimpleHTTPRequestHandler):
     def do_OPTIONS(self):
         """Handle CORS preflight requests."""
         self.send_response(200)
+        self.end_headers()
+
+    def do_POST(self):
+        """Handle POST requests."""
+        if self.path == '/startShaping':
+            start_shaping()
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps({'success': True, 'message': 'tc-trace.py starting'}).encode())
+            return
+        self.send_response(404)
         self.end_headers()
     
     def do_GET(self):

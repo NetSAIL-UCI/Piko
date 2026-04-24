@@ -88,7 +88,7 @@
 
   <script>
     const qs  = new URLSearchParams(window.location.search);
-    const mpd = qs.get('mpd') || '/manifest.mpd';
+    const mpd = qs.get('mpd') || '/manifest_ll.mpd';
     document.getElementById('manifestLbl').textContent = mpd;
 
     const video  = document.getElementById('video');
@@ -109,19 +109,12 @@
     let stallingStartTime  = null;
     let isStalling         = false;
 
-    // Trace-driven bandwidth cap (injected by benchmark.py)
+    // Trace-driven bandwidth reference (injected by benchmark.py).
+    // Do NOT cap maxBitrate dynamically — instantaneous BW updates cause
+    // wild oscillation. BOLA learns from actual segment download times.
     window.__traceBandwidthKbps = null;
     window.__setTraceBandwidth  = function(bwKbps) {
       window.__traceBandwidthKbps = bwKbps;
-      if (!window.dashPlayer) return;
-      try {
-        window.dashPlayer.updateSettings({
-          streaming: { abr: {
-            maxBitrate: { video: Math.round(bwKbps) },
-            throughput: { bandwidthSafetyFactor: 1.0 },
-          }}
-        });
-      } catch(e) {}
     };
 
     player.updateSettings({
@@ -137,7 +130,7 @@
           bufferTimeDefault: 5,
         },
         abr: {
-          initialBitrate: { video: 400 },
+          initialBitrate: { video: 100 },      // Start at lowest rung to minimize startup stall
           autoSwitchBitrate: { video: true },
         },
         timeouts: { load: 120000 },
@@ -180,16 +173,20 @@
       updateStatus('Error: ' + (e.error?.message || 'Unknown'));
     });
 
-    // Throughput tracking via stable public event
+    // Throughput tracking via stable public event.
+    // bytesLoaded may be missing in some dash.js builds; fall back to bytesTotal/bytes.
     window.__throughputSamples = [];
     player.on(dashjs.MediaPlayer.events.FRAGMENT_LOADING_COMPLETED, e => {
       const req = e.request;
-      if (req && req.mediaType === 'video' && req.type === 'MediaSegment') {
-        const bytes = req.bytesLoaded || 0;
-        const ms = req.requestEndDate - req.requestStartDate;
-        if (ms > 0 && bytes > 0) {
-          window.__throughputSamples.push((bytes * 8) / ms);
-        }
+      if (!req || req.mediaType !== 'video') return;
+      const bytes = req.bytesLoaded || req.bytesTotal || req.bytes || 0;
+      const startDate = req.requestStartDate || req.trequest;
+      const endDate   = req.requestEndDate   || req.tresponse;
+      if (!startDate || !endDate) return;
+      const ms = (endDate instanceof Date ? endDate.getTime() : endDate)
+               - (startDate instanceof Date ? startDate.getTime() : startDate);
+      if (ms > 0 && bytes > 0) {
+        window.__throughputSamples.push((bytes * 8) / ms);
       }
     });
 

@@ -8,19 +8,36 @@ Serves LL-DASH player UI and CMAF/DASH content from CONTENT_DIR.
 
 import json
 import os
+import subprocess
+import threading
 from datetime import datetime
 from http.server import HTTPServer, SimpleHTTPRequestHandler
-
-CHUNK_SIZE = 65536  # 64 KiB read buffer for chunked transfer
 
 
 PORT = int(os.getenv("PORT", 8081))
 HOST = os.getenv("HOST", "0.0.0.0")
 CONTENT_DIR = os.getenv("CONTENT_DIR", "/app/content")
 
+_tc_trace_proc = None
+
+def _do_start_shaping():
+    global _tc_trace_proc
+    subprocess.run(["pkill", "-f", "tc-trace.py"], capture_output=True)
+    _tc_trace_proc = None
+    _tc_trace_proc = subprocess.Popen(
+        ["python3", "/app/tc-trace.py"],
+        start_new_session=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+    print(f"[SHAPING] tc-trace.py started (pid: {_tc_trace_proc.pid})")
+
+def start_shaping():
+    threading.Timer(0.3, _do_start_shaping).start()
+
 
 class LLDASHHandler(SimpleHTTPRequestHandler):
-    """HTTP handler with LL-DASH-friendly headers."""
+    """HTTP handler for DASH content with CORS headers."""
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=CONTENT_DIR, **kwargs)
@@ -34,45 +51,6 @@ class LLDASHHandler(SimpleHTTPRequestHandler):
             return 'video/mp4'
         return super().guess_type(path)
 
-    def send_head(self):
-        """Use chunked transfer encoding for .m4s segments; fall back for everything else."""
-        if self.path.split('?')[0].endswith('.m4s'):
-            return self._send_head_chunked()
-        return super().send_head()
-
-    def _send_head_chunked(self):
-        path = self.translate_path(self.path)
-        try:
-            f = open(path, 'rb')
-        except OSError:
-            self.send_error(404, 'File not found')
-            return None
-        self.send_response(200)
-        self.send_header('Content-Type', self.guess_type(path))
-        self.send_header('Transfer-Encoding', 'chunked')
-        # No Content-Length — required for chunked encoding
-        self._chunked_response = True
-        self.end_headers()
-        return f
-
-    def copyfile(self, source, outputfile):
-        if getattr(self, '_chunked_response', False):
-            self._chunked_response = False
-            try:
-                while True:
-                    data = source.read(CHUNK_SIZE)
-                    if not data:
-                        break
-                    outputfile.write(f'{len(data):X}\r\n'.encode())
-                    outputfile.write(data)
-                    outputfile.write(b'\r\n')
-                outputfile.write(b'0\r\n\r\n')
-                outputfile.flush()
-            except (BrokenPipeError, ConnectionResetError):
-                pass
-        else:
-            super().copyfile(source, outputfile)
-
     def end_headers(self):
         # CORS headers
         self.send_header('Access-Control-Allow-Origin', '*')
@@ -83,6 +61,9 @@ class LLDASHHandler(SimpleHTTPRequestHandler):
         # Keep manifests fresh; segments can be cached.
         if self.path.endswith('.mpd'):
             self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+        elif self.path.endswith('.m4s') and '/ll-' in self.path:
+            # LL-DASH chunks should not be cached aggressively.
+            self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
         elif self.path.endswith('.m4s') or self.path.endswith('.mp4'):
             self.send_header('Cache-Control', 'public, max-age=86400')
 
@@ -90,6 +71,17 @@ class LLDASHHandler(SimpleHTTPRequestHandler):
 
     def do_OPTIONS(self):
         self.send_response(200)
+        self.end_headers()
+
+    def do_POST(self):
+        if self.path == '/startShaping':
+            start_shaping()
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps({'success': True, 'message': 'tc-trace.py starting'}).encode())
+            return
+        self.send_response(404)
         self.end_headers()
 
     def do_GET(self):
