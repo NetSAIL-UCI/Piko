@@ -1,0 +1,1773 @@
+
+======================================================================
+  BATCH RUN: 10 trace(s) from traces/fcc-2016-sept
+======================================================================
+
+
+──────────────────────────────────────────────────────────────────────
+  [1/10] fcc2016_sept_unit178682_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] fcc2016_sept_unit178682_tc.csv
+[LLDASH-SHAPER] Triggering tc-trace via /startShaping API...
+[LLDASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8081/?mpd=http://localhost:8081/manifest_ll.mpd
+======================================================================
+
+[TRACE] Loaded 1576 entries with bandwidth
+[INFO] Auto-detected video duration 596s → max_duration=626s
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1763ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.8s | bitrate: 100 kbps | tp: 6985 kbps | trace_bw: 6985 kbps
+   t=20s | buffer: 0.1s | bitrate: 4500 kbps | tp: 7008 kbps | trace_bw: 7008 kbps
+   t=31s | buffer: 0.1s | bitrate: 100 kbps | tp: 6851 kbps | trace_bw: 6851 kbps
+   t=41s | buffer: 0.1s | bitrate: 3000 kbps | tp: 7036 kbps | trace_bw: 7036 kbps
+   t=51s | buffer: 0.1s | bitrate: 3000 kbps | tp: 6999 kbps | trace_bw: 6999 kbps
+   t=61s | buffer: 0.1s | bitrate: 100 kbps | tp: 6948 kbps | trace_bw: 6948 kbps
+   t=72s | buffer: 0.6s | bitrate: 2000 kbps | tp: 6876 kbps | trace_bw: 6876 kbps
+   t=82s | buffer: 0.1s | bitrate: 100 kbps | tp: 6987 kbps | trace_bw: 6987 kbps
+   t=92s | buffer: 0.1s | bitrate: 1500 kbps | tp: 7094 kbps | trace_bw: 7094 kbps
+   t=102s | buffer: 0.1s | bitrate: 100 kbps | tp: 6906 kbps | trace_bw: 6906 kbps
+   t=112s | buffer: 0.4s | bitrate: 1200 kbps | tp: 6997 kbps | trace_bw: 6997 kbps
+   t=122s | buffer: 0.1s | bitrate: 100 kbps | tp: 7055 kbps | trace_bw: 7055 kbps
+   t=133s | buffer: 0.1s | bitrate: 100 kbps | tp: 6953 kbps | trace_bw: 6953 kbps
+   t=143s | buffer: 0.1s | bitrate: 100 kbps | tp: 4193 kbps | trace_bw: 4193 kbps
+   t=153s | buffer: 0.1s | bitrate: 600 kbps | tp: 6888 kbps | trace_bw: 6888 kbps
+   t=163s | buffer: 0.1s | bitrate: 100 kbps | tp: 7029 kbps | trace_bw: 7029 kbps
+   t=173s | buffer: 0.1s | bitrate: 400 kbps | tp: 6930 kbps | trace_bw: 6930 kbps
+   t=183s | buffer: 0.1s | bitrate: 100 kbps | tp: 6941 kbps | trace_bw: 6941 kbps
+   t=194s | buffer: 0.1s | bitrate: 200 kbps | tp: 6869 kbps | trace_bw: 6869 kbps
+   t=204s | buffer: 0.1s | bitrate: 100 kbps | tp: 4365 kbps | trace_bw: 4365 kbps
+   t=214s | buffer: 0.1s | bitrate: 100 kbps | tp: 6980 kbps | trace_bw: 6980 kbps
+   t=224s | buffer: 0.1s | bitrate: 100 kbps | tp: 6985 kbps | trace_bw: 6985 kbps
+   t=234s | buffer: 0.1s | bitrate: 2000 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=245s | buffer: 0.1s | bitrate: 2000 kbps | tp: 6953 kbps | trace_bw: 6953 kbps
+   t=255s | buffer: 0.1s | bitrate: 100 kbps | tp: 7062 kbps | trace_bw: 7062 kbps
+   t=265s | buffer: 0.1s | bitrate: 100 kbps | tp: 6978 kbps | trace_bw: 6978 kbps
+   t=275s | buffer: 0.1s | bitrate: 100 kbps | tp: 7041 kbps | trace_bw: 7041 kbps
+   t=285s | buffer: 0.1s | bitrate: 1200 kbps | tp: 6890 kbps | trace_bw: 6890 kbps
+   t=295s | buffer: 0.1s | bitrate: 100 kbps | tp: 6981 kbps | trace_bw: 6981 kbps
+   t=306s | buffer: 0.1s | bitrate: 100 kbps | tp: 6017 kbps | trace_bw: 6017 kbps
+   t=316s | buffer: 0.1s | bitrate: 100 kbps | tp: 5824 kbps | trace_bw: 5824 kbps
+   t=326s | buffer: 0.1s | bitrate: 100 kbps | tp: 1703 kbps | trace_bw: 1703 kbps
+   t=336s | buffer: 0.1s | bitrate: 600 kbps | tp: 6969 kbps | trace_bw: 6969 kbps
+   t=346s | buffer: 0.1s | bitrate: 100 kbps | tp: 6983 kbps | trace_bw: 6983 kbps
+   t=356s | buffer: 0.1s | bitrate: 100 kbps | tp: 6983 kbps | trace_bw: 6983 kbps
+   t=367s | buffer: 0.1s | bitrate: 400 kbps | tp: 4017 kbps | trace_bw: 4017 kbps
+   t=377s | buffer: 0.1s | bitrate: 200 kbps | tp: 2694 kbps | trace_bw: 2694 kbps
+   t=387s | buffer: 0.1s | bitrate: 100 kbps | tp: 2787 kbps | trace_bw: 2787 kbps
+   t=397s | buffer: 0.1s | bitrate: 100 kbps | tp: 6946 kbps | trace_bw: 6946 kbps
+   t=407s | buffer: 0.1s | bitrate: 100 kbps | tp: 6158 kbps | trace_bw: 6158 kbps
+   t=418s | buffer: 0.1s | bitrate: 3000 kbps | tp: 2956 kbps | trace_bw: 2956 kbps
+   t=428s | buffer: 0.1s | bitrate: 100 kbps | tp: 6909 kbps | trace_bw: 6909 kbps
+   t=438s | buffer: 0.1s | bitrate: 100 kbps | tp: 2864 kbps | trace_bw: 2864 kbps
+   t=448s | buffer: 0.1s | bitrate: 100 kbps | tp: 2956 kbps | trace_bw: 2956 kbps
+   t=458s | buffer: 0.1s | bitrate: 1500 kbps | tp: 6923 kbps | trace_bw: 6923 kbps
+   t=469s | buffer: 0.1s | bitrate: 1500 kbps | tp: 6953 kbps | trace_bw: 6953 kbps
+   t=479s | buffer: 0.1s | bitrate: 1500 kbps | tp: 6876 kbps | trace_bw: 6876 kbps
+   t=489s | buffer: 0.1s | bitrate: 100 kbps | tp: 6950 kbps | trace_bw: 6950 kbps
+   t=499s | buffer: 0.1s | bitrate: 100 kbps | tp: 6983 kbps | trace_bw: 6983 kbps
+   t=509s | buffer: 0.1s | bitrate: 100 kbps | tp: 6987 kbps | trace_bw: 6987 kbps
+   t=519s | buffer: 0.1s | bitrate: 100 kbps | tp: 6985 kbps | trace_bw: 6985 kbps
+   t=530s | buffer: 0.6s | bitrate: 600 kbps | tp: 6981 kbps | trace_bw: 6981 kbps
+   t=540s | buffer: 0.1s | bitrate: 100 kbps | tp: 2206 kbps | trace_bw: 2206 kbps
+   t=550s | buffer: 0.1s | bitrate: 400 kbps | tp: 137 kbps | trace_bw: 137 kbps
+   t=560s | buffer: 0.1s | bitrate: 100 kbps | tp: 220 kbps | trace_bw: 220 kbps
+   t=570s | buffer: 0.1s | bitrate: 200 kbps | tp: 7034 kbps | trace_bw: 7034 kbps
+   t=580s | buffer: 0.1s | bitrate: 100 kbps | tp: 6971 kbps | trace_bw: 6971 kbps
+   t=590s | buffer: 0.1s | bitrate: 100 kbps | tp: 6897 kbps | trace_bw: 6897 kbps
+   t=601s | buffer: 0.1s | bitrate: 3000 kbps | tp: 6990 kbps | trace_bw: 6990 kbps
+   t=611s | buffer: 0.1s | bitrate: 100 kbps | tp: 6610 kbps | trace_bw: 6610 kbps
+   t=621s | buffer: 0.1s | bitrate: 100 kbps | tp: 3336 kbps | trace_bw: 3336 kbps
+Error occurred in event listener
+Traceback (most recent call last):
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 296, in handle
+    return await self._handle_internal(route)
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 332, in _handle_internal
+    await handler_finished_future
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 323, in _handler
+    self.handler(route, route.request)  # type: ignore
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_impl_to_api_mapping.py", line 123, in wrapper_func
+    return handler(
+  File "benchmark.py", line 483, in _patch_dash_html
+    resp = route.fetch()
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/sync_api/_generated.py", line 804, in fetch
+    self._sync(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_network.py", line 457, in fetch
+    return await self._connection.wrap_api_call(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_connection.py", line 520, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TargetClosedError: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8081/ll-chunk-stream7-00111.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8081/?mpd=http://localhost:8081/manifest_ll.mpd
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_page.py", line 297, in _on_route
+    handled = await route_handler.handle(route)
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 305, in handle
+    raise rewrite_error(
+playwright._impl._errors.TargetClosedError: "Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8081/ll-chunk-stream7-00111.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8081/?mpd=http://localhost:8081/manifest_ll.mpd
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+" while running route callback.
+Consider awaiting `page.unroute_all(behavior='ignoreErrors')`
+before the end of the test to ignore remaining routes in flight.
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,763 ms
+      Playback time:     111.9 s
+
+  [BITRATE]
+      Average (selected):  748 kbps
+      Average (effective): 133 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              100 kbps
+      Std deviation:       1,102.2 kbps
+      Variance:            1,214,870.7
+      25th/75th %ile:      100 / 1,200 kbps
+
+  [SWITCHES]
+      Total count:       165
+      Up / Down:         83 / 82
+      Avg magnitude:     1,431 kbps
+
+  [REBUFFERING]
+      Events:            112
+      Total time:        515,016 ms
+      Ratio:             82.1538%
+      Frequency:         60.066 per minute
+      Avg duration:      4,630 ms
+      Max duration:      15,752 ms
+
+  [THROUGHPUT]
+      Average:           5,979 kbps
+      Median:            6,950 kbps
+      Min / Max:         5 / 7,094 kbps
+      Std deviation:     1,958.4 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           5,979 kbps
+      Min / Max:         5 / 7,094 kbps
+      Utilisation:       116.2%
+
+  [BUFFER]
+      Average level:     0.2 s
+      Min / Max:         0.1 / 1.1 s
+
+  [UTILIZATION]
+      Bandwidth:         10.8%
+
+======================================================================
+
+[SAVED] results/fcc2016_sept/benchmark_lldash_fcc2016_sept_unit178682_tc_20260423_181742.json
+
+──────────────────────────────────────────────────────────────────────
+  [2/10] fcc2016_sept_unit241853_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] fcc2016_sept_unit241853_tc.csv
+[LLDASH-SHAPER] Triggering tc-trace via /startShaping API...
+[LLDASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8081/?mpd=http://localhost:8081/manifest_ll.mpd
+======================================================================
+
+[TRACE] Loaded 584 entries with bandwidth
+[INFO] Auto-detected video duration 596s → max_duration=626s
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1719ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.8s | bitrate: 100 kbps | tp: 6925 kbps | trace_bw: 6925 kbps
+   t=20s | buffer: 0.1s | bitrate: 100 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=30s | buffer: 0.9s | bitrate: 100 kbps | tp: 6832 kbps | trace_bw: 6832 kbps
+   t=41s | buffer: 0.8s | bitrate: 100 kbps | tp: 7015 kbps | trace_bw: 7015 kbps
+   t=51s | buffer: 0.4s | bitrate: 100 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=61s | buffer: 0.1s | bitrate: 100 kbps | tp: 7022 kbps | trace_bw: 7022 kbps
+   t=71s | buffer: 0.1s | bitrate: 100 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=81s | buffer: 0.1s | bitrate: 100 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=92s | buffer: 0.1s | bitrate: 100 kbps | tp: 7022 kbps | trace_bw: 7022 kbps
+   t=102s | buffer: 0.1s | bitrate: 100 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=112s | buffer: 0.1s | bitrate: 2000 kbps | tp: 6994 kbps | trace_bw: 6994 kbps
+   t=122s | buffer: 0.1s | bitrate: 100 kbps | tp: 7022 kbps | trace_bw: 7022 kbps
+   t=132s | buffer: 0.1s | bitrate: 1500 kbps | tp: 7020 kbps | trace_bw: 7020 kbps
+   t=143s | buffer: 0.1s | bitrate: 100 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=153s | buffer: 0.1s | bitrate: 1200 kbps | tp: 7022 kbps | trace_bw: 7022 kbps
+   t=163s | buffer: 0.1s | bitrate: 100 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=173s | buffer: 0.1s | bitrate: 800 kbps | tp: 7017 kbps | trace_bw: 7017 kbps
+   t=183s | buffer: 0.1s | bitrate: 100 kbps | tp: 7022 kbps | trace_bw: 7022 kbps
+   t=193s | buffer: 0.1s | bitrate: 600 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=204s | buffer: 0.1s | bitrate: 100 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=214s | buffer: 0.1s | bitrate: 100 kbps | tp: 7022 kbps | trace_bw: 7022 kbps
+   t=224s | buffer: 0.8s | bitrate: 400 kbps | tp: 7019 kbps | trace_bw: 7019 kbps
+   t=234s | buffer: 0.1s | bitrate: 100 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=244s | buffer: 0.1s | bitrate: 200 kbps | tp: 7020 kbps | trace_bw: 7020 kbps
+   t=254s | buffer: 0.8s | bitrate: 100 kbps | tp: 7015 kbps | trace_bw: 7015 kbps
+   t=265s | buffer: 0.1s | bitrate: 100 kbps | tp: 6997 kbps | trace_bw: 6997 kbps
+   t=275s | buffer: 0.1s | bitrate: 3000 kbps | tp: 7024 kbps | trace_bw: 7024 kbps
+   t=285s | buffer: 0.1s | bitrate: 100 kbps | tp: 6990 kbps | trace_bw: 6990 kbps
+   t=295s | buffer: 0.1s | bitrate: 2000 kbps | tp: 7020 kbps | trace_bw: 7020 kbps
+   t=305s | buffer: 0.1s | bitrate: 100 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=316s | buffer: 0.1s | bitrate: 1500 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=326s | buffer: 0.1s | bitrate: 100 kbps | tp: 7020 kbps | trace_bw: 7020 kbps
+   t=336s | buffer: 0.1s | bitrate: 100 kbps | tp: 7020 kbps | trace_bw: 7020 kbps
+   t=346s | buffer: 0.1s | bitrate: 800 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=356s | buffer: 0.1s | bitrate: 100 kbps | tp: 7020 kbps | trace_bw: 7020 kbps
+   t=366s | buffer: 0.1s | bitrate: 100 kbps | tp: 7020 kbps | trace_bw: 7020 kbps
+   t=377s | buffer: 0.1s | bitrate: 600 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=387s | buffer: 0.1s | bitrate: 100 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=397s | buffer: 0.1s | bitrate: 400 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=407s | buffer: 0.1s | bitrate: 100 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=417s | buffer: 0.1s | bitrate: 200 kbps | tp: 7020 kbps | trace_bw: 7020 kbps
+   t=427s | buffer: 0.1s | bitrate: 100 kbps | tp: 7020 kbps | trace_bw: 7020 kbps
+   t=438s | buffer: 0.8s | bitrate: 100 kbps | tp: 7020 kbps | trace_bw: 7020 kbps
+   t=448s | buffer: 0.1s | bitrate: 3000 kbps | tp: 7020 kbps | trace_bw: 7020 kbps
+   t=458s | buffer: 0.1s | bitrate: 3000 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=468s | buffer: 0.1s | bitrate: 3000 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=478s | buffer: 0.1s | bitrate: 100 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=489s | buffer: 0.1s | bitrate: 100 kbps | tp: 7020 kbps | trace_bw: 7020 kbps
+   t=499s | buffer: 0.1s | bitrate: 100 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=509s | buffer: 0.1s | bitrate: 100 kbps | tp: 7020 kbps | trace_bw: 7020 kbps
+   t=519s | buffer: 0.1s | bitrate: 1200 kbps | tp: 6986 kbps | trace_bw: 6986 kbps
+   t=529s | buffer: 0.1s | bitrate: 100 kbps | tp: 7015 kbps | trace_bw: 7015 kbps
+   t=540s | buffer: 0.1s | bitrate: 100 kbps | tp: 7015 kbps | trace_bw: 7015 kbps
+   t=550s | buffer: 0.1s | bitrate: 100 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=560s | buffer: 0.1s | bitrate: 100 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=570s | buffer: 0.1s | bitrate: 100 kbps | tp: 7027 kbps | trace_bw: 7027 kbps
+   t=580s | buffer: 0.1s | bitrate: 100 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=590s | buffer: 0.6s | bitrate: 200 kbps | tp: 6960 kbps | trace_bw: 6960 kbps
+   t=601s | buffer: 0.1s | bitrate: 100 kbps | tp: 7020 kbps | trace_bw: 7020 kbps
+   t=611s | buffer: 0.8s | bitrate: 100 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+   t=621s | buffer: 0.1s | bitrate: 4500 kbps | tp: 7018 kbps | trace_bw: 7018 kbps
+Error occurred in event listener
+Traceback (most recent call last):
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 296, in handle
+    return await self._handle_internal(route)
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 332, in _handle_internal
+    await handler_finished_future
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 323, in _handler
+    self.handler(route, route.request)  # type: ignore
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_impl_to_api_mapping.py", line 123, in wrapper_func
+    return handler(
+  File "benchmark.py", line 483, in _patch_dash_html
+    resp = route.fetch()
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/sync_api/_generated.py", line 804, in fetch
+    self._sync(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_network.py", line 457, in fetch
+    return await self._connection.wrap_api_call(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_connection.py", line 520, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TargetClosedError: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8081/ll-init-stream8.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8081/?mpd=http://localhost:8081/manifest_ll.mpd
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_page.py", line 297, in _on_route
+    handled = await route_handler.handle(route)
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 305, in handle
+    raise rewrite_error(
+playwright._impl._errors.TargetClosedError: "Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8081/ll-init-stream8.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8081/?mpd=http://localhost:8081/manifest_ll.mpd
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+" while running route callback.
+Consider awaiting `page.unroute_all(behavior='ignoreErrors')`
+before the end of the test to ignore remaining routes in flight.
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,719 ms
+      Playback time:     155.4 s
+
+  [BITRATE]
+      Average (selected):  619 kbps
+      Average (effective): 154 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              100 kbps
+      Std deviation:       1,037.6 kbps
+      Variance:            1,076,622.5
+      25th/75th %ile:      100 / 600 kbps
+
+  [SWITCHES]
+      Total count:       157
+      Up / Down:         79 / 78
+      Avg magnitude:     1,375 kbps
+
+  [REBUFFERING]
+      Events:            154
+      Total time:        471,170 ms
+      Ratio:             75.1989%
+      Frequency:         59.461 per minute
+      Avg duration:      3,060 ms
+      Max duration:      9,190 ms
+
+  [THROUGHPUT]
+      Average:           7,006 kbps
+      Median:            7,018 kbps
+      Min / Max:         6,753 / 7,027 kbps
+      Std deviation:     41.4 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           7,006 kbps
+      Min / Max:         6,753 / 7,027 kbps
+      Utilisation:       100.2%
+
+  [BUFFER]
+      Average level:     0.2 s
+      Min / Max:         0.1 / 1.1 s
+
+  [UTILIZATION]
+      Bandwidth:         8.8%
+
+======================================================================
+
+[SAVED] results/fcc2016_sept/benchmark_lldash_fcc2016_sept_unit241853_tc_20260423_182814.json
+
+──────────────────────────────────────────────────────────────────────
+  [3/10] fcc2016_sept_unit26562_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] fcc2016_sept_unit26562_tc.csv
+[LLDASH-SHAPER] Triggering tc-trace via /startShaping API...
+[LLDASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8081/?mpd=http://localhost:8081/manifest_ll.mpd
+======================================================================
+
+[TRACE] Loaded 1967 entries with bandwidth
+[INFO] Auto-detected video duration 596s → max_duration=626s
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1741ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.1s | bitrate: 100 kbps | tp: 83588 kbps | trace_bw: 83588 kbps
+   t=20s | buffer: 0.1s | bitrate: 4500 kbps | tp: 99228 kbps | trace_bw: 99228 kbps
+   t=31s | buffer: 0.1s | bitrate: 100 kbps | tp: 98085 kbps | trace_bw: 98085 kbps
+   t=41s | buffer: 0.1s | bitrate: 3000 kbps | tp: 99022 kbps | trace_bw: 99022 kbps
+   t=51s | buffer: 0.1s | bitrate: 100 kbps | tp: 99130 kbps | trace_bw: 99130 kbps
+   t=61s | buffer: 0.1s | bitrate: 100 kbps | tp: 95089 kbps | trace_bw: 95089 kbps
+   t=72s | buffer: 0.7s | bitrate: 1500 kbps | tp: 102382 kbps | trace_bw: 102382 kbps
+   t=82s | buffer: 0.1s | bitrate: 100 kbps | tp: 88931 kbps | trace_bw: 88931 kbps
+   t=92s | buffer: 0.1s | bitrate: 100 kbps | tp: 82433 kbps | trace_bw: 82433 kbps
+   t=102s | buffer: 0.1s | bitrate: 100 kbps | tp: 96420 kbps | trace_bw: 96420 kbps
+   t=112s | buffer: 0.1s | bitrate: 800 kbps | tp: 70250 kbps | trace_bw: 70250 kbps
+   t=123s | buffer: 0.1s | bitrate: 100 kbps | tp: 83000 kbps | trace_bw: 83000 kbps
+   t=133s | buffer: 0.6s | bitrate: 600 kbps | tp: 97263 kbps | trace_bw: 97263 kbps
+   t=143s | buffer: 0.1s | bitrate: 100 kbps | tp: 99907 kbps | trace_bw: 99907 kbps
+   t=153s | buffer: 0.3s | bitrate: 400 kbps | tp: 93617 kbps | trace_bw: 93617 kbps
+   t=163s | buffer: 0.1s | bitrate: 100 kbps | tp: 99298 kbps | trace_bw: 99298 kbps
+   t=173s | buffer: 0.1s | bitrate: 200 kbps | tp: 107267 kbps | trace_bw: 107267 kbps
+   t=184s | buffer: 0.1s | bitrate: 100 kbps | tp: 105900 kbps | trace_bw: 105900 kbps
+   t=194s | buffer: 0.1s | bitrate: 100 kbps | tp: 104457 kbps | trace_bw: 104457 kbps
+   t=204s | buffer: 0.1s | bitrate: 4500 kbps | tp: 103813 kbps | trace_bw: 103813 kbps
+   t=214s | buffer: 0.1s | bitrate: 3000 kbps | tp: 81783 kbps | trace_bw: 81783 kbps
+   t=224s | buffer: 0.1s | bitrate: 100 kbps | tp: 103399 kbps | trace_bw: 103399 kbps
+   t=235s | buffer: 0.1s | bitrate: 2000 kbps | tp: 92208 kbps | trace_bw: 92208 kbps
+   t=245s | buffer: 0.1s | bitrate: 100 kbps | tp: 104475 kbps | trace_bw: 104475 kbps
+   t=255s | buffer: 0.1s | bitrate: 1500 kbps | tp: 84845 kbps | trace_bw: 84845 kbps
+   t=265s | buffer: 0.1s | bitrate: 100 kbps | tp: 94446 kbps | trace_bw: 94446 kbps
+   t=275s | buffer: 0.1s | bitrate: 1200 kbps | tp: 104168 kbps | trace_bw: 104168 kbps
+   t=285s | buffer: 0.1s | bitrate: 100 kbps | tp: 68135 kbps | trace_bw: 68135 kbps
+   t=296s | buffer: 0.8s | bitrate: 800 kbps | tp: 99451 kbps | trace_bw: 99451 kbps
+   t=306s | buffer: 0.1s | bitrate: 100 kbps | tp: 103584 kbps | trace_bw: 103584 kbps
+   t=316s | buffer: 0.6s | bitrate: 600 kbps | tp: 99015 kbps | trace_bw: 99015 kbps
+   t=326s | buffer: 0.1s | bitrate: 100 kbps | tp: 100879 kbps | trace_bw: 100879 kbps
+   t=336s | buffer: 0.1s | bitrate: 400 kbps | tp: 102630 kbps | trace_bw: 102630 kbps
+   t=346s | buffer: 0.1s | bitrate: 100 kbps | tp: 99998 kbps | trace_bw: 99998 kbps
+   t=357s | buffer: 0.1s | bitrate: 200 kbps | tp: 98862 kbps | trace_bw: 98862 kbps
+   t=367s | buffer: 0.1s | bitrate: 100 kbps | tp: 105837 kbps | trace_bw: 105837 kbps
+   t=377s | buffer: 0.1s | bitrate: 4500 kbps | tp: 105787 kbps | trace_bw: 105787 kbps
+   t=387s | buffer: 0.1s | bitrate: 3000 kbps | tp: 98691 kbps | trace_bw: 98691 kbps
+   t=397s | buffer: 0.1s | bitrate: 100 kbps | tp: 108084 kbps | trace_bw: 108084 kbps
+   t=408s | buffer: 0.1s | bitrate: 100 kbps | tp: 100832 kbps | trace_bw: 100832 kbps
+   t=418s | buffer: 0.1s | bitrate: 100 kbps | tp: 109156 kbps | trace_bw: 109156 kbps
+   t=428s | buffer: 0.7s | bitrate: 1500 kbps | tp: 65223 kbps | trace_bw: 65223 kbps
+   t=438s | buffer: 0.1s | bitrate: 100 kbps | tp: 91050 kbps | trace_bw: 91050 kbps
+   t=448s | buffer: 0.6s | bitrate: 1200 kbps | tp: 93262 kbps | trace_bw: 93262 kbps
+   t=459s | buffer: 0.1s | bitrate: 100 kbps | tp: 94768 kbps | trace_bw: 94768 kbps
+   t=469s | buffer: 0.1s | bitrate: 100 kbps | tp: 96506 kbps | trace_bw: 96506 kbps
+   t=479s | buffer: 0.1s | bitrate: 100 kbps | tp: 103568 kbps | trace_bw: 103568 kbps
+   t=489s | buffer: 0.1s | bitrate: 600 kbps | tp: 96265 kbps | trace_bw: 96265 kbps
+   t=499s | buffer: 0.1s | bitrate: 100 kbps | tp: 89569 kbps | trace_bw: 89569 kbps
+   t=509s | buffer: 0.1s | bitrate: 400 kbps | tp: 84986 kbps | trace_bw: 84986 kbps
+   t=520s | buffer: 0.1s | bitrate: 100 kbps | tp: 106545 kbps | trace_bw: 106545 kbps
+   t=530s | buffer: 0.1s | bitrate: 200 kbps | tp: 89319 kbps | trace_bw: 89319 kbps
+   t=540s | buffer: 0.7s | bitrate: 200 kbps | tp: 87161 kbps | trace_bw: 87161 kbps
+   t=550s | buffer: 0.6s | bitrate: 100 kbps | tp: 76006 kbps | trace_bw: 76006 kbps
+   t=560s | buffer: 0.1s | bitrate: 100 kbps | tp: 68354 kbps | trace_bw: 68354 kbps
+   t=570s | buffer: 0.1s | bitrate: 3000 kbps | tp: 95103 kbps | trace_bw: 95103 kbps
+   t=581s | buffer: 0.1s | bitrate: 100 kbps | tp: 83641 kbps | trace_bw: 83641 kbps
+   t=591s | buffer: 0.1s | bitrate: 2000 kbps | tp: 100907 kbps | trace_bw: 100907 kbps
+   t=601s | buffer: 0.1s | bitrate: 100 kbps | tp: 92795 kbps | trace_bw: 92795 kbps
+   t=611s | buffer: 0.1s | bitrate: 1500 kbps | tp: 83193 kbps | trace_bw: 83193 kbps
+   t=622s | buffer: 0.1s | bitrate: 100 kbps | tp: 105559 kbps | trace_bw: 105559 kbps
+Error occurred in event listener
+Traceback (most recent call last):
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 296, in handle
+    return await self._handle_internal(route)
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 332, in _handle_internal
+    await handler_finished_future
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 323, in _handler
+    self.handler(route, route.request)  # type: ignore
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_impl_to_api_mapping.py", line 123, in wrapper_func
+    return handler(
+  File "benchmark.py", line 483, in _patch_dash_html
+    resp = route.fetch()
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/sync_api/_generated.py", line 804, in fetch
+    self._sync(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_network.py", line 457, in fetch
+    return await self._connection.wrap_api_call(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_connection.py", line 520, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TargetClosedError: Route.fetch: Target page, context or browser has been closed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_page.py", line 297, in _on_route
+    handled = await route_handler.handle(route)
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 305, in handle
+    raise rewrite_error(
+playwright._impl._errors.TargetClosedError: "Route.fetch: Target page, context or browser has been closed" while running route callback.
+Consider awaiting `page.unroute_all(behavior='ignoreErrors')`
+before the end of the test to ignore remaining routes in flight.
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,741 ms
+      Playback time:     119.9 s
+
+  [BITRATE]
+      Average (selected):  706 kbps
+      Average (effective): 135 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              100 kbps
+      Std deviation:       1,085.5 kbps
+      Variance:            1,178,205.5
+      25th/75th %ile:      100 / 800 kbps
+
+  [SWITCHES]
+      Total count:       176
+      Up / Down:         88 / 88
+      Avg magnitude:     1,434 kbps
+
+  [REBUFFERING]
+      Events:            117
+      Total time:        506,897 ms
+      Ratio:             80.8710%
+      Frequency:         58.549 per minute
+      Avg duration:      4,348 ms
+      Max duration:      8,786 ms
+
+  [THROUGHPUT]
+      Average:           94,040 kbps
+      Median:            96,265 kbps
+      Min / Max:         61,924 / 109,156 kbps
+      Std deviation:     10,435.5 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           94,040 kbps
+      Min / Max:         61,924 / 109,156 kbps
+      Utilisation:       102.4%
+
+  [BUFFER]
+      Average level:     0.2 s
+      Min / Max:         0.1 / 1.2 s
+
+  [UTILIZATION]
+      Bandwidth:         0.7%
+
+======================================================================
+
+[SAVED] results/fcc2016_sept/benchmark_lldash_fcc2016_sept_unit26562_tc_20260423_183846.json
+
+──────────────────────────────────────────────────────────────────────
+  [4/10] fcc2016_sept_unit619854_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] fcc2016_sept_unit619854_tc.csv
+[LLDASH-SHAPER] Triggering tc-trace via /startShaping API...
+[LLDASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8081/?mpd=http://localhost:8081/manifest_ll.mpd
+======================================================================
+
+[TRACE] Loaded 456 entries with bandwidth
+[INFO] Auto-detected video duration 596s → max_duration=626s
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1743ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.1s | bitrate: 100 kbps | tp: 50150 kbps | trace_bw: 50150 kbps
+   t=20s | buffer: 0.8s | bitrate: 4500 kbps | tp: 44407 kbps | trace_bw: 44407 kbps
+   t=31s | buffer: 0.1s | bitrate: 100 kbps | tp: 49659 kbps | trace_bw: 49659 kbps
+   t=41s | buffer: 0.1s | bitrate: 3000 kbps | tp: 38299 kbps | trace_bw: 38299 kbps
+   t=51s | buffer: 0.1s | bitrate: 100 kbps | tp: 39251 kbps | trace_bw: 39251 kbps
+   t=61s | buffer: 0.1s | bitrate: 2000 kbps | tp: 38714 kbps | trace_bw: 38714 kbps
+   t=71s | buffer: 0.1s | bitrate: 100 kbps | tp: 38905 kbps | trace_bw: 38905 kbps
+   t=82s | buffer: 0.1s | bitrate: 1500 kbps | tp: 39256 kbps | trace_bw: 39256 kbps
+   t=92s | buffer: 0.1s | bitrate: 1500 kbps | tp: 44760 kbps | trace_bw: 44760 kbps
+   t=102s | buffer: 0.1s | bitrate: 100 kbps | tp: 39421 kbps | trace_bw: 39421 kbps
+   t=112s | buffer: 0.1s | bitrate: 100 kbps | tp: 44167 kbps | trace_bw: 44167 kbps
+   t=122s | buffer: 0.1s | bitrate: 800 kbps | tp: 44532 kbps | trace_bw: 44532 kbps
+   t=133s | buffer: 0.1s | bitrate: 100 kbps | tp: 44235 kbps | trace_bw: 44235 kbps
+   t=143s | buffer: 0.1s | bitrate: 100 kbps | tp: 40510 kbps | trace_bw: 40510 kbps
+   t=153s | buffer: 0.1s | bitrate: 600 kbps | tp: 38896 kbps | trace_bw: 38896 kbps
+   t=163s | buffer: 0.1s | bitrate: 100 kbps | tp: 40465 kbps | trace_bw: 40465 kbps
+   t=173s | buffer: 0.1s | bitrate: 400 kbps | tp: 44759 kbps | trace_bw: 44759 kbps
+   t=183s | buffer: 0.1s | bitrate: 100 kbps | tp: 49548 kbps | trace_bw: 49548 kbps
+   t=194s | buffer: 0.1s | bitrate: 200 kbps | tp: 47743 kbps | trace_bw: 47743 kbps
+   t=204s | buffer: 0.1s | bitrate: 100 kbps | tp: 49203 kbps | trace_bw: 49203 kbps
+   t=214s | buffer: 0.1s | bitrate: 100 kbps | tp: 49936 kbps | trace_bw: 49936 kbps
+   t=224s | buffer: 0.1s | bitrate: 3000 kbps | tp: 49632 kbps | trace_bw: 49632 kbps
+   t=234s | buffer: 0.1s | bitrate: 100 kbps | tp: 48931 kbps | trace_bw: 48931 kbps
+   t=245s | buffer: 0.1s | bitrate: 2000 kbps | tp: 46502 kbps | trace_bw: 46502 kbps
+   t=255s | buffer: 0.1s | bitrate: 100 kbps | tp: 43068 kbps | trace_bw: 43068 kbps
+   t=265s | buffer: 0.1s | bitrate: 2000 kbps | tp: 48483 kbps | trace_bw: 48483 kbps
+   t=275s | buffer: 0.1s | bitrate: 100 kbps | tp: 39227 kbps | trace_bw: 39227 kbps
+   t=285s | buffer: 0.1s | bitrate: 1500 kbps | tp: 36327 kbps | trace_bw: 36327 kbps
+   t=295s | buffer: 0.1s | bitrate: 100 kbps | tp: 44772 kbps | trace_bw: 44772 kbps
+   t=306s | buffer: 0.1s | bitrate: 1200 kbps | tp: 39261 kbps | trace_bw: 39261 kbps
+   t=316s | buffer: 0.1s | bitrate: 100 kbps | tp: 38481 kbps | trace_bw: 38481 kbps
+   t=326s | buffer: 0.8s | bitrate: 800 kbps | tp: 23761 kbps | trace_bw: 23761 kbps
+   t=336s | buffer: 0.1s | bitrate: 100 kbps | tp: 48894 kbps | trace_bw: 48894 kbps
+   t=346s | buffer: 0.1s | bitrate: 100 kbps | tp: 30843 kbps | trace_bw: 30843 kbps
+   t=356s | buffer: 0.1s | bitrate: 400 kbps | tp: 39057 kbps | trace_bw: 39057 kbps
+   t=367s | buffer: 0.1s | bitrate: 100 kbps | tp: 39028 kbps | trace_bw: 39028 kbps
+   t=377s | buffer: 0.1s | bitrate: 100 kbps | tp: 43943 kbps | trace_bw: 43943 kbps
+   t=387s | buffer: 0.1s | bitrate: 100 kbps | tp: 39132 kbps | trace_bw: 39132 kbps
+   t=397s | buffer: 0.8s | bitrate: 100 kbps | tp: 49679 kbps | trace_bw: 49679 kbps
+   t=407s | buffer: 0.1s | bitrate: 100 kbps | tp: 49620 kbps | trace_bw: 49620 kbps
+   t=417s | buffer: 0.6s | bitrate: 3000 kbps | tp: 48797 kbps | trace_bw: 48797 kbps
+   t=428s | buffer: 0.1s | bitrate: 100 kbps | tp: 49609 kbps | trace_bw: 49609 kbps
+   t=438s | buffer: 0.1s | bitrate: 2000 kbps | tp: 48500 kbps | trace_bw: 48500 kbps
+   t=448s | buffer: 0.1s | bitrate: 100 kbps | tp: 44559 kbps | trace_bw: 44559 kbps
+   t=458s | buffer: 0.1s | bitrate: 1500 kbps | tp: 33927 kbps | trace_bw: 33927 kbps
+   t=469s | buffer: 0.1s | bitrate: 100 kbps | tp: 40957 kbps | trace_bw: 40957 kbps
+   t=479s | buffer: 0.1s | bitrate: 1200 kbps | tp: 43938 kbps | trace_bw: 43938 kbps
+   t=489s | buffer: 0.1s | bitrate: 100 kbps | tp: 48718 kbps | trace_bw: 48718 kbps
+   t=499s | buffer: 0.1s | bitrate: 800 kbps | tp: 49296 kbps | trace_bw: 49296 kbps
+   t=509s | buffer: 0.1s | bitrate: 100 kbps | tp: 49403 kbps | trace_bw: 49403 kbps
+   t=519s | buffer: 0.1s | bitrate: 600 kbps | tp: 47740 kbps | trace_bw: 47740 kbps
+   t=530s | buffer: 0.1s | bitrate: 100 kbps | tp: 46473 kbps | trace_bw: 46473 kbps
+   t=540s | buffer: 0.1s | bitrate: 400 kbps | tp: 43927 kbps | trace_bw: 43927 kbps
+   t=550s | buffer: 0.1s | bitrate: 100 kbps | tp: 42486 kbps | trace_bw: 42486 kbps
+   t=560s | buffer: 0.1s | bitrate: 100 kbps | tp: 50137 kbps | trace_bw: 50137 kbps
+   t=570s | buffer: 0.1s | bitrate: 100 kbps | tp: 43877 kbps | trace_bw: 43877 kbps
+   t=580s | buffer: 0.1s | bitrate: 100 kbps | tp: 39451 kbps | trace_bw: 39451 kbps
+   t=591s | buffer: 0.1s | bitrate: 4500 kbps | tp: 42109 kbps | trace_bw: 42109 kbps
+   t=601s | buffer: 0.1s | bitrate: 100 kbps | tp: 41238 kbps | trace_bw: 41238 kbps
+   t=611s | buffer: 0.1s | bitrate: 3000 kbps | tp: 37708 kbps | trace_bw: 37708 kbps
+   t=621s | buffer: 0.1s | bitrate: 100 kbps | tp: 38544 kbps | trace_bw: 38544 kbps
+Error occurred in event listener
+Traceback (most recent call last):
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 296, in handle
+    return await self._handle_internal(route)
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 332, in _handle_internal
+    await handler_finished_future
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 323, in _handler
+    self.handler(route, route.request)  # type: ignore
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_impl_to_api_mapping.py", line 123, in wrapper_func
+    return handler(
+  File "benchmark.py", line 483, in _patch_dash_html
+    resp = route.fetch()
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/sync_api/_generated.py", line 804, in fetch
+    self._sync(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_network.py", line 457, in fetch
+    return await self._connection.wrap_api_call(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_connection.py", line 520, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TargetClosedError: Route.fetch: Target page, context or browser has been closed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_page.py", line 297, in _on_route
+    handled = await route_handler.handle(route)
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 305, in handle
+    raise rewrite_error(
+playwright._impl._errors.TargetClosedError: "Route.fetch: Target page, context or browser has been closed" while running route callback.
+Consider awaiting `page.unroute_all(behavior='ignoreErrors')`
+before the end of the test to ignore remaining routes in flight.
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,743 ms
+      Playback time:     119.9 s
+
+  [BITRATE]
+      Average (selected):  741 kbps
+      Average (effective): 142 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              100 kbps
+      Std deviation:       1,145.9 kbps
+      Variance:            1,313,143.5
+      25th/75th %ile:      100 / 800 kbps
+
+  [SWITCHES]
+      Total count:       163
+      Up / Down:         82 / 81
+      Avg magnitude:     1,425 kbps
+
+  [REBUFFERING]
+      Events:            121
+      Total time:        507,003 ms
+      Ratio:             80.8751%
+      Frequency:         60.554 per minute
+      Avg duration:      4,225 ms
+      Max duration:      15,759 ms
+
+  [THROUGHPUT]
+      Average:           43,562 kbps
+      Median:            44,138 kbps
+      Min / Max:         21,575 / 50,171 kbps
+      Std deviation:     5,347.4 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           43,562 kbps
+      Min / Max:         21,575 / 50,171 kbps
+      Utilisation:       101.3%
+
+  [BUFFER]
+      Average level:     0.2 s
+      Min / Max:         0.1 / 1.1 s
+
+  [UTILIZATION]
+      Bandwidth:         1.7%
+
+======================================================================
+
+[SAVED] results/fcc2016_sept/benchmark_lldash_fcc2016_sept_unit619854_tc_20260423_184918.json
+
+──────────────────────────────────────────────────────────────────────
+  [5/10] fcc2016_sept_unit656870_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] fcc2016_sept_unit656870_tc.csv
+[LLDASH-SHAPER] Triggering tc-trace via /startShaping API...
+[LLDASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8081/?mpd=http://localhost:8081/manifest_ll.mpd
+======================================================================
+
+[TRACE] Loaded 1221 entries with bandwidth
+[INFO] Auto-detected video duration 596s → max_duration=626s
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1747ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.1s | bitrate: 100 kbps | tp: 6092 kbps | trace_bw: 6092 kbps
+   t=20s | buffer: 0.9s | bitrate: 100 kbps | tp: 6089 kbps | trace_bw: 6089 kbps
+   t=31s | buffer: 0.1s | bitrate: 4500 kbps | tp: 6085 kbps | trace_bw: 6085 kbps
+   t=41s | buffer: 0.1s | bitrate: 100 kbps | tp: 5742 kbps | trace_bw: 5742 kbps
+   t=51s | buffer: 0.6s | bitrate: 3000 kbps | tp: 5942 kbps | trace_bw: 5942 kbps
+   t=61s | buffer: 0.1s | bitrate: 3000 kbps | tp: 6034 kbps | trace_bw: 6034 kbps
+   t=72s | buffer: 0.1s | bitrate: 100 kbps | tp: 6092 kbps | trace_bw: 6092 kbps
+   t=82s | buffer: 0.1s | bitrate: 100 kbps | tp: 6043 kbps | trace_bw: 6043 kbps
+   t=92s | buffer: 0.1s | bitrate: 100 kbps | tp: 6078 kbps | trace_bw: 6078 kbps
+   t=102s | buffer: 0.1s | bitrate: 1500 kbps | tp: 6089 kbps | trace_bw: 6089 kbps
+   t=113s | buffer: 0.1s | bitrate: 100 kbps | tp: 6089 kbps | trace_bw: 6089 kbps
+   t=123s | buffer: 0.1s | bitrate: 100 kbps | tp: 6089 kbps | trace_bw: 6089 kbps
+   t=133s | buffer: 0.1s | bitrate: 800 kbps | tp: 6089 kbps | trace_bw: 6089 kbps
+   t=143s | buffer: 0.1s | bitrate: 100 kbps | tp: 6090 kbps | trace_bw: 6090 kbps
+   t=153s | buffer: 0.1s | bitrate: 600 kbps | tp: 6089 kbps | trace_bw: 6089 kbps
+   t=164s | buffer: 0.1s | bitrate: 100 kbps | tp: 5564 kbps | trace_bw: 5564 kbps
+   t=174s | buffer: 0.1s | bitrate: 100 kbps | tp: 5373 kbps | trace_bw: 5373 kbps
+   t=184s | buffer: 0.1s | bitrate: 400 kbps | tp: 5923 kbps | trace_bw: 5923 kbps
+   t=194s | buffer: 0.1s | bitrate: 100 kbps | tp: 5772 kbps | trace_bw: 5772 kbps
+   t=204s | buffer: 0.1s | bitrate: 100 kbps | tp: 6089 kbps | trace_bw: 6089 kbps
+   t=215s | buffer: 0.1s | bitrate: 100 kbps | tp: 6089 kbps | trace_bw: 6089 kbps
+   t=225s | buffer: 0.7s | bitrate: 3000 kbps | tp: 6089 kbps | trace_bw: 6089 kbps
+   t=235s | buffer: 0.1s | bitrate: 100 kbps | tp: 5785 kbps | trace_bw: 5785 kbps
+   t=245s | buffer: 0.1s | bitrate: 100 kbps | tp: 5292 kbps | trace_bw: 5292 kbps
+   t=255s | buffer: 0.1s | bitrate: 2000 kbps | tp: 5447 kbps | trace_bw: 5447 kbps
+   t=266s | buffer: 0.1s | bitrate: 100 kbps | tp: 5854 kbps | trace_bw: 5854 kbps
+   t=276s | buffer: 0.1s | bitrate: 100 kbps | tp: 6068 kbps | trace_bw: 6068 kbps
+   t=286s | buffer: 0.1s | bitrate: 1200 kbps | tp: 6092 kbps | trace_bw: 6092 kbps
+   t=296s | buffer: 0.1s | bitrate: 1200 kbps | tp: 6053 kbps | trace_bw: 6053 kbps
+   t=306s | buffer: 0.1s | bitrate: 100 kbps | tp: 5988 kbps | trace_bw: 5988 kbps
+   t=317s | buffer: 0.1s | bitrate: 100 kbps | tp: 5689 kbps | trace_bw: 5689 kbps
+   t=327s | buffer: 0.1s | bitrate: 100 kbps | tp: 5808 kbps | trace_bw: 5808 kbps
+   t=337s | buffer: 0.1s | bitrate: 600 kbps | tp: 6092 kbps | trace_bw: 6092 kbps
+   t=347s | buffer: 0.1s | bitrate: 100 kbps | tp: 6094 kbps | trace_bw: 6094 kbps
+   t=357s | buffer: 0.1s | bitrate: 400 kbps | tp: 5854 kbps | trace_bw: 5854 kbps
+   t=368s | buffer: 0.1s | bitrate: 200 kbps | tp: 6041 kbps | trace_bw: 6041 kbps
+   t=378s | buffer: 0.1s | bitrate: 100 kbps | tp: 6089 kbps | trace_bw: 6089 kbps
+   t=388s | buffer: 0.9s | bitrate: 100 kbps | tp: 5907 kbps | trace_bw: 5907 kbps
+   t=398s | buffer: 0.1s | bitrate: 3000 kbps | tp: 6087 kbps | trace_bw: 6087 kbps
+   t=408s | buffer: 0.1s | bitrate: 100 kbps | tp: 6089 kbps | trace_bw: 6089 kbps
+   t=419s | buffer: 0.1s | bitrate: 2000 kbps | tp: 6089 kbps | trace_bw: 6089 kbps
+   t=429s | buffer: 0.1s | bitrate: 100 kbps | tp: 6089 kbps | trace_bw: 6089 kbps
+   t=439s | buffer: 0.1s | bitrate: 100 kbps | tp: 5861 kbps | trace_bw: 5861 kbps
+   t=449s | buffer: 0.6s | bitrate: 1500 kbps | tp: 5995 kbps | trace_bw: 5995 kbps
+   t=459s | buffer: 0.1s | bitrate: 100 kbps | tp: 5753 kbps | trace_bw: 5753 kbps
+   t=470s | buffer: 0.1s | bitrate: 100 kbps | tp: 5891 kbps | trace_bw: 5891 kbps
+   t=480s | buffer: 0.1s | bitrate: 800 kbps | tp: 6069 kbps | trace_bw: 6069 kbps
+   t=490s | buffer: 0.1s | bitrate: 100 kbps | tp: 5960 kbps | trace_bw: 5960 kbps
+   t=500s | buffer: 0.1s | bitrate: 100 kbps | tp: 5799 kbps | trace_bw: 5799 kbps
+   t=510s | buffer: 0.1s | bitrate: 100 kbps | tp: 6089 kbps | trace_bw: 6089 kbps
+   t=521s | buffer: 0.1s | bitrate: 100 kbps | tp: 5972 kbps | trace_bw: 5972 kbps
+   t=531s | buffer: 0.1s | bitrate: 400 kbps | tp: 5930 kbps | trace_bw: 5930 kbps
+   t=541s | buffer: 0.1s | bitrate: 100 kbps | tp: 6094 kbps | trace_bw: 6094 kbps
+   t=551s | buffer: 0.1s | bitrate: 100 kbps | tp: 6129 kbps | trace_bw: 6129 kbps
+   t=561s | buffer: 0.1s | bitrate: 100 kbps | tp: 6090 kbps | trace_bw: 6090 kbps
+   t=571s | buffer: 0.1s | bitrate: 4500 kbps | tp: 5718 kbps | trace_bw: 5718 kbps
+   t=582s | buffer: 0.1s | bitrate: 100 kbps | tp: 6050 kbps | trace_bw: 6050 kbps
+   t=592s | buffer: 0.7s | bitrate: 3000 kbps | tp: 5907 kbps | trace_bw: 5907 kbps
+   t=602s | buffer: 0.1s | bitrate: 100 kbps | tp: 6046 kbps | trace_bw: 6046 kbps
+   t=612s | buffer: 0.6s | bitrate: 2000 kbps | tp: 5921 kbps | trace_bw: 5921 kbps
+   t=623s | buffer: 0.1s | bitrate: 2000 kbps | tp: 5944 kbps | trace_bw: 5944 kbps
+Error occurred in event listener
+Traceback (most recent call last):
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 296, in handle
+    return await self._handle_internal(route)
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 332, in _handle_internal
+    await handler_finished_future
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 323, in _handler
+    self.handler(route, route.request)  # type: ignore
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_impl_to_api_mapping.py", line 123, in wrapper_func
+    return handler(
+  File "benchmark.py", line 483, in _patch_dash_html
+    resp = route.fetch()
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/sync_api/_generated.py", line 804, in fetch
+    self._sync(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_network.py", line 457, in fetch
+    return await self._connection.wrap_api_call(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_connection.py", line 520, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TargetClosedError: Route.fetch: Target page, context or browser has been closed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_page.py", line 297, in _on_route
+    handled = await route_handler.handle(route)
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 305, in handle
+    raise rewrite_error(
+playwright._impl._errors.TargetClosedError: "Route.fetch: Target page, context or browser has been closed" while running route callback.
+Consider awaiting `page.unroute_all(behavior='ignoreErrors')`
+before the end of the test to ignore remaining routes in flight.
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,747 ms
+      Playback time:     126.9 s
+
+  [BITRATE]
+      Average (selected):  721 kbps
+      Average (effective): 146 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              100 kbps
+      Std deviation:       1,094.7 kbps
+      Variance:            1,198,440.4
+      25th/75th %ile:      100 / 800 kbps
+
+  [SWITCHES]
+      Total count:       168
+      Up / Down:         84 / 84
+      Avg magnitude:     1,439 kbps
+
+  [REBUFFERING]
+      Events:            124
+      Total time:        499,956 ms
+      Ratio:             79.7565%
+      Frequency:         58.630 per minute
+      Avg duration:      3,953 ms
+      Max duration:      9,687 ms
+
+  [THROUGHPUT]
+      Average:           5,960 kbps
+      Median:            6,048 kbps
+      Min / Max:         5,292 / 6,138 kbps
+      Std deviation:     182.2 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           5,960 kbps
+      Min / Max:         5,292 / 6,138 kbps
+      Utilisation:       101.5%
+
+  [BUFFER]
+      Average level:     0.2 s
+      Min / Max:         0.1 / 1.3 s
+
+  [UTILIZATION]
+      Bandwidth:         11.9%
+
+======================================================================
+
+[SAVED] results/fcc2016_sept/benchmark_lldash_fcc2016_sept_unit656870_tc_20260423_185950.json
+
+──────────────────────────────────────────────────────────────────────
+  [6/10] fcc2016_sept_unit799440_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] fcc2016_sept_unit799440_tc.csv
+[LLDASH-SHAPER] Triggering tc-trace via /startShaping API...
+[LLDASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8081/?mpd=http://localhost:8081/manifest_ll.mpd
+======================================================================
+
+[TRACE] Loaded 1117 entries with bandwidth
+[INFO] Auto-detected video duration 596s → max_duration=626s
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1737ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.1s | bitrate: 100 kbps | tp: 1908 kbps | trace_bw: 1908 kbps
+   t=20s | buffer: 0.1s | bitrate: 4500 kbps | tp: 1922 kbps | trace_bw: 1922 kbps
+   t=31s | buffer: 0.1s | bitrate: 100 kbps | tp: 1908 kbps | trace_bw: 1908 kbps
+   t=41s | buffer: 0.1s | bitrate: 3000 kbps | tp: 1951 kbps | trace_bw: 1951 kbps
+   t=51s | buffer: 0.1s | bitrate: 100 kbps | tp: 1894 kbps | trace_bw: 1894 kbps
+   t=61s | buffer: 0.1s | bitrate: 100 kbps | tp: 1924 kbps | trace_bw: 1924 kbps
+   t=71s | buffer: 0.1s | bitrate: 2000 kbps | tp: 1954 kbps | trace_bw: 1954 kbps
+   t=82s | buffer: 0.1s | bitrate: 100 kbps | tp: 1488 kbps | trace_bw: 1488 kbps
+   t=92s | buffer: 0.6s | bitrate: 1500 kbps | tp: 1919 kbps | trace_bw: 1919 kbps
+   t=102s | buffer: 0.1s | bitrate: 100 kbps | tp: 1908 kbps | trace_bw: 1908 kbps
+   t=112s | buffer: 0.8s | bitrate: 1200 kbps | tp: 1905 kbps | trace_bw: 1905 kbps
+   t=122s | buffer: 0.1s | bitrate: 100 kbps | tp: 1915 kbps | trace_bw: 1915 kbps
+   t=133s | buffer: 0.1s | bitrate: 800 kbps | tp: 1908 kbps | trace_bw: 1908 kbps
+   t=143s | buffer: 0.6s | bitrate: 600 kbps | tp: 1908 kbps | trace_bw: 1908 kbps
+   t=153s | buffer: 0.1s | bitrate: 100 kbps | tp: 1928 kbps | trace_bw: 1928 kbps
+   t=163s | buffer: 0.1s | bitrate: 400 kbps | tp: 1908 kbps | trace_bw: 1908 kbps
+   t=173s | buffer: 0.1s | bitrate: 100 kbps | tp: 1935 kbps | trace_bw: 1935 kbps
+   t=183s | buffer: 0.1s | bitrate: 200 kbps | tp: 1908 kbps | trace_bw: 1908 kbps
+   t=194s | buffer: 0.1s | bitrate: 100 kbps | tp: 1908 kbps | trace_bw: 1908 kbps
+   t=204s | buffer: 0.1s | bitrate: 4500 kbps | tp: 1905 kbps | trace_bw: 1905 kbps
+   t=214s | buffer: 0.1s | bitrate: 100 kbps | tp: 1871 kbps | trace_bw: 1871 kbps
+   t=224s | buffer: 0.1s | bitrate: 100 kbps | tp: 1905 kbps | trace_bw: 1905 kbps
+   t=234s | buffer: 0.1s | bitrate: 100 kbps | tp: 1908 kbps | trace_bw: 1908 kbps
+   t=245s | buffer: 0.1s | bitrate: 100 kbps | tp: 1901 kbps | trace_bw: 1901 kbps
+   t=255s | buffer: 0.8s | bitrate: 1500 kbps | tp: 1924 kbps | trace_bw: 1924 kbps
+   t=265s | buffer: 0.1s | bitrate: 100 kbps | tp: 1940 kbps | trace_bw: 1940 kbps
+   t=275s | buffer: 0.6s | bitrate: 1200 kbps | tp: 1908 kbps | trace_bw: 1908 kbps
+   t=285s | buffer: 0.1s | bitrate: 100 kbps | tp: 1859 kbps | trace_bw: 1859 kbps
+   t=295s | buffer: 0.1s | bitrate: 800 kbps | tp: 1905 kbps | trace_bw: 1905 kbps
+   t=306s | buffer: 0.1s | bitrate: 100 kbps | tp: 1908 kbps | trace_bw: 1908 kbps
+   t=316s | buffer: 0.1s | bitrate: 100 kbps | tp: 1908 kbps | trace_bw: 1908 kbps
+   t=326s | buffer: 0.1s | bitrate: 600 kbps | tp: 1905 kbps | trace_bw: 1905 kbps
+   t=336s | buffer: 0.1s | bitrate: 100 kbps | tp: 1901 kbps | trace_bw: 1901 kbps
+   t=346s | buffer: 0.1s | bitrate: 100 kbps | tp: 1906 kbps | trace_bw: 1906 kbps
+   t=356s | buffer: 0.1s | bitrate: 100 kbps | tp: 1905 kbps | trace_bw: 1905 kbps
+   t=367s | buffer: 0.1s | bitrate: 100 kbps | tp: 1905 kbps | trace_bw: 1905 kbps
+   t=377s | buffer: 0.1s | bitrate: 100 kbps | tp: 1843 kbps | trace_bw: 1843 kbps
+   t=387s | buffer: 0.1s | bitrate: 100 kbps | tp: 1905 kbps | trace_bw: 1905 kbps
+   t=397s | buffer: 0.1s | bitrate: 100 kbps | tp: 1908 kbps | trace_bw: 1908 kbps
+   t=407s | buffer: 0.1s | bitrate: 100 kbps | tp: 1940 kbps | trace_bw: 1940 kbps
+   t=418s | buffer: 0.8s | bitrate: 2000 kbps | tp: 1908 kbps | trace_bw: 1908 kbps
+   t=428s | buffer: 0.1s | bitrate: 100 kbps | tp: 1908 kbps | trace_bw: 1908 kbps
+   t=438s | buffer: 0.6s | bitrate: 1500 kbps | tp: 1908 kbps | trace_bw: 1908 kbps
+   t=448s | buffer: 0.1s | bitrate: 100 kbps | tp: 1905 kbps | trace_bw: 1905 kbps
+   t=458s | buffer: 0.1s | bitrate: 1200 kbps | tp: 1869 kbps | trace_bw: 1869 kbps
+   t=468s | buffer: 0.1s | bitrate: 100 kbps | tp: 1938 kbps | trace_bw: 1938 kbps
+   t=479s | buffer: 0.1s | bitrate: 800 kbps | tp: 1889 kbps | trace_bw: 1889 kbps
+   t=489s | buffer: 0.1s | bitrate: 100 kbps | tp: 1901 kbps | trace_bw: 1901 kbps
+   t=499s | buffer: 0.1s | bitrate: 600 kbps | tp: 1908 kbps | trace_bw: 1908 kbps
+   t=509s | buffer: 0.1s | bitrate: 100 kbps | tp: 1898 kbps | trace_bw: 1898 kbps
+   t=519s | buffer: 0.1s | bitrate: 400 kbps | tp: 1958 kbps | trace_bw: 1958 kbps
+   t=529s | buffer: 0.1s | bitrate: 100 kbps | tp: 1889 kbps | trace_bw: 1889 kbps
+   t=540s | buffer: 0.1s | bitrate: 200 kbps | tp: 1935 kbps | trace_bw: 1935 kbps
+   t=550s | buffer: 0.1s | bitrate: 100 kbps | tp: 1908 kbps | trace_bw: 1908 kbps
+   t=560s | buffer: 0.8s | bitrate: 100 kbps | tp: 1908 kbps | trace_bw: 1908 kbps
+   t=570s | buffer: 0.7s | bitrate: 4500 kbps | tp: 1910 kbps | trace_bw: 1910 kbps
+   t=580s | buffer: 0.1s | bitrate: 3000 kbps | tp: 1908 kbps | trace_bw: 1908 kbps
+   t=591s | buffer: 0.1s | bitrate: 100 kbps | tp: 1908 kbps | trace_bw: 1908 kbps
+   t=601s | buffer: 0.1s | bitrate: 100 kbps | tp: 1894 kbps | trace_bw: 1894 kbps
+   t=611s | buffer: 0.1s | bitrate: 2000 kbps | tp: 1945 kbps | trace_bw: 1945 kbps
+   t=621s | buffer: 0.1s | bitrate: 100 kbps | tp: 1905 kbps | trace_bw: 1905 kbps
+Error occurred in event listener
+Traceback (most recent call last):
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 296, in handle
+    return await self._handle_internal(route)
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 332, in _handle_internal
+    await handler_finished_future
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 323, in _handler
+    self.handler(route, route.request)  # type: ignore
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_impl_to_api_mapping.py", line 123, in wrapper_func
+    return handler(
+  File "benchmark.py", line 483, in _patch_dash_html
+    resp = route.fetch()
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/sync_api/_generated.py", line 804, in fetch
+    self._sync(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_network.py", line 457, in fetch
+    return await self._connection.wrap_api_call(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_connection.py", line 520, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TargetClosedError: Route.fetch: Target page, context or browser has been closed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_page.py", line 297, in _on_route
+    handled = await route_handler.handle(route)
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 305, in handle
+    raise rewrite_error(
+playwright._impl._errors.TargetClosedError: "Route.fetch: Target page, context or browser has been closed" while running route callback.
+Consider awaiting `page.unroute_all(behavior='ignoreErrors')`
+before the end of the test to ignore remaining routes in flight.
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,737 ms
+      Playback time:     121.9 s
+
+  [BITRATE]
+      Average (selected):  686 kbps
+      Average (effective): 133 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              100 kbps
+      Std deviation:       1,073.3 kbps
+      Variance:            1,151,957.3
+      25th/75th %ile:      100 / 800 kbps
+
+  [SWITCHES]
+      Total count:       169
+      Up / Down:         85 / 84
+      Avg magnitude:     1,439 kbps
+
+  [REBUFFERING]
+      Events:            123
+      Total time:        505,085 ms
+      Ratio:             80.5593%
+      Frequency:         60.547 per minute
+      Avg duration:      4,127 ms
+      Max duration:      10,169 ms
+
+  [THROUGHPUT]
+      Average:           1,896 kbps
+      Median:            1,908 kbps
+      Min / Max:         823 / 1,972 kbps
+      Std deviation:     106.1 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,896 kbps
+      Min / Max:         823 / 1,972 kbps
+      Utilisation:       100.7%
+
+  [BUFFER]
+      Average level:     0.2 s
+      Min / Max:         0.1 / 1.0 s
+
+  [UTILIZATION]
+      Bandwidth:         35.9%
+
+======================================================================
+
+[SAVED] results/fcc2016_sept/benchmark_lldash_fcc2016_sept_unit799440_tc_20260423_191022.json
+
+──────────────────────────────────────────────────────────────────────
+  [7/10] fcc2016_sept_unit806274_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] fcc2016_sept_unit806274_tc.csv
+[LLDASH-SHAPER] Triggering tc-trace via /startShaping API...
+[LLDASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8081/?mpd=http://localhost:8081/manifest_ll.mpd
+======================================================================
+
+[TRACE] Loaded 458 entries with bandwidth
+[INFO] Auto-detected video duration 596s → max_duration=626s
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1748ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.1s | bitrate: 100 kbps | tp: 2614 kbps | trace_bw: 2614 kbps
+   t=21s | buffer: 0.1s | bitrate: 100 kbps | tp: 3305 kbps | trace_bw: 3305 kbps
+   t=31s | buffer: 0.1s | bitrate: 3000 kbps | tp: 3285 kbps | trace_bw: 3285 kbps
+   t=41s | buffer: 0.1s | bitrate: 100 kbps | tp: 3269 kbps | trace_bw: 3269 kbps
+   t=51s | buffer: 0.6s | bitrate: 2000 kbps | tp: 3304 kbps | trace_bw: 3304 kbps
+   t=62s | buffer: 0.1s | bitrate: 100 kbps | tp: 3275 kbps | trace_bw: 3275 kbps
+   t=72s | buffer: 0.1s | bitrate: 1500 kbps | tp: 3283 kbps | trace_bw: 3283 kbps
+   t=82s | buffer: 0.1s | bitrate: 100 kbps | tp: 3281 kbps | trace_bw: 3281 kbps
+   t=92s | buffer: 0.1s | bitrate: 100 kbps | tp: 3308 kbps | trace_bw: 3308 kbps
+   t=102s | buffer: 0.1s | bitrate: 100 kbps | tp: 3014 kbps | trace_bw: 3014 kbps
+   t=113s | buffer: 0.1s | bitrate: 800 kbps | tp: 3290 kbps | trace_bw: 3290 kbps
+   t=123s | buffer: 0.1s | bitrate: 100 kbps | tp: 3283 kbps | trace_bw: 3283 kbps
+   t=133s | buffer: 0.1s | bitrate: 600 kbps | tp: 3288 kbps | trace_bw: 3288 kbps
+   t=143s | buffer: 0.1s | bitrate: 100 kbps | tp: 3281 kbps | trace_bw: 3281 kbps
+   t=153s | buffer: 0.1s | bitrate: 400 kbps | tp: 3279 kbps | trace_bw: 3279 kbps
+   t=164s | buffer: 0.1s | bitrate: 100 kbps | tp: 3276 kbps | trace_bw: 3276 kbps
+   t=174s | buffer: 0.1s | bitrate: 200 kbps | tp: 3284 kbps | trace_bw: 3284 kbps
+   t=184s | buffer: 0.1s | bitrate: 100 kbps | tp: 3305 kbps | trace_bw: 3305 kbps
+   t=194s | buffer: 0.1s | bitrate: 100 kbps | tp: 3040 kbps | trace_bw: 3040 kbps
+   t=204s | buffer: 0.1s | bitrate: 4500 kbps | tp: 2363 kbps | trace_bw: 2363 kbps
+   t=215s | buffer: 0.1s | bitrate: 100 kbps | tp: 1721 kbps | trace_bw: 1721 kbps
+   t=225s | buffer: 0.1s | bitrate: 3000 kbps | tp: 2788 kbps | trace_bw: 2788 kbps
+   t=235s | buffer: 0.1s | bitrate: 100 kbps | tp: 2114 kbps | trace_bw: 2114 kbps
+   t=245s | buffer: 0.8s | bitrate: 2000 kbps | tp: 2906 kbps | trace_bw: 2906 kbps
+   t=255s | buffer: 0.1s | bitrate: 100 kbps | tp: 3068 kbps | trace_bw: 3068 kbps
+   t=266s | buffer: 0.1s | bitrate: 1500 kbps | tp: 3293 kbps | trace_bw: 3293 kbps
+   t=276s | buffer: 0.1s | bitrate: 100 kbps | tp: 3270 kbps | trace_bw: 3270 kbps
+   t=286s | buffer: 0.8s | bitrate: 1200 kbps | tp: 2680 kbps | trace_bw: 2680 kbps
+   t=296s | buffer: 0.1s | bitrate: 100 kbps | tp: 1969 kbps | trace_bw: 1969 kbps
+   t=306s | buffer: 0.6s | bitrate: 800 kbps | tp: 3306 kbps | trace_bw: 3306 kbps
+   t=317s | buffer: 0.1s | bitrate: 100 kbps | tp: 2486 kbps | trace_bw: 2486 kbps
+   t=327s | buffer: 0.1s | bitrate: 600 kbps | tp: 2830 kbps | trace_bw: 2830 kbps
+   t=337s | buffer: 0.1s | bitrate: 100 kbps | tp: 3282 kbps | trace_bw: 3282 kbps
+   t=347s | buffer: 0.1s | bitrate: 100 kbps | tp: 3275 kbps | trace_bw: 3275 kbps
+   t=357s | buffer: 0.1s | bitrate: 200 kbps | tp: 2669 kbps | trace_bw: 2669 kbps
+   t=368s | buffer: 0.1s | bitrate: 100 kbps | tp: 2634 kbps | trace_bw: 2634 kbps
+   t=378s | buffer: 0.9s | bitrate: 100 kbps | tp: 2367 kbps | trace_bw: 2367 kbps
+   t=388s | buffer: 0.1s | bitrate: 100 kbps | tp: 3271 kbps | trace_bw: 3271 kbps
+   t=398s | buffer: 0.1s | bitrate: 100 kbps | tp: 3282 kbps | trace_bw: 3282 kbps
+   t=408s | buffer: 0.1s | bitrate: 100 kbps | tp: 3308 kbps | trace_bw: 3308 kbps
+   t=419s | buffer: 0.1s | bitrate: 2000 kbps | tp: 3286 kbps | trace_bw: 3286 kbps
+   t=429s | buffer: 0.1s | bitrate: 100 kbps | tp: 3306 kbps | trace_bw: 3306 kbps
+   t=439s | buffer: 0.6s | bitrate: 1500 kbps | tp: 2933 kbps | trace_bw: 2933 kbps
+   t=449s | buffer: 0.1s | bitrate: 100 kbps | tp: 3286 kbps | trace_bw: 3286 kbps
+   t=460s | buffer: 0.1s | bitrate: 100 kbps | tp: 3284 kbps | trace_bw: 3284 kbps
+   t=470s | buffer: 0.1s | bitrate: 1200 kbps | tp: 3256 kbps | trace_bw: 3256 kbps
+   t=480s | buffer: 0.1s | bitrate: 100 kbps | tp: 2882 kbps | trace_bw: 2882 kbps
+   t=490s | buffer: 0.1s | bitrate: 800 kbps | tp: 3279 kbps | trace_bw: 3279 kbps
+   t=500s | buffer: 0.1s | bitrate: 100 kbps | tp: 3300 kbps | trace_bw: 3300 kbps
+   t=511s | buffer: 0.1s | bitrate: 600 kbps | tp: 3292 kbps | trace_bw: 3292 kbps
+   t=521s | buffer: 0.1s | bitrate: 100 kbps | tp: 3281 kbps | trace_bw: 3281 kbps
+   t=531s | buffer: 0.1s | bitrate: 400 kbps | tp: 3307 kbps | trace_bw: 3307 kbps
+   t=541s | buffer: 0.1s | bitrate: 100 kbps | tp: 3303 kbps | trace_bw: 3303 kbps
+   t=551s | buffer: 0.1s | bitrate: 200 kbps | tp: 2467 kbps | trace_bw: 2467 kbps
+   t=561s | buffer: 0.1s | bitrate: 100 kbps | tp: 3294 kbps | trace_bw: 3294 kbps
+   t=572s | buffer: 0.8s | bitrate: 100 kbps | tp: 3318 kbps | trace_bw: 3318 kbps
+   t=582s | buffer: 0.1s | bitrate: 3000 kbps | tp: 3299 kbps | trace_bw: 3299 kbps
+   t=592s | buffer: 0.1s | bitrate: 100 kbps | tp: 3276 kbps | trace_bw: 3276 kbps
+   t=602s | buffer: 0.1s | bitrate: 100 kbps | tp: 3279 kbps | trace_bw: 3279 kbps
+   t=613s | buffer: 0.1s | bitrate: 100 kbps | tp: 3187 kbps | trace_bw: 3187 kbps
+   t=623s | buffer: 0.6s | bitrate: 1500 kbps | tp: 3260 kbps | trace_bw: 3260 kbps
+Error occurred in event listener
+Traceback (most recent call last):
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 296, in handle
+    return await self._handle_internal(route)
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 332, in _handle_internal
+    await handler_finished_future
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 323, in _handler
+    self.handler(route, route.request)  # type: ignore
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_impl_to_api_mapping.py", line 123, in wrapper_func
+    return handler(
+  File "benchmark.py", line 483, in _patch_dash_html
+    resp = route.fetch()
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/sync_api/_generated.py", line 804, in fetch
+    self._sync(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_network.py", line 457, in fetch
+    return await self._connection.wrap_api_call(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_connection.py", line 520, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TargetClosedError: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8081/ll-chunk-stream0-00111.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8081/?mpd=http://localhost:8081/manifest_ll.mpd
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_page.py", line 297, in _on_route
+    handled = await route_handler.handle(route)
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 305, in handle
+    raise rewrite_error(
+playwright._impl._errors.TargetClosedError: "Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8081/ll-chunk-stream0-00111.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8081/?mpd=http://localhost:8081/manifest_ll.mpd
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+" while running route callback.
+Consider awaiting `page.unroute_all(behavior='ignoreErrors')`
+before the end of the test to ignore remaining routes in flight.
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,748 ms
+      Playback time:     110.9 s
+
+  [BITRATE]
+      Average (selected):  704 kbps
+      Average (effective): 125 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              100 kbps
+      Std deviation:       1,073.1 kbps
+      Variance:            1,151,584.2
+      25th/75th %ile:      100 / 800 kbps
+
+  [SWITCHES]
+      Total count:       170
+      Up / Down:         85 / 85
+      Avg magnitude:     1,439 kbps
+
+  [REBUFFERING]
+      Events:            111
+      Total time:        515,646 ms
+      Ratio:             82.3009%
+      Frequency:         60.059 per minute
+      Avg duration:      4,659 ms
+      Max duration:      10,259 ms
+
+  [THROUGHPUT]
+      Average:           3,077 kbps
+      Median:            3,279 kbps
+      Min / Max:         1,573 / 3,326 kbps
+      Std deviation:     379.7 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           3,077 kbps
+      Min / Max:         1,573 / 3,326 kbps
+      Utilisation:       106.6%
+
+  [BUFFER]
+      Average level:     0.2 s
+      Min / Max:         0.1 / 1.3 s
+
+  [UTILIZATION]
+      Bandwidth:         21.5%
+
+======================================================================
+
+[SAVED] results/fcc2016_sept/benchmark_lldash_fcc2016_sept_unit806274_tc_20260423_192054.json
+
+──────────────────────────────────────────────────────────────────────
+  [8/10] fcc2016_sept_unit8814_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] fcc2016_sept_unit8814_tc.csv
+[LLDASH-SHAPER] Triggering tc-trace via /startShaping API...
+[LLDASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8081/?mpd=http://localhost:8081/manifest_ll.mpd
+======================================================================
+
+[TRACE] Loaded 455 entries with bandwidth
+[INFO] Auto-detected video duration 596s → max_duration=626s
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1771ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.9s | bitrate: 100 kbps | tp: 144771 kbps | trace_bw: 144771 kbps
+   t=20s | buffer: 0.1s | bitrate: 4500 kbps | tp: 149221 kbps | trace_bw: 149221 kbps
+   t=31s | buffer: 0.1s | bitrate: 100 kbps | tp: 148736 kbps | trace_bw: 148736 kbps
+   t=41s | buffer: 0.1s | bitrate: 3000 kbps | tp: 148835 kbps | trace_bw: 148835 kbps
+   t=51s | buffer: 0.1s | bitrate: 100 kbps | tp: 148009 kbps | trace_bw: 148009 kbps
+   t=62s | buffer: 0.7s | bitrate: 2000 kbps | tp: 149263 kbps | trace_bw: 149263 kbps
+   t=72s | buffer: 0.1s | bitrate: 100 kbps | tp: 141421 kbps | trace_bw: 141421 kbps
+   t=82s | buffer: 0.1s | bitrate: 1500 kbps | tp: 146466 kbps | trace_bw: 146466 kbps
+   t=92s | buffer: 0.6s | bitrate: 1200 kbps | tp: 147363 kbps | trace_bw: 147363 kbps
+   t=102s | buffer: 0.1s | bitrate: 100 kbps | tp: 147312 kbps | trace_bw: 147312 kbps
+   t=113s | buffer: 0.1s | bitrate: 800 kbps | tp: 149171 kbps | trace_bw: 149171 kbps
+   t=123s | buffer: 0.1s | bitrate: 100 kbps | tp: 151485 kbps | trace_bw: 151485 kbps
+   t=133s | buffer: 0.1s | bitrate: 600 kbps | tp: 149711 kbps | trace_bw: 149711 kbps
+   t=143s | buffer: 0.1s | bitrate: 100 kbps | tp: 145165 kbps | trace_bw: 145165 kbps
+   t=153s | buffer: 0.1s | bitrate: 400 kbps | tp: 148694 kbps | trace_bw: 148694 kbps
+   t=164s | buffer: 0.1s | bitrate: 100 kbps | tp: 142509 kbps | trace_bw: 142509 kbps
+   t=174s | buffer: 0.1s | bitrate: 200 kbps | tp: 147394 kbps | trace_bw: 147394 kbps
+   t=184s | buffer: 0.1s | bitrate: 100 kbps | tp: 147685 kbps | trace_bw: 147685 kbps
+   t=194s | buffer: 0.1s | bitrate: 100 kbps | tp: 151132 kbps | trace_bw: 151132 kbps
+   t=204s | buffer: 0.1s | bitrate: 4500 kbps | tp: 149056 kbps | trace_bw: 149056 kbps
+   t=215s | buffer: 0.1s | bitrate: 100 kbps | tp: 153016 kbps | trace_bw: 153016 kbps
+   t=225s | buffer: 0.1s | bitrate: 3000 kbps | tp: 150194 kbps | trace_bw: 150194 kbps
+   t=235s | buffer: 0.1s | bitrate: 100 kbps | tp: 147177 kbps | trace_bw: 147177 kbps
+   t=245s | buffer: 0.6s | bitrate: 2000 kbps | tp: 136057 kbps | trace_bw: 136057 kbps
+   t=256s | buffer: 0.1s | bitrate: 100 kbps | tp: 147510 kbps | trace_bw: 147510 kbps
+   t=266s | buffer: 0.1s | bitrate: 1500 kbps | tp: 150909 kbps | trace_bw: 150909 kbps
+   t=276s | buffer: 0.1s | bitrate: 100 kbps | tp: 142724 kbps | trace_bw: 142724 kbps
+   t=286s | buffer: 0.1s | bitrate: 1200 kbps | tp: 148471 kbps | trace_bw: 148471 kbps
+   t=296s | buffer: 0.1s | bitrate: 100 kbps | tp: 146065 kbps | trace_bw: 146065 kbps
+   t=307s | buffer: 0.1s | bitrate: 800 kbps | tp: 139404 kbps | trace_bw: 139404 kbps
+   t=317s | buffer: 0.1s | bitrate: 100 kbps | tp: 151280 kbps | trace_bw: 151280 kbps
+   t=327s | buffer: 0.1s | bitrate: 600 kbps | tp: 148059 kbps | trace_bw: 148059 kbps
+   t=337s | buffer: 0.1s | bitrate: 100 kbps | tp: 149359 kbps | trace_bw: 149359 kbps
+   t=347s | buffer: 0.1s | bitrate: 400 kbps | tp: 151676 kbps | trace_bw: 151676 kbps
+   t=357s | buffer: 0.1s | bitrate: 100 kbps | tp: 146998 kbps | trace_bw: 146998 kbps
+   t=368s | buffer: 0.1s | bitrate: 200 kbps | tp: 147619 kbps | trace_bw: 147619 kbps
+   t=378s | buffer: 0.1s | bitrate: 100 kbps | tp: 146999 kbps | trace_bw: 146999 kbps
+   t=388s | buffer: 0.1s | bitrate: 100 kbps | tp: 139276 kbps | trace_bw: 139276 kbps
+   t=398s | buffer: 0.1s | bitrate: 3000 kbps | tp: 144965 kbps | trace_bw: 144965 kbps
+   t=409s | buffer: 0.1s | bitrate: 100 kbps | tp: 154582 kbps | trace_bw: 154582 kbps
+   t=419s | buffer: 0.1s | bitrate: 2000 kbps | tp: 151452 kbps | trace_bw: 151452 kbps
+   t=429s | buffer: 0.1s | bitrate: 2000 kbps | tp: 146621 kbps | trace_bw: 146621 kbps
+   t=439s | buffer: 0.1s | bitrate: 100 kbps | tp: 151064 kbps | trace_bw: 151064 kbps
+   t=450s | buffer: 0.1s | bitrate: 1500 kbps | tp: 150066 kbps | trace_bw: 150066 kbps
+   t=460s | buffer: 0.1s | bitrate: 100 kbps | tp: 151006 kbps | trace_bw: 151006 kbps
+   t=470s | buffer: 0.1s | bitrate: 100 kbps | tp: 148112 kbps | trace_bw: 148112 kbps
+   t=480s | buffer: 0.1s | bitrate: 800 kbps | tp: 149297 kbps | trace_bw: 149297 kbps
+   t=490s | buffer: 0.1s | bitrate: 100 kbps | tp: 143363 kbps | trace_bw: 143363 kbps
+   t=500s | buffer: 0.1s | bitrate: 100 kbps | tp: 150437 kbps | trace_bw: 150437 kbps
+   t=511s | buffer: 0.1s | bitrate: 600 kbps | tp: 140018 kbps | trace_bw: 140018 kbps
+   t=521s | buffer: 0.1s | bitrate: 100 kbps | tp: 148534 kbps | trace_bw: 148534 kbps
+   t=531s | buffer: 0.1s | bitrate: 400 kbps | tp: 146200 kbps | trace_bw: 146200 kbps
+   t=541s | buffer: 0.1s | bitrate: 100 kbps | tp: 147632 kbps | trace_bw: 147632 kbps
+   t=551s | buffer: 0.1s | bitrate: 200 kbps | tp: 149231 kbps | trace_bw: 149231 kbps
+   t=562s | buffer: 0.1s | bitrate: 100 kbps | tp: 149804 kbps | trace_bw: 149804 kbps
+   t=572s | buffer: 0.1s | bitrate: 100 kbps | tp: 148570 kbps | trace_bw: 148570 kbps
+   t=582s | buffer: 0.1s | bitrate: 3000 kbps | tp: 149459 kbps | trace_bw: 149459 kbps
+   t=592s | buffer: 0.1s | bitrate: 100 kbps | tp: 145838 kbps | trace_bw: 145838 kbps
+   t=603s | buffer: 0.1s | bitrate: 100 kbps | tp: 143734 kbps | trace_bw: 143734 kbps
+   t=613s | buffer: 0.1s | bitrate: 100 kbps | tp: 152533 kbps | trace_bw: 152533 kbps
+   t=623s | buffer: 0.1s | bitrate: 100 kbps | tp: 147175 kbps | trace_bw: 147175 kbps
+Error occurred in event listener
+Traceback (most recent call last):
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 296, in handle
+    return await self._handle_internal(route)
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 332, in _handle_internal
+    await handler_finished_future
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 323, in _handler
+    self.handler(route, route.request)  # type: ignore
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_impl_to_api_mapping.py", line 123, in wrapper_func
+    return handler(
+  File "benchmark.py", line 483, in _patch_dash_html
+    resp = route.fetch()
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/sync_api/_generated.py", line 804, in fetch
+    self._sync(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_network.py", line 457, in fetch
+    return await self._connection.wrap_api_call(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_connection.py", line 520, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TargetClosedError: Route.fetch: Target page, context or browser has been closed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_page.py", line 297, in _on_route
+    handled = await route_handler.handle(route)
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 305, in handle
+    raise rewrite_error(
+playwright._impl._errors.TargetClosedError: "Route.fetch: Target page, context or browser has been closed" while running route callback.
+Consider awaiting `page.unroute_all(behavior='ignoreErrors')`
+before the end of the test to ignore remaining routes in flight.
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,771 ms
+      Playback time:     115.9 s
+
+  [BITRATE]
+      Average (selected):  706 kbps
+      Average (effective): 131 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              100 kbps
+      Std deviation:       1,096.7 kbps
+      Variance:            1,202,785.1
+      25th/75th %ile:      100 / 800 kbps
+
+  [SWITCHES]
+      Total count:       172
+      Up / Down:         86 / 86
+      Avg magnitude:     1,438 kbps
+
+  [REBUFFERING]
+      Events:            115
+      Total time:        510,770 ms
+      Ratio:             81.5054%
+      Frequency:         59.534 per minute
+      Avg duration:      4,458 ms
+      Max duration:      7,717 ms
+
+  [THROUGHPUT]
+      Average:           147,605 kbps
+      Median:            148,009 kbps
+      Min / Max:         136,057 / 154,582 kbps
+      Std deviation:     3,133.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           147,605 kbps
+      Min / Max:         136,057 / 154,582 kbps
+      Utilisation:       100.3%
+
+  [BUFFER]
+      Average level:     0.2 s
+      Min / Max:         0.1 / 1.1 s
+
+  [UTILIZATION]
+      Bandwidth:         0.5%
+
+======================================================================
+
+[SAVED] results/fcc2016_sept/benchmark_lldash_fcc2016_sept_unit8814_tc_20260423_193126.json
+
+──────────────────────────────────────────────────────────────────────
+  [9/10] fcc2016_sept_unit925854_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] fcc2016_sept_unit925854_tc.csv
+[LLDASH-SHAPER] Triggering tc-trace via /startShaping API...
+[LLDASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8081/?mpd=http://localhost:8081/manifest_ll.mpd
+======================================================================
+
+[TRACE] Loaded 459 entries with bandwidth
+[INFO] Auto-detected video duration 596s → max_duration=626s
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 2595ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.1s | bitrate: 100 kbps | tp: 28648 kbps | trace_bw: 28648 kbps
+   t=20s | buffer: 0.1s | bitrate: 100 kbps | tp: 28660 kbps | trace_bw: 28660 kbps
+   t=31s | buffer: 0.1s | bitrate: 4500 kbps | tp: 28638 kbps | trace_bw: 28638 kbps
+   t=41s | buffer: 0.1s | bitrate: 100 kbps | tp: 28173 kbps | trace_bw: 28173 kbps
+   t=51s | buffer: 0.1s | bitrate: 3000 kbps | tp: 28656 kbps | trace_bw: 28656 kbps
+   t=61s | buffer: 0.1s | bitrate: 100 kbps | tp: 28641 kbps | trace_bw: 28641 kbps
+   t=72s | buffer: 0.1s | bitrate: 100 kbps | tp: 28647 kbps | trace_bw: 28647 kbps
+   t=82s | buffer: 0.1s | bitrate: 1500 kbps | tp: 28630 kbps | trace_bw: 28630 kbps
+   t=92s | buffer: 0.1s | bitrate: 100 kbps | tp: 28654 kbps | trace_bw: 28654 kbps
+   t=102s | buffer: 0.1s | bitrate: 100 kbps | tp: 26971 kbps | trace_bw: 26971 kbps
+   t=112s | buffer: 0.1s | bitrate: 1200 kbps | tp: 28648 kbps | trace_bw: 28648 kbps
+   t=122s | buffer: 0.1s | bitrate: 100 kbps | tp: 28626 kbps | trace_bw: 28626 kbps
+   t=133s | buffer: 0.1s | bitrate: 100 kbps | tp: 28644 kbps | trace_bw: 28644 kbps
+   t=143s | buffer: 0.1s | bitrate: 100 kbps | tp: 28656 kbps | trace_bw: 28656 kbps
+   t=153s | buffer: 0.1s | bitrate: 100 kbps | tp: 28649 kbps | trace_bw: 28649 kbps
+   t=163s | buffer: 0.6s | bitrate: 400 kbps | tp: 28648 kbps | trace_bw: 28648 kbps
+   t=173s | buffer: 0.1s | bitrate: 100 kbps | tp: 28659 kbps | trace_bw: 28659 kbps
+   t=183s | buffer: 0.6s | bitrate: 200 kbps | tp: 28647 kbps | trace_bw: 28647 kbps
+   t=194s | buffer: 0.1s | bitrate: 100 kbps | tp: 28638 kbps | trace_bw: 28638 kbps
+   t=204s | buffer: 0.1s | bitrate: 100 kbps | tp: 28660 kbps | trace_bw: 28660 kbps
+   t=214s | buffer: 0.6s | bitrate: 3000 kbps | tp: 28438 kbps | trace_bw: 28438 kbps
+   t=224s | buffer: 0.1s | bitrate: 3000 kbps | tp: 28640 kbps | trace_bw: 28640 kbps
+   t=234s | buffer: 0.1s | bitrate: 100 kbps | tp: 28639 kbps | trace_bw: 28639 kbps
+   t=245s | buffer: 0.1s | bitrate: 2000 kbps | tp: 28650 kbps | trace_bw: 28650 kbps
+   t=255s | buffer: 0.1s | bitrate: 100 kbps | tp: 28641 kbps | trace_bw: 28641 kbps
+   t=265s | buffer: 0.1s | bitrate: 1500 kbps | tp: 28649 kbps | trace_bw: 28649 kbps
+   t=275s | buffer: 0.1s | bitrate: 100 kbps | tp: 28648 kbps | trace_bw: 28648 kbps
+   t=285s | buffer: 0.1s | bitrate: 1200 kbps | tp: 28633 kbps | trace_bw: 28633 kbps
+   t=295s | buffer: 0.1s | bitrate: 100 kbps | tp: 28535 kbps | trace_bw: 28535 kbps
+   t=306s | buffer: 0.1s | bitrate: 800 kbps | tp: 28641 kbps | trace_bw: 28641 kbps
+   t=316s | buffer: 0.1s | bitrate: 100 kbps | tp: 28660 kbps | trace_bw: 28660 kbps
+   t=326s | buffer: 0.1s | bitrate: 600 kbps | tp: 28636 kbps | trace_bw: 28636 kbps
+   t=336s | buffer: 0.1s | bitrate: 100 kbps | tp: 28641 kbps | trace_bw: 28641 kbps
+   t=346s | buffer: 0.1s | bitrate: 400 kbps | tp: 28273 kbps | trace_bw: 28273 kbps
+   t=356s | buffer: 0.1s | bitrate: 100 kbps | tp: 28636 kbps | trace_bw: 28636 kbps
+   t=367s | buffer: 0.1s | bitrate: 200 kbps | tp: 28564 kbps | trace_bw: 28564 kbps
+   t=377s | buffer: 0.1s | bitrate: 100 kbps | tp: 28338 kbps | trace_bw: 28338 kbps
+   t=387s | buffer: 0.1s | bitrate: 100 kbps | tp: 28640 kbps | trace_bw: 28640 kbps
+   t=397s | buffer: 0.1s | bitrate: 3000 kbps | tp: 28654 kbps | trace_bw: 28654 kbps
+   t=408s | buffer: 0.1s | bitrate: 100 kbps | tp: 26220 kbps | trace_bw: 26220 kbps
+   t=418s | buffer: 0.1s | bitrate: 2000 kbps | tp: 28649 kbps | trace_bw: 28649 kbps
+   t=428s | buffer: 0.1s | bitrate: 100 kbps | tp: 28237 kbps | trace_bw: 28237 kbps
+   t=438s | buffer: 0.1s | bitrate: 1500 kbps | tp: 28122 kbps | trace_bw: 28122 kbps
+   t=448s | buffer: 0.1s | bitrate: 100 kbps | tp: 28615 kbps | trace_bw: 28615 kbps
+   t=459s | buffer: 0.1s | bitrate: 100 kbps | tp: 28654 kbps | trace_bw: 28654 kbps
+   t=469s | buffer: 0.1s | bitrate: 1200 kbps | tp: 28646 kbps | trace_bw: 28646 kbps
+   t=479s | buffer: 0.1s | bitrate: 100 kbps | tp: 28673 kbps | trace_bw: 28673 kbps
+   t=489s | buffer: 0.1s | bitrate: 800 kbps | tp: 28661 kbps | trace_bw: 28661 kbps
+   t=499s | buffer: 0.1s | bitrate: 100 kbps | tp: 28670 kbps | trace_bw: 28670 kbps
+   t=509s | buffer: 0.1s | bitrate: 100 kbps | tp: 28651 kbps | trace_bw: 28651 kbps
+   t=519s | buffer: 0.8s | bitrate: 400 kbps | tp: 28651 kbps | trace_bw: 28651 kbps
+   t=530s | buffer: 0.1s | bitrate: 100 kbps | tp: 28655 kbps | trace_bw: 28655 kbps
+   t=540s | buffer: 0.1s | bitrate: 400 kbps | tp: 28662 kbps | trace_bw: 28662 kbps
+   t=550s | buffer: 0.1s | bitrate: 100 kbps | tp: 28644 kbps | trace_bw: 28644 kbps
+   t=560s | buffer: 0.2s | bitrate: 200 kbps | tp: 28676 kbps | trace_bw: 28676 kbps
+   t=570s | buffer: 0.1s | bitrate: 100 kbps | tp: 28525 kbps | trace_bw: 28525 kbps
+   t=580s | buffer: 1.1s | bitrate: 3000 kbps | tp: 28653 kbps | trace_bw: 28653 kbps
+   t=591s | buffer: 0.1s | bitrate: 100 kbps | tp: 28647 kbps | trace_bw: 28647 kbps
+   t=601s | buffer: 0.1s | bitrate: 100 kbps | tp: 28660 kbps | trace_bw: 28660 kbps
+   t=611s | buffer: 0.1s | bitrate: 2000 kbps | tp: 28635 kbps | trace_bw: 28635 kbps
+   t=621s | buffer: 0.1s | bitrate: 100 kbps | tp: 28657 kbps | trace_bw: 28657 kbps
+Error occurred in event listener
+Traceback (most recent call last):
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 296, in handle
+    return await self._handle_internal(route)
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 332, in _handle_internal
+    await handler_finished_future
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 323, in _handler
+    self.handler(route, route.request)  # type: ignore
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_impl_to_api_mapping.py", line 123, in wrapper_func
+    return handler(
+  File "benchmark.py", line 483, in _patch_dash_html
+    resp = route.fetch()
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/sync_api/_generated.py", line 804, in fetch
+    self._sync(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_network.py", line 457, in fetch
+    return await self._connection.wrap_api_call(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_connection.py", line 520, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TargetClosedError: Route.fetch: Target page, context or browser has been closed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_page.py", line 297, in _on_route
+    handled = await route_handler.handle(route)
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 305, in handle
+    raise rewrite_error(
+playwright._impl._errors.TargetClosedError: "Route.fetch: Target page, context or browser has been closed" while running route callback.
+Consider awaiting `page.unroute_all(behavior='ignoreErrors')`
+before the end of the test to ignore remaining routes in flight.
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     2,595 ms
+      Playback time:     116.9 s
+
+  [BITRATE]
+      Average (selected):  728 kbps
+      Average (effective): 136 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              100 kbps
+      Std deviation:       1,098.9 kbps
+      Variance:            1,207,551.3
+      25th/75th %ile:      100 / 800 kbps
+
+  [SWITCHES]
+      Total count:       167
+      Up / Down:         84 / 83
+      Avg magnitude:     1,453 kbps
+
+  [REBUFFERING]
+      Events:            115
+      Total time:        510,146 ms
+      Ratio:             81.3582%
+      Frequency:         59.029 per minute
+      Avg duration:      4,457 ms
+      Max duration:      9,686 ms
+
+  [THROUGHPUT]
+      Average:           28,534 kbps
+      Median:            28,647 kbps
+      Min / Max:         26,220 / 28,678 kbps
+      Std deviation:     385.6 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           28,534 kbps
+      Min / Max:         26,220 / 28,678 kbps
+      Utilisation:       100.4%
+
+  [BUFFER]
+      Average level:     0.2 s
+      Min / Max:         0.1 / 1.1 s
+
+  [UTILIZATION]
+      Bandwidth:         2.5%
+
+======================================================================
+
+[SAVED] results/fcc2016_sept/benchmark_lldash_fcc2016_sept_unit925854_tc_20260423_194158.json
+
+──────────────────────────────────────────────────────────────────────
+  [10/10] fcc2016_sept_unit941754_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] fcc2016_sept_unit941754_tc.csv
+[LLDASH-SHAPER] Triggering tc-trace via /startShaping API...
+[LLDASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  LLDASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8081/?mpd=http://localhost:8081/manifest_ll.mpd
+======================================================================
+
+[TRACE] Loaded 456 entries with bandwidth
+[INFO] Auto-detected video duration 596s → max_duration=626s
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 2577ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.1s | bitrate: 4500 kbps | tp: 1675 kbps | trace_bw: 1675 kbps
+   t=21s | buffer: 0.1s | bitrate: 100 kbps | tp: 1687 kbps | trace_bw: 1687 kbps
+   t=31s | buffer: 0.1s | bitrate: 3000 kbps | tp: 1631 kbps | trace_bw: 1631 kbps
+   t=41s | buffer: 0.1s | bitrate: 100 kbps | tp: 1633 kbps | trace_bw: 1633 kbps
+   t=51s | buffer: 0.1s | bitrate: 2000 kbps | tp: 1704 kbps | trace_bw: 1704 kbps
+   t=62s | buffer: 0.1s | bitrate: 100 kbps | tp: 1697 kbps | trace_bw: 1697 kbps
+   t=72s | buffer: 0.1s | bitrate: 1500 kbps | tp: 1695 kbps | trace_bw: 1695 kbps
+   t=82s | buffer: 0.1s | bitrate: 100 kbps | tp: 1669 kbps | trace_bw: 1669 kbps
+   t=92s | buffer: 0.1s | bitrate: 1200 kbps | tp: 1521 kbps | trace_bw: 1521 kbps
+   t=102s | buffer: 0.1s | bitrate: 100 kbps | tp: 1692 kbps | trace_bw: 1692 kbps
+   t=113s | buffer: 0.1s | bitrate: 800 kbps | tp: 1714 kbps | trace_bw: 1714 kbps
+   t=123s | buffer: 0.1s | bitrate: 100 kbps | tp: 1743 kbps | trace_bw: 1743 kbps
+   t=133s | buffer: 0.1s | bitrate: 100 kbps | tp: 1684 kbps | trace_bw: 1684 kbps
+   t=143s | buffer: 0.1s | bitrate: 600 kbps | tp: 1703 kbps | trace_bw: 1703 kbps
+   t=153s | buffer: 0.1s | bitrate: 600 kbps | tp: 1546 kbps | trace_bw: 1546 kbps
+   t=163s | buffer: 0.1s | bitrate: 100 kbps | tp: 1553 kbps | trace_bw: 1553 kbps
+   t=174s | buffer: 0.1s | bitrate: 400 kbps | tp: 1698 kbps | trace_bw: 1698 kbps
+   t=184s | buffer: 0.1s | bitrate: 100 kbps | tp: 1699 kbps | trace_bw: 1699 kbps
+   t=194s | buffer: 0.1s | bitrate: 200 kbps | tp: 1632 kbps | trace_bw: 1632 kbps
+   t=204s | buffer: 0.1s | bitrate: 100 kbps | tp: 1691 kbps | trace_bw: 1691 kbps
+   t=214s | buffer: 0.1s | bitrate: 3000 kbps | tp: 1709 kbps | trace_bw: 1709 kbps
+   t=225s | buffer: 0.1s | bitrate: 100 kbps | tp: 1653 kbps | trace_bw: 1653 kbps
+   t=235s | buffer: 0.1s | bitrate: 100 kbps | tp: 1699 kbps | trace_bw: 1699 kbps
+   t=245s | buffer: 0.1s | bitrate: 100 kbps | tp: 1694 kbps | trace_bw: 1694 kbps
+   t=255s | buffer: 0.6s | bitrate: 1500 kbps | tp: 3418 kbps | trace_bw: 3418 kbps
+   t=266s | buffer: 0.1s | bitrate: 100 kbps | tp: 3422 kbps | trace_bw: 3422 kbps
+   t=276s | buffer: 0.1s | bitrate: 100 kbps | tp: 3401 kbps | trace_bw: 3401 kbps
+   t=286s | buffer: 0.1s | bitrate: 100 kbps | tp: 3416 kbps | trace_bw: 3416 kbps
+   t=296s | buffer: 0.1s | bitrate: 100 kbps | tp: 3415 kbps | trace_bw: 3415 kbps
+   t=306s | buffer: 0.1s | bitrate: 100 kbps | tp: 3414 kbps | trace_bw: 3414 kbps
+   t=317s | buffer: 0.1s | bitrate: 100 kbps | tp: 3253 kbps | trace_bw: 3253 kbps
+   t=327s | buffer: 0.1s | bitrate: 600 kbps | tp: 3364 kbps | trace_bw: 3364 kbps
+   t=337s | buffer: 0.1s | bitrate: 100 kbps | tp: 3410 kbps | trace_bw: 3410 kbps
+   t=347s | buffer: 0.1s | bitrate: 400 kbps | tp: 3378 kbps | trace_bw: 3378 kbps
+   t=357s | buffer: 0.1s | bitrate: 100 kbps | tp: 3380 kbps | trace_bw: 3380 kbps
+   t=368s | buffer: 0.1s | bitrate: 200 kbps | tp: 3355 kbps | trace_bw: 3355 kbps
+   t=378s | buffer: 0.1s | bitrate: 100 kbps | tp: 3417 kbps | trace_bw: 3417 kbps
+   t=388s | buffer: 0.1s | bitrate: 100 kbps | tp: 3420 kbps | trace_bw: 3420 kbps
+   t=398s | buffer: 0.1s | bitrate: 3000 kbps | tp: 3428 kbps | trace_bw: 3428 kbps
+   t=408s | buffer: 0.1s | bitrate: 100 kbps | tp: 3409 kbps | trace_bw: 3409 kbps
+   t=419s | buffer: 0.1s | bitrate: 2000 kbps | tp: 3439 kbps | trace_bw: 3439 kbps
+   t=429s | buffer: 0.1s | bitrate: 100 kbps | tp: 3413 kbps | trace_bw: 3413 kbps
+   t=439s | buffer: 0.1s | bitrate: 100 kbps | tp: 3413 kbps | trace_bw: 3413 kbps
+   t=449s | buffer: 0.1s | bitrate: 1500 kbps | tp: 3444 kbps | trace_bw: 3444 kbps
+   t=460s | buffer: 0.1s | bitrate: 100 kbps | tp: 3393 kbps | trace_bw: 3393 kbps
+   t=470s | buffer: 0.1s | bitrate: 1200 kbps | tp: 3411 kbps | trace_bw: 3411 kbps
+   t=480s | buffer: 0.1s | bitrate: 100 kbps | tp: 3373 kbps | trace_bw: 3373 kbps
+   t=490s | buffer: 0.1s | bitrate: 800 kbps | tp: 3351 kbps | trace_bw: 3351 kbps
+   t=500s | buffer: 0.1s | bitrate: 100 kbps | tp: 3342 kbps | trace_bw: 3342 kbps
+   t=511s | buffer: 0.8s | bitrate: 600 kbps | tp: 3414 kbps | trace_bw: 3414 kbps
+   t=521s | buffer: 0.1s | bitrate: 100 kbps | tp: 3365 kbps | trace_bw: 3365 kbps
+   t=531s | buffer: 0.1s | bitrate: 100 kbps | tp: 3416 kbps | trace_bw: 3416 kbps
+   t=541s | buffer: 0.1s | bitrate: 400 kbps | tp: 3413 kbps | trace_bw: 3413 kbps
+   t=551s | buffer: 0.1s | bitrate: 100 kbps | tp: 3405 kbps | trace_bw: 3405 kbps
+   t=562s | buffer: 0.1s | bitrate: 100 kbps | tp: 3409 kbps | trace_bw: 3409 kbps
+   t=572s | buffer: 0.6s | bitrate: 100 kbps | tp: 3421 kbps | trace_bw: 3421 kbps
+   t=582s | buffer: 0.1s | bitrate: 3000 kbps | tp: 3386 kbps | trace_bw: 3386 kbps
+   t=592s | buffer: 0.1s | bitrate: 100 kbps | tp: 2771 kbps | trace_bw: 2771 kbps
+   t=602s | buffer: 0.1s | bitrate: 2000 kbps | tp: 2288 kbps | trace_bw: 2288 kbps
+   t=613s | buffer: 0.1s | bitrate: 100 kbps | tp: 3405 kbps | trace_bw: 3405 kbps
+   t=623s | buffer: 0.1s | bitrate: 1500 kbps | tp: 3407 kbps | trace_bw: 3407 kbps
+Error occurred in event listener
+Traceback (most recent call last):
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 296, in handle
+    return await self._handle_internal(route)
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 332, in _handle_internal
+    await handler_finished_future
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 323, in _handler
+    self.handler(route, route.request)  # type: ignore
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_impl_to_api_mapping.py", line 123, in wrapper_func
+    return handler(
+  File "benchmark.py", line 483, in _patch_dash_html
+    resp = route.fetch()
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/sync_api/_generated.py", line 804, in fetch
+    self._sync(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_network.py", line 457, in fetch
+    return await self._connection.wrap_api_call(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_connection.py", line 520, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TargetClosedError: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8081/ll-chunk-stream0-00113.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8081/?mpd=http://localhost:8081/manifest_ll.mpd
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+  - ← 200 OK
+  -   server: SimpleHTTP/0.6 Python/3.11.15
+  -   date: Fri, 24 Apr 2026 03:03:00 GMT
+  -   content-type: video/iso.segment
+  -   content-length: 18938
+  -   last-modified: Thu, 23 Apr 2026 23:42:16 GMT
+  -   access-control-allow-origin: *
+  -   access-control-allow-methods: GET, OPTIONS
+  -   access-control-allow-headers: Content-Type, Range
+  -   access-control-expose-headers: Content-Length, Content-Range
+  -   cache-control: public, max-age=86400
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_page.py", line 297, in _on_route
+    handled = await route_handler.handle(route)
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_helper.py", line 305, in handle
+    raise rewrite_error(
+playwright._impl._errors.TargetClosedError: "Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8081/ll-chunk-stream0-00113.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8081/?mpd=http://localhost:8081/manifest_ll.mpd
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+  - ← 200 OK
+  -   server: SimpleHTTP/0.6 Python/3.11.15
+  -   date: Fri, 24 Apr 2026 03:03:00 GMT
+  -   content-type: video/iso.segment
+  -   content-length: 18938
+  -   last-modified: Thu, 23 Apr 2026 23:42:16 GMT
+  -   access-control-allow-origin: *
+  -   access-control-allow-methods: GET, OPTIONS
+  -   access-control-allow-headers: Content-Type, Range
+  -   access-control-expose-headers: Content-Length, Content-Range
+  -   cache-control: public, max-age=86400
+" while running route callback.
+Consider awaiting `page.unroute_all(behavior='ignoreErrors')`
+before the end of the test to ignore remaining routes in flight.
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     2,577 ms
+      Playback time:     112.9 s
+
+  [BITRATE]
+      Average (selected):  699 kbps
+      Average (effective): 126 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              100 kbps
+      Std deviation:       1,079.8 kbps
+      Variance:            1,165,984.0
+      25th/75th %ile:      100 / 800 kbps
+
+  [SWITCHES]
+      Total count:       170
+      Up / Down:         85 / 85
+      Avg magnitude:     1,439 kbps
+
+  [REBUFFERING]
+      Events:            112
+      Total time:        513,692 ms
+      Ratio:             81.9840%
+      Frequency:         59.530 per minute
+      Avg duration:      4,595 ms
+      Max duration:      14,779 ms
+
+  [THROUGHPUT]
+      Average:           2,687 kbps
+      Median:            3,364 kbps
+      Min / Max:         1,336 / 3,444 kbps
+      Std deviation:     846.6 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           2,687 kbps
+      Min / Max:         1,336 / 3,444 kbps
+      Utilisation:       125.2%
+
+  [BUFFER]
+      Average level:     0.2 s
+      Min / Max:         0.1 / 1.1 s
+
+  [UTILIZATION]
+      Bandwidth:         20.8%
+
+======================================================================
+
+[SAVED] results/fcc2016_sept/benchmark_lldash_fcc2016_sept_unit941754_tc_20260423_195231.json
+
+======================================================================
+  BATCH COMPLETE: 10/10 succeeded
+  Results saved to: results/fcc2016_sept/
+======================================================================
+
