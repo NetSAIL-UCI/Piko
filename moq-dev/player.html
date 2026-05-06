@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MOQ2 Player</title>
+<style>
+body { margin: 0; background: #111; color: #eee; font-family: monospace; }
+video { width: 100%; max-height: 60vh; display: block; background: #000; }
+#status { padding: 8px 12px; font-size: 13px; }
+</style>
+</head>
+<body>
+<video id="video" autoplay muted playsinline></video>
+<div id="status"><span id="status-text">Connecting…</span></div>
+<script>
+// Polyfills for Chrome 112 compatibility
+if (!Promise.withResolvers) {
+    Promise.withResolvers = function() {
+        let resolve, reject;
+        const promise = new Promise((res, rej) => { resolve = res; reject = rej; });
+        return { promise, resolve, reject };
+    };
+}
+if (!Promise.any) {
+    Promise.any = function(promises) {
+        return new Promise((resolve, reject) => {
+            let errors = [], remaining = 0;
+            const ps = Array.from(promises);
+            remaining = ps.length;
+            if (remaining === 0) return reject(new AggregateError([], 'All promises were rejected'));
+            ps.forEach((p, i) => {
+                Promise.resolve(p).then(resolve, e => {
+                    errors[i] = e;
+                    if (--remaining === 0) reject(new AggregateError(errors, 'All promises were rejected'));
+                });
+            });
+        });
+    };
+}
+</script>
+<script type="module">
+import { Moq } from '/moq-bundle.js';
+
+const RELAY_URL  = 'http://127.0.0.1:4446';
+const BROADCAST  = 'video';
+const CATALOG_TK = 'catalog.json';
+const VIDEO_TK   = 'video0.m4s';
+
+// ── Metrics exposed to Playwright ─────────────────────────────────────────
+window.__rebufferCount      = 0;
+window.__rebufferDurations  = [];
+window.__throughputSamples  = [];
+window.__playbackEnded      = false;
+window.__moq2StartupMs      = null;
+
+// ── Stall tracking ────────────────────────────────────────────────────────
+const video = document.getElementById('video');
+const statusEl = document.getElementById('status-text');
+let stallStart = null;
+
+video.addEventListener('waiting', () => {
+  if (stallStart === null) {
+    stallStart = performance.now();
+    statusEl.textContent = 'Buffering…';
+  }
+});
+video.addEventListener('playing', () => {
+  if (stallStart !== null) {
+    const dur = performance.now() - stallStart;
+    window.__rebufferCount++;
+    window.__rebufferDurations.push(dur);
+    stallStart = null;
+    statusEl.textContent = 'Playing';
+  }
+});
+
+// ── MSE helpers ───────────────────────────────────────────────────────────
+function waitUpdateEnd(sb) {
+  if (!sb.updating) return Promise.resolve();
+  return new Promise(r => sb.addEventListener('updateend', r, { once: true }));
+}
+
+async function appendBuffer(sb, data) {
+  await waitUpdateEnd(sb);
+  sb.appendBuffer(data);
+  await waitUpdateEnd(sb);
+}
+
+// ── Main playback loop ────────────────────────────────────────────────────
+async function main() {
+  statusEl.textContent = 'Connecting…';
+
+  let conn;
+  try {
+    conn = await Moq.Moq.Connection.connect(new URL(RELAY_URL));
+    statusEl.textContent = 'Connected';
+  } catch (e) {
+    statusEl.textContent = 'Connection failed: ' + e.message;
+    console.error('connect failed', e);
+    return;
+  }
+
+  // Consume the broadcast
+  const broadcast = conn.consume(BROADCAST);
+
+  // Subscribe to catalog track to get video config
+  const catalogTrack = broadcast.subscribe(CATALOG_TK, Moq.Catalog.PRIORITY.catalog);
+  statusEl.textContent = 'Loading catalog…';
+
+  let catalog;
+  try {
+    catalog = await Moq.Catalog.fetch(catalogTrack);
+    catalogTrack.close();
+  } catch (e) {
+    statusEl.textContent = 'Catalog error: ' + e.message;
+    console.error('catalog error', e);
+    return;
+  }
+
+  if (!catalog || !catalog.video) {
+    statusEl.textContent = 'No video in catalog';
+    console.error('no video in catalog', catalog);
+    return;
+  }
+
+  // Get first video rendition
+  const renditions = catalog.video.renditions;
+  const trackNames = Object.keys(renditions);
+  if (trackNames.length === 0) {
+    statusEl.textContent = 'No video renditions';
+    return;
+  }
+  const trackName = trackNames[0];
+  const videoConfig = renditions[trackName];
+  console.log('video config', trackName, videoConfig);
+
+  if (videoConfig.container?.kind !== 'cmaf') {
+    statusEl.textContent = 'Expected CMAF container, got: ' + videoConfig.container?.kind;
+    return;
+  }
+
+  // Build fMP4 init segment from catalog config
+  let initSegment;
+  try {
+    initSegment = Moq.Container.Cmaf.createVideoInitSegment(videoConfig);
+  } catch (e) {
+    statusEl.textContent = 'Init segment error: ' + e.message;
+    console.error('init segment error', e);
+    return;
+  }
+
+  // Set up MSE
+  const mediaSource = new MediaSource();
+  video.src = URL.createObjectURL(mediaSource);
+
+  await new Promise(r => mediaSource.addEventListener('sourceopen', r, { once: true }));
+
+  const mimeType = `video/mp4; codecs="${videoConfig.codec}"`;
+  if (!MediaSource.isTypeSupported(mimeType)) {
+    statusEl.textContent = 'Codec not supported: ' + mimeType;
+    return;
+  }
+
+  const sb = mediaSource.addSourceBuffer(mimeType);
+  sb.mode = 'sequence';
+
+  // Append init segment
+  await appendBuffer(sb, initSegment);
+  statusEl.textContent = 'Receiving…';
+
+  // Subscribe to video data track
+  const dataTrack = broadcast.subscribe(trackName, Moq.Catalog.PRIORITY.video);
+
+  let firstFrame = true;
+  const connectTime = performance.now();
+
+  try {
+    for (;;) {
+      const frame = await dataTrack.readFrame();
+      if (!frame) break;
+
+      if (firstFrame) {
+        firstFrame = false;
+        window.__moq2StartupMs = performance.now() - connectTime;
+        statusEl.textContent = 'Playing';
+        video.play().catch(() => {});
+      }
+
+      try {
+        await appendBuffer(sb, frame);
+      } catch (e) {
+        console.warn('appendBuffer error', e);
+      }
+
+      // Trim old buffered data to prevent memory growth
+      if (sb.buffered.length > 0 && video.currentTime > 15 && !sb.updating) {
+        try {
+          sb.remove(0, video.currentTime - 10);
+          await waitUpdateEnd(sb);
+        } catch (e) { /* ignore trim errors */ }
+      }
+    }
+  } catch (e) {
+    console.warn('track ended', e);
+  }
+
+  window.__playbackEnded = true;
+  statusEl.textContent = 'Done';
+  conn.close();
+}
+
+main().catch(e => {
+  console.error('fatal', e);
+  document.getElementById('status-text').textContent = 'Error: ' + e.message;
+});
+</script>
+</body>
+</html>

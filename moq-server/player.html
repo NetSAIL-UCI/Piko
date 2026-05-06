@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NetSail MOQ Player</title>
+  <style>
+    :root { --bg:#0a1118; --panel:#12202d; --accent:#2dd4bf; --muted:#94a3b8; --text:#e2e8f0; --ok:#22c55e; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family:monospace; background:var(--bg); color:var(--text); padding:20px; }
+    .wrap { max-width:900px; margin:0 auto; }
+    h1 { font-size:1.4rem; color:var(--accent); margin:0 0 6px; }
+    p  { margin:0 0 14px; color:var(--muted); font-size:.85rem; }
+    .panel { border:1px solid #234; border-radius:10px; overflow:hidden;
+             background:linear-gradient(160deg,rgba(16,38,54,.8),rgba(11,24,34,.85)); }
+    video { width:100%; background:#000; display:block; }
+    .metrics { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:8px; padding:10px; }
+    .m { padding:8px; border-radius:6px; background:rgba(11,24,34,.9); border:1px solid #203446; }
+    .k { font-size:.68rem; color:var(--muted); text-transform:uppercase; letter-spacing:.07em; }
+    .v { font-size:1.1rem; color:var(--accent); margin-top:3px; }
+    .status { display:flex; justify-content:space-between; padding:8px 12px;
+              border-top:1px solid #203446; color:var(--muted); font-size:.8rem; }
+    .dot { width:7px; height:7px; border-radius:99px; background:var(--ok); display:inline-block; margin-right:7px; }
+    #log { margin-top:14px; padding:8px; background:#0b1820; border-radius:6px;
+           font-size:.75rem; color:var(--muted); max-height:100px; overflow-y:auto; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>NetSail MOQ — WebSocket relay</h1>
+  <p>MOQ pub-sub · CMAF/m4s objects · software-paced ABR</p>
+  <div class="panel">
+    <video id="video" controls autoplay muted playsinline></video>
+    <div class="metrics">
+      <div class="m"><div class="k">Buffer</div><div class="v" id="buffer">0.00 s</div></div>
+      <div class="m"><div class="k">Objects Rx</div><div class="v" id="objects">0</div></div>
+      <div class="m"><div class="k">Throughput</div><div class="v" id="tput">-- kbps</div></div>
+      <div class="m"><div class="k">Stalls</div><div class="v" id="stalls">0</div></div>
+    </div>
+    <div class="status">
+      <div><span class="dot"></span><span id="status-text">Connecting…</span></div>
+      <div id="quality-lbl">MOQ/WS</div>
+    </div>
+  </div>
+  <div id="log"></div>
+</div>
+
+<script>
+// ── Playwright-compatible API surface ──────────────────────────────────────
+window.__playbackEnded     = false;
+window.__rebufferCount     = 0;
+window.__rebufferDurations = [];
+window.__rebufferStart     = null;
+window.__throughputSamples = [];
+window.__moqBitrateBps     = 0;   // instantaneous throughput
+window.__moqQualityBps     = 0;   // publisher's selected quality level (from object metadata)
+window.__moqQualitySamples = [];  // [{bps, timeMs}] for per-chunk bitrate tracking
+
+const video = document.getElementById('video');
+
+window.dashPlayer = {
+  getBufferLength: () => {
+    try {
+      if (!video.buffered.length) return 0;
+      return Math.max(0, video.buffered.end(video.buffered.length - 1) - video.currentTime);
+    } catch(_) { return 0; }
+  },
+  getCurrentLiveLatency:          () => null,
+  getCurrentRepresentationForType: () => ({ bandwidth: window.__moqBitrateBps }),
+  getSettings: () => ({ streaming: { lowLatencyEnabled: false } }),
+};
+
+// ── MOQ wire codec ─────────────────────────────────────────────────────────
+const MSG_SUBSCRIBE    = 1;
+const MSG_OBJECT       = 3;
+const MSG_SUBSCRIBE_OK = 4;
+
+function encodeMsg(type, payloadBytes) {
+  const out = new Uint8Array(5 + payloadBytes.length);
+  const len = payloadBytes.length;
+  out[0] = type;
+  out[1] = (len >>> 24) & 0xff;
+  out[2] = (len >>> 16) & 0xff;
+  out[3] = (len >>>  8) & 0xff;
+  out[4] =  len         & 0xff;
+  out.set(payloadBytes, 5);
+  return out;
+}
+
+function encodeSubscribe(ns, name) {
+  const json = JSON.stringify({ namespace: ns, name });
+  return encodeMsg(MSG_SUBSCRIBE, new TextEncoder().encode(json));
+}
+
+// ── MSE setup ─────────────────────────────────────────────────────────────
+let ms, sourceBuffer, sbReady = false;
+const sbQueue  = [];
+let   draining = false;
+
+function setupMSE() {
+  ms = new MediaSource();
+  video.src = URL.createObjectURL(ms);
+  ms.addEventListener('sourceopen', () => {
+    sourceBuffer = ms.addSourceBuffer('video/mp4; codecs="avc1.64001f"');
+    sourceBuffer.mode = 'segments';
+    sourceBuffer.addEventListener('updateend', drainQueue);
+    sbReady = true;
+    drainQueue();
+  });
+}
+
+function drainQueue() {
+  if (draining || !sbReady || sourceBuffer.updating || !sbQueue.length) return;
+  draining = true;
+  const item = sbQueue.shift();
+  try { sourceBuffer.appendBuffer(item); }
+  catch(e) {
+    dbgLog('MSE appendBuffer: ' + e.message);
+    try { sourceBuffer.abort(); } catch(_) {}
+  }
+  draining = false;
+}
+
+setupMSE();
+
+// ── Object handler: each group = one complete segment, flush immediately ───
+function onMOQObject(meta, payload) {
+  const now = performance.now();
+  const elapsed = now - (window.__lastGroupFlushMs || now);
+  if (elapsed > 0 && payload.byteLength > 0) {
+    window.__throughputSamples.push({ bytes: payload.byteLength, ms: elapsed });
+    window.__moqBitrateBps = (payload.byteLength * 8) / (elapsed / 1000);
+  }
+  window.__lastGroupFlushMs = now;
+  if (meta.bps) {
+    window.__moqQualityBps = meta.bps;
+    window.__moqQualitySamples.push({ bps: meta.bps, timeMs: now });
+  }
+  sbQueue.push(payload);
+  drainQueue();
+}
+
+// ── Message receive buffer + parser ───────────────────────────────────────
+let recvBuf = new Uint8Array(0);
+let objectsRx = 0;
+
+function appendRecv(chunk) {
+  const merged = new Uint8Array(recvBuf.byteLength + chunk.byteLength);
+  merged.set(recvBuf);
+  merged.set(chunk, recvBuf.byteLength);
+  recvBuf = merged;
+}
+
+function processRecv() {
+  while (recvBuf.byteLength >= 5) {
+    const view = new DataView(recvBuf.buffer, recvBuf.byteOffset, recvBuf.byteLength);
+    const type   = view.getUint8(0);
+    const length = view.getUint32(1, false);  // 4-byte big-endian length
+    if (recvBuf.byteLength < 5 + length) break;
+
+    const payload = recvBuf.slice(5, 5 + length);
+    recvBuf = recvBuf.slice(5 + length);
+
+    if (type === MSG_SUBSCRIBE_OK) {
+      const info = JSON.parse(new TextDecoder().decode(payload));
+      dbgLog(`SUBSCRIBE_OK ${info.namespace}/${info.name}`);
+      updateStatus('Receiving…');
+
+    } else if (type === MSG_OBJECT) {
+      objectsRx++;
+      document.getElementById('objects').textContent = objectsRx;
+
+      const v2 = new DataView(payload.buffer, payload.byteOffset, payload.byteLength);
+      const metaLen = v2.getUint16(0, false);
+      const metaBytes = payload.slice(2, 2 + metaLen);
+      const meta = JSON.parse(new TextDecoder().decode(metaBytes));
+      const pload = payload.slice(2 + metaLen);
+      onMOQObject(meta, pload.buffer.slice(pload.byteOffset, pload.byteOffset + pload.byteLength));
+    }
+  }
+}
+
+// ── WebSocket connection ───────────────────────────────────────────────────
+function connect() {
+  const ws = new WebSocket('ws://localhost:4445');
+  ws.binaryType = 'arraybuffer';
+
+  ws.onopen = () => {
+    dbgLog('WebSocket connected → sending SUBSCRIBE video/main');
+    updateStatus('Connected');
+    ws.send(encodeSubscribe('video', 'main'));
+  };
+
+  ws.onmessage = ev => {
+    appendRecv(new Uint8Array(ev.data));
+    processRecv();
+  };
+
+  ws.onerror = e => {
+    dbgLog('WebSocket error');
+    updateStatus('WS Error');
+  };
+
+  ws.onclose = e => {
+    dbgLog(`WebSocket closed (code=${e.code})`);
+    updateStatus('Disconnected');
+    // Flush any remaining pieces
+    if (curPieces.length) flushGroup(false, curPieces);
+  };
+}
+
+// ── Video events ───────────────────────────────────────────────────────────
+let stallStart = null;
+
+video.addEventListener('waiting', () => {
+  updateStatus('Buffering…');
+  if (stallStart === null) {
+    stallStart = Date.now();
+    window.__rebufferCount++;
+    window.__rebufferStart = stallStart;
+  }
+});
+video.addEventListener('playing', () => {
+  updateStatus('Playing');
+  if (stallStart !== null) {
+    window.__rebufferDurations.push(Date.now() - stallStart);
+    stallStart = null;
+    window.__rebufferStart = null;
+  }
+});
+video.addEventListener('ended', () => {
+  updateStatus('Ended');
+  window.__playbackEnded = true;
+  if (curPieces.length) flushGroup(false, curPieces);
+});
+video.addEventListener('canplay', () => { if (stallStart === null) updateStatus('Playing'); });
+
+// ── HUD ───────────────────────────────────────────────────────────────────
+function updateStatus(text) {
+  document.getElementById('status-text').textContent = text;
+}
+
+setInterval(() => {
+  let buf = 0;
+  try {
+    if (video.buffered.length)
+      buf = Math.max(0, video.buffered.end(video.buffered.length-1) - video.currentTime);
+  } catch(_) {}
+  document.getElementById('buffer').textContent = buf.toFixed(2) + ' s';
+
+  const recent = window.__throughputSamples.slice(-5);
+  if (recent.length) {
+    const kbps = recent.reduce((s,x) => s + x.bytes * 8 / x.ms, 0) / recent.length;
+    document.getElementById('tput').textContent = Math.round(kbps) + ' kbps';
+  }
+
+  document.getElementById('stalls').textContent = window.__rebufferCount;
+}, 500);
+
+function dbgLog(msg) {
+  const el = document.getElementById('log');
+  el.textContent += '\n' + msg;
+  el.scrollTop = el.scrollHeight;
+  console.log('[MOQ]', msg);
+}
+
+// ── Boot ──────────────────────────────────────────────────────────────────
+connect();
+</script>
+</body>
+</html>

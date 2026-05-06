@@ -69,7 +69,7 @@
 <body>
   <div class="wrap">
     <h1>NetSail LL-DASH</h1>
-    <p>Low-latency DASH · dash.js · lowLatencyEnabled</p>
+    <p>Low-latency DASH · dash.js · 1s segments · 2s buffer target</p>
 
     <div class="panel">
       <video id="video" controls autoplay muted playsinline></video>
@@ -119,19 +119,22 @@
 
     player.updateSettings({
       streaming: {
-        lowLatencyEnabled: true,
-        delay: {
-          liveDelayFragmentCount: 4,
-          useSuggestedPresentationDelay: false,
-        },
+        lowLatencyEnabled: false,
         buffer: {
           fastSwitchEnabled: true,
-          bufferTimeAtTopQuality: 6,
-          bufferTimeDefault: 5,
+          bufferTimeAtTopQuality: 10,
+          bufferTimeDefault: 10,
         },
         abr: {
-          initialBitrate: { video: 100 },      // Start at lowest rung to minimize startup stall
+          initialBitrate: { video: 100 },
           autoSwitchBitrate: { video: true },
+          rules: {
+            bolaRule:               { active: false },
+            throughputRule:         { active: true  },
+            insufficientBufferRule: { active: true  },
+            switchHistoryRule:      { active: true  },
+            droppedFramesRule:      { active: true  },
+          },
         },
         timeouts: { load: 120000 },
       }
