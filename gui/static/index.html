@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Streaming Benchmark Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<style>
+/* ── reset / base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:      #0f1117;
+  --surface: #1a1d27;
+  --card:    #21263a;
+  --border:  #2e3450;
+  --text:    #d4d8f0;
+  --muted:   #7880a4;
+  --accent:  #5b7fff;
+  --green:   #3ecf70;
+  --red:     #ff5c5c;
+  --yellow:  #f5c842;
+  --orange:  #f0843a;
+
+  --dash:      #5b7fff;
+  --lldash-gpac:#3ecf70;
+  --hls:       #f0843a;
+  --webrtc:    #c97bff;
+  --moq2:      #ff6b9d;
+}
+html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; }
+a { color: var(--accent); text-decoration: none; }
+button { cursor: pointer; font: inherit; border: none; border-radius: 6px; padding: 7px 14px; transition: opacity .15s; }
+button:hover { opacity: .85; }
+button:disabled { opacity: .4; cursor: default; }
+select, input[type=number], input[type=text] {
+  background: var(--card); color: var(--text); border: 1px solid var(--border);
+  border-radius: 6px; padding: 6px 10px; font: inherit;
+}
+input[type=checkbox] { accent-color: var(--accent); width: 14px; height: 14px; }
+h2 { font-size: 1.1rem; font-weight: 600; color: #fff; }
+h3 { font-size: .95rem; font-weight: 600; color: var(--text); }
+
+/* ── layout ───────────────────────────────────────────────── */
+#app { display: grid; grid-template-columns: 220px 1fr; height: 100vh; overflow: hidden; }
+#sidebar {
+  background: var(--surface); border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; overflow-y: auto;
+}
+#main { display: flex; flex-direction: column; overflow: hidden; }
+
+/* ── nav ──────────────────────────────────────────────────── */
+.nav-logo {
+  padding: 18px 16px 10px; font-size: .85rem; font-weight: 700;
+  letter-spacing: .08em; color: var(--accent); text-transform: uppercase;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 10px; padding: 9px 16px;
+  cursor: pointer; border-radius: 0; transition: background .12s; color: var(--muted);
+  font-size: .88rem; user-select: none;
+}
+.nav-item:hover { background: var(--card); color: var(--text); }
+.nav-item.active { background: rgba(91,127,255,.15); color: var(--accent); font-weight: 600; }
+.nav-icon { font-size: 1rem; width: 18px; text-align: center; }
+.nav-section { padding: 10px 16px 4px; font-size: .7rem; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-top: 8px; }
+
+/* ── page views ───────────────────────────────────────────── */
+.page { display: none; flex: 1; overflow-y: auto; padding: 24px; }
+.page.active { display: block; }
+
+/* ── cards ────────────────────────────────────────────────── */
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 16px; }
+.card-title { font-size: .8rem; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 12px; }
+
+/* ── stat grid ────────────────────────────────────────────── */
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); gap: 12px; }
+.stat-box { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+.stat-label { font-size: .75rem; color: var(--muted); margin-bottom: 6px; }
+.stat-value { font-size: 1.4rem; font-weight: 700; color: #fff; }
+.stat-unit  { font-size: .7rem; color: var(--muted); margin-left: 3px; }
+
+/* ── protocol badge ───────────────────────────────────────── */
+.proto-badge {
+  display: inline-block; padding: 2px 8px; border-radius: 4px;
+  font-size: .75rem; font-weight: 600; text-transform: uppercase;
+}
+.proto-dash      { background: rgba(91,127,255,.2);  color: var(--dash); }
+.proto-lldash-gpac { background: rgba(62,207,112,.2); color: var(--lldash-gpac); }
+.proto-hls       { background: rgba(240,132,58,.2);  color: var(--hls); }
+.proto-webrtc    { background: rgba(201,123,255,.2); color: var(--webrtc); }
+.proto-moq2      { background: rgba(255,107,157,.2); color: var(--moq2); }
+
+/* ── status pill ──────────────────────────────────────────── */
+.pill { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: .72rem; font-weight: 600; }
+.pill-running { background: rgba(91,127,255,.2); color: var(--accent); }
+.pill-done    { background: rgba(62,207,112,.2); color: var(--green); }
+.pill-error   { background: rgba(255,92,92,.2);  color: var(--red); }
+.pill-stopped { background: rgba(120,128,164,.2);color: var(--muted); }
+
+/* ── table ────────────────────────────────────────────────── */
+.tbl { width: 100%; border-collapse: collapse; font-size: .82rem; }
+.tbl th { text-align: left; padding: 8px 10px; color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.tbl td { padding: 8px 10px; border-bottom: 1px solid rgba(46,52,80,.5); vertical-align: middle; }
+.tbl tr:hover td { background: rgba(91,127,255,.04); }
+.tbl .num { text-align: right; font-variant-numeric: tabular-nums; }
+.tbl .good { color: var(--green); }
+.tbl .bad  { color: var(--red); }
+.tbl .warn { color: var(--yellow); }
+
+/* ── log console ──────────────────────────────────────────── */
+#run-log {
+  background: #0a0c13; border: 1px solid var(--border); border-radius: 8px;
+  padding: 12px; font-family: monospace; font-size: .78rem; color: #a8b4d0;
+  height: 340px; overflow-y: auto; white-space: pre-wrap; word-break: break-all;
+}
+#run-log .log-err  { color: var(--red); }
+#run-log .log-warn { color: var(--yellow); }
+#run-log .log-good { color: var(--green); }
+#run-log .log-head { color: var(--accent); font-weight: bold; }
+
+/* ── trace checklist ──────────────────────────────────────── */
+.trace-list { display: grid; grid-template-columns: repeat(auto-fill,minmax(200px,1fr)); gap: 6px; margin-top: 8px; }
+.trace-item { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; cursor: pointer; }
+.trace-item:hover { border-color: var(--accent); }
+.trace-item label { cursor: pointer; font-size: .82rem; user-select: none; }
+
+/* ── compare page ─────────────────────────────────────────── */
+.compare-controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; }
+.proto-toggle { display: flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 6px; border: 1px solid var(--border); cursor: pointer; font-size: .82rem; user-select: none; }
+.proto-toggle.on  { border-color: currentColor; background: rgba(255,255,255,.05); }
+.proto-toggle.off { opacity: .4; }
+.chart-wrap { position: relative; height: 260px; }
+
+/* ── detail modal ─────────────────────────────────────────── */
+#modal-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6);
+  z-index: 100; align-items: center; justify-content: center;
+}
+#modal-overlay.open { display: flex; }
+#modal {
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+  width: 760px; max-height: 85vh; overflow-y: auto; padding: 24px;
+}
+#modal-close { float: right; background: var(--surface); color: var(--muted); padding: 4px 10px; }
+
+/* ── misc ─────────────────────────────────────────────────── */
+.flex-row  { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.grow      { flex: 1; }
+.mt8       { margin-top: 8px; }
+.mt16      { margin-top: 16px; }
+.mb16      { margin-bottom: 16px; }
+.dim       { color: var(--muted); }
+.separator { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+.empty-state { text-align: center; padding: 48px; color: var(--muted); }
+.spin { animation: spin 1s linear infinite; display: inline-block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div id="app">
+  <!-- ── sidebar ── -->
+  <nav id="sidebar">
+    <div class="nav-logo">⚡ Benchmark Lab</div>
+    <div class="nav-section">Dashboard</div>
+    <div class="nav-item active" data-page="overview">   <span class="nav-icon">📊</span> Overview</div>
+    <div class="nav-section">Benchmark</div>
+    <div class="nav-item" data-page="run">               <span class="nav-icon">▶</span> Run</div>
+    <div class="nav-item" data-page="progress">          <span class="nav-icon">📋</span> Progress</div>
+    <div class="nav-section">Analysis</div>
+    <div class="nav-item" data-page="compare">           <span class="nav-icon">⚖</span> Compare</div>
+    <div class="nav-item" data-page="results">           <span class="nav-icon">📁</span> All Results</div>
+  </nav>
+
+  <!-- ── main ── -->
+  <div id="main">
+
+    <!-- Overview -->
+    <div class="page active" id="page-overview">
+      <h2 class="mb16">Overview</h2>
+      <div id="overview-stats" class="stat-grid mb16">
+        <div class="stat-box"><div class="stat-label">Total Runs</div><div class="stat-value" id="ov-total">—</div></div>
+        <div class="stat-box"><div class="stat-label">Protocols</div><div class="stat-value" id="ov-protos">—</div></div>
+        <div class="stat-box"><div class="stat-label">Traces Available</div><div class="stat-value" id="ov-traces">—</div></div>
+        <div class="stat-box"><div class="stat-label">Active Runs</div><div class="stat-value" id="ov-active">—</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Protocol Summary (avg across all runs)</div>
+        <div style="overflow-x:auto">
+        <table class="tbl" id="overview-table">
+          <thead><tr>
+            <th>Protocol</th><th class="num">Runs</th>
+            <th class="num">Avg Bitrate<br><small>kbps</small></th>
+            <th class="num">Avg Buffer<br><small>s</small></th>
+            <th class="num">Rebuffers</th>
+            <th class="num">Rebuffer<br><small>ms</small></th>
+            <th class="num">Startup<br><small>ms</small></th>
+            <th class="num">Throughput<br><small>kbps</small></th>
+          </tr></thead>
+          <tbody id="overview-body"></tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Run -->
+    <div class="page" id="page-run">
+      <h2 class="mb16">New Benchmark Run</h2>
+      <div class="card">
+        <div class="card-title">Configuration</div>
+        <div class="flex-row mb16">
+          <div>
+            <label class="dim" style="display:block;margin-bottom:4px;font-size:.8rem">Protocol</label>
+            <select id="run-protocol">
+              <option value="dash">DASH</option>
+              <option value="lldash-gpac" selected>LL-DASH (GPAC)</option>
+              <option value="hls">HLS</option>
+              <option value="webrtc">WebRTC</option>
+              <option value="moq2">MOQ2</option>
+            </select>
+          </div>
+          <div>
+            <label class="dim" style="display:block;margin-bottom:4px;font-size:.8rem">Duration (s)</label>
+            <input type="number" id="run-duration" value="120" min="10" max="600" style="width:90px">
+          </div>
+          <div>
+            <label class="dim" style="display:block;margin-bottom:4px;font-size:.8rem">Results Folder</label>
+            <input type="text" id="run-results-dir" placeholder="auto" style="width:180px">
+          </div>
+        </div>
+
+        <div class="card-title mt8">Traces <span class="dim" style="font-size:.75rem">(leave all unchecked to run all)</span></div>
+        <div class="flex-row mb16" style="gap:8px">
+          <button onclick="selectAllTraces(true)"  style="background:var(--surface);color:var(--text);font-size:.78rem">Select All</button>
+          <button onclick="selectAllTraces(false)" style="background:var(--surface);color:var(--text);font-size:.78rem">Clear</button>
+        </div>
+        <div class="trace-list" id="trace-list"></div>
+      </div>
+
+      <div class="flex-row mt16">
+        <button id="run-btn" onclick="startRun()" style="background:var(--accent);color:#fff;font-size:.95rem;padding:9px 24px">▶ Start Run</button>
+        <span id="run-status-msg" class="dim"></span>
+      </div>
+    </div>
+
+    <!-- Progress -->
+    <div class="page" id="page-progress">
+      <h2 class="mb16">Run Progress</h2>
+      <div id="no-runs" class="empty-state" style="display:none">No active or recent runs.</div>
+      <div id="runs-list"></div>
+    </div>
+
+    <!-- Compare -->
+    <div class="page" id="page-compare">
+      <h2 class="mb16">Protocol Comparison</h2>
+      <div class="compare-controls" id="proto-toggles"></div>
+
+      <div class="card mb16">
+        <div class="card-title">Average Bitrate (kbps)</div>
+        <div class="chart-wrap"><canvas id="chart-bitrate"></canvas></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="card">
+          <div class="card-title">Rebuffer Count</div>
+          <div class="chart-wrap"><canvas id="chart-rebuf-count"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Total Rebuffer Time (ms)</div>
+          <div class="chart-wrap"><canvas id="chart-rebuf-ms"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Startup Time (ms)</div>
+          <div class="chart-wrap"><canvas id="chart-startup"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Avg Buffer Level (s)</div>
+          <div class="chart-wrap"><canvas id="chart-buffer"></canvas></div>
+        </div>
+      </div>
+
+      <div class="card mt16">
+        <div class="card-title">Per-Trace Breakdown</div>
+        <div style="overflow-x:auto">
+        <table class="tbl" id="compare-table">
+          <thead><tr>
+            <th>Trace Unit</th>
+            <th class="num">Avg Bitrate</th>
+            <th class="num">Buffer (s)</th>
+            <th class="num">Rebuffers</th>
+            <th class="num">Rebuffer (ms)</th>
+            <th class="num">Startup (ms)</th>
+            <th class="num">Throughput</th>
+          </tr></thead>
+          <tbody id="compare-body"></tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- All Results -->
+    <div class="page" id="page-results">
+      <div class="flex-row mb16">
+        <h2 class="grow">All Results</h2>
+        <select id="results-filter-proto" onchange="renderResults()">
+          <option value="">All Protocols</option>
+          <option value="dash">DASH</option>
+          <option value="lldash-gpac">LL-DASH-GPAC</option>
+          <option value="hls">HLS</option>
+          <option value="webrtc">WebRTC</option>
+          <option value="moq2">MOQ2</option>
+        </select>
+        <input type="text" id="results-filter-unit" placeholder="Filter unit…" oninput="renderResults()" style="width:130px">
+      </div>
+      <div class="card">
+        <div style="overflow-x:auto">
+        <table class="tbl" id="results-table">
+          <thead><tr>
+            <th>Protocol</th><th>Unit</th><th>Timestamp</th>
+            <th class="num">Bitrate<br><small>kbps</small></th>
+            <th class="num">Buffer<br><small>s</small></th>
+            <th class="num">Rebuf<br><small>#</small></th>
+            <th class="num">Rebuf<br><small>ms</small></th>
+            <th class="num">Startup<br><small>ms</small></th>
+            <th class="num">Throughput<br><small>kbps</small></th>
+            <th></th>
+          </tr></thead>
+          <tbody id="results-body"></tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- Detail Modal -->
+<div id="modal-overlay">
+  <div id="modal">
+    <button id="modal-close" onclick="closeModal()">✕ Close</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<script>
+// ── state ───────────────────────────────────────────────────────────────────
+const PROTOCOLS = ['dash','lldash-gpac','hls','webrtc','moq2'];
+const PROTO_COLORS = {
+  'dash':       '#5b7fff',
+
+  'lldash-gpac':'#3ecf70',
+  'hls':        '#f0843a',
+  'webrtc':     '#c97bff',
+  'moq2':       '#ff6b9d',
+};
+
+let allResults   = {};   // protocol → [entries]
+let allTraces    = [];
+let activeProtos = new Set(PROTOCOLS);
+let charts       = {};
+let activeRunId  = null;
+let activeRunSSE = null;
+
+// ── navigation ──────────────────────────────────────────────────────────────
+document.querySelectorAll('.nav-item').forEach(el => {
+  el.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(e => e.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(e => e.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('page-' + el.dataset.page).classList.add('active');
+    if (el.dataset.page === 'compare') renderCompare();
+    if (el.dataset.page === 'results') renderResults();
+    if (el.dataset.page === 'overview') renderOverview();
+    if (el.dataset.page === 'progress') renderProgress();
+  });
+});
+
+// ── data loading ─────────────────────────────────────────────────────────────
+async function loadAll() {
+  const [res, tr] = await Promise.all([
+    fetch('/api/results').then(r => r.json()),
+    fetch('/api/traces').then(r => r.json()),
+  ]);
+  allResults = res;
+  allTraces  = tr;
+  renderTraceList();
+  renderOverview();
+  buildProtoToggles();
+}
+
+// ── traces ───────────────────────────────────────────────────────────────────
+function renderTraceList() {
+  const el = document.getElementById('trace-list');
+  el.innerHTML = allTraces.map(t => `
+    <label class="trace-item">
+      <input type="checkbox" class="trace-cb" value="${t.name}">
+      <span>${t.name.replace('fcc2016_sept_','').replace('_tc.csv','')}</span>
+    </label>`).join('');
+}
+function selectAllTraces(v) {
+  document.querySelectorAll('.trace-cb').forEach(cb => cb.checked = v);
+}
+
+// ── overview ─────────────────────────────────────────────────────────────────
+function renderOverview() {
+  let total = 0;
+  const rows = [];
+  for (const [proto, entries] of Object.entries(allResults)) {
+    if (!entries.length) continue;
+    total += entries.length;
+    const avg = k => {
+      const vs = entries.map(e => e[k]).filter(v => v != null && v > 0);
+      return vs.length ? vs.reduce((a,b)=>a+b,0)/vs.length : null;
+    };
+    rows.push({ proto, n: entries.length,
+      avg_bitrate: avg('avg_bitrate'), avg_buffer: avg('avg_buffer_s'),
+      rebuf_count: avg('rebuf_count'), rebuf_ms: avg('rebuf_ms'),
+      startup_ms: avg('startup_ms'), avg_throughput: avg('avg_throughput'),
+    });
+  }
+  document.getElementById('ov-total').textContent  = total;
+  document.getElementById('ov-protos').textContent = rows.length;
+  document.getElementById('ov-traces').textContent = allTraces.length;
+  document.getElementById('ov-active').textContent = '—';
+
+  const body = document.getElementById('overview-body');
+  body.innerHTML = rows.sort((a,b)=>a.proto.localeCompare(b.proto)).map(r => `
+    <tr>
+      <td><span class="proto-badge proto-${r.proto}">${r.proto}</span></td>
+      <td class="num">${r.n}</td>
+      <td class="num">${fmt(r.avg_bitrate,0)}</td>
+      <td class="num">${fmt(r.avg_buffer,2)}</td>
+      <td class="num ${r.rebuf_count > 10 ? 'bad' : r.rebuf_count > 2 ? 'warn' : 'good'}">${fmt(r.rebuf_count,1)}</td>
+      <td class="num ${r.rebuf_ms > 5000 ? 'bad' : r.rebuf_ms > 1000 ? 'warn' : 'good'}">${fmt(r.rebuf_ms,0)}</td>
+      <td class="num">${fmt(r.startup_ms,0)}</td>
+      <td class="num">${fmt(r.avg_throughput,0)}</td>
+    </tr>`).join('');
+}
+
+// ── run ───────────────────────────────────────────────────────────────────────
+async function startRun() {
+  const protocol   = document.getElementById('run-protocol').value;
+  const duration   = parseInt(document.getElementById('run-duration').value, 10);
+  const resultsDir = document.getElementById('run-results-dir').value.trim() || undefined;
+  const traces     = [...document.querySelectorAll('.trace-cb:checked')].map(cb => cb.value);
+
+  document.getElementById('run-btn').disabled = true;
+  document.getElementById('run-status-msg').textContent = 'Starting…';
+
+  const body = { protocol, duration, traces };
+  if (resultsDir) body.results_dir = resultsDir;
+
+  const res = await fetch('/api/run', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+  const data = await res.json();
+  document.getElementById('run-btn').disabled = false;
+
+  if (data.run_id) {
+    document.getElementById('run-status-msg').textContent = `Run ${data.run_id} started`;
+    activeRunId = data.run_id;
+    // switch to progress page
+    document.querySelector('[data-page=progress]').click();
+    attachSSE(data.run_id);
+  } else {
+    document.getElementById('run-status-msg').textContent = 'Error: ' + JSON.stringify(data);
+  }
+}
+
+// ── progress ──────────────────────────────────────────────────────────────────
+function renderProgress() {
+  fetch('/api/runs').then(r=>r.json()).then(runs => {
+    const el = document.getElementById('runs-list');
+    if (!runs.length) { document.getElementById('no-runs').style.display=''; el.innerHTML=''; return; }
+    document.getElementById('no-runs').style.display='none';
+    el.innerHTML = runs.map(r => `
+      <div class="card" id="run-card-${r.run_id}">
+        <div class="flex-row mb16">
+          <h3>${r.protocol} &nbsp;<span class="pill pill-${r.status}">${r.status}</span></h3>
+          <span class="dim grow" style="font-size:.78rem">ID: ${r.run_id} · started ${new Date(r.started_at*1000).toLocaleTimeString()}</span>
+          ${r.status==='running' ? `<button onclick="stopRun('${r.run_id}')" style="background:var(--red);color:#fff;font-size:.8rem">■ Stop</button>` : ''}
+        </div>
+        <pre id="run-log-${r.run_id}" style="background:#0a0c13;border:1px solid var(--border);border-radius:8px;padding:12px;font-family:monospace;font-size:.75rem;color:#a8b4d0;height:300px;overflow-y:auto;white-space:pre-wrap;word-break:break-all"></pre>
+      </div>`).join('');
+    // reattach SSE for running runs
+    runs.filter(r=>r.status==='running').forEach(r => attachSSE(r.run_id));
+  });
+}
+
+function attachSSE(runId) {
+  if (window._sseConns && window._sseConns[runId]) return;
+  if (!window._sseConns) window._sseConns = {};
+  const es = new EventSource(`/api/run/${runId}/stream`);
+  window._sseConns[runId] = es;
+  es.onmessage = e => {
+    const d = JSON.parse(e.data);
+    appendLog(runId, d.line);
+  };
+  es.addEventListener('done', e => {
+    const d = JSON.parse(e.data);
+    appendLog(runId, `\n[Run ${runId} ${d.status}]`);
+    updateRunPill(runId, d.status);
+    es.close();
+    delete window._sseConns[runId];
+    loadAll(); // refresh results
+  });
+  es.onerror = () => { es.close(); delete window._sseConns[runId]; };
+}
+
+function appendLog(runId, line) {
+  const el = document.getElementById(`run-log-${runId}`);
+  if (!el) return;
+  const div = document.createElement('div');
+  div.className = line.match(/error|Error|ERROR|failed|FAIL/i) ? 'log-err'
+                : line.match(/warn|WARN/i) ? 'log-warn'
+                : line.match(/SAVED|COMPLETE|done|Done/i) ? 'log-good'
+                : line.match(/^={3,}|^──|^\[/i) ? 'log-head'
+                : '';
+  div.textContent = line;
+  el.appendChild(div);
+  el.scrollTop = el.scrollHeight;
+}
+
+function updateRunPill(runId, status) {
+  const card = document.getElementById(`run-card-${runId}`);
+  if (!card) return;
+  const pill = card.querySelector('.pill');
+  if (pill) { pill.className = `pill pill-${status}`; pill.textContent = status; }
+}
+
+async function stopRun(runId) {
+  await fetch(`/api/run/${runId}/stop`, {method:'POST'});
+  renderProgress();
+}
+
+// ── compare ───────────────────────────────────────────────────────────────────
+const UNITS = ['178682','241853','26562','619854','656870','799440','806274','8814','925854','941754'];
+
+function buildProtoToggles() {
+  const el = document.getElementById('proto-toggles');
+  el.innerHTML = PROTOCOLS.map(p => `
+    <div class="proto-toggle on" data-proto="${p}" style="color:${PROTO_COLORS[p]}" onclick="toggleProto('${p}')">
+      <span>●</span> ${p}
+    </div>`).join('');
+}
+
+function toggleProto(p) {
+  if (activeProtos.has(p)) activeProtos.delete(p); else activeProtos.add(p);
+  document.querySelectorAll('.proto-toggle').forEach(el => {
+    el.classList.toggle('on',  activeProtos.has(el.dataset.proto));
+    el.classList.toggle('off', !activeProtos.has(el.dataset.proto));
+  });
+  renderCompare();
+}
+
+function getBestEntry(proto, unit) {
+  const entries = (allResults[proto] || []).filter(e => e.unit === unit);
+  if (!entries.length) return null;
+  return entries.sort((a,b) => b.timestamp.localeCompare(a.timestamp))[0];
+}
+
+function protoAvg(proto, key) {
+  const vals = UNITS.map(u => getBestEntry(proto,u)?.[key]).filter(v => v != null && v >= 0);
+  return vals.length ? vals.reduce((a,b)=>a+b,0)/vals.length : null;
+}
+
+function makeBarChart(canvasId, label, protos, dataFn, color='white') {
+  if (charts[canvasId]) { charts[canvasId].destroy(); }
+  const ctx = document.getElementById(canvasId).getContext('2d');
+  charts[canvasId] = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: protos,
+      datasets: [{
+        label,
+        data: protos.map(dataFn),
+        backgroundColor: protos.map(p => PROTO_COLORS[p] + 'bb'),
+        borderColor:     protos.map(p => PROTO_COLORS[p]),
+        borderWidth: 1,
+        borderRadius: 4,
+      }],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#7880a4' }, grid: { color: '#2e345033' } },
+        y: { ticks: { color: '#7880a4' }, grid: { color: '#2e345033' } },
+      },
+    },
+  });
+}
+
+function renderCompare() {
+  const protos = PROTOCOLS.filter(p => activeProtos.has(p));
+  if (!protos.length) return;
+
+  makeBarChart('chart-bitrate',     'Avg Bitrate (kbps)',   protos, p => protoAvg(p,'avg_bitrate'));
+  makeBarChart('chart-rebuf-count', 'Rebuffer Count',        protos, p => protoAvg(p,'rebuf_count'));
+  makeBarChart('chart-rebuf-ms',    'Total Rebuffer (ms)',   protos, p => protoAvg(p,'rebuf_ms'));
+  makeBarChart('chart-startup',     'Startup Time (ms)',     protos, p => protoAvg(p,'startup_ms'));
+  makeBarChart('chart-buffer',      'Avg Buffer Level (s)',  protos, p => protoAvg(p,'avg_buffer_s'));
+
+  // per-trace table — one row per unit, columns grouped by protocol
+  const head = document.querySelector('#compare-table thead tr');
+  head.innerHTML = '<th>Trace Unit</th>' + protos.map(p =>
+    `<th class="num" colspan="2" style="color:${PROTO_COLORS[p]}">${p}</th>`
+  ).join('');
+  // sub-header
+  const sub = document.createElement('tr');
+  sub.innerHTML = '<th></th>' + protos.map(() =>
+    '<th class="num dim" style="font-size:.7rem">Bitrate</th><th class="num dim" style="font-size:.7rem">Rebuf ms</th>'
+  ).join('');
+  head.parentElement.insertBefore(sub, head.nextSibling);
+
+  const body = document.getElementById('compare-body');
+  body.innerHTML = UNITS.map(unit => {
+    const cells = protos.map(p => {
+      const e = getBestEntry(p, unit);
+      if (!e) return '<td class="num dim">—</td><td class="num dim">—</td>';
+      const br = e.avg_bitrate != null ? fmt(e.avg_bitrate,0) : '—';
+      const rm = e.rebuf_ms   != null ? fmt(e.rebuf_ms,0)    : '—';
+      const cls = e.rebuf_ms > 5000 ? 'bad' : e.rebuf_ms > 1000 ? 'warn' : 'good';
+      return `<td class="num">${br}</td><td class="num ${cls}">${rm}</td>`;
+    }).join('');
+    return `<tr><td>${unit}</td>${cells}</tr>`;
+  }).join('');
+}
+
+// ── results list ──────────────────────────────────────────────────────────────
+function renderResults() {
+  const filterProto = document.getElementById('results-filter-proto').value;
+  const filterUnit  = document.getElementById('results-filter-unit').value.trim().toLowerCase();
+  const body        = document.getElementById('results-body');
+
+  let rows = [];
+  for (const [proto, entries] of Object.entries(allResults)) {
+    if (filterProto && proto !== filterProto) continue;
+    for (const e of entries) {
+      if (filterUnit && !(e.unit || '').includes(filterUnit)) continue;
+      rows.push(e);
+    }
+  }
+  rows.sort((a,b) => b.timestamp.localeCompare(a.timestamp));
+
+  body.innerHTML = rows.map(e => `
+    <tr>
+      <td><span class="proto-badge proto-${e.protocol}">${e.protocol}</span></td>
+      <td>${e.unit || '—'}</td>
+      <td class="dim" style="font-size:.75rem">${(e.timestamp||'').replace('T',' ').slice(0,19)}</td>
+      <td class="num">${fmt(e.avg_bitrate,0)}</td>
+      <td class="num">${fmt(e.avg_buffer_s,2)}</td>
+      <td class="num ${e.rebuf_count>10?'bad':e.rebuf_count>2?'warn':'good'}">${fmt(e.rebuf_count,0)}</td>
+      <td class="num ${e.rebuf_ms>5000?'bad':e.rebuf_ms>1000?'warn':'good'}">${fmt(e.rebuf_ms,0)}</td>
+      <td class="num">${fmt(e.startup_ms,0)}</td>
+      <td class="num">${fmt(e.avg_throughput,0)}</td>
+      <td><button onclick='openDetail("${e.file}")' style="background:var(--surface);color:var(--muted);font-size:.75rem;padding:3px 8px">Detail</button></td>
+    </tr>`).join('');
+}
+
+// ── detail modal ──────────────────────────────────────────────────────────────
+async function openDetail(file) {
+  const res = await fetch('/api/result-detail?file=' + encodeURIComponent(file));
+  const d   = await res.json();
+  const md  = d.metrics || {};
+
+  let html = `<h2 style="margin-bottom:16px">${d.protocol} &nbsp; <span class="proto-badge proto-${d.protocol}">${d.protocol}</span></h2>`;
+  html += `<div class="dim" style="font-size:.78rem;margin-bottom:16px">${d.timestamp || ''} &nbsp;·&nbsp; ${file}</div>`;
+
+  const sections = [
+    ['Timing',       md.timing       || {}],
+    ['Bitrate',      md.bitrate      || {}],
+    ['Switching',    md.switching    || {}],
+    ['Rebuffering',  md.rebuffering  || {}],
+    ['Throughput',   md.throughput   || {}],
+    ['Buffer',       md.buffer       || {}],
+    ['Utilization',  md.utilization  || {}],
+  ];
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">';
+  for (const [title, obj] of sections) {
+    if (!Object.keys(obj).length) continue;
+    html += `<div class="card"><h3 style="margin-bottom:10px">${title}</h3>`;
+    html += '<table class="tbl" style="font-size:.8rem">';
+    for (const [k, v] of Object.entries(obj)) {
+      if (typeof v === 'object') continue;
+      html += `<tr><td class="dim">${k}</td><td class="num">${typeof v==='number'?v.toLocaleString(undefined,{maximumFractionDigits:2}):v}</td></tr>`;
+    }
+    html += '</table></div>';
+  }
+  html += '</div>';
+
+  // bitrate history sparkline
+  const bitSamples = (md.samples || {}).bitrate || [];
+  if (bitSamples.length > 1) {
+    html += '<div class="card mt16"><h3 style="margin-bottom:10px">Bitrate History</h3><div style="position:relative;height:120px"><canvas id="modal-chart-bitrate"></canvas></div></div>';
+  }
+
+  document.getElementById('modal-content').innerHTML = html;
+  document.getElementById('modal-overlay').classList.add('open');
+
+  if (bitSamples.length > 1) {
+    new Chart(document.getElementById('modal-chart-bitrate').getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: bitSamples.map((_,i) => i),
+        datasets: [{ label: 'Bitrate (kbps)', data: bitSamples,
+          borderColor: PROTO_COLORS[d.protocol] || '#5b7fff', backgroundColor: 'transparent',
+          pointRadius: 2, borderWidth: 1.5, tension: 0.3 }],
+      },
+      options: {
+        responsive:true, maintainAspectRatio:false,
+        plugins:{legend:{display:false}},
+        scales:{
+          x:{display:false},
+          y:{ticks:{color:'#7880a4'},grid:{color:'#2e345033'}},
+        },
+      },
+    });
+  }
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+document.getElementById('modal-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+});
+
+// ── utils ─────────────────────────────────────────────────────────────────────
+function fmt(v, dec=0) {
+  if (v == null || isNaN(v)) return '—';
+  return v.toLocaleString(undefined, { minimumFractionDigits: dec, maximumFractionDigits: dec });
+}
+
+// ── init ──────────────────────────────────────────────────────────────────────
+loadAll();
+setInterval(loadAll, 15000);  // refresh every 15s
+</script>
+</body>
+</html>

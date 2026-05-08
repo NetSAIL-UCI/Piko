@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>GPAC LL-DASH Player</title>
+<script src="/dash.all.min.js"></script>
+<style>
+body { margin: 0; background: #111; color: #eee; font-family: monospace; }
+video { width: 100%; max-height: 60vh; display: block; background: #000; }
+#status { padding: 8px 12px; font-size: 13px; }
+</style>
+</head>
+<body>
+<video id="video" autoplay muted playsinline></video>
+<div id="status"><span id="status-text">Initializing…</span></div>
+<script>
+const qs  = new URLSearchParams(window.location.search);
+const mpd = qs.get('mpd') || (window.location.origin + '/manifest.mpd');
+
+// ── Playwright-readable metrics ───────────────────────────────────────────
+window.__rebufferCount     = 0;
+window.__rebufferDurations = [];
+window.__throughputSamples = [];
+window.__playbackEnded     = false;
+
+// ── Variables expected by the benchmark's final page.evaluate() ──────────
+var bitrateHistory     = [];
+var bitrateSwitchCount = 0;
+var totalStallingTime  = 0;
+var isStalling         = false;
+var stallingStartTime  = null;
+
+const video    = document.getElementById('video');
+const statusEl = document.getElementById('status-text');
+
+let rebufStart = null;
+
+const player = dashjs.MediaPlayer().create();
+window.dashPlayer = player;
+
+player.updateSettings({
+  streaming: {
+    buffer: {
+      fastSwitchEnabled: true,
+      bufferTimeDefault:        4,
+      bufferTimeAtTopQuality:   8,
+      stallThreshold:           0.3,
+    },
+    abr: {
+      initialBitrate: { video: 100 },
+      autoSwitchBitrate: { video: true },
+      rules: {
+        bolaRule:               { active: true },
+        throughputRule:         { active: true },
+        insufficientBufferRule: { active: true },
+        switchHistoryRule:      { active: true },
+        droppedFramesRule:      { active: true },
+      },
+    },
+    cmcd: { enabled: false },
+  }
+});
+
+player.initialize(video, mpd, true);
+
+player.on(dashjs.MediaPlayer.events.CAN_PLAY, () => {
+  statusEl.textContent = 'Playing';
+  // Capture the initial quality (QUALITY_CHANGE_RENDERED doesn't fire for first selection)
+  if (bitrateHistory.length === 0) {
+    try {
+      const rep = player.getCurrentRepresentationForType('video');
+      if (rep && rep.bandwidth) bitrateHistory.push({ bitrate: rep.bandwidth });
+    } catch (_) {}
+  }
+});
+player.on(dashjs.MediaPlayer.events.PLAYBACK_PLAYING, () => {
+  statusEl.textContent = 'Playing';
+  if (isStalling && stallingStartTime !== null) {
+    totalStallingTime += Date.now() - stallingStartTime;
+    window.__rebufferDurations.push(Date.now() - stallingStartTime);
+  }
+  isStalling = false;
+  stallingStartTime = null;
+  rebufStart = null;
+});
+player.on(dashjs.MediaPlayer.events.PLAYBACK_WAITING, () => {
+  statusEl.textContent = 'Buffering…';
+  if (!isStalling) {
+    isStalling = true;
+    stallingStartTime = Date.now();
+    window.__rebufferCount++;
+    rebufStart = Date.now();
+  }
+});
+player.on(dashjs.MediaPlayer.events.PLAYBACK_ENDED, () => {
+  window.__playbackEnded = true;
+  statusEl.textContent = 'Done';
+});
+player.on(dashjs.MediaPlayer.events.ERROR, e => {
+  console.error('dash.js error', JSON.stringify(e.error));
+  statusEl.textContent = 'Error: ' + (e.error?.message || JSON.stringify(e.error));
+});
+
+// Track quality switches for bitrateHistory
+player.on(dashjs.MediaPlayer.events.QUALITY_CHANGE_RENDERED, e => {
+  if (e.mediaType !== 'video') return;
+  try {
+    const list = player.getBitrateInfoListFor('video');
+    const bps = (list && list[e.newQuality]) ? list[e.newQuality].bitrate : 0;
+    bitrateHistory.push({ bitrate: bps });
+    if (bitrateHistory.length > 1) bitrateSwitchCount++;
+  } catch (_) {}
+});
+
+// Throughput samples from completed fragment loads
+player.on(dashjs.MediaPlayer.events.FRAGMENT_LOADING_COMPLETED, e => {
+  const req = e.request;
+  if (!req || req.mediaType !== 'video') return;
+  const bytes = req.bytesLoaded || req.bytesTotal || req.bytes || 0;
+  const startDate = req.requestStartDate || req.trequest;
+  const endDate   = req.requestEndDate   || req.tresponse;
+  if (!startDate || !endDate) return;
+  const ms = (endDate instanceof Date ? endDate.getTime() : +endDate)
+           - (startDate instanceof Date ? startDate.getTime() : +startDate);
+  if (ms > 0 && bytes > 0)
+    window.__throughputSamples.push((bytes * 8) / ms);
+});
+</script>
+</body>
+</html>

@@ -15,7 +15,8 @@ Supports both DASH and WebRTC (mediasoup) protocols for comparison.
 """
 
 import argparse
-import json 
+import json
+import os
 import time
 import sys
 import math
@@ -138,35 +139,30 @@ class StreamingMetrics:
     
     def calculate_statistics(self, max_bitrate: int = 3000):
         """Calculate all streaming statistics."""
-        if not self.bitrate_samples:
-            return
-        
-        # Bitrate statistics
-        self.avg_bitrate_kbps = sum(self.bitrate_samples) / len(self.bitrate_samples)
-        self.min_bitrate_kbps = min(self.bitrate_samples)
-        self.max_bitrate_kbps = max(self.bitrate_samples)
+        # Bitrate statistics (guarded — may be empty if player never switches quality)
+        if self.bitrate_samples:
+            self.avg_bitrate_kbps = sum(self.bitrate_samples) / len(self.bitrate_samples)
+            self.min_bitrate_kbps = min(self.bitrate_samples)
+            self.max_bitrate_kbps = max(self.bitrate_samples)
 
-        # Effective average bitrate — penalises stall periods by weighting
-        # avg_bitrate by the fraction of time the player was actually playing.
-        # During rebuffering the delivered bitrate is 0, so the true average is:
-        #   effective = avg_bitrate × play_time / (play_time + stall_time)
-        total_wall = self.total_playback_time_ms + self.rebuffer_time_ms
-        if total_wall > 0:
-            self.effective_avg_bitrate_kbps = self.avg_bitrate_kbps * (self.total_playback_time_ms / total_wall)
-        else:
-            self.effective_avg_bitrate_kbps = self.avg_bitrate_kbps
-        
-        # Standard deviation and variance
-        mean = self.avg_bitrate_kbps
-        self.bitrate_variance = sum((x - mean) ** 2 for x in self.bitrate_samples) / len(self.bitrate_samples)
-        self.bitrate_std_dev = self.bitrate_variance ** 0.5
-        
-        # Percentiles
-        sorted_bitrates = sorted(self.bitrate_samples)
-        n = len(sorted_bitrates)
-        self.bitrate_median = sorted_bitrates[n // 2]
-        self.bitrate_25th_percentile = sorted_bitrates[n // 4]
-        self.bitrate_75th_percentile = sorted_bitrates[3 * n // 4]
+            # Effective average bitrate — penalises stall periods
+            total_wall = self.total_playback_time_ms + self.rebuffer_time_ms
+            if total_wall > 0:
+                self.effective_avg_bitrate_kbps = self.avg_bitrate_kbps * (self.total_playback_time_ms / total_wall)
+            else:
+                self.effective_avg_bitrate_kbps = self.avg_bitrate_kbps
+
+            # Standard deviation and variance
+            mean = self.avg_bitrate_kbps
+            self.bitrate_variance = sum((x - mean) ** 2 for x in self.bitrate_samples) / len(self.bitrate_samples)
+            self.bitrate_std_dev = self.bitrate_variance ** 0.5
+
+            # Percentiles
+            sorted_bitrates = sorted(self.bitrate_samples)
+            n = len(sorted_bitrates)
+            self.bitrate_median = sorted_bitrates[n // 2]
+            self.bitrate_25th_percentile = sorted_bitrates[n // 4]
+            self.bitrate_75th_percentile = sorted_bitrates[3 * n // 4]
         
         # Switching statistics
         if self.bitrate_switches > 0:
@@ -472,48 +468,9 @@ class DASHJSBenchmark:
             )
             page = browser.new_page()
 
-            # ── LL-DASH (Option A): intercept settings before player init ──
-            # The lldash-server HTML is served from an uneditable container with
-            # lowLatencyEnabled: true. lowLatencyEnabled cannot be hot-swapped after
-            # initialize(), so we wrap player.updateSettings at the setter of
-            # window.dashPlayer — before the HTML's own updateSettings call runs —
-            # and rewrite streaming settings to Option A values (6s buffer, no live-mode).
-            if self.protocol_name == 'lldash':
-                page.add_init_script("""
-                    (function() {
-                        let _p;
-                        Object.defineProperty(window, 'dashPlayer', {
-                            configurable: true,
-                            get() { return _p; },
-                            set(player) {
-                                _p = player;
-                                const _orig = player.updateSettings.bind(player);
-                                // Disable live-edge mode; use throughputRule (not BOLA)
-                                // for 2s segments. BOLA oscillates badly: stays at lowest
-                                // quality with full buffer, then overshoots to top quality.
-                                player.updateSettings = function(s) {
-                                    if (s && s.streaming) {
-                                        s.streaming.lowLatencyEnabled = false;
-                                        delete s.streaming.delay;
-                                        s.streaming.buffer = s.streaming.buffer || {};
-                                        s.streaming.buffer.fastSwitchEnabled = true;
-                                        s.streaming.buffer.bufferTimeDefault = 8;
-                                        s.streaming.buffer.bufferTimeAtTopQuality = 8;
-                                        s.streaming.abr = s.streaming.abr || {};
-                                        s.streaming.abr.rules = {
-                                            bolaRule:               { active: false },
-                                            throughputRule:         { active: true  },
-                                            insufficientBufferRule: { active: true  },
-                                            switchHistoryRule:      { active: true  },
-                                            droppedFramesRule:      { active: false },
-                                        };
-                                    }
-                                    return _orig(s);
-                                };
-                            }
-                        });
-                    })();
-                """)
+            # Capture browser console errors to aid debugging
+            page.on('console', lambda msg: print(f"[BROWSER-{msg.type.upper()}] {msg.text}")
+                    if msg.type in ('error', 'warn') else None)
 
             # ── Patch player HTML on-the-fly (no container rebuild required) ──
             # Fixes: (1) remove instantaneous maxBitrate cap that causes
@@ -540,24 +497,18 @@ class DASHJSBenchmark:
                     'initialBitrate: { video: 100 }',
                 )
 
-                # Neutralize live-mode LL toggles for all non-live protocols.
-                # For lldash (Option A): disable lowLatencyEnabled, remove live-edge
-                # delay block, set a 2-3s buffer target to reflect LL intent without
-                # the broken live-edge chasing behavior.
-                import re as _re2
-                html = html.replace(
-                    'lowLatencyEnabled: true,',
-                    'lowLatencyEnabled: false,',
-                )
-                html = _re2.sub(
-                    r'delay:\s*\{[^}]*\},?\s*',
-                    '',
-                    html,
-                )
-                if self.protocol_name == 'lldash':
-                    html = html.replace('bufferTimeDefault: 5,', 'bufferTimeDefault: 8,')
-                    html = html.replace('bufferTimeAtTopQuality: 6,', 'bufferTimeAtTopQuality: 8,')
-                else:
+                # lldash-gpac: keep all LL settings intact — the GPAC player is a genuine LL-DASH client.
+                if self.protocol_name != 'lldash-gpac':
+                    import re as _re2
+                    html = html.replace(
+                        'lowLatencyEnabled: true,',
+                        'lowLatencyEnabled: false,',
+                    )
+                    html = _re2.sub(
+                        r'delay:\s*\{[^}]*\},?\s*',
+                        '',
+                        html,
+                    )
                     html = html.replace(
                         'fastSwitchEnabled: true,',
                         'fastSwitchEnabled: false,',
@@ -603,15 +554,14 @@ class DASHJSBenchmark:
                            if k.lower() != 'content-length'}
                 route.fulfill(status=resp.status, headers=headers, body=body)
 
-            # Route all requests to the server origin through the patcher.
-            # Using origin/** instead of the full base_url because lldash's
-            # base_url contains a query string (?mpd=...) which breaks exact matching.
-            # _patch_dash_html already guards against non-HTML responses.
-            # Use a regex to avoid minimatch's /**-doesn't-match-root-/ edge case.
-            from urllib.parse import urlparse as _urlparse
-            import re as _rerout
-            _origin = "{0.scheme}://{0.netloc}".format(_urlparse(self.base_url))
-            page.route(_rerout.compile(r'^' + _rerout.escape(_origin) + r'/'), _patch_dash_html)
+            # lldash-gpac: skip route interception entirely — the player HTML is
+            # self-contained and Playwright's route.fetch() buffers chunked responses,
+            # which breaks LL-DASH progressive delivery to the browser.
+            if self.protocol_name != 'lldash-gpac':
+                from urllib.parse import urlparse as _urlparse
+                import re as _rerout
+                _origin = "{0.scheme}://{0.netloc}".format(_urlparse(self.base_url))
+                page.route(_rerout.compile(r'^' + _rerout.escape(_origin) + r'/'), _patch_dash_html)
 
             print("[BROWSER] Launching headless Chromium...")
             startup_start = time.time()
@@ -843,6 +793,54 @@ class DASHJSBenchmark:
         with open(filename, 'w') as f:
             json.dump(results, f, indent=2)
         print(f"\n[SAVED] {filename}")
+
+
+class LLDASHGPACBenchmark:
+    """
+    LL-DASH benchmark using the GPAC-packaged content and gpac_server.py.
+
+    Starts gpac_server.py (Python HTTP server with chunked transfer + trace-based
+    bandwidth pacing) on SERVER_PORT, then delegates browser playback and metrics
+    collection to DASHJSBenchmark with LL settings kept intact.
+    """
+
+    SERVER_PORT   = 8082
+    SERVER_SCRIPT = Path(__file__).parent / 'lldash-server' / 'gpac_server.py'
+
+    def __init__(self, url: str, max_duration=None):
+        self._url        = url
+        self.max_duration = max_duration
+        self._inner      = DASHJSBenchmark(url, max_duration, protocol_name='lldash-gpac')
+        self.metrics     = self._inner.metrics
+        self._proc       = None
+
+    @property
+    def max_bitrate(self):
+        return self._inner.max_bitrate
+
+    def run(self):
+        env = {**os.environ, 'LLDASH_PORT': str(self.SERVER_PORT)}
+        self._proc = subprocess.Popen(
+            [sys.executable, '-u', str(self.SERVER_SCRIPT)],
+            env=env,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.PIPE,
+        )
+        time.sleep(2)
+        try:
+            return self._inner.run()
+        finally:
+            self._proc.terminate()
+            try:
+                self._proc.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                self._proc.kill()
+
+    def print_results(self):
+        self._inner.print_results()
+
+    def save_results(self, path: str):
+        self._inner.save_results(path)
 
 
 class HLSBenchmark:
@@ -1862,26 +1860,36 @@ class WebRTCBenchmark:
 
 class MOQBenchmark:
     """
-    MOQ (Media over QUIC Transport) benchmark.
-    Starts the relay + publisher as subprocesses, then runs a headless Chromium
-    browser that connects via WebTransport and plays back the video.
+    MOQ benchmark using the official moq-dev/moq stack:
+      - moq-relay  (Rust binary compiled from moq-dev/moq)
+      - moq-cli publish fmp4 --passthrough  (per-chunk ABR, fed from publisher.py)
+      - Browser player using moq-bundle.js over WebSocket
+
+    Per-chunk ABR: publisher selects quality each chunk based on instantaneous
+    trace bandwidth, writing a new init segment on quality switch.  moq-cli fmp4
+    --passthrough forwards each fMP4 box as a separate MoQ object.  The player
+    detects moov boxes and calls changeType() to reconfigure the decoder.
     """
 
+    RELAY_BIN  = Path('/tmp/moq-dev/target/release/moq-relay')
+    MOQ_CLI    = Path('/tmp/moq-dev/target/release/moq-cli')
+    MOQ_DIR    = Path(__file__).parent / 'moq-dev'
+    RELAY_PORT = 4446
+    HTTP_PORT  = 8095
+
     def __init__(self, duration: float = 120.0, trace_path: str = None):
-        self.max_duration     = duration
-        self.trace_path       = trace_path          # FCC trace CSV (may be None)
-        self.metrics          = StreamingMetrics()
+        self.max_duration = duration
+        self.trace_path   = trace_path
+        self.metrics      = StreamingMetrics()
         self.trace_bandwidth_samples: List[float] = []
 
-        self._moq_dir     = Path(__file__).parent / 'moq-server'
-        self._relay_url   = 'http://localhost:8090'   # HTTP companion for player
-        self._player_url  = 'http://localhost:8090/player.html'
+        self._relay_url  = f'http://127.0.0.1:{self.RELAY_PORT}/moq'
+        self._player_url = f'http://127.0.0.1:{self.HTTP_PORT}/player.html'
 
     def _load_trace(self):
         import csv as _csv
-        src = Path(self.trace_path) if self.trace_path else \
-              Path(__file__).parent / 'shaper' / 'trace' / 'trace.csv'
-        if not src.exists():
+        src = Path(self.trace_path) if self.trace_path else None
+        if not src or not src.exists():
             self._trace_rows = []
             return
         rows = []
@@ -1894,9 +1902,9 @@ class MOQBenchmark:
                     has_header = True
                     continue
                 try:
-                    elapsed_s = float(row[0])
+                    t  = float(row[0])
                     bw = float(row[3]) if has_header and len(row) >= 4 else float(row[1])
-                    rows.append((elapsed_s, bw))
+                    rows.append((t, bw))
                 except (ValueError, IndexError):
                     continue
         if rows:
@@ -1905,9 +1913,9 @@ class MOQBenchmark:
         else:
             self._trace_rows = []
 
-    def _trace_bw_at(self, elapsed_s: float):
+    def _trace_bw_at(self, elapsed_s: float) -> float:
         if not self._trace_rows:
-            return None
+            return 4_500_000
         dur = self._trace_rows[-1][0]
         t = elapsed_s % dur if dur > 0 else 0
         for i in range(len(self._trace_rows) - 1):
@@ -1916,30 +1924,76 @@ class MOQBenchmark:
         return self._trace_rows[-1][1]
 
     def run(self) -> StreamingMetrics:
+        import http.server
+        import threading
         from playwright.sync_api import sync_playwright
 
         print("\n" + "=" * 70)
-        print("  MOQ Streaming QoE Benchmark (WebTransport/QUIC)")
+        print("  MOQ Streaming QoE Benchmark (moq-dev/moq official stack)")
         print("=" * 70)
+        print(f"  Relay:   {self._relay_url}")
         print(f"  Player:  {self._player_url}")
         print(f"  Trace:   {self.trace_path or '(none)'}")
         print("=" * 70 + "\n")
 
         self._load_trace()
 
-        # Start relay
+        if not self.RELAY_BIN.exists():
+            raise FileNotFoundError(f"moq-relay not found: {self.RELAY_BIN}")
+        if not self.MOQ_CLI.exists():
+            raise FileNotFoundError(f"moq-cli not found: {self.MOQ_CLI}")
+
+        # HTTP server for player.html + moq-bundle.js
+        moq_dir = str(self.MOQ_DIR)
+        handler = http.server.SimpleHTTPRequestHandler
+
+        class _ReuseServer(http.server.HTTPServer):
+            allow_reuse_address = True
+
+        httpd = _ReuseServer(('127.0.0.1', self.HTTP_PORT),
+                             lambda *a, **kw: handler(*a, directory=moq_dir, **kw))
+        httpd_thread = threading.Thread(target=httpd.serve_forever, daemon=True)
+        httpd_thread.start()
+
+        # Start moq-relay
         relay_proc = subprocess.Popen(
-            [sys.executable, str(self._moq_dir / 'relay.py')],
+            [
+                str(self.RELAY_BIN),
+                '--server-bind',     f'127.0.0.1:{self.RELAY_PORT}',
+                '--web-http-listen', f'127.0.0.1:{self.RELAY_PORT}',
+                '--tls-generate',    'localhost',
+                '--auth-public',     '/',
+                '--web-ws',
+            ],
             stdout=subprocess.DEVNULL, stderr=subprocess.PIPE,
-            cwd=Path(__file__).parent,
+            cwd='/tmp',
         )
-        time.sleep(3)  # wait for relay to bind
+        time.sleep(2)
 
-        # Publisher is started AFTER browser subscribes (inside the playwright block)
         pub_proc = None
-
         buffer_samples: List[float] = []
         throughput_samples: List[float] = []
+        pub_quality_samples: List[int] = []   # kbps, from publisher stdout
+
+        # Start publisher BEFORE browser so first init segment is available
+        pub_args = [
+            sys.executable,
+            str(self.MOQ_DIR / 'publisher.py'),
+            '--duration', str(self.max_duration + 30),
+        ]
+        if self.trace_path:
+            pub_args += ['--trace', self.trace_path]
+
+        pub_proc = subprocess.Popen(
+            pub_args,
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            cwd=Path(__file__).parent,
+            env={**__import__('os').environ,
+                 'MOQ2_RELAY_URL': self._relay_url,
+                 'MOQ_CLI': str(self.MOQ_CLI)},
+        )
+
+        time.sleep(3)  # let publisher send init segment + first chunk
 
         try:
             with sync_playwright() as p:
@@ -1950,37 +2004,19 @@ class MOQBenchmark:
                         '--autoplay-policy=no-user-gesture-required',
                         '--mute-audio',
                         '--no-sandbox',
+                        '--ignore-certificate-errors',
+                        '--allow-insecure-localhost',
                         '--crash-dumps-dir=/tmp/ajhunjh1_tmp/crashpad',
                         '--disable-crash-reporter',
                     ]
                 )
                 page = browser.new_page()
+                page.on('console', lambda m: print(f"[CONSOLE] {m.type}: {m.text}"))
 
                 print("[BROWSER] Launching headless Chromium (MOQ)...")
                 page.goto(self._player_url, timeout=30000, wait_until='domcontentloaded')
 
-                # Wait for WebSocket to subscribe (before starting publisher)
-                try:
-                    page.wait_for_function(
-                        "document.getElementById('status-text').textContent.includes('Receiving')",
-                        timeout=10000,
-                    )
-                except Exception:
-                    pass  # proceed anyway
-
-                # NOW start publisher (browser is subscribed → init segment not evicted)
-                pub_args = [sys.executable, str(self._moq_dir / 'publisher.py'),
-                            '--duration', str(self.max_duration + 20)]
-                if self.trace_path:
-                    pub_args += ['--trace', self.trace_path]
-                pub_proc = subprocess.Popen(
-                    pub_args,
-                    stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                    cwd=Path(__file__).parent,
-                )
-
                 startup_start = time.time()
-                # Wait until video is actually playing
                 try:
                     page.wait_for_function(
                         "document.getElementById('video') && "
@@ -1989,7 +2025,6 @@ class MOQBenchmark:
                     )
                 except Exception:
                     pass
-
                 self.metrics.startup_delay_ms = (time.time() - startup_start) * 1000
                 print(f"   Startup delay: {self.metrics.startup_delay_ms:.0f}ms\n")
 
@@ -1997,7 +2032,6 @@ class MOQBenchmark:
                 poll_interval = 0.5
                 playback_start = time.perf_counter()
                 last_print = 0.0
-                quality_samples = []   # kbps values sampled every 0.5s
 
                 while True:
                     elapsed = time.perf_counter() - playback_start
@@ -2006,10 +2040,24 @@ class MOQBenchmark:
                         ended = page.evaluate("window.__playbackEnded")
                     except Exception:
                         ended = False
-                    if ended:
+                    if ended or elapsed >= self.max_duration:
                         break
-                    if elapsed >= self.max_duration:
-                        break
+
+                    # Drain publisher stdout for quality samples (non-blocking)
+                    import select as _sel
+                    while pub_proc.stdout:
+                        r, _, _ = _sel.select([pub_proc.stdout], [], [], 0)
+                        if not r:
+                            break
+                        line = pub_proc.stdout.readline()
+                        if not line:
+                            break
+                        line = line.decode().strip()
+                        if line.startswith('QUALITY_SAMPLE '):
+                            try:
+                                pub_quality_samples.append(int(line.split()[1]) // 1000)
+                            except (IndexError, ValueError):
+                                pass
 
                     try:
                         buf_s = page.evaluate("""(() => {
@@ -2021,29 +2069,16 @@ class MOQBenchmark:
                     except Exception:
                         buffer_samples.append(0.0)
 
-                    try:
-                        q_bps = page.evaluate("window.__moqQualityBps || 0")
-                        if q_bps > 0:
-                            quality_samples.append(int(q_bps) // 1000)
-                    except Exception:
-                        pass
-
                     trace_bw = self._trace_bw_at(elapsed)
-                    if trace_bw is not None:
-                        throughput_samples.append(trace_bw)
-                        self.trace_bandwidth_samples.append(trace_bw)
+                    throughput_samples.append(trace_bw)
+                    self.trace_bandwidth_samples.append(trace_bw)
 
                     if elapsed - last_print >= 10:
-                        buf_s_val = buffer_samples[-1] / 1000 if buffer_samples else 0
-                        bps_str = ""
-                        try:
-                            q_bps = page.evaluate("window.__moqQualityBps || 0")
-                            bps_str = f" | bitrate: {int(q_bps)//1000} kbps"
-                        except Exception:
-                            pass
-                        trace_str = f" | trace_bw: {trace_bw:.0f} kbps" if trace_bw else ""
-                        print(f"   t={elapsed:.0f}s | buffer: {buf_s_val:.1f}s"
-                              f"{bps_str}{trace_str}")
+                        buf_val = buffer_samples[-1] / 1000 if buffer_samples else 0
+                        q_str = (f" | bitrate: {pub_quality_samples[-1]} kbps"
+                                 if pub_quality_samples else "")
+                        print(f"   t={elapsed:.0f}s | buffer: {buf_val:.1f}s{q_str}"
+                              f" | trace_bw: {trace_bw:.0f} kbps")
                         last_print = elapsed
 
                     time.sleep(poll_interval)
@@ -2056,17 +2091,19 @@ class MOQBenchmark:
                 final = page.evaluate("""() => {
                     const v = document.getElementById('video');
                     return {
-                        rebufferCount:     window.__rebufferCount,
-                        rebufferDurations: window.__rebufferDurations,
-                        throughputSamples: window.__throughputSamples,
+                        rebufferCount:     window.__rebufferCount     || 0,
+                        rebufferDurations: window.__rebufferDurations || [],
                         playbackTimeMs:    v ? v.currentTime * 1000 : 0,
-                        qualitySamples:    window.__moqQualitySamples || [],
+                        bitrateHistory:    (window.__moqBitrateHistory || [])
+                                            .map(s => Math.round(s.bitrate / 1000)),
                     };
                 }""")
                 browser.close()
 
         finally:
             relay_proc.terminate()
+            httpd.shutdown()
+            httpd.server_close()
             if pub_proc:
                 pub_proc.terminate()
             try:
@@ -2079,15 +2116,6 @@ class MOQBenchmark:
                     pub_proc.kill()
 
         m = self.metrics
-        # Throughput from browser throughput samples
-        js_tput = final.get('throughputSamples', [])
-        if js_tput:
-            for s in js_tput:
-                if isinstance(s, dict) and s.get('ms', 0) > 0:
-                    kbps = s['bytes'] * 8 / s['ms']
-                    throughput_samples.append(kbps)
-
-        # Use trace BW as throughput if no browser samples (same as DASH benchmark)
         m.throughput_samples     = throughput_samples
         m.buffer_samples         = buffer_samples
         m.rebuffer_count         = final.get('rebufferCount', 0)
@@ -2095,13 +2123,14 @@ class MOQBenchmark:
         m.rebuffer_durations     = final.get('rebufferDurations', [])
         m.total_playback_time_ms = final.get('playbackTimeMs', 0)
 
-        # Build bitrate samples: prefer per-chunk quality from publisher metadata,
-        # fall back to the polling samples collected during playback.
-        js_quality = final.get('qualitySamples', [])
-        if js_quality:
-            m.bitrate_samples = [int(s['bps'] / 1000) for s in js_quality if s.get('bps', 0) > 0]
-        elif quality_samples:
-            m.bitrate_samples = quality_samples
+        # Bitrate: prefer player-observed history (moov-detected quality),
+        # fall back to publisher stdout samples.
+        js_br = [b for b in final.get('bitrateHistory', []) if b > 0]
+        if js_br:
+            m.bitrate_samples = js_br
+        elif pub_quality_samples:
+            m.bitrate_samples = pub_quality_samples
+
         m.trace_bandwidth_samples = list(self.trace_bandwidth_samples)
         m.calculate_statistics()
         return m
@@ -2109,7 +2138,7 @@ class MOQBenchmark:
     def print_results(self):
         m = self.metrics
         print("\n" + "=" * 70)
-        print("  BENCHMARK RESULTS (MOQ / WebTransport/QUIC)")
+        print("  BENCHMARK RESULTS (MOQ / moq-dev official stack)")
         print("=" * 70)
         print(f"\n  [TIMING]")
         print(f"      Startup delay:     {m.startup_delay_ms:,.0f} ms")
@@ -2456,11 +2485,18 @@ def setup_trace(trace_path: Path, protocol: str = "dash", skip_restart: bool = F
         shutil.copy(trace_path, shaper_trace)
     print(f"[TRACE] {trace_path.name}")
 
+    # lldash-gpac uses in-process trace pacing (gpac_server.py reads shaper/trace/trace.csv).
+    # No tc/netem container to notify — just copying the trace file is enough.
+    if protocol == 'lldash-gpac':
+        print(f"[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.")
+        time.sleep(1)
+        return
+
     # Protocols that use tc/netem directly inside their own container
     _direct_shapers = {
         "dash":   "http://localhost:8080",
         "hls":    "http://localhost:8080",
-        "lldash": "http://localhost:8081",
+
     }
     if protocol in _direct_shapers:
         url = _direct_shapers[protocol]
@@ -2508,7 +2544,6 @@ def resolve_url(base_url: str, protocol: str, shaped: bool) -> str:
     DASH now uses tc/netem directly inside hls-dash-server (port 8080).
     No nginx proxy hop — port 8080 is always used regardless of shaping.
     """
-    # All other protocols (lldash, hls) keep their existing port behaviour.
     return base_url
 
 
@@ -2518,8 +2553,8 @@ def run_single_benchmark(protocol: str, url: str, duration, output_path: str,
     """Run a single benchmark and save results. Returns True on success."""
     if protocol == "dash":
         benchmark = DASHJSBenchmark(url, duration, protocol_name="dash")
-    elif protocol == "lldash":
-        benchmark = DASHJSBenchmark(url, duration, protocol_name="lldash")
+    elif protocol == "lldash-gpac":
+        benchmark = LLDASHGPACBenchmark(url, duration)
     elif protocol == "hls":
         benchmark = HLSBenchmark(url, duration)
     elif protocol == "moq":
@@ -2584,7 +2619,7 @@ Examples:
   python benchmark.py -p webrtc --duration 60
         """
     )
-    parser.add_argument("--protocol", "-p", choices=["dash", "lldash", "hls", "webrtc", "moq", "moq2"], default="dash",
+    parser.add_argument("--protocol", "-p", choices=["dash", "lldash-gpac", "hls", "webrtc", "moq", "moq2"], default="dash",
                        help="Streaming protocol to benchmark (default: dash)")
     parser.add_argument("--url", default=None,
                        help="Base URL of server (default: auto-detect based on protocol)")
@@ -2617,9 +2652,10 @@ Examples:
         elif args.protocol == "hls":
             # Both page and media from port 8080 — tc/netem shapes inside hls-dash-server
             args.url = "http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8"
-        elif args.protocol == "lldash":
-            # Both page and media from port 8081 — tc/netem shapes inside lldash-server
-            args.url = "http://localhost:8081/?mpd=http://localhost:8081/manifest_ll_2s.mpd"
+        elif args.protocol == "lldash-gpac":
+            # GPAC LL-DASH server started on-demand at port 8082; absolute mpd URL for dash.js
+            p = LLDASHGPACBenchmark.SERVER_PORT
+            args.url = f"http://localhost:{p}/player.html?mpd=http://localhost:{p}/manifest.mpd"
         elif args.protocol == "moq":
             args.url = "http://localhost:8090/player.html"
         elif args.protocol == "moq2":
