@@ -65,13 +65,6 @@ player.initialize(video, mpd, true);
 
 player.on(dashjs.MediaPlayer.events.CAN_PLAY, () => {
   statusEl.textContent = 'Playing';
-  // Capture the initial quality (QUALITY_CHANGE_RENDERED doesn't fire for first selection)
-  if (bitrateHistory.length === 0) {
-    try {
-      const rep = player.getCurrentRepresentationForType('video');
-      if (rep && rep.bandwidth) bitrateHistory.push({ bitrate: rep.bandwidth });
-    } catch (_) {}
-  }
 });
 player.on(dashjs.MediaPlayer.events.PLAYBACK_PLAYING, () => {
   statusEl.textContent = 'Playing';
@@ -101,16 +94,20 @@ player.on(dashjs.MediaPlayer.events.ERROR, e => {
   statusEl.textContent = 'Error: ' + (e.error?.message || JSON.stringify(e.error));
 });
 
-// Track quality switches for bitrateHistory
-player.on(dashjs.MediaPlayer.events.QUALITY_CHANGE_RENDERED, e => {
-  if (e.mediaType !== 'video') return;
+// Poll current representation every 2s — more reliable than QUALITY_CHANGE_RENDERED.
+// rep.bandwidth is always in bps, consistent with the CAN_PLAY capture above.
+let _lastBW = 0;
+setInterval(() => {
   try {
-    const list = player.getBitrateInfoListFor('video');
-    const bps = (list && list[e.newQuality]) ? list[e.newQuality].bitrate : 0;
-    bitrateHistory.push({ bitrate: bps });
-    if (bitrateHistory.length > 1) bitrateSwitchCount++;
+    const rep = player.getCurrentRepresentationForType('video');
+    if (!rep || !rep.bandwidth) return;
+    if (rep.bandwidth !== _lastBW) {
+      bitrateHistory.push({ bitrate: rep.bandwidth });
+      if (_lastBW > 0) bitrateSwitchCount++;
+      _lastBW = rep.bandwidth;
+    }
   } catch (_) {}
-});
+}, 2000);
 
 // Throughput samples from completed fragment loads
 player.on(dashjs.MediaPlayer.events.FRAGMENT_LOADING_COMPLETED, e => {
