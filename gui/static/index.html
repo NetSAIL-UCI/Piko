@@ -2,403 +2,449 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Streaming Benchmark Dashboard</title>
+<title>Benchmark Lab</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 <style>
-/* ── reset / base ─────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --bg:      #0f1117;
-  --surface: #1a1d27;
-  --card:    #21263a;
-  --border:  #2e3450;
-  --text:    #d4d8f0;
-  --muted:   #7880a4;
-  --accent:  #5b7fff;
-  --green:   #3ecf70;
-  --red:     #ff5c5c;
-  --yellow:  #f5c842;
-  --orange:  #f0843a;
+  --bg:       #080b12;
+  --surface:  #0e1320;
+  --card:     #111827;
+  --border:   #1e2a3a;
+  --text:     #c9d1e0;
+  --muted:    #506070;
+  --accent:   #4f7cf7;
+  --green:    #2dd4a0;
+  --red:      #f55f5f;
+  --yellow:   #f0c04a;
+  --orange:   #e07840;
 
-  --dash:      #5b7fff;
-  --lldash-gpac:#3ecf70;
-  --hls:       #f0843a;
-  --webrtc:    #c97bff;
-  --moq2:      #ff6b9d;
+  --c-dash:       #4f7cf7;
+  --c-lldash-gpac:#2dd4a0;
+  --c-hls:        #e07840;
+  --c-webrtc:     #a87cf7;
+  --c-moq2:       #f76490;
 }
-html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; }
-a { color: var(--accent); text-decoration: none; }
-button { cursor: pointer; font: inherit; border: none; border-radius: 6px; padding: 7px 14px; transition: opacity .15s; }
-button:hover { opacity: .85; }
-button:disabled { opacity: .4; cursor: default; }
-select, input[type=number], input[type=text] {
-  background: var(--card); color: var(--text); border: 1px solid var(--border);
-  border-radius: 6px; padding: 6px 10px; font: inherit;
-}
-input[type=checkbox] { accent-color: var(--accent); width: 14px; height: 14px; }
-h2 { font-size: 1.1rem; font-weight: 600; color: #fff; }
-h3 { font-size: .95rem; font-weight: 600; color: var(--text); }
 
-/* ── layout ───────────────────────────────────────────────── */
-#app { display: grid; grid-template-columns: 220px 1fr; height: 100vh; overflow: hidden; }
-#sidebar {
-  background: var(--surface); border-right: 1px solid var(--border);
-  display: flex; flex-direction: column; overflow-y: auto;
-}
+html, body { height: 100%; background: var(--bg); color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif; font-size: 13px; line-height: 1.5; }
+
+/* ── scrollbars ── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* ── layout ── */
+#app { display: grid; grid-template-columns: 200px 1fr; height: 100vh; overflow: hidden; }
+#sidebar { background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; }
 #main { display: flex; flex-direction: column; overflow: hidden; }
 
-/* ── nav ──────────────────────────────────────────────────── */
-.nav-logo {
-  padding: 18px 16px 10px; font-size: .85rem; font-weight: 700;
-  letter-spacing: .08em; color: var(--accent); text-transform: uppercase;
-}
-.nav-item {
-  display: flex; align-items: center; gap: 10px; padding: 9px 16px;
-  cursor: pointer; border-radius: 0; transition: background .12s; color: var(--muted);
-  font-size: .88rem; user-select: none;
-}
-.nav-item:hover { background: var(--card); color: var(--text); }
-.nav-item.active { background: rgba(91,127,255,.15); color: var(--accent); font-weight: 600; }
-.nav-icon { font-size: 1rem; width: 18px; text-align: center; }
-.nav-section { padding: 10px 16px 4px; font-size: .7rem; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-top: 8px; }
+/* ── sidebar ── */
+.logo { padding: 20px 18px 14px; font-size: .75rem; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--accent); }
+.nav-group { padding: 6px 0 10px; }
+.nav-label { padding: 4px 18px; font-size: .65rem; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--muted); }
+.nav-item { display: flex; align-items: center; gap: 9px; padding: 7px 18px; cursor: pointer;
+  color: var(--muted); font-size: .82rem; transition: color .12s, background .12s; }
+.nav-item:hover { color: var(--text); background: rgba(255,255,255,.03); }
+.nav-item.active { color: #fff; background: rgba(79,124,247,.12); }
+.nav-item .icon { font-size: .9rem; width: 16px; text-align: center; }
 
-/* ── page views ───────────────────────────────────────────── */
-.page { display: none; flex: 1; overflow-y: auto; padding: 24px; }
+/* ── page ── */
+.page { display: none; flex: 1; overflow-y: auto; padding: 28px 32px; }
 .page.active { display: block; }
+.page-header { margin-bottom: 24px; }
+.page-header h1 { font-size: 1.1rem; font-weight: 600; color: #fff; }
+.page-header p  { font-size: .8rem; color: var(--muted); margin-top: 3px; }
 
-/* ── cards ────────────────────────────────────────────────── */
-.card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 16px; }
-.card-title { font-size: .8rem; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 12px; }
+/* ── stat row ── */
+.stat-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px,1fr)); gap: 10px; margin-bottom: 24px; }
+.stat-box { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+.stat-label { font-size: .7rem; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 6px; }
+.stat-value { font-size: 1.5rem; font-weight: 600; color: #fff; letter-spacing: -.02em; }
+.stat-sub   { font-size: .7rem; color: var(--muted); margin-top: 2px; }
 
-/* ── stat grid ────────────────────────────────────────────── */
-.stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); gap: 12px; }
-.stat-box { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
-.stat-label { font-size: .75rem; color: var(--muted); margin-bottom: 6px; }
-.stat-value { font-size: 1.4rem; font-weight: 700; color: #fff; }
-.stat-unit  { font-size: .7rem; color: var(--muted); margin-left: 3px; }
+/* ── card ── */
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+  padding: 18px 20px; margin-bottom: 16px; }
+.card-title { font-size: .7rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--muted); margin-bottom: 14px; }
 
-/* ── protocol badge ───────────────────────────────────────── */
-.proto-badge {
-  display: inline-block; padding: 2px 8px; border-radius: 4px;
-  font-size: .75rem; font-weight: 600; text-transform: uppercase;
-}
-.proto-dash      { background: rgba(91,127,255,.2);  color: var(--dash); }
-.proto-lldash-gpac { background: rgba(62,207,112,.2); color: var(--lldash-gpac); }
-.proto-hls       { background: rgba(240,132,58,.2);  color: var(--hls); }
-.proto-webrtc    { background: rgba(201,123,255,.2); color: var(--webrtc); }
-.proto-moq2      { background: rgba(255,107,157,.2); color: var(--moq2); }
+/* ── table ── */
+.tbl { width: 100%; border-collapse: collapse; font-size: .8rem; }
+.tbl th { text-align: left; padding: 7px 12px; color: var(--muted); font-weight: 500;
+  font-size: .7rem; text-transform: uppercase; letter-spacing: .06em;
+  border-bottom: 1px solid var(--border); white-space: nowrap; }
+.tbl td { padding: 8px 12px; border-bottom: 1px solid rgba(30,42,58,.6); vertical-align: middle; }
+.tbl tr:last-child td { border-bottom: none; }
+.tbl tr:hover td { background: rgba(79,124,247,.04); }
+.tbl .r { text-align: right; font-variant-numeric: tabular-nums; }
+.good { color: var(--green); }
+.bad  { color: var(--red); }
+.warn { color: var(--yellow); }
 
-/* ── status pill ──────────────────────────────────────────── */
-.pill { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: .72rem; font-weight: 600; }
-.pill-running { background: rgba(91,127,255,.2); color: var(--accent); }
-.pill-done    { background: rgba(62,207,112,.2); color: var(--green); }
-.pill-error   { background: rgba(255,92,92,.2);  color: var(--red); }
-.pill-stopped { background: rgba(120,128,164,.2);color: var(--muted); }
+/* ── proto badge ── */
+.badge { display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px;
+  border-radius: 4px; font-size: .68rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+.badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.b-dash       { background: rgba(79,124,247,.15); color: var(--c-dash); }
+.b-lldash-gpac{ background: rgba(45,212,160,.15); color: var(--c-lldash-gpac); }
+.b-hls        { background: rgba(224,120,64,.15);  color: var(--c-hls); }
+.b-webrtc     { background: rgba(168,124,247,.15); color: var(--c-webrtc); }
+.b-moq2       { background: rgba(247,100,144,.15); color: var(--c-moq2); }
 
-/* ── table ────────────────────────────────────────────────── */
-.tbl { width: 100%; border-collapse: collapse; font-size: .82rem; }
-.tbl th { text-align: left; padding: 8px 10px; color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--border); white-space: nowrap; }
-.tbl td { padding: 8px 10px; border-bottom: 1px solid rgba(46,52,80,.5); vertical-align: middle; }
-.tbl tr:hover td { background: rgba(91,127,255,.04); }
-.tbl .num { text-align: right; font-variant-numeric: tabular-nums; }
-.tbl .good { color: var(--green); }
-.tbl .bad  { color: var(--red); }
-.tbl .warn { color: var(--yellow); }
+/* ── pill ── */
+.pill { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: .68rem; font-weight: 600; }
+.pill-running { background: rgba(79,124,247,.2); color: var(--accent); }
+.pill-done    { background: rgba(45,212,160,.2);  color: var(--green); }
+.pill-error   { background: rgba(245,95,95,.2);   color: var(--red); }
+.pill-stopped { background: rgba(80,96,112,.2);   color: var(--muted); }
 
-/* ── log console ──────────────────────────────────────────── */
-#run-log {
-  background: #0a0c13; border: 1px solid var(--border); border-radius: 8px;
-  padding: 12px; font-family: monospace; font-size: .78rem; color: #a8b4d0;
-  height: 340px; overflow-y: auto; white-space: pre-wrap; word-break: break-all;
-}
-#run-log .log-err  { color: var(--red); }
-#run-log .log-warn { color: var(--yellow); }
-#run-log .log-good { color: var(--green); }
-#run-log .log-head { color: var(--accent); font-weight: bold; }
+/* ── chart ── */
+.chart-wrap { position: relative; }
+.chart-wrap canvas { display: block; }
 
-/* ── trace checklist ──────────────────────────────────────── */
-.trace-list { display: grid; grid-template-columns: repeat(auto-fill,minmax(200px,1fr)); gap: 6px; margin-top: 8px; }
-.trace-item { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; cursor: pointer; }
+/* ── compare toggles ── */
+.proto-toggles { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+.ptoggle { display: flex; align-items: center; gap: 6px; padding: 5px 12px;
+  border-radius: 20px; border: 1px solid transparent; cursor: pointer;
+  font-size: .75rem; font-weight: 500; transition: opacity .15s; user-select: none; }
+.ptoggle.on  { border-color: currentColor; background: rgba(255,255,255,.04); }
+.ptoggle.off { opacity: .3; }
+
+/* ── trace list ── */
+.trace-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(190px,1fr)); gap: 6px; margin-top: 8px; }
+.trace-item { display: flex; align-items: center; gap: 8px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 6px; padding: 7px 10px; cursor: pointer; transition: border-color .12s; }
 .trace-item:hover { border-color: var(--accent); }
-.trace-item label { cursor: pointer; font-size: .82rem; user-select: none; }
+.trace-item label { cursor: pointer; font-size: .8rem; color: var(--text); user-select: none; }
+input[type=checkbox] { accent-color: var(--accent); }
 
-/* ── compare page ─────────────────────────────────────────── */
-.compare-controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; }
-.proto-toggle { display: flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 6px; border: 1px solid var(--border); cursor: pointer; font-size: .82rem; user-select: none; }
-.proto-toggle.on  { border-color: currentColor; background: rgba(255,255,255,.05); }
-.proto-toggle.off { opacity: .4; }
-.chart-wrap { position: relative; height: 260px; }
+/* ── log ── */
+.log-box { background: #05080e; border: 1px solid var(--border); border-radius: 6px;
+  padding: 12px 14px; font-family: 'SF Mono', 'Fira Mono', monospace; font-size: .72rem;
+  color: #7a8fa8; height: 340px; overflow-y: auto; white-space: pre-wrap; word-break: break-all; }
+.log-box .le { color: var(--red); }
+.log-box .lw { color: var(--yellow); }
+.log-box .lg { color: var(--green); }
+.log-box .lh { color: var(--accent); font-weight: 600; }
 
-/* ── detail modal ─────────────────────────────────────────── */
-#modal-overlay {
-  display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6);
-  z-index: 100; align-items: center; justify-content: center;
-}
-#modal-overlay.open { display: flex; }
-#modal {
-  background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-  width: 760px; max-height: 85vh; overflow-y: auto; padding: 24px;
-}
-#modal-close { float: right; background: var(--surface); color: var(--muted); padding: 4px 10px; }
+/* ── run split layout ── */
+.run-split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 900px) { .run-split { grid-template-columns: 1fr; } }
+.run-metrics { display: flex; flex-direction: column; gap: 10px; }
+.run-mini-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.run-mini-stat { background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+  padding: 8px 10px; text-align: center; }
+.run-mini-stat .val { font-size: 1.05rem; font-weight: 600; color: var(--text); line-height: 1.2; }
+.run-mini-stat .lbl { font-size: .65rem; color: var(--muted); text-transform: uppercase;
+  letter-spacing: .06em; margin-top: 3px; }
+.run-chart-box { background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+  padding: 10px 12px; flex: 1; min-height: 0; }
+.run-chart-box .rct { font-size: .68rem; color: var(--muted); text-transform: uppercase;
+  letter-spacing: .06em; margin-bottom: 6px; }
+.run-metrics-empty { display: flex; align-items: center; justify-content: center;
+  height: 100%; color: var(--muted); font-size: .78rem; background: var(--bg);
+  border: 1px solid var(--border); border-radius: 6px; padding: 20px; text-align: center; }
 
-/* ── misc ─────────────────────────────────────────────────── */
-.flex-row  { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
-.grow      { flex: 1; }
-.mt8       { margin-top: 8px; }
-.mt16      { margin-top: 16px; }
-.mb16      { margin-bottom: 16px; }
-.dim       { color: var(--muted); }
-.separator { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
-.empty-state { text-align: center; padding: 48px; color: var(--muted); }
-.spin { animation: spin 1s linear infinite; display: inline-block; }
-@keyframes spin { to { transform: rotate(360deg); } }
+/* ── modal ── */
+#overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.7);
+  z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
+#overlay.open { display: flex; }
+#modal { background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  width: min(820px, 94vw); max-height: 88vh; overflow-y: auto; padding: 26px 28px; position: relative; }
+#modal-close { position: absolute; top: 16px; right: 16px; background: var(--surface);
+  color: var(--muted); border: 1px solid var(--border); border-radius: 6px;
+  padding: 4px 10px; cursor: pointer; font-size: .78rem; }
+
+/* ── form elements ── */
+select, input[type=number], input[type=text] {
+  background: var(--surface); color: var(--text); border: 1px solid var(--border);
+  border-radius: 6px; padding: 6px 10px; font: inherit; font-size: .82rem; }
+select:focus, input:focus { outline: none; border-color: var(--accent); }
+button { cursor: pointer; font: inherit; border: none; border-radius: 6px;
+  padding: 7px 16px; font-size: .82rem; transition: opacity .12s; }
+button:hover { opacity: .85; }
+button:disabled { opacity: .35; cursor: default; }
+.btn-primary { background: var(--accent); color: #fff; font-weight: 500; }
+.btn-ghost   { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+.btn-danger  { background: var(--red); color: #fff; }
+
+/* ── misc ── */
+.flex { display: flex; align-items: center; }
+.gap8 { gap: 8px; }
+.gap12 { gap: 12px; }
+.grow { flex: 1; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.mt16 { margin-top: 16px; }
+.mb8  { margin-bottom: 8px; }
+.empty { text-align: center; padding: 48px; color: var(--muted); font-size: .85rem; }
+.dim { color: var(--muted); }
 </style>
 </head>
 <body>
 <div id="app">
-  <!-- ── sidebar ── -->
-  <nav id="sidebar">
-    <div class="nav-logo">⚡ Benchmark Lab</div>
-    <div class="nav-section">Dashboard</div>
-    <div class="nav-item active" data-page="overview">   <span class="nav-icon">📊</span> Overview</div>
-    <div class="nav-section">Benchmark</div>
-    <div class="nav-item" data-page="run">               <span class="nav-icon">▶</span> Run</div>
-    <div class="nav-item" data-page="progress">          <span class="nav-icon">📋</span> Progress</div>
-    <div class="nav-section">Analysis</div>
-    <div class="nav-item" data-page="compare">           <span class="nav-icon">⚖</span> Compare</div>
-    <div class="nav-item" data-page="results">           <span class="nav-icon">📁</span> All Results</div>
-  </nav>
 
-  <!-- ── main ── -->
-  <div id="main">
+<!-- sidebar -->
+<nav id="sidebar">
+  <div class="logo">Benchmark Lab</div>
+  <div class="nav-group">
+    <div class="nav-label">Dashboard</div>
+    <div class="nav-item active" data-page="overview"><span class="icon">◈</span> Overview</div>
+  </div>
+  <div class="nav-group">
+    <div class="nav-label">Benchmark</div>
+    <div class="nav-item" data-page="run"><span class="icon">▷</span> Run</div>
+    <div class="nav-item" data-page="progress"><span class="icon">≡</span> Progress</div>
+  </div>
+  <div class="nav-group">
+    <div class="nav-label">Analysis</div>
+    <div class="nav-item" data-page="compare"><span class="icon">⊞</span> Compare</div>
+    <div class="nav-item" data-page="results"><span class="icon">◫</span> Results</div>
+  </div>
+</nav>
 
-    <!-- Overview -->
-    <div class="page active" id="page-overview">
-      <h2 class="mb16">Overview</h2>
-      <div id="overview-stats" class="stat-grid mb16">
-        <div class="stat-box"><div class="stat-label">Total Runs</div><div class="stat-value" id="ov-total">—</div></div>
-        <div class="stat-box"><div class="stat-label">Protocols</div><div class="stat-value" id="ov-protos">—</div></div>
-        <div class="stat-box"><div class="stat-label">Traces Available</div><div class="stat-value" id="ov-traces">—</div></div>
-        <div class="stat-box"><div class="stat-label">Active Runs</div><div class="stat-value" id="ov-active">—</div></div>
-      </div>
+<!-- main -->
+<div id="main">
 
-      <div class="card">
-        <div class="card-title">Protocol Summary (avg across all runs)</div>
-        <div style="overflow-x:auto">
-        <table class="tbl" id="overview-table">
-          <thead><tr>
-            <th>Protocol</th><th class="num">Runs</th>
-            <th class="num">Avg Bitrate<br><small>kbps</small></th>
-            <th class="num">Avg Buffer<br><small>s</small></th>
-            <th class="num">Rebuffers</th>
-            <th class="num">Rebuffer<br><small>ms</small></th>
-            <th class="num">Startup<br><small>ms</small></th>
-            <th class="num">Throughput<br><small>kbps</small></th>
-          </tr></thead>
-          <tbody id="overview-body"></tbody>
-        </table>
-        </div>
-      </div>
+<!-- ── Overview ── -->
+<div class="page active" id="page-overview">
+  <div class="page-header">
+    <h1>Overview</h1>
+    <p>Aggregate performance across all benchmarked runs</p>
+  </div>
+  <div class="stat-row" id="ov-stats">
+    <div class="stat-box"><div class="stat-label">Total Runs</div><div class="stat-value" id="ov-total">—</div></div>
+    <div class="stat-box"><div class="stat-label">Protocols</div><div class="stat-value" id="ov-protos">—</div></div>
+    <div class="stat-box"><div class="stat-label">Traces</div><div class="stat-value" id="ov-traces">—</div></div>
+    <div class="stat-box"><div class="stat-label">Active Runs</div><div class="stat-value" id="ov-active">0</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Protocol Summary — avg across all runs</div>
+    <table class="tbl" id="ov-table">
+      <thead><tr>
+        <th>Protocol</th><th class="r">Runs</th>
+        <th class="r">Avg Bitrate</th><th class="r">Rebuffers</th>
+        <th class="r">Stall Time</th><th class="r">Startup</th>
+        <th class="r">Buffer</th><th class="r">Throughput</th>
+      </tr></thead>
+      <tbody id="ov-body"></tbody>
+    </table>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">Avg Bitrate by Protocol</div>
+      <div class="chart-wrap" style="height:200px"><canvas id="ov-chart-bitrate"></canvas></div>
     </div>
-
-    <!-- Run -->
-    <div class="page" id="page-run">
-      <h2 class="mb16">New Benchmark Run</h2>
-      <div class="card">
-        <div class="card-title">Configuration</div>
-        <div class="flex-row mb16">
-          <div>
-            <label class="dim" style="display:block;margin-bottom:4px;font-size:.8rem">Protocol</label>
-            <select id="run-protocol">
-              <option value="dash">DASH</option>
-              <option value="lldash-gpac" selected>LL-DASH (GPAC)</option>
-              <option value="hls">HLS</option>
-              <option value="webrtc">WebRTC</option>
-              <option value="moq2">MOQ2</option>
-            </select>
-          </div>
-          <div>
-            <label class="dim" style="display:block;margin-bottom:4px;font-size:.8rem">Duration (s)</label>
-            <input type="number" id="run-duration" value="120" min="10" max="600" style="width:90px">
-          </div>
-          <div>
-            <label class="dim" style="display:block;margin-bottom:4px;font-size:.8rem">Results Folder</label>
-            <input type="text" id="run-results-dir" placeholder="auto" style="width:180px">
-          </div>
-        </div>
-
-        <div class="card-title mt8">Traces <span class="dim" style="font-size:.75rem">(leave all unchecked to run all)</span></div>
-        <div class="flex-row mb16" style="gap:8px">
-          <button onclick="selectAllTraces(true)"  style="background:var(--surface);color:var(--text);font-size:.78rem">Select All</button>
-          <button onclick="selectAllTraces(false)" style="background:var(--surface);color:var(--text);font-size:.78rem">Clear</button>
-        </div>
-        <div class="trace-list" id="trace-list"></div>
-      </div>
-
-      <div class="flex-row mt16">
-        <button id="run-btn" onclick="startRun()" style="background:var(--accent);color:#fff;font-size:.95rem;padding:9px 24px">▶ Start Run</button>
-        <span id="run-status-msg" class="dim"></span>
-      </div>
+    <div class="card">
+      <div class="card-title">Startup Time by Protocol</div>
+      <div class="chart-wrap" style="height:200px"><canvas id="ov-chart-startup"></canvas></div>
     </div>
+  </div>
+</div>
 
-    <!-- Progress -->
-    <div class="page" id="page-progress">
-      <h2 class="mb16">Run Progress</h2>
-      <div id="no-runs" class="empty-state" style="display:none">No active or recent runs.</div>
-      <div id="runs-list"></div>
-    </div>
-
-    <!-- Compare -->
-    <div class="page" id="page-compare">
-      <h2 class="mb16">Protocol Comparison</h2>
-      <div class="compare-controls" id="proto-toggles"></div>
-
-      <div class="card mb16">
-        <div class="card-title">Average Bitrate (kbps)</div>
-        <div class="chart-wrap"><canvas id="chart-bitrate"></canvas></div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-        <div class="card">
-          <div class="card-title">Rebuffer Count</div>
-          <div class="chart-wrap"><canvas id="chart-rebuf-count"></canvas></div>
-        </div>
-        <div class="card">
-          <div class="card-title">Total Rebuffer Time (ms)</div>
-          <div class="chart-wrap"><canvas id="chart-rebuf-ms"></canvas></div>
-        </div>
-        <div class="card">
-          <div class="card-title">Startup Time (ms)</div>
-          <div class="chart-wrap"><canvas id="chart-startup"></canvas></div>
-        </div>
-        <div class="card">
-          <div class="card-title">Avg Buffer Level (s)</div>
-          <div class="chart-wrap"><canvas id="chart-buffer"></canvas></div>
-        </div>
-      </div>
-
-      <div class="card mt16">
-        <div class="card-title">Per-Trace Breakdown</div>
-        <div style="overflow-x:auto">
-        <table class="tbl" id="compare-table">
-          <thead><tr>
-            <th>Trace Unit</th>
-            <th class="num">Avg Bitrate</th>
-            <th class="num">Buffer (s)</th>
-            <th class="num">Rebuffers</th>
-            <th class="num">Rebuffer (ms)</th>
-            <th class="num">Startup (ms)</th>
-            <th class="num">Throughput</th>
-          </tr></thead>
-          <tbody id="compare-body"></tbody>
-        </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- All Results -->
-    <div class="page" id="page-results">
-      <div class="flex-row mb16">
-        <h2 class="grow">All Results</h2>
-        <select id="results-filter-proto" onchange="renderResults()">
-          <option value="">All Protocols</option>
+<!-- ── Run ── -->
+<div class="page" id="page-run">
+  <div class="page-header"><h1>New Run</h1><p>Configure and launch a benchmark</p></div>
+  <div class="card">
+    <div class="card-title">Configuration</div>
+    <div class="flex gap12 mb8" style="flex-wrap:wrap">
+      <div>
+        <div class="dim mb8" style="font-size:.72rem;text-transform:uppercase;letter-spacing:.07em">Protocol</div>
+        <select id="run-proto">
+          <option value="lldash-gpac">LL-DASH (GPAC)</option>
           <option value="dash">DASH</option>
-          <option value="lldash-gpac">LL-DASH-GPAC</option>
           <option value="hls">HLS</option>
           <option value="webrtc">WebRTC</option>
           <option value="moq2">MOQ2</option>
         </select>
-        <input type="text" id="results-filter-unit" placeholder="Filter unit…" oninput="renderResults()" style="width:130px">
       </div>
-      <div class="card">
-        <div style="overflow-x:auto">
-        <table class="tbl" id="results-table">
-          <thead><tr>
-            <th>Protocol</th><th>Unit</th><th>Timestamp</th>
-            <th class="num">Bitrate<br><small>kbps</small></th>
-            <th class="num">Buffer<br><small>s</small></th>
-            <th class="num">Rebuf<br><small>#</small></th>
-            <th class="num">Rebuf<br><small>ms</small></th>
-            <th class="num">Startup<br><small>ms</small></th>
-            <th class="num">Throughput<br><small>kbps</small></th>
-            <th></th>
-          </tr></thead>
-          <tbody id="results-body"></tbody>
-        </table>
-        </div>
+      <div>
+        <div class="dim mb8" style="font-size:.72rem;text-transform:uppercase;letter-spacing:.07em">Duration (s)</div>
+        <input type="number" id="run-dur" value="120" min="10" max="600" style="width:90px">
+      </div>
+      <div>
+        <div class="dim mb8" style="font-size:.72rem;text-transform:uppercase;letter-spacing:.07em">Results Folder</div>
+        <input type="text" id="run-dir" placeholder="auto" style="width:200px">
       </div>
     </div>
+  </div>
 
-  </div><!-- /main -->
+  <div class="card">
+    <div class="card-title">Traces &nbsp;<span class="dim" style="font-weight:400;text-transform:none;letter-spacing:0">— leave all unchecked to run all</span></div>
+    <div class="flex gap12 mb8" style="flex-wrap:wrap;align-items:flex-end">
+      <div>
+        <div class="dim mb8" style="font-size:.72rem;text-transform:uppercase;letter-spacing:.07em">Trace Set</div>
+        <select id="run-trace-set" onchange="renderTraceList()"></select>
+      </div>
+      <div class="flex gap8">
+        <button class="btn-ghost" style="font-size:.75rem" onclick="selTraces(true)">Select All</button>
+        <button class="btn-ghost" style="font-size:.75rem" onclick="selTraces(false)">Clear</button>
+      </div>
+    </div>
+    <div class="trace-grid" id="trace-list"></div>
+  </div>
+
+  <div class="flex gap12 mt16">
+    <button class="btn-primary" id="run-btn" onclick="startRun()">▷ Start Run</button>
+    <span class="dim" id="run-msg" style="font-size:.8rem"></span>
+  </div>
+</div>
+
+<!-- ── Progress ── -->
+<div class="page" id="page-progress">
+  <div class="page-header"><h1>Progress</h1><p>Terminal output and live metrics side-by-side</p></div>
+  <div class="empty" id="no-runs">No runs yet.</div>
+  <div id="runs-list"></div>
+</div>
+
+<!-- ── Compare ── -->
+<div class="page" id="page-compare">
+  <div class="page-header"><h1>Compare</h1><p>Protocol performance across all traces</p></div>
+  <div class="proto-toggles" id="proto-toggles"></div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">Avg Bitrate (kbps)</div>
+      <div class="chart-wrap" style="height:220px"><canvas id="c-bitrate"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Total Rebuffer Time (ms)</div>
+      <div class="chart-wrap" style="height:220px"><canvas id="c-rebuf-ms"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Startup Time (ms)</div>
+      <div class="chart-wrap" style="height:220px"><canvas id="c-startup"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Avg Buffer Level (s)</div>
+      <div class="chart-wrap" style="height:220px"><canvas id="c-buffer"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card mt16">
+    <div class="card-title">Per-Trace — Rebuffer Time (ms)</div>
+    <div class="chart-wrap" style="height:260px"><canvas id="c-per-trace"></canvas></div>
+  </div>
+</div>
+
+<!-- ── Results ── -->
+<div class="page" id="page-results">
+  <div class="page-header">
+    <div class="flex gap12">
+      <div class="grow"><h1>Results</h1><p>All saved benchmark runs</p></div>
+      <select id="rf-proto" onchange="renderResults()">
+        <option value="">All Protocols</option>
+        <option value="dash">DASH</option>
+        <option value="lldash-gpac">LL-DASH-GPAC</option>
+        <option value="hls">HLS</option>
+        <option value="webrtc">WebRTC</option>
+        <option value="moq2">MOQ2</option>
+      </select>
+      <input type="text" id="rf-unit" placeholder="Filter unit…" oninput="renderResults()" style="width:120px">
+    </div>
+  </div>
+  <div class="card">
+    <table class="tbl">
+      <thead><tr>
+        <th>Protocol</th><th>Unit</th><th>Timestamp</th>
+        <th class="r">Bitrate</th><th class="r">Buffer</th>
+        <th class="r">Rebuf #</th><th class="r">Rebuf ms</th>
+        <th class="r">Startup</th><th class="r">Throughput</th>
+        <th style="width:80px"></th>
+      </tr></thead>
+      <tbody id="res-body"></tbody>
+    </table>
+  </div>
+</div>
+
+</div><!-- /main -->
 </div><!-- /app -->
 
-<!-- Detail Modal -->
-<div id="modal-overlay">
+<!-- detail modal -->
+<div id="overlay">
   <div id="modal">
-    <button id="modal-close" onclick="closeModal()">✕ Close</button>
+    <button id="modal-close" onclick="closeModal()">✕</button>
     <div id="modal-content"></div>
   </div>
 </div>
 
 <script>
-// ── state ───────────────────────────────────────────────────────────────────
-const PROTOCOLS = ['dash','lldash-gpac','hls','webrtc','moq2'];
-const PROTO_COLORS = {
-  'dash':       '#5b7fff',
+// ── constants ────────────────────────────────────────────────────────────────
+const PROTOS = ['dash','lldash-gpac','hls','webrtc','moq2'];
+const PC = { dash:'#4f7cf7', 'lldash-gpac':'#2dd4a0', hls:'#e07840', webrtc:'#a87cf7', moq2:'#f76490' };
 
-  'lldash-gpac':'#3ecf70',
-  'hls':        '#f0843a',
-  'webrtc':     '#c97bff',
-  'moq2':       '#ff6b9d',
-};
+// ── state ────────────────────────────────────────────────────────────────────
+let allResults  = {};
+let allTraceSets = {};   // set_id → {label, traces:[]}
+let activeProtos = new Set(PROTOS);
+let charts = {};
 
-let allResults   = {};   // protocol → [entries]
-let allTraces    = [];
-let activeProtos = new Set(PROTOCOLS);
-let charts       = {};
-let activeRunId  = null;
-let activeRunSSE = null;
-
-// ── navigation ──────────────────────────────────────────────────────────────
+// ── nav ──────────────────────────────────────────────────────────────────────
 document.querySelectorAll('.nav-item').forEach(el => {
   el.addEventListener('click', () => {
     document.querySelectorAll('.nav-item').forEach(e => e.classList.remove('active'));
     document.querySelectorAll('.page').forEach(e => e.classList.remove('active'));
     el.classList.add('active');
     document.getElementById('page-' + el.dataset.page).classList.add('active');
-    if (el.dataset.page === 'compare') renderCompare();
-    if (el.dataset.page === 'results') renderResults();
-    if (el.dataset.page === 'overview') renderOverview();
-    if (el.dataset.page === 'progress') renderProgress();
+    const p = el.dataset.page;
+    if (p === 'overview') renderOverview();
+    if (p === 'compare')  renderCompare();
+    if (p === 'results')  renderResults();
+    if (p === 'progress') renderProgress();
   });
 });
 
-// ── data loading ─────────────────────────────────────────────────────────────
+// ── data ─────────────────────────────────────────────────────────────────────
 async function loadAll() {
   const [res, tr] = await Promise.all([
     fetch('/api/results').then(r => r.json()),
     fetch('/api/traces').then(r => r.json()),
   ]);
-  allResults = res;
-  allTraces  = tr;
+  allResults   = res;
+  allTraceSets = tr;
+  return res;
+  // populate trace-set selector once
+  const sel = document.getElementById('run-trace-set');
+  if (sel && sel.options.length === 0) {
+    for (const [id, meta] of Object.entries(tr)) {
+      const opt = document.createElement('option');
+      opt.value = id;
+      opt.textContent = `${meta.label} (${meta.traces.length})`;
+      sel.appendChild(opt);
+    }
+  }
   renderTraceList();
-  renderOverview();
-  buildProtoToggles();
+  if (document.querySelector('#page-overview.active')) renderOverview();
+  if (document.querySelector('#page-compare.active'))  renderCompare();
+  if (document.querySelector('#page-results.active'))  renderResults();
 }
 
-// ── traces ───────────────────────────────────────────────────────────────────
+// ── trace list ────────────────────────────────────────────────────────────────
 function renderTraceList() {
-  const el = document.getElementById('trace-list');
-  el.innerHTML = allTraces.map(t => `
-    <label class="trace-item">
-      <input type="checkbox" class="trace-cb" value="${t.name}">
-      <span>${t.name.replace('fcc2016_sept_','').replace('_tc.csv','')}</span>
-    </label>`).join('');
+  const setId  = document.getElementById('run-trace-set')?.value || Object.keys(allTraceSets)[0];
+  const traces = allTraceSets[setId]?.traces || [];
+  document.getElementById('trace-list').innerHTML = traces.map(t => {
+    const label = t.name
+      .replace(/^fcc\d+_\d+_/, '')   // fcc2016_201609_
+      .replace(/^fcc2016_[a-z]+_/, '') // fcc2016_sept_
+      .replace(/^starlink-/, '')
+      .replace(/^hsdpa_/, '')
+      .replace(/_tc\.csv$/, '');
+    return `<label class="trace-item">
+      <input type="checkbox" class="tcb" value="${t.name}">
+      <span>${label}</span>
+    </label>`;
+  }).join('');
 }
-function selectAllTraces(v) {
-  document.querySelectorAll('.trace-cb').forEach(cb => cb.checked = v);
-}
+function selTraces(v) { document.querySelectorAll('.tcb').forEach(cb => cb.checked = v); }
 
-// ── overview ─────────────────────────────────────────────────────────────────
+// ── overview ──────────────────────────────────────────────────────────────────
 function renderOverview() {
   let total = 0;
   const rows = [];
@@ -406,330 +452,453 @@ function renderOverview() {
     if (!entries.length) continue;
     total += entries.length;
     const avg = k => {
-      const vs = entries.map(e => e[k]).filter(v => v != null && v > 0);
+      const vs = entries.map(e => e[k]).filter(v => v != null && v >= 0);
       return vs.length ? vs.reduce((a,b)=>a+b,0)/vs.length : null;
     };
-    rows.push({ proto, n: entries.length,
-      avg_bitrate: avg('avg_bitrate'), avg_buffer: avg('avg_buffer_s'),
-      rebuf_count: avg('rebuf_count'), rebuf_ms: avg('rebuf_ms'),
-      startup_ms: avg('startup_ms'), avg_throughput: avg('avg_throughput'),
-    });
+    rows.push({ proto, n: entries.length, avg_bitrate: avg('avg_bitrate'),
+      avg_buffer: avg('avg_buffer_s'), rebuf_count: avg('rebuf_count'),
+      rebuf_ms: avg('rebuf_ms'), startup_ms: avg('startup_ms'), avg_tp: avg('avg_throughput') });
   }
   document.getElementById('ov-total').textContent  = total;
   document.getElementById('ov-protos').textContent = rows.length;
-  document.getElementById('ov-traces').textContent = allTraces.length;
-  document.getElementById('ov-active').textContent = '—';
+  const totalTraces = Object.values(allTraceSets).reduce((s,ts)=>s+ts.traces.length,0);
+  document.getElementById('ov-traces').textContent = totalTraces;
 
-  const body = document.getElementById('overview-body');
-  body.innerHTML = rows.sort((a,b)=>a.proto.localeCompare(b.proto)).map(r => `
+  rows.sort((a,b) => a.proto.localeCompare(b.proto));
+  document.getElementById('ov-body').innerHTML = rows.map(r => `
     <tr>
-      <td><span class="proto-badge proto-${r.proto}">${r.proto}</span></td>
-      <td class="num">${r.n}</td>
-      <td class="num">${fmt(r.avg_bitrate,0)}</td>
-      <td class="num">${fmt(r.avg_buffer,2)}</td>
-      <td class="num ${r.rebuf_count > 10 ? 'bad' : r.rebuf_count > 2 ? 'warn' : 'good'}">${fmt(r.rebuf_count,1)}</td>
-      <td class="num ${r.rebuf_ms > 5000 ? 'bad' : r.rebuf_ms > 1000 ? 'warn' : 'good'}">${fmt(r.rebuf_ms,0)}</td>
-      <td class="num">${fmt(r.startup_ms,0)}</td>
-      <td class="num">${fmt(r.avg_throughput,0)}</td>
+      <td><span class="badge b-${r.proto}">${r.proto}</span></td>
+      <td class="r dim">${r.n}</td>
+      <td class="r">${f(r.avg_bitrate)} <span class="dim">kbps</span></td>
+      <td class="r ${r.rebuf_count > 5 ? 'bad' : r.rebuf_count > 1 ? 'warn' : 'good'}">${f(r.rebuf_count,1)}</td>
+      <td class="r ${r.rebuf_ms > 2000 ? 'bad' : r.rebuf_ms > 500 ? 'warn' : 'good'}">${f(r.rebuf_ms)} <span class="dim">ms</span></td>
+      <td class="r">${f(r.startup_ms)} <span class="dim">ms</span></td>
+      <td class="r">${f(r.avg_buffer,2)} <span class="dim">s</span></td>
+      <td class="r dim">${f(r.avg_tp)} <span class="dim">kbps</span></td>
     </tr>`).join('');
+
+  mkBar('ov-chart-bitrate', rows.map(r=>r.proto), rows.map(r=>r.avg_bitrate), 'Bitrate');
+  mkBar('ov-chart-startup',  rows.map(r=>r.proto), rows.map(r=>r.startup_ms),   'Startup');
 }
 
 // ── run ───────────────────────────────────────────────────────────────────────
 async function startRun() {
-  const protocol   = document.getElementById('run-protocol').value;
-  const duration   = parseInt(document.getElementById('run-duration').value, 10);
-  const resultsDir = document.getElementById('run-results-dir').value.trim() || undefined;
-  const traces     = [...document.querySelectorAll('.trace-cb:checked')].map(cb => cb.value);
+  const protocol = document.getElementById('run-proto').value;
+  const duration = +document.getElementById('run-dur').value;
+  const resDir   = document.getElementById('run-dir').value.trim() || undefined;
+  const traces    = [...document.querySelectorAll('.tcb:checked')].map(cb => cb.value);
+  const trace_set = document.getElementById('run-trace-set')?.value;
 
   document.getElementById('run-btn').disabled = true;
-  document.getElementById('run-status-msg').textContent = 'Starting…';
+  document.getElementById('run-msg').textContent = 'Starting…';
 
-  const body = { protocol, duration, traces };
-  if (resultsDir) body.results_dir = resultsDir;
+  const body = { protocol, duration, traces, trace_set };
+  if (resDir) body.results_dir = resDir;
 
-  const res = await fetch('/api/run', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
-  const data = await res.json();
+  const data = await fetch('/api/run', {
+    method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body)
+  }).then(r => r.json());
+
   document.getElementById('run-btn').disabled = false;
-
   if (data.run_id) {
-    document.getElementById('run-status-msg').textContent = `Run ${data.run_id} started`;
-    activeRunId = data.run_id;
-    // switch to progress page
+    document.getElementById('run-msg').textContent = `Started: ${data.run_id}`;
     document.querySelector('[data-page=progress]').click();
     attachSSE(data.run_id);
   } else {
-    document.getElementById('run-status-msg').textContent = 'Error: ' + JSON.stringify(data);
+    document.getElementById('run-msg').textContent = 'Error: ' + JSON.stringify(data);
   }
 }
 
 // ── progress ──────────────────────────────────────────────────────────────────
 function renderProgress() {
   fetch('/api/runs').then(r=>r.json()).then(runs => {
-    const el = document.getElementById('runs-list');
-    if (!runs.length) { document.getElementById('no-runs').style.display=''; el.innerHTML=''; return; }
-    document.getElementById('no-runs').style.display='none';
-    el.innerHTML = runs.map(r => `
-      <div class="card" id="run-card-${r.run_id}">
-        <div class="flex-row mb16">
-          <h3>${r.protocol} &nbsp;<span class="pill pill-${r.status}">${r.status}</span></h3>
-          <span class="dim grow" style="font-size:.78rem">ID: ${r.run_id} · started ${new Date(r.started_at*1000).toLocaleTimeString()}</span>
-          ${r.status==='running' ? `<button onclick="stopRun('${r.run_id}')" style="background:var(--red);color:#fff;font-size:.8rem">■ Stop</button>` : ''}
+    const noRuns = document.getElementById('no-runs');
+    const list   = document.getElementById('runs-list');
+    if (!runs.length) { noRuns.style.display=''; list.innerHTML=''; return; }
+    noRuns.style.display = 'none';
+    list.innerHTML = runs.map(r => `
+      <div class="card" id="rcard-${r.run_id}" style="margin-bottom:14px">
+        <div class="flex gap12" style="margin-bottom:12px">
+          <span class="badge b-${r.protocol}">${r.protocol}</span>
+          <span class="pill pill-${r.status}" id="rpill-${r.run_id}">${r.status}</span>
+          <span class="dim grow" style="font-size:.75rem">${r.run_id} · ${new Date(r.started_at*1000).toLocaleTimeString()}</span>
+          ${r.status==='running'?`<button class="btn-danger" style="font-size:.72rem;padding:3px 10px" onclick="stopRun('${r.run_id}')">Stop</button>`:''}
         </div>
-        <pre id="run-log-${r.run_id}" style="background:#0a0c13;border:1px solid var(--border);border-radius:8px;padding:12px;font-family:monospace;font-size:.75rem;color:#a8b4d0;height:300px;overflow-y:auto;white-space:pre-wrap;word-break:break-all"></pre>
+        <div class="run-split">
+          <div class="log-box" id="rlog-${r.run_id}"></div>
+          <div class="run-metrics" id="rmeta-${r.run_id}">
+            <div class="run-metrics-empty">Waiting for first result…</div>
+          </div>
+        </div>
       </div>`).join('');
-    // reattach SSE for running runs
     runs.filter(r=>r.status==='running').forEach(r => attachSSE(r.run_id));
+    runs.filter(r=>r.status!=='running').forEach(r => updateRunMetrics(r.run_id, r.protocol));
   });
 }
 
-function attachSSE(runId) {
-  if (window._sseConns && window._sseConns[runId]) return;
-  if (!window._sseConns) window._sseConns = {};
-  const es = new EventSource(`/api/run/${runId}/stream`);
-  window._sseConns[runId] = es;
+function attachSSE(id) {
+  if (!window._sse) window._sse = {};
+  if (window._sse[id]) return;
+  const es = new EventSource(`/api/run/${id}/stream`);
+  window._sse[id] = { es, proto: null };
+  // fetch protocol for this run
+  fetch(`/api/run/${id}/status`).then(r=>r.json()).then(s => {
+    if (window._sse[id]) window._sse[id].proto = s.protocol;
+  });
   es.onmessage = e => {
     const d = JSON.parse(e.data);
-    appendLog(runId, d.line);
+    appendLog(id, d.line);
+    if (/SAVED|results saved/i.test(d.line)) {
+      loadAll().then(() => updateRunMetrics(id, window._sse[id]?.proto));
+    }
   };
   es.addEventListener('done', e => {
     const d = JSON.parse(e.data);
-    appendLog(runId, `\n[Run ${runId} ${d.status}]`);
-    updateRunPill(runId, d.status);
-    es.close();
-    delete window._sseConns[runId];
-    loadAll(); // refresh results
+    appendLog(id, `\n── Run ${id}: ${d.status} ──`);
+    const pill = document.getElementById(`rpill-${id}`);
+    if (pill) { pill.className = `pill pill-${d.status}`; pill.textContent = d.status; }
+    const proto = window._sse[id]?.proto;
+    es.close(); delete window._sse[id];
+    loadAll().then(() => updateRunMetrics(id, proto));
   });
-  es.onerror = () => { es.close(); delete window._sseConns[runId]; };
+  es.onerror = () => { es.close(); delete window._sse[id]; };
 }
 
-function appendLog(runId, line) {
-  const el = document.getElementById(`run-log-${runId}`);
-  if (!el) return;
+function appendLog(id, line) {
+  const el = document.getElementById(`rlog-${id}`);
+  if (!el || !line) return;
   const div = document.createElement('div');
-  div.className = line.match(/error|Error|ERROR|failed|FAIL/i) ? 'log-err'
-                : line.match(/warn|WARN/i) ? 'log-warn'
-                : line.match(/SAVED|COMPLETE|done|Done/i) ? 'log-good'
-                : line.match(/^={3,}|^──|^\[/i) ? 'log-head'
-                : '';
+  div.className = /error|Error|ERROR|failed/i.test(line) ? 'le'
+                : /warn|WARN/i.test(line)                ? 'lw'
+                : /SAVED|COMPLETE|done/i.test(line)      ? 'lg'
+                : /^[=─\[]/.test(line)                   ? 'lh' : '';
   div.textContent = line;
   el.appendChild(div);
   el.scrollTop = el.scrollHeight;
 }
 
-function updateRunPill(runId, status) {
-  const card = document.getElementById(`run-card-${runId}`);
-  if (!card) return;
-  const pill = card.querySelector('.pill');
-  if (pill) { pill.className = `pill pill-${status}`; pill.textContent = status; }
+function updateRunMetrics(runId, proto) {
+  const el = document.getElementById(`rmeta-${runId}`);
+  if (!el || !proto) return;
+  const entries = (allResults[proto] || []).slice(0, 8); // most recent
+  if (!entries.length) return;
+
+  const latest = entries[0];
+  const col = PC[proto] || '#4f7cf7';
+
+  const fv = (v, d=0) => v != null ? (+v).toLocaleString(undefined,{maximumFractionDigits:d}) : '—';
+
+  // mini stat row
+  const statsHtml = `
+    <div class="run-mini-stats">
+      <div class="run-mini-stat">
+        <div class="val">${fv(latest.avg_bitrate)}</div>
+        <div class="lbl">kbps</div>
+      </div>
+      <div class="run-mini-stat">
+        <div class="val ${latest.rebuf_count>5?'bad':latest.rebuf_count>1?'warn':'good'}">${fv(latest.rebuf_count,0)}</div>
+        <div class="lbl">rebuffers</div>
+      </div>
+      <div class="run-mini-stat">
+        <div class="val">${fv(latest.startup_ms)}</div>
+        <div class="lbl">startup ms</div>
+      </div>
+    </div>`;
+
+  // bitrate chart if samples available
+  const bitSamples = latest.samples?.bitrate || [];
+  const chartHtml = bitSamples.length > 1
+    ? `<div class="run-chart-box">
+        <div class="rct">Latest — Bitrate History</div>
+        <div style="position:relative;height:110px"><canvas id="rc-bit-${runId}"></canvas></div>
+       </div>`
+    : '';
+
+  // completed traces table (up to 6)
+  const rowsHtml = entries.slice(0,6).map(e => `
+    <tr>
+      <td class="dim" style="font-size:.72rem">${e.unit||'—'}</td>
+      <td class="r" style="font-size:.75rem">${fv(e.avg_bitrate)}</td>
+      <td class="r ${e.rebuf_count>5?'bad':e.rebuf_count>1?'warn':'good'}" style="font-size:.75rem">${fv(e.rebuf_count,0)}</td>
+      <td class="r" style="font-size:.75rem">${fv(e.startup_ms)}</td>
+    </tr>`).join('');
+
+  const tableHtml = `
+    <div class="run-chart-box" style="flex:0">
+      <div class="rct">Recent Traces</div>
+      <table class="tbl" style="font-size:.72rem">
+        <thead><tr><th>Unit</th><th class="r">Bitrate</th><th class="r">Rebuf</th><th class="r">Startup</th></tr></thead>
+        <tbody>${rowsHtml}</tbody>
+      </table>
+    </div>`;
+
+  el.innerHTML = statsHtml + chartHtml + tableHtml;
+
+  if (bitSamples.length > 1) {
+    const cvs = document.getElementById(`rc-bit-${runId}`);
+    if (cvs) {
+      if (cvs._chart) cvs._chart.destroy();
+      cvs._chart = new Chart(cvs.getContext('2d'), {
+        type: 'line',
+        data: { labels: bitSamples.map((_,i)=>i),
+          datasets: [{ data: bitSamples, borderColor: col, backgroundColor: col+'22',
+            fill: true, stepped: true, pointRadius: 0, borderWidth: 1.5 }] },
+        options: chartOpts('kbps'),
+      });
+    }
+  }
 }
 
-async function stopRun(runId) {
-  await fetch(`/api/run/${runId}/stop`, {method:'POST'});
+async function stopRun(id) {
+  await fetch(`/api/run/${id}/stop`, {method:'POST'});
   renderProgress();
 }
 
 // ── compare ───────────────────────────────────────────────────────────────────
-const UNITS = ['178682','241853','26562','619854','656870','799440','806274','8814','925854','941754'];
-
-function buildProtoToggles() {
-  const el = document.getElementById('proto-toggles');
-  el.innerHTML = PROTOCOLS.map(p => `
-    <div class="proto-toggle on" data-proto="${p}" style="color:${PROTO_COLORS[p]}" onclick="toggleProto('${p}')">
-      <span>●</span> ${p}
+function buildToggles() {
+  document.getElementById('proto-toggles').innerHTML = PROTOS.map(p => `
+    <div class="ptoggle on" data-proto="${p}" style="color:${PC[p]}" onclick="toggleProto('${p}')">
+      <span style="font-size:.6rem">●</span> ${p}
     </div>`).join('');
 }
 
 function toggleProto(p) {
   if (activeProtos.has(p)) activeProtos.delete(p); else activeProtos.add(p);
-  document.querySelectorAll('.proto-toggle').forEach(el => {
+  document.querySelectorAll('.ptoggle').forEach(el => {
     el.classList.toggle('on',  activeProtos.has(el.dataset.proto));
     el.classList.toggle('off', !activeProtos.has(el.dataset.proto));
   });
   renderCompare();
 }
 
-function getBestEntry(proto, unit) {
-  const entries = (allResults[proto] || []).filter(e => e.unit === unit);
-  if (!entries.length) return null;
-  return entries.sort((a,b) => b.timestamp.localeCompare(a.timestamp))[0];
+function bestEntry(proto, unit) {
+  return ((allResults[proto]||[]).filter(e=>e.unit===unit)
+    .sort((a,b)=>b.timestamp.localeCompare(a.timestamp))[0]) || null;
 }
 
 function protoAvg(proto, key) {
-  const vals = UNITS.map(u => getBestEntry(proto,u)?.[key]).filter(v => v != null && v >= 0);
+  const vs = Object.keys(allResults[proto]||{}).concat(
+    (allResults[proto]||[]).map(e=>e.unit)
+  );
+  const entries = allResults[proto] || [];
+  const vals = entries.map(e=>e[key]).filter(v=>v!=null&&v>=0);
   return vals.length ? vals.reduce((a,b)=>a+b,0)/vals.length : null;
 }
 
-function makeBarChart(canvasId, label, protos, dataFn, color='white') {
-  if (charts[canvasId]) { charts[canvasId].destroy(); }
-  const ctx = document.getElementById(canvasId).getContext('2d');
-  charts[canvasId] = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: protos,
-      datasets: [{
-        label,
-        data: protos.map(dataFn),
-        backgroundColor: protos.map(p => PROTO_COLORS[p] + 'bb'),
-        borderColor:     protos.map(p => PROTO_COLORS[p]),
-        borderWidth: 1,
-        borderRadius: 4,
-      }],
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { ticks: { color: '#7880a4' }, grid: { color: '#2e345033' } },
-        y: { ticks: { color: '#7880a4' }, grid: { color: '#2e345033' } },
-      },
-    },
-  });
-}
-
 function renderCompare() {
-  const protos = PROTOCOLS.filter(p => activeProtos.has(p));
-  if (!protos.length) return;
+  const protos = PROTOS.filter(p => activeProtos.has(p));
 
-  makeBarChart('chart-bitrate',     'Avg Bitrate (kbps)',   protos, p => protoAvg(p,'avg_bitrate'));
-  makeBarChart('chart-rebuf-count', 'Rebuffer Count',        protos, p => protoAvg(p,'rebuf_count'));
-  makeBarChart('chart-rebuf-ms',    'Total Rebuffer (ms)',   protos, p => protoAvg(p,'rebuf_ms'));
-  makeBarChart('chart-startup',     'Startup Time (ms)',     protos, p => protoAvg(p,'startup_ms'));
-  makeBarChart('chart-buffer',      'Avg Buffer Level (s)',  protos, p => protoAvg(p,'avg_buffer_s'));
+  // aggregate bar charts
+  mkBar('c-bitrate',   protos, protos.map(p=>protoAvg(p,'avg_bitrate')),    'Bitrate');
+  mkBar('c-rebuf-ms',  protos, protos.map(p=>protoAvg(p,'rebuf_ms')),        'Rebuffer ms');
+  mkBar('c-startup',   protos, protos.map(p=>protoAvg(p,'startup_ms')),      'Startup');
+  mkBar('c-buffer',    protos, protos.map(p=>protoAvg(p,'avg_buffer_s')),    'Buffer');
 
-  // per-trace table — one row per unit, columns grouped by protocol
-  const head = document.querySelector('#compare-table thead tr');
-  head.innerHTML = '<th>Trace Unit</th>' + protos.map(p =>
-    `<th class="num" colspan="2" style="color:${PROTO_COLORS[p]}">${p}</th>`
-  ).join('');
-  // sub-header
-  const sub = document.createElement('tr');
-  sub.innerHTML = '<th></th>' + protos.map(() =>
-    '<th class="num dim" style="font-size:.7rem">Bitrate</th><th class="num dim" style="font-size:.7rem">Rebuf ms</th>'
-  ).join('');
-  head.parentElement.insertBefore(sub, head.nextSibling);
-
-  const body = document.getElementById('compare-body');
-  body.innerHTML = UNITS.map(unit => {
-    const cells = protos.map(p => {
-      const e = getBestEntry(p, unit);
-      if (!e) return '<td class="num dim">—</td><td class="num dim">—</td>';
-      const br = e.avg_bitrate != null ? fmt(e.avg_bitrate,0) : '—';
-      const rm = e.rebuf_ms   != null ? fmt(e.rebuf_ms,0)    : '—';
-      const cls = e.rebuf_ms > 5000 ? 'bad' : e.rebuf_ms > 1000 ? 'warn' : 'good';
-      return `<td class="num">${br}</td><td class="num ${cls}">${rm}</td>`;
-    }).join('');
-    return `<tr><td>${unit}</td>${cells}</tr>`;
-  }).join('');
+  // per-trace grouped bar
+  const allUnits = [...new Set(PROTOS.flatMap(p=>(allResults[p]||[]).map(e=>e.unit).filter(Boolean)))].sort();
+  const datasets = protos.map(p => ({
+    label: p,
+    data: allUnits.map(u => bestEntry(p,u)?.rebuf_ms ?? null),
+    backgroundColor: PC[p] + 'bb',
+    borderColor: PC[p],
+    borderWidth: 1, borderRadius: 3,
+  }));
+  mkGroupedBar('c-per-trace', allUnits, datasets);
 }
 
-// ── results list ──────────────────────────────────────────────────────────────
+// ── results ───────────────────────────────────────────────────────────────────
 function renderResults() {
-  const filterProto = document.getElementById('results-filter-proto').value;
-  const filterUnit  = document.getElementById('results-filter-unit').value.trim().toLowerCase();
-  const body        = document.getElementById('results-body');
+  const fp = document.getElementById('rf-proto').value;
+  const fu = document.getElementById('rf-unit').value.trim().toLowerCase();
 
   let rows = [];
   for (const [proto, entries] of Object.entries(allResults)) {
-    if (filterProto && proto !== filterProto) continue;
+    if (fp && proto !== fp) continue;
     for (const e of entries) {
-      if (filterUnit && !(e.unit || '').includes(filterUnit)) continue;
+      if (fu && !(e.unit||'').includes(fu)) continue;
       rows.push(e);
     }
   }
-  rows.sort((a,b) => b.timestamp.localeCompare(a.timestamp));
+  const hasData = e => e.avg_bitrate != null || e.rebuf_count != null || e.startup_ms != null;
+  rows.sort((a, b) => {
+    const aOk = hasData(a), bOk = hasData(b);
+    if (aOk !== bOk) return aOk ? -1 : 1;
+    return b.timestamp.localeCompare(a.timestamp);
+  });
 
-  body.innerHTML = rows.map(e => `
+  document.getElementById('res-body').innerHTML = rows.map(e => `
     <tr>
-      <td><span class="proto-badge proto-${e.protocol}">${e.protocol}</span></td>
-      <td>${e.unit || '—'}</td>
-      <td class="dim" style="font-size:.75rem">${(e.timestamp||'').replace('T',' ').slice(0,19)}</td>
-      <td class="num">${fmt(e.avg_bitrate,0)}</td>
-      <td class="num">${fmt(e.avg_buffer_s,2)}</td>
-      <td class="num ${e.rebuf_count>10?'bad':e.rebuf_count>2?'warn':'good'}">${fmt(e.rebuf_count,0)}</td>
-      <td class="num ${e.rebuf_ms>5000?'bad':e.rebuf_ms>1000?'warn':'good'}">${fmt(e.rebuf_ms,0)}</td>
-      <td class="num">${fmt(e.startup_ms,0)}</td>
-      <td class="num">${fmt(e.avg_throughput,0)}</td>
-      <td><button onclick='openDetail("${e.file}")' style="background:var(--surface);color:var(--muted);font-size:.75rem;padding:3px 8px">Detail</button></td>
+      <td><span class="badge b-${e.protocol}">${e.protocol}</span></td>
+      <td class="dim" style="font-size:.78rem">${e.unit||'—'}</td>
+      <td class="dim" style="font-size:.72rem">${(e.timestamp||'').replace('T',' ').slice(0,16)}</td>
+      <td class="r">${f(e.avg_bitrate)}</td>
+      <td class="r">${f(e.avg_buffer_s,2)}</td>
+      <td class="r ${e.rebuf_count>5?'bad':e.rebuf_count>1?'warn':'good'}">${f(e.rebuf_count,0)}</td>
+      <td class="r ${e.rebuf_ms>2000?'bad':e.rebuf_ms>500?'warn':'good'}">${f(e.rebuf_ms)}</td>
+      <td class="r">${f(e.startup_ms)}</td>
+      <td class="r dim">${f(e.avg_throughput)}</td>
+      <td><button class="btn-ghost" style="font-size:.7rem;padding:3px 8px" onclick='openDetail("${e.file}")'>Detail</button></td>
     </tr>`).join('');
 }
 
 // ── detail modal ──────────────────────────────────────────────────────────────
 async function openDetail(file) {
-  const res = await fetch('/api/result-detail?file=' + encodeURIComponent(file));
-  const d   = await res.json();
-  const md  = d.metrics || {};
+  const d  = await fetch('/api/result-detail?file=' + encodeURIComponent(file)).then(r=>r.json());
+  const md = d.metrics || {};
 
-  let html = `<h2 style="margin-bottom:16px">${d.protocol} &nbsp; <span class="proto-badge proto-${d.protocol}">${d.protocol}</span></h2>`;
-  html += `<div class="dim" style="font-size:.78rem;margin-bottom:16px">${d.timestamp || ''} &nbsp;·&nbsp; ${file}</div>`;
-
-  const sections = [
-    ['Timing',       md.timing       || {}],
-    ['Bitrate',      md.bitrate      || {}],
-    ['Switching',    md.switching    || {}],
-    ['Rebuffering',  md.rebuffering  || {}],
-    ['Throughput',   md.throughput   || {}],
-    ['Buffer',       md.buffer       || {}],
-    ['Utilization',  md.utilization  || {}],
+  const s = [
+    ['Timing',      md.timing      || {}],
+    ['Bitrate',     md.bitrate     || {}],
+    ['Rebuffering', md.rebuffering || {}],
+    ['Throughput',  md.throughput  || {}],
+    ['Buffer',      md.buffer      || {}],
+    ['Switching',   md.switching   || {}],
   ];
-  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">';
-  for (const [title, obj] of sections) {
-    if (!Object.keys(obj).length) continue;
-    html += `<div class="card"><h3 style="margin-bottom:10px">${title}</h3>`;
-    html += '<table class="tbl" style="font-size:.8rem">';
-    for (const [k, v] of Object.entries(obj)) {
-      if (typeof v === 'object') continue;
-      html += `<tr><td class="dim">${k}</td><td class="num">${typeof v==='number'?v.toLocaleString(undefined,{maximumFractionDigits:2}):v}</td></tr>`;
-    }
-    html += '</table></div>';
-  }
-  html += '</div>';
 
-  // bitrate history sparkline
-  const bitSamples = (md.samples || {}).bitrate || [];
+  let html = `
+    <div class="flex gap12" style="margin-bottom:20px">
+      <span class="badge b-${d.protocol}" style="font-size:.8rem">${d.protocol}</span>
+      <span class="dim" style="font-size:.78rem">${d.timestamp||''}</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">`;
+
+  for (const [title, obj] of s) {
+    const kv = Object.entries(obj).filter(([,v])=>typeof v !== 'object' && v != null);
+    if (!kv.length) continue;
+    html += `<div class="card" style="margin:0"><div class="card-title">${title}</div>
+      <table class="tbl" style="font-size:.78rem">${kv.map(([k,v])=>
+        `<tr><td class="dim">${k}</td><td class="r">${typeof v==='number'?v.toLocaleString(undefined,{maximumFractionDigits:2}):v}</td></tr>`
+      ).join('')}</table></div>`;
+  }
+  html += `</div>`;
+
+  const bitSamples = (md.samples||{}).bitrate || [];
+  const tpSamples  = (md.samples||{}).throughput || [];
+
   if (bitSamples.length > 1) {
-    html += '<div class="card mt16"><h3 style="margin-bottom:10px">Bitrate History</h3><div style="position:relative;height:120px"><canvas id="modal-chart-bitrate"></canvas></div></div>';
+    html += `<div class="card" style="margin-bottom:12px">
+      <div class="card-title">Bitrate History</div>
+      <div class="chart-wrap" style="height:130px"><canvas id="mc-bitrate"></canvas></div>
+    </div>`;
+  }
+  if (tpSamples.length > 1) {
+    html += `<div class="card">
+      <div class="card-title">Throughput Samples</div>
+      <div class="chart-wrap" style="height:130px"><canvas id="mc-tp"></canvas></div>
+    </div>`;
   }
 
   document.getElementById('modal-content').innerHTML = html;
-  document.getElementById('modal-overlay').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+
+  const col = PC[d.protocol] || '#4f7cf7';
 
   if (bitSamples.length > 1) {
-    new Chart(document.getElementById('modal-chart-bitrate').getContext('2d'), {
+    new Chart(document.getElementById('mc-bitrate').getContext('2d'), {
       type: 'line',
-      data: {
-        labels: bitSamples.map((_,i) => i),
-        datasets: [{ label: 'Bitrate (kbps)', data: bitSamples,
-          borderColor: PROTO_COLORS[d.protocol] || '#5b7fff', backgroundColor: 'transparent',
-          pointRadius: 2, borderWidth: 1.5, tension: 0.3 }],
-      },
-      options: {
-        responsive:true, maintainAspectRatio:false,
-        plugins:{legend:{display:false}},
-        scales:{
-          x:{display:false},
-          y:{ticks:{color:'#7880a4'},grid:{color:'#2e345033'}},
-        },
-      },
+      data: { labels: bitSamples.map((_,i)=>i),
+        datasets: [{ data: bitSamples, borderColor: col, backgroundColor: col+'22',
+          fill: true, stepped: true, pointRadius: 2, borderWidth: 1.5 }] },
+      options: chartOpts('kbps'),
+    });
+  }
+  if (tpSamples.length > 1) {
+    const tp = tpSamples.map(v => Math.round(v));
+    new Chart(document.getElementById('mc-tp').getContext('2d'), {
+      type: 'line',
+      data: { labels: tp.map((_,i)=>i),
+        datasets: [{ data: tp, borderColor: '#4f7cf7', backgroundColor: '#4f7cf722',
+          fill: true, pointRadius: 0, borderWidth: 1.5, tension: 0.3 }] },
+      options: chartOpts('kbps'),
     });
   }
 }
 
-function closeModal() {
-  document.getElementById('modal-overlay').classList.remove('open');
-}
-document.getElementById('modal-overlay').addEventListener('click', e => {
-  if (e.target === document.getElementById('modal-overlay')) closeModal();
+function closeModal() { document.getElementById('overlay').classList.remove('open'); }
+document.getElementById('overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('overlay')) closeModal();
 });
 
+// ── chart helpers ─────────────────────────────────────────────────────────────
+const CHART_DEFAULTS = {
+  plugins: { legend: { display: false } },
+  scales: {
+    x: { ticks: { color: '#506070', font: {size:10} }, grid: { color: '#1e2a3a' } },
+    y: { ticks: { color: '#506070', font: {size:10} }, grid: { color: '#1e2a3a' } },
+  },
+  animation: { duration: 300 },
+};
+
+function chartOpts(unit) {
+  return {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false },
+      tooltip: { callbacks: { label: ctx => `${ctx.parsed.y?.toLocaleString()} ${unit}` } } },
+    scales: {
+      x: { display: false },
+      y: { ticks: { color: '#506070', font:{size:10}, callback: v => v >= 1000 ? (v/1000).toFixed(0)+'k' : v },
+           grid: { color: '#1e2a3a' } },
+    },
+    animation: { duration: 200 },
+  };
+}
+
+function mkBar(id, labels, data, label) {
+  if (charts[id]) charts[id].destroy();
+  const ctx = document.getElementById(id)?.getContext('2d');
+  if (!ctx) return;
+  charts[id] = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{ label, data,
+        backgroundColor: labels.map(p => (PC[p]||'#4f7cf7') + 'bb'),
+        borderColor:     labels.map(p => PC[p]||'#4f7cf7'),
+        borderWidth: 1, borderRadius: 5,
+      }],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      ...CHART_DEFAULTS,
+      scales: {
+        x: { ticks: { color: '#506070', font:{size:10} }, grid: { color: '#1e2a3a40' } },
+        y: { ticks: { color: '#506070', font:{size:10}, callback: v => v>=1000?(v/1000).toFixed(0)+'k':v },
+             grid: { color: '#1e2a3a' } },
+      },
+    },
+  });
+}
+
+function mkGroupedBar(id, labels, datasets) {
+  if (charts[id]) charts[id].destroy();
+  const ctx = document.getElementById(id)?.getContext('2d');
+  if (!ctx) return;
+  charts[id] = new Chart(ctx, {
+    type: 'bar',
+    data: { labels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: true, labels: { color: '#506070', font:{size:10}, boxWidth:10, padding:14 } } },
+      scales: {
+        x: { ticks: { color: '#506070', font:{size:9} }, grid: { color: '#1e2a3a40' } },
+        y: { ticks: { color: '#506070', font:{size:10}, callback: v => v>=1000?(v/1000).toFixed(0)+'k':v },
+             grid: { color: '#1e2a3a' } },
+      },
+      animation: { duration: 300 },
+    },
+  });
+}
+
 // ── utils ─────────────────────────────────────────────────────────────────────
-function fmt(v, dec=0) {
-  if (v == null || isNaN(v)) return '—';
-  return v.toLocaleString(undefined, { minimumFractionDigits: dec, maximumFractionDigits: dec });
+function f(v, dec=0) {
+  if (v == null || isNaN(v)) return '<span class="dim">—</span>';
+  return v.toLocaleString(undefined, {minimumFractionDigits:dec, maximumFractionDigits:dec});
 }
 
 // ── init ──────────────────────────────────────────────────────────────────────
+buildToggles();
 loadAll();
-setInterval(loadAll, 15000);  // refresh every 15s
+setInterval(loadAll, 20000);
 </script>
 </body>
 </html>

@@ -18,9 +18,17 @@ from pathlib import Path
 from flask import Flask, jsonify, request, Response, send_from_directory
 
 ROOT        = Path(__file__).parent.parent
-TRACES_DIR  = ROOT / 'traces' / 'fcc-2016-sept'
 RESULTS_DIR = ROOT / 'results'
 BENCHMARK   = ROOT / 'benchmark.py'
+
+TRACE_SETS = {
+    'fcc-2016-sept':  {'label': 'FCC 2016 – September', 'dir': ROOT / 'traces' / 'fcc-2016-sept',  'glob': '*.csv'},
+    'fcc-2016-jul':   {'label': 'FCC 2016 – July',      'dir': ROOT / 'traces' / 'fcc-2016-jul',   'glob': '*.csv'},
+    'fcc-2016-jun':   {'label': 'FCC 2016 – June',      'dir': ROOT / 'traces' / 'fcc-2016-jun',   'glob': '*.csv'},
+    'starlink-11-24': {'label': 'Starlink Nov 2024',     'dir': ROOT / 'traces' / 'starlink-11-24', 'glob': '*_tc.csv'},
+    'hsdpa':          {'label': 'HSDPA Mobile',          'dir': ROOT / 'traces' / 'hsdpa',          'glob': '*.csv'},
+}
+DEFAULT_TRACE_SET = 'fcc-2016-sept'
 
 app = Flask(__name__, static_folder='static', static_url_path='')
 
@@ -34,11 +42,15 @@ _runs_lock = threading.Lock()
 PROTOCOLS = ['dash', 'lldash-gpac', 'hls', 'webrtc', 'moq2']
 
 def _list_traces():
-    traces = []
-    if TRACES_DIR.exists():
-        for f in sorted(TRACES_DIR.glob('*.csv')):
-            traces.append({'name': f.name, 'path': str(f)})
-    return traces
+    result = {}
+    for set_id, meta in TRACE_SETS.items():
+        d = meta['dir']
+        files = []
+        if d.exists():
+            for f in sorted(d.glob(meta.get('glob', '*.csv'))):
+                files.append({'name': f.name, 'path': str(f)})
+        result[set_id] = {'label': meta['label'], 'traces': files}
+    return result
 
 def _list_results():
     """Return all results grouped by protocol, each with key metrics."""
@@ -124,14 +136,19 @@ def api_result_detail():
 
 @app.route('/api/run', methods=['POST'])
 def api_run():
-    body     = request.json or {}
-    protocol = body.get('protocol', 'dash')
-    traces   = body.get('traces', [])   # list of trace filenames, empty = all
-    duration = int(body.get('duration', 120))
+    body      = request.json or {}
+    protocol  = body.get('protocol', 'dash')
+    traces    = body.get('traces', [])   # list of trace filenames, empty = all
+    trace_set = body.get('trace_set', DEFAULT_TRACE_SET)
+    duration  = int(body.get('duration', 120))
     results_subdir = body.get('results_dir', f'gui_run_{int(time.time())}')
 
     if protocol not in PROTOCOLS:
         return jsonify({'error': f'unknown protocol {protocol}'}), 400
+    if trace_set not in TRACE_SETS:
+        return jsonify({'error': f'unknown trace_set {trace_set}'}), 400
+
+    traces_dir = TRACE_SETS[trace_set]['dir']
 
     # Build command
     results_path = RESULTS_DIR / results_subdir
@@ -144,11 +161,10 @@ def api_run():
             '--protocol', protocol,
             '--duration', str(duration),
             '--results-dir', str(results_path),
-            '--trace', str(TRACES_DIR / traces[0]),
+            '--trace', str(traces_dir / traces[0]),
         ]
     elif traces:
-        # multiple specific traces — wrap in a shell loop via a helper script
-        # We run them sequentially by launching one process per trace
+        # multiple specific traces — run sequentially in background thread
         cmd = None  # handled below via multi-trace runner
     else:
         cmd = [
@@ -156,7 +172,7 @@ def api_run():
             '--protocol', protocol,
             '--duration', str(duration),
             '--results-dir', str(results_path),
-            '--trace-dir', str(TRACES_DIR),
+            '--trace-dir', str(traces_dir),
         ]
 
     run_id = str(uuid.uuid4())[:8]
@@ -168,6 +184,7 @@ def api_run():
             'log_queue':   log_q,
             'status':      'running',
             'protocol':    protocol,
+            'trace_set':   trace_set,
             'traces':      traces,
             'duration':    duration,
             'results_dir': str(results_path),
@@ -190,7 +207,7 @@ def api_run():
                      '--protocol', protocol,
                      '--duration', str(duration),
                      '--results-dir', str(results_path),
-                     '--trace', str(TRACES_DIR / trace)]
+                     '--trace', str(traces_dir / trace)]
                 p = subprocess.Popen(c, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, cwd=str(ROOT))
                 with _runs_lock:
                     _runs[run_id]['proc'] = p
