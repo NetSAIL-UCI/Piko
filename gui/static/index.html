@@ -5,184 +5,221 @@
 <title>Benchmark Lab</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --bg:       #080b12;
-  --surface:  #0e1320;
-  --card:     #111827;
-  --border:   #1e2a3a;
-  --text:     #c9d1e0;
-  --muted:    #506070;
+  --bg:       #0d1117;
+  --surface:  #161d2a;
+  --card:     #1c2638;
+  --border:   #263347;
+  --text:     #d4dce8;
+  --muted:    #5a7080;
   --accent:   #4f7cf7;
   --green:    #2dd4a0;
   --red:      #f55f5f;
   --yellow:   #f0c04a;
   --orange:   #e07840;
-
-  --c-dash:       #4f7cf7;
-  --c-lldash-gpac:#2dd4a0;
-  --c-hls:        #e07840;
-  --c-webrtc:     #a87cf7;
-  --c-moq2:       #f76490;
+  --c-dash:        #4f7cf7;
+  --c-lldash-gpac: #2dd4a0;
+  --c-hls:         #e07840;
+  --c-webrtc:      #a87cf7;
+  --c-moq2:        #f76490;
+  --r: 10px;
 }
 
 html, body { height: 100%; background: var(--bg); color: var(--text);
-  font-family: 'Inter', system-ui, sans-serif; font-size: 13px; line-height: 1.5; }
+  font-family: 'Inter', system-ui, sans-serif; font-size: 14px; line-height: 1.55; }
 
-/* ── scrollbars ── */
-::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
 /* ── layout ── */
-#app { display: grid; grid-template-columns: 200px 1fr; height: 100vh; overflow: hidden; }
-#sidebar { background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; }
+#app { display: grid; grid-template-columns: 264px 1fr; height: 100vh; overflow: hidden; }
+#sidebar { background: var(--surface); border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; overflow-y: auto; }
 #main { display: flex; flex-direction: column; overflow: hidden; }
 
 /* ── sidebar ── */
-.logo { padding: 20px 18px 14px; font-size: .75rem; font-weight: 600; letter-spacing: .12em;
+.logo { padding: 28px 24px 18px; font-size: .82rem; font-weight: 700; letter-spacing: .1em;
   text-transform: uppercase; color: var(--accent); }
-.nav-group { padding: 6px 0 10px; }
-.nav-label { padding: 4px 18px; font-size: .65rem; font-weight: 600; letter-spacing: .1em;
+.nav-group { padding: 4px 0 14px; }
+.nav-label { padding: 6px 24px 5px; font-size: .68rem; font-weight: 600; letter-spacing: .1em;
   text-transform: uppercase; color: var(--muted); }
-.nav-item { display: flex; align-items: center; gap: 9px; padding: 7px 18px; cursor: pointer;
-  color: var(--muted); font-size: .82rem; transition: color .12s, background .12s; }
-.nav-item:hover { color: var(--text); background: rgba(255,255,255,.03); }
-.nav-item.active { color: #fff; background: rgba(79,124,247,.12); }
-.nav-item .icon { font-size: .9rem; width: 16px; text-align: center; }
+.nav-item { display: flex; align-items: center; gap: 13px; padding: 11px 24px; cursor: pointer;
+  color: var(--muted); font-size: .9rem; font-weight: 500;
+  transition: color .12s, background .12s; border-left: 3px solid transparent; margin: 1px 0; }
+.nav-item:hover { color: var(--text); background: rgba(255,255,255,.04); }
+.nav-item.active { color: #fff; background: rgba(79,124,247,.14); border-left-color: var(--accent); }
+.nav-item .icon { font-size: 1rem; width: 20px; text-align: center; flex-shrink: 0; }
+
+/* ── sidebar upload zone ── */
+.sidebar-upload { margin: auto 18px 24px; }
+.sidebar-upload .upload-label { font-size: .68rem; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--muted); padding: 0 6px; margin-bottom: 10px; display: block; }
+#upload-zone { border: 1.5px dashed var(--border); border-radius: var(--r); padding: 20px 16px;
+  text-align: center; cursor: pointer; transition: all .15s; color: var(--muted); user-select: none; }
+#upload-zone:hover, #upload-zone.drag-over { border-color: var(--accent); color: var(--accent);
+  background: rgba(79,124,247,.07); }
+#upload-zone .up-icon { font-size: 1.6rem; margin-bottom: 7px; }
+#upload-zone .up-text { font-size: .84rem; font-weight: 600; }
+#upload-zone .up-sub  { font-size: .72rem; color: var(--muted); margin-top: 3px; }
+#upload-msg { font-size: .74rem; margin-top: 9px; text-align: center; min-height: 1.2em; line-height: 1.4; }
 
 /* ── page ── */
-.page { display: none; flex: 1; overflow-y: auto; padding: 28px 32px; }
+.page { display: none; flex: 1; overflow-y: auto; padding: 38px 44px; }
 .page.active { display: block; }
-.page-header { margin-bottom: 24px; }
-.page-header h1 { font-size: 1.1rem; font-weight: 600; color: #fff; }
-.page-header p  { font-size: .8rem; color: var(--muted); margin-top: 3px; }
+.page-header { margin-bottom: 32px; }
+.page-header h1 { font-size: 1.75rem; font-weight: 700; color: #fff; letter-spacing: -.02em; }
+.page-header p  { font-size: .92rem; color: var(--muted); margin-top: 6px; }
 
 /* ── stat row ── */
-.stat-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px,1fr)); gap: 10px; margin-bottom: 24px; }
-.stat-box { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
-.stat-label { font-size: .7rem; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 6px; }
-.stat-value { font-size: 1.5rem; font-weight: 600; color: #fff; letter-spacing: -.02em; }
-.stat-sub   { font-size: .7rem; color: var(--muted); margin-top: 2px; }
+.stat-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
+  gap: 16px; margin-bottom: 32px; }
+.stat-box { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 24px 26px; }
+.stat-label { font-size: .72rem; color: var(--muted); font-weight: 600; text-transform: uppercase;
+  letter-spacing: .08em; margin-bottom: 12px; }
+.stat-value { font-size: 2.6rem; font-weight: 700; color: #fff; letter-spacing: -.03em; line-height: 1; }
+.stat-sub   { font-size: .76rem; color: var(--muted); margin-top: 8px; }
 
 /* ── card ── */
-.card { background: var(--card); border: 1px solid var(--border); border-radius: 8px;
-  padding: 18px 20px; margin-bottom: 16px; }
-.card-title { font-size: .7rem; font-weight: 600; text-transform: uppercase;
-  letter-spacing: .08em; color: var(--muted); margin-bottom: 14px; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r);
+  padding: 26px 30px; margin-bottom: 20px; }
+.card-title { font-size: .72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--muted); margin-bottom: 20px; }
 
 /* ── table ── */
-.tbl { width: 100%; border-collapse: collapse; font-size: .8rem; }
-.tbl th { text-align: left; padding: 7px 12px; color: var(--muted); font-weight: 500;
-  font-size: .7rem; text-transform: uppercase; letter-spacing: .06em;
+.tbl { width: 100%; border-collapse: collapse; font-size: .9rem; }
+.tbl th { text-align: left; padding: 11px 18px; color: var(--muted); font-weight: 600;
+  font-size: .72rem; text-transform: uppercase; letter-spacing: .07em;
   border-bottom: 1px solid var(--border); white-space: nowrap; }
-.tbl td { padding: 8px 12px; border-bottom: 1px solid rgba(30,42,58,.6); vertical-align: middle; }
+.tbl td { padding: 14px 18px; border-bottom: 1px solid rgba(38,51,71,.6); vertical-align: middle; }
 .tbl tr:last-child td { border-bottom: none; }
-.tbl tr:hover td { background: rgba(79,124,247,.04); }
+.tbl tr:hover td { background: rgba(79,124,247,.05); }
 .tbl .r { text-align: right; font-variant-numeric: tabular-nums; }
 .good { color: var(--green); }
 .bad  { color: var(--red); }
 .warn { color: var(--yellow); }
 
 /* ── proto badge ── */
-.badge { display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px;
-  border-radius: 4px; font-size: .68rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
-.badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
-.b-dash       { background: rgba(79,124,247,.15); color: var(--c-dash); }
-.b-lldash-gpac{ background: rgba(45,212,160,.15); color: var(--c-lldash-gpac); }
-.b-hls        { background: rgba(224,120,64,.15);  color: var(--c-hls); }
-.b-webrtc     { background: rgba(168,124,247,.15); color: var(--c-webrtc); }
-.b-moq2       { background: rgba(247,100,144,.15); color: var(--c-moq2); }
+.badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px;
+  border-radius: 5px; font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+.badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.b-dash        { background: rgba(79,124,247,.15);  color: var(--c-dash); }
+.b-lldash-gpac { background: rgba(45,212,160,.15);  color: var(--c-lldash-gpac); }
+.b-hls         { background: rgba(224,120,64,.15);   color: var(--c-hls); }
+.b-webrtc      { background: rgba(168,124,247,.15);  color: var(--c-webrtc); }
+.b-moq2        { background: rgba(247,100,144,.15);  color: var(--c-moq2); }
 
 /* ── pill ── */
-.pill { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: .68rem; font-weight: 600; }
-.pill-running { background: rgba(79,124,247,.2); color: var(--accent); }
-.pill-done    { background: rgba(45,212,160,.2);  color: var(--green); }
-.pill-error   { background: rgba(245,95,95,.2);   color: var(--red); }
-.pill-stopped { background: rgba(80,96,112,.2);   color: var(--muted); }
+.pill { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: .72rem; font-weight: 600; }
+.pill-running { background: rgba(79,124,247,.2);  color: var(--accent); }
+.pill-done    { background: rgba(45,212,160,.2);   color: var(--green); }
+.pill-error   { background: rgba(245,95,95,.2);    color: var(--red); }
+.pill-stopped { background: rgba(80,96,112,.2);    color: var(--muted); }
 
 /* ── chart ── */
 .chart-wrap { position: relative; }
 .chart-wrap canvas { display: block; }
 
 /* ── compare toggles ── */
-.proto-toggles { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
-.ptoggle { display: flex; align-items: center; gap: 6px; padding: 5px 12px;
+.proto-toggles { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
+.ptoggle { display: flex; align-items: center; gap: 7px; padding: 7px 16px;
   border-radius: 20px; border: 1px solid transparent; cursor: pointer;
-  font-size: .75rem; font-weight: 500; transition: opacity .15s; user-select: none; }
-.ptoggle.on  { border-color: currentColor; background: rgba(255,255,255,.04); }
+  font-size: .82rem; font-weight: 500; transition: opacity .15s; user-select: none; }
+.ptoggle.on  { border-color: currentColor; background: rgba(255,255,255,.05); }
 .ptoggle.off { opacity: .3; }
 
 /* ── trace list ── */
-.trace-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(190px,1fr)); gap: 6px; margin-top: 8px; }
-.trace-item { display: flex; align-items: center; gap: 8px; background: var(--surface);
-  border: 1px solid var(--border); border-radius: 6px; padding: 7px 10px; cursor: pointer; transition: border-color .12s; }
+.trace-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(210px,1fr)); gap: 9px; margin-top: 14px; }
+.trace-item { display: flex; align-items: center; gap: 10px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 8px; padding: 11px 15px; cursor: pointer; transition: border-color .12s; }
 .trace-item:hover { border-color: var(--accent); }
-.trace-item label { cursor: pointer; font-size: .8rem; color: var(--text); user-select: none; }
-input[type=checkbox] { accent-color: var(--accent); }
+.trace-item label { cursor: pointer; font-size: .86rem; color: var(--text); user-select: none; }
+input[type=checkbox] { accent-color: var(--accent); width: 15px; height: 15px; flex-shrink: 0; }
 
 /* ── log ── */
-.log-box { background: #05080e; border: 1px solid var(--border); border-radius: 6px;
-  padding: 12px 14px; font-family: 'SF Mono', 'Fira Mono', monospace; font-size: .72rem;
-  color: #7a8fa8; height: 340px; overflow-y: auto; white-space: pre-wrap; word-break: break-all; }
+.log-box { background: #05080e; border: 1px solid var(--border); border-radius: 8px;
+  padding: 16px 18px; font-family: 'SF Mono','Fira Mono',monospace; font-size: .78rem;
+  color: #7a8fa8; height: 380px; overflow-y: auto; white-space: pre-wrap; word-break: break-all; }
 .log-box .le { color: var(--red); }
 .log-box .lw { color: var(--yellow); }
 .log-box .lg { color: var(--green); }
 .log-box .lh { color: var(--accent); font-weight: 600; }
 
 /* ── run split layout ── */
-.run-split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-@media (max-width: 900px) { .run-split { grid-template-columns: 1fr; } }
-.run-metrics { display: flex; flex-direction: column; gap: 10px; }
-.run-mini-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-.run-mini-stat { background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
-  padding: 8px 10px; text-align: center; }
-.run-mini-stat .val { font-size: 1.05rem; font-weight: 600; color: var(--text); line-height: 1.2; }
-.run-mini-stat .lbl { font-size: .65rem; color: var(--muted); text-transform: uppercase;
-  letter-spacing: .06em; margin-top: 3px; }
-.run-chart-box { background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
-  padding: 10px 12px; flex: 1; min-height: 0; }
-.run-chart-box .rct { font-size: .68rem; color: var(--muted); text-transform: uppercase;
-  letter-spacing: .06em; margin-bottom: 6px; }
+.run-split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 1060px) { .run-split { grid-template-columns: 1fr; } }
+.run-metrics { display: flex; flex-direction: column; gap: 12px; }
+.run-mini-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+.run-mini-stat { background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+  padding: 14px 16px; text-align: center; }
+.run-mini-stat .val { font-size: 1.25rem; font-weight: 700; color: var(--text); line-height: 1.2; }
+.run-mini-stat .lbl { font-size: .68rem; color: var(--muted); text-transform: uppercase;
+  letter-spacing: .06em; margin-top: 5px; }
+.run-chart-box { background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+  padding: 14px 16px; flex: 1; min-height: 0; }
+.run-chart-box .rct { font-size: .7rem; color: var(--muted); text-transform: uppercase;
+  letter-spacing: .06em; margin-bottom: 8px; }
 .run-metrics-empty { display: flex; align-items: center; justify-content: center;
-  height: 100%; color: var(--muted); font-size: .78rem; background: var(--bg);
-  border: 1px solid var(--border); border-radius: 6px; padding: 20px; text-align: center; }
+  height: 100%; color: var(--muted); font-size: .84rem; background: var(--bg);
+  border: 1px solid var(--border); border-radius: 8px; padding: 28px; text-align: center; }
 
 /* ── modal ── */
-#overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.7);
-  z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
+#overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.72);
+  z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(3px); }
 #overlay.open { display: flex; }
-#modal { background: var(--card); border: 1px solid var(--border); border-radius: 10px;
-  width: min(820px, 94vw); max-height: 88vh; overflow-y: auto; padding: 26px 28px; position: relative; }
-#modal-close { position: absolute; top: 16px; right: 16px; background: var(--surface);
-  color: var(--muted); border: 1px solid var(--border); border-radius: 6px;
-  padding: 4px 10px; cursor: pointer; font-size: .78rem; }
+#modal { background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+  width: min(880px, 95vw); max-height: 88vh; overflow-y: auto; padding: 32px 36px; position: relative; }
+#modal-close { position: absolute; top: 20px; right: 20px; background: var(--surface);
+  color: var(--muted); border: 1px solid var(--border); border-radius: 8px;
+  padding: 6px 14px; cursor: pointer; font-size: .84rem; }
 
 /* ── form elements ── */
 select, input[type=number], input[type=text] {
   background: var(--surface); color: var(--text); border: 1px solid var(--border);
-  border-radius: 6px; padding: 6px 10px; font: inherit; font-size: .82rem; }
+  border-radius: 8px; padding: 10px 14px; font: inherit; font-size: .9rem; }
 select:focus, input:focus { outline: none; border-color: var(--accent); }
-button { cursor: pointer; font: inherit; border: none; border-radius: 6px;
-  padding: 7px 16px; font-size: .82rem; transition: opacity .12s; }
+button { cursor: pointer; font: inherit; border: none; border-radius: 8px;
+  padding: 10px 22px; font-size: .9rem; font-weight: 600; transition: opacity .12s; }
 button:hover { opacity: .85; }
 button:disabled { opacity: .35; cursor: default; }
-.btn-primary { background: var(--accent); color: #fff; font-weight: 500; }
-.btn-ghost   { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-ghost   { background: var(--surface); color: var(--text); border: 1px solid var(--border); font-weight: 500; }
 .btn-danger  { background: var(--red); color: #fff; }
 
 /* ── misc ── */
 .flex { display: flex; align-items: center; }
-.gap8 { gap: 8px; }
+.gap8  { gap: 8px; }
 .gap12 { gap: 12px; }
-.grow { flex: 1; }
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.mt16 { margin-top: 16px; }
-.mb8  { margin-bottom: 8px; }
-.empty { text-align: center; padding: 48px; color: var(--muted); font-size: .85rem; }
-.dim { color: var(--muted); }
+.gap16 { gap: 16px; }
+.grow  { flex: 1; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.mt16  { margin-top: 16px; }
+.mt20  { margin-top: 20px; }
+.mb8   { margin-bottom: 8px; }
+.mb12  { margin-bottom: 12px; }
+.empty { text-align: center; padding: 64px; color: var(--muted); font-size: .92rem; }
+.dim   { color: var(--muted); }
+
+/* ── trace generator ── */
+.model-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.model-tab { padding: 7px 16px; border-radius: 20px; font-size: .82rem; font-weight: 500;
+  border: 1px solid var(--border); background: var(--surface); color: var(--muted);
+  cursor: pointer; transition: all .12s; }
+.model-tab.active { border-color: var(--accent); color: var(--accent); background: rgba(79,124,247,.1); }
+.model-ref { font-size: .74rem; color: var(--muted); font-style: italic; margin-bottom: 18px;
+  padding: 10px 14px; border-left: 2px solid var(--border); line-height: 1.55; }
+.param-grid { display: grid; grid-template-columns: 130px 1fr 76px; gap: 9px 14px; align-items: center; }
+.param-grid label { font-size: .86rem; color: var(--muted); }
+.param-grid .unit  { font-size: .78rem; color: var(--muted); }
+.param-grid input, .param-grid select { width: 100%; }
+.synth-item { display: flex; align-items: center; gap: 14px; padding: 14px 18px;
+  border: 1px solid var(--border); border-radius: 9px; background: var(--surface);
+  font-size: .86rem; margin-bottom: 9px; }
+.synth-item .si-name { flex: 1; font-family: monospace; font-size: .82rem; color: var(--text); }
+.synth-stat { color: var(--muted); font-size: .78rem; white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -199,11 +236,28 @@ button:disabled { opacity: .35; cursor: default; }
     <div class="nav-label">Benchmark</div>
     <div class="nav-item" data-page="run"><span class="icon">▷</span> Run</div>
     <div class="nav-item" data-page="progress"><span class="icon">≡</span> Progress</div>
+    <div class="nav-item" data-page="traces"><span class="icon">⌇</span> Traces</div>
   </div>
   <div class="nav-group">
     <div class="nav-label">Analysis</div>
     <div class="nav-item" data-page="compare"><span class="icon">⊞</span> Compare</div>
     <div class="nav-item" data-page="results"><span class="icon">◫</span> Results</div>
+  </div>
+
+  <!-- upload zone -->
+  <div class="sidebar-upload">
+    <span class="upload-label">Upload Trace</span>
+    <div id="upload-zone"
+         onclick="document.getElementById('upload-input').click()"
+         ondragover="uploadDragOver(event)"
+         ondragleave="uploadDragLeave(event)"
+         ondrop="uploadDrop(event)">
+      <div class="up-icon">↑</div>
+      <div class="up-text">Drop CSV here</div>
+      <div class="up-sub">or click to browse</div>
+    </div>
+    <input type="file" id="upload-input" accept=".csv" style="display:none" onchange="uploadFile(event)">
+    <div id="upload-msg"></div>
   </div>
 </nav>
 
@@ -253,7 +307,7 @@ button:disabled { opacity: .35; cursor: default; }
   <div class="page-header"><h1>New Run</h1><p>Configure and launch a benchmark</p></div>
   <div class="card">
     <div class="card-title">Configuration</div>
-    <div class="flex gap12 mb8" style="flex-wrap:wrap">
+    <div class="flex gap16" style="flex-wrap:wrap">
       <div>
         <div class="dim mb8" style="font-size:.72rem;text-transform:uppercase;letter-spacing:.07em">Protocol</div>
         <select id="run-proto">
@@ -266,33 +320,33 @@ button:disabled { opacity: .35; cursor: default; }
       </div>
       <div>
         <div class="dim mb8" style="font-size:.72rem;text-transform:uppercase;letter-spacing:.07em">Duration (s)</div>
-        <input type="number" id="run-dur" value="120" min="10" max="600" style="width:90px">
+        <input type="number" id="run-dur" value="120" min="10" max="600" style="width:110px">
       </div>
       <div>
         <div class="dim mb8" style="font-size:.72rem;text-transform:uppercase;letter-spacing:.07em">Results Folder</div>
-        <input type="text" id="run-dir" placeholder="auto" style="width:200px">
+        <input type="text" id="run-dir" placeholder="auto-generated" style="width:220px">
       </div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-title">Traces &nbsp;<span class="dim" style="font-weight:400;text-transform:none;letter-spacing:0">— leave all unchecked to run all</span></div>
-    <div class="flex gap12 mb8" style="flex-wrap:wrap;align-items:flex-end">
+    <div class="card-title">Traces &nbsp;<span class="dim" style="font-weight:400;text-transform:none;letter-spacing:0">— leave all unchecked to run entire set</span></div>
+    <div class="flex gap16 mb12" style="flex-wrap:wrap;align-items:flex-end">
       <div>
         <div class="dim mb8" style="font-size:.72rem;text-transform:uppercase;letter-spacing:.07em">Trace Set</div>
         <select id="run-trace-set" onchange="renderTraceList()"></select>
       </div>
       <div class="flex gap8">
-        <button class="btn-ghost" style="font-size:.75rem" onclick="selTraces(true)">Select All</button>
-        <button class="btn-ghost" style="font-size:.75rem" onclick="selTraces(false)">Clear</button>
+        <button class="btn-ghost" onclick="selTraces(true)">Select All</button>
+        <button class="btn-ghost" onclick="selTraces(false)">Clear</button>
       </div>
     </div>
     <div class="trace-grid" id="trace-list"></div>
   </div>
 
-  <div class="flex gap12 mt16">
-    <button class="btn-primary" id="run-btn" onclick="startRun()">▷ Start Run</button>
-    <span class="dim" id="run-msg" style="font-size:.8rem"></span>
+  <div class="flex gap12 mt20">
+    <button class="btn-primary" id="run-btn" onclick="startRun()" style="padding:12px 32px;font-size:1rem">▷ Start Run</button>
+    <span class="dim" id="run-msg" style="font-size:.86rem"></span>
   </div>
 </div>
 
@@ -301,6 +355,50 @@ button:disabled { opacity: .35; cursor: default; }
   <div class="page-header"><h1>Progress</h1><p>Terminal output and live metrics side-by-side</p></div>
   <div class="empty" id="no-runs">No runs yet.</div>
   <div id="runs-list"></div>
+</div>
+
+<!-- ── Trace Generator ── -->
+<div class="page" id="page-traces">
+  <div class="page-header"><h1>Trace Generator</h1><p>Synthesize bandwidth traces from validated models — then run them like any real trace</p></div>
+
+  <div class="grid2">
+    <!-- config card -->
+    <div class="card">
+      <div class="card-title">Model</div>
+      <div class="model-tabs" id="model-tabs"></div>
+      <div class="model-ref" id="model-ref"></div>
+      <div class="param-grid" id="model-params"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+        <div>
+          <div class="dim mb8" style="font-size:.72rem;text-transform:uppercase;letter-spacing:.07em">Duration (s)</div>
+          <input type="number" id="tgen-dur" value="120" min="10" max="600" oninput="refreshPreview()" style="width:100%">
+        </div>
+        <div>
+          <div class="dim mb8" style="font-size:.72rem;text-transform:uppercase;letter-spacing:.07em">Trace Name</div>
+          <input type="text" id="tgen-name" placeholder="auto-generated" style="width:100%">
+        </div>
+      </div>
+      <div class="flex gap8 mt16">
+        <button class="btn-primary grow" onclick="generateTrace()">⊕ Generate &amp; Save</button>
+      </div>
+      <div id="tgen-msg" style="margin-top:8px;font-size:.78rem"></div>
+    </div>
+
+    <!-- preview card -->
+    <div class="card" style="display:flex;flex-direction:column">
+      <div class="flex" style="margin-bottom:10px">
+        <div class="card-title grow">Preview</div>
+        <span id="preview-stats" class="dim" style="font-size:.72rem"></span>
+      </div>
+      <div style="position:relative;flex:1;min-height:180px"><canvas id="preview-chart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- saved synthetic traces -->
+  <div class="card mt16">
+    <div class="card-title">Saved Synthetic Traces</div>
+    <div id="synth-list"><div class="dim" style="font-size:.8rem;padding:12px 0">No synthetic traces yet.</div></div>
+  </div>
 </div>
 
 <!-- ── Compare ── -->
@@ -397,6 +495,7 @@ document.querySelectorAll('.nav-item').forEach(el => {
     if (p === 'compare')  renderCompare();
     if (p === 'results')  renderResults();
     if (p === 'progress') renderProgress();
+    if (p === 'traces')   renderTracesPage();
   });
 });
 
@@ -408,7 +507,6 @@ async function loadAll() {
   ]);
   allResults   = res;
   allTraceSets = tr;
-  return res;
   // populate trace-set selector once
   const sel = document.getElementById('run-trace-set');
   if (sel && sel.options.length === 0) {
@@ -423,6 +521,7 @@ async function loadAll() {
   if (document.querySelector('#page-overview.active')) renderOverview();
   if (document.querySelector('#page-compare.active'))  renderCompare();
   if (document.querySelector('#page-results.active'))  renderResults();
+  return res;
 }
 
 // ── trace list ────────────────────────────────────────────────────────────────
@@ -818,6 +917,303 @@ function closeModal() { document.getElementById('overlay').classList.remove('ope
 document.getElementById('overlay').addEventListener('click', e => {
   if (e.target === document.getElementById('overlay')) closeModal();
 });
+
+// ── sidebar upload ────────────────────────────────────────────────────────────
+function uploadDragOver(e) { e.preventDefault(); document.getElementById('upload-zone').classList.add('drag-over'); }
+function uploadDragLeave()  { document.getElementById('upload-zone').classList.remove('drag-over'); }
+function uploadDrop(e) {
+  e.preventDefault();
+  document.getElementById('upload-zone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file) doUpload(file);
+}
+function uploadFile(e) { const file = e.target.files[0]; if (file) doUpload(file); e.target.value = ''; }
+
+async function doUpload(file) {
+  const msg = document.getElementById('upload-msg');
+  msg.style.color = 'var(--muted)';
+  msg.textContent = `Uploading ${file.name}…`;
+  const fd = new FormData();
+  fd.append('file', file);
+  const r = await fetch('/api/upload-trace', { method: 'POST', body: fd }).then(r => r.json());
+  if (r.error) { msg.style.color = 'var(--red)'; msg.textContent = '✕ ' + r.error; return; }
+  msg.style.color = 'var(--green)';
+  msg.textContent = `✓ ${r.file} (${r.rows} rows)`;
+  await loadAll();
+  // auto-select the uploaded trace set in the Run page
+  const sel = document.getElementById('run-trace-set');
+  if (sel) { sel.value = 'uploaded'; renderTraceList(); }
+}
+
+// ── trace generator ───────────────────────────────────────────────────────────
+
+const MODEL_DEFS = {
+  constant: {
+    label: 'Constant', icon: '─',
+    ref: 'Fixed bandwidth baseline — used in BOLA (Spiteri et al., INFOCOM 2016) and MPC (Yin et al., SIGCOMM 2015) controlled evaluations.',
+    params: [
+      { id:'bw_kbps',  label:'Bandwidth', unit:'kbps', type:'number', min:100,  max:100000, step:100,  def:5000 },
+      { id:'rtt_ms',   label:'RTT',       unit:'ms',   type:'number', min:1,    max:500,    step:1,    def:20 },
+    ],
+  },
+  step: {
+    label: 'Step', icon: '⌐',
+    ref: 'Square-wave alternation between two bandwidth levels. Models sudden congestion onset/recovery; used in Pensieve evaluation traces (Mao et al., SIGCOMM 2017).',
+    params: [
+      { id:'high_kbps', label:'High BW',  unit:'kbps', type:'number', min:500,  max:100000, step:500,  def:10000 },
+      { id:'low_kbps',  label:'Low BW',   unit:'kbps', type:'number', min:100,  max:20000,  step:100,  def:1000 },
+      { id:'period_s',  label:'Period',   unit:'s',    type:'number', min:5,    max:120,    step:5,    def:30 },
+      { id:'rtt_ms',    label:'RTT',      unit:'ms',   type:'number', min:1,    max:500,    step:1,    def:20 },
+    ],
+  },
+  sinusoidal: {
+    label: 'Sinusoidal', icon: '∿',
+    ref: 'Smooth periodic oscillation modelling gradual congestion cycles. Used in Comyco (Huang et al., MM 2019) and RobustMPC (Huang et al., 2015) evaluations.',
+    params: [
+      { id:'min_kbps', label:'Min BW',   unit:'kbps', type:'number', min:100,  max:50000,  step:100,  def:1000 },
+      { id:'max_kbps', label:'Max BW',   unit:'kbps', type:'number', min:500,  max:100000, step:500,  def:15000 },
+      { id:'period_s', label:'Period',   unit:'s',    type:'number', min:10,   max:300,    step:5,    def:60 },
+      { id:'rtt_ms',   label:'RTT',      unit:'ms',   type:'number', min:1,    max:500,    step:1,    def:20 },
+    ],
+  },
+  markov: {
+    label: 'Markov', icon: '⇌',
+    ref: 'Markov-modulated discrete states with exponential holding times. Canonical ABR evaluation model from Mao et al., "Pensieve", SIGCOMM 2017.',
+    params: [
+      { id:'states_kbps', label:'States',    unit:'kbps, comma-sep', type:'text', def:'500,1000,2000,4000,8000,16000' },
+      { id:'mean_hold_s', label:'Mean hold', unit:'s',               type:'number', min:0.5, max:30, step:0.5, def:5 },
+      { id:'rtt_ms',      label:'RTT',       unit:'ms',              type:'number', min:1,   max:500, step:1,  def:20 },
+    ],
+  },
+  lognormal: {
+    label: 'Log-normal AR(1)', icon: '~',
+    ref: 'Autocorrelated log-normal process — best statistical match to empirical broadband. From Comyco (Huang et al., MM 2019), Oboe (Achterberg et al., SIGCOMM 2018), and Mok et al., IFIP/IEEE IM 2012.',
+    params: [
+      { id:'mean_kbps', label:'Mean BW',   unit:'kbps',   type:'number', min:100,  max:100000, step:100,  def:5000 },
+      { id:'std_kbps',  label:'Std dev',   unit:'kbps',   type:'number', min:50,   max:50000,  step:50,   def:2000 },
+      { id:'autocorr',  label:'Autocorr',  unit:'0–0.99', type:'number', min:0,    max:0.99,   step:0.01, def:0.8 },
+      { id:'rtt_ms',    label:'RTT',       unit:'ms',     type:'number', min:1,    max:500,    step:1,    def:20 },
+    ],
+  },
+  profile: {
+    label: '3GPP Profile', icon: '◉',
+    ref: 'Pre-calibrated profiles from 3GPP TR 38.901 (5G NR) and TR 36.942 (LTE/HSPA), with measured mean/variance from Huang et al. 2012 and ITU-T G.1010.',
+    params: [
+      { id:'profile', label:'Network', unit:'', type:'select', def:'lte', options: [
+        { value:'3g',        label:'3G UMTS  (~750 kbps, 100ms RTT)' },
+        { value:'hspa',      label:'HSPA+  (~3 Mbps, 70ms RTT)' },
+        { value:'lte',       label:'4G LTE  (~10 Mbps, 40ms RTT)' },
+        { value:'lte_a',     label:'LTE-Advanced  (~30 Mbps, 30ms RTT)' },
+        { value:'5g_nr',     label:'5G NR  (~100 Mbps, 10ms RTT)' },
+        { value:'wifi',      label:'WiFi 802.11ac  (~50 Mbps, 5ms RTT)' },
+        { value:'satellite', label:'Satellite  (~30 Mbps, 600ms RTT)' },
+      ]},
+    ],
+  },
+};
+
+let _activeModel = 'constant';
+let _previewChart = null;
+
+function renderTracesPage() {
+  // build model tabs once
+  const tabs = document.getElementById('model-tabs');
+  if (!tabs.children.length) {
+    for (const [key, def] of Object.entries(MODEL_DEFS)) {
+      const btn = document.createElement('button');
+      btn.className = 'model-tab' + (key === _activeModel ? ' active' : '');
+      btn.textContent = `${def.icon} ${def.label}`;
+      btn.onclick = () => setModel(key);
+      btn.dataset.model = key;
+      tabs.appendChild(btn);
+    }
+  }
+  setModel(_activeModel, false);
+  renderSynthList();
+}
+
+function setModel(key, resetDefaults = true) {
+  _activeModel = key;
+  document.querySelectorAll('.model-tab').forEach(b => b.classList.toggle('active', b.dataset.model === key));
+  const def = MODEL_DEFS[key];
+  document.getElementById('model-ref').textContent = def.ref;
+
+  // render param inputs
+  const grid = document.getElementById('model-params');
+  grid.innerHTML = def.params.map(p => {
+    if (p.type === 'select') {
+      const opts = p.options.map(o => `<option value="${o.value}">${o.label}</option>`).join('');
+      return `<label>${p.label}</label>
+        <select id="tp-${p.id}" onchange="refreshPreview()">${opts}</select>
+        <span class="unit"></span>`;
+    }
+    return `<label>${p.label}</label>
+      <input type="${p.type}" id="tp-${p.id}" value="${p.def}"
+        ${p.min!=null?`min="${p.min}"`:''}
+        ${p.max!=null?`max="${p.max}"`:''}
+        ${p.step!=null?`step="${p.step}"`:''}
+        oninput="refreshPreview()">
+      <span class="unit">${p.unit}</span>`;
+  }).join('');
+
+  refreshPreview();
+}
+
+function getModelParams() {
+  const def = MODEL_DEFS[_activeModel];
+  const p = { duration_s: +(document.getElementById('tgen-dur').value || 120), interval_s: 1.0 };
+  for (const pd of def.params) {
+    const el = document.getElementById(`tp-${pd.id}`);
+    if (!el) continue;
+    p[pd.id] = pd.type === 'number' ? +el.value : el.value;
+  }
+  return p;
+}
+
+// ── JS-side preview computation (mirrors trace_gen.py) ──────────────────────
+
+function _randn() {
+  const u1 = Math.max(Math.random(), 1e-12), u2 = Math.random();
+  return Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+}
+function _randexp(mean) { return -mean * Math.log(Math.max(Math.random(), 1e-12)); }
+
+function computePreviewBW(model, params) {
+  const dur = params.duration_s || 120;
+  const iv  = params.interval_s || 1;
+  const n   = Math.ceil(dur / iv) + 1;
+  const bws = [];
+
+  if (model === 'constant') {
+    for (let i = 0; i < n; i++) bws.push(params.bw_kbps || 5000);
+
+  } else if (model === 'step') {
+    const hi = params.high_kbps || 10000, lo = params.low_kbps || 1000, per = params.period_s || 30;
+    for (let i = 0; i < n; i++) bws.push((Math.floor(i * iv / per) % 2 === 0) ? hi : lo);
+
+  } else if (model === 'sinusoidal') {
+    const mn = params.min_kbps || 1000, mx = params.max_kbps || 15000, per = params.period_s || 60;
+    const amp = (mx - mn) / 2, ctr = (mx + mn) / 2;
+    for (let i = 0; i < n; i++) bws.push(Math.max(50, ctr + amp * Math.sin(2 * Math.PI * i * iv / per)));
+
+  } else if (model === 'markov') {
+    const raw = String(params.states_kbps || '500,1000,2000,4000,8000');
+    const states = raw.split(',').map(Number).filter(v => v > 0);
+    const hold = params.mean_hold_s || 5;
+    let state = states[0], nextT = _randexp(hold);
+    for (let i = 0; i < n; i++) {
+      const t = i * iv;
+      if (t >= nextT) {
+        const others = states.filter(s => s !== state);
+        state = others[Math.floor(Math.random() * others.length)] || state;
+        nextT = t + _randexp(hold);
+      }
+      bws.push(state);
+    }
+
+  } else if (model === 'lognormal' || model === 'profile') {
+    let mean = params.mean_kbps || 5000, std = params.std_kbps || 2000, ac = params.autocorr ?? 0.8;
+    // profile: look up preset values reflected in JS
+    if (model === 'profile') {
+      const P = {
+        '3g':       [750,   300,  0.85], 'hspa':  [3000,  1200, 0.85],
+        'lte':      [10000, 5000, 0.85], 'lte_a': [30000, 12000,0.82],
+        '5g_nr':    [100000,40000,0.80], 'wifi':  [50000, 10000,0.90],
+        'satellite':[30000, 15000,0.75],
+      };
+      [mean, std, ac] = P[params.profile || 'lte'] || [10000, 5000, 0.85];
+    }
+    const sigma2 = Math.log(1 + (std / mean) ** 2);
+    const mu = Math.log(mean) - sigma2 / 2;
+    const sigma = Math.sqrt(sigma2);
+    let prev = mu;
+    for (let i = 0; i < n; i++) {
+      const noise = _randn() * sigma * Math.sqrt(Math.max(0, 1 - ac ** 2));
+      const logBw = ac * prev + (1 - ac) * mu + noise;
+      bws.push(Math.max(50, Math.min(Math.exp(logBw), mean * 6)));
+      prev = logBw;
+    }
+  }
+  return bws;
+}
+
+function refreshPreview() {
+  const params = getModelParams();
+  const bws    = computePreviewBW(_activeModel, params);
+  const labels = bws.map((_, i) => i);
+
+  const avg = Math.round(bws.reduce((a,b)=>a+b,0) / bws.length);
+  const mn  = Math.round(Math.min(...bws));
+  const mx  = Math.round(Math.max(...bws));
+  document.getElementById('preview-stats').textContent =
+    `avg ${(avg/1000).toFixed(1)} Mbps · min ${(mn/1000).toFixed(1)} · max ${(mx/1000).toFixed(1)}`;
+
+  const ctx = document.getElementById('preview-chart').getContext('2d');
+  if (_previewChart) _previewChart.destroy();
+  _previewChart = new Chart(ctx, {
+    type: 'line',
+    data: { labels, datasets: [{ data: bws, borderColor: '#4f7cf7', backgroundColor: '#4f7cf711',
+      fill: true, pointRadius: 0, borderWidth: 1.5,
+      stepped: ['constant','step','markov'].includes(_activeModel) ? true : false,
+      tension: 0.3 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      animation: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { display: false },
+        y: { ticks: { color: '#506070', font:{size:10},
+               callback: v => v >= 1000 ? (v/1000).toFixed(0)+'M' : v+'k' },
+             grid: { color: '#1e2a3a' } },
+      },
+    },
+  });
+}
+
+async function generateTrace() {
+  const params = getModelParams();
+  const name   = document.getElementById('tgen-name').value.trim() || '';
+  const msg    = document.getElementById('tgen-msg');
+  msg.textContent = 'Generating…';
+  msg.style.color = 'var(--muted)';
+
+  const r = await fetch('/api/generate-trace', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ model: _activeModel, params, name }),
+  }).then(r => r.json());
+
+  if (r.error) {
+    msg.textContent = '✕ ' + r.error; msg.style.color = 'var(--red)'; return;
+  }
+  const s = r.stats;
+  msg.style.color = 'var(--green)';
+  msg.textContent = `✓ Saved ${r.file}  ·  avg ${(s.avg_bw/1000).toFixed(1)} Mbps  ·  ${s.rows} samples`;
+  document.getElementById('tgen-name').value = '';
+  await loadAll();
+  renderSynthList();
+}
+
+function renderSynthList() {
+  const el = document.getElementById('synth-list');
+  const traces = allTraceSets['synthetic']?.traces || [];
+  if (!traces.length) {
+    el.innerHTML = '<div class="dim" style="font-size:.8rem;padding:12px 0">No synthetic traces yet.</div>';
+    return;
+  }
+  el.innerHTML = traces.map(t => `
+    <div class="synth-item">
+      <span class="si-name">${t.name}</span>
+      <button class="btn-ghost" style="font-size:.7rem;padding:3px 10px"
+        onclick="deleteSynthTrace('${t.name}')">Delete</button>
+    </div>`).join('');
+}
+
+async function deleteSynthTrace(name) {
+  await fetch(`/api/synthetic-trace/${encodeURIComponent(name)}`, { method: 'DELETE' });
+  await loadAll();
+  renderSynthList();
+}
 
 // ── chart helpers ─────────────────────────────────────────────────────────────
 const CHART_DEFAULTS = {

@@ -17,16 +17,26 @@ import uuid
 from pathlib import Path
 from flask import Flask, jsonify, request, Response, send_from_directory
 
+sys.path.insert(0, str(Path(__file__).parent))
+import trace_gen as _tgen
+
 ROOT        = Path(__file__).parent.parent
 RESULTS_DIR = ROOT / 'results'
 BENCHMARK   = ROOT / 'benchmark.py'
+
+SYNTHETIC_DIR = ROOT / 'traces' / 'synthetic'
+UPLOADED_DIR  = ROOT / 'traces' / 'uploaded'
+SYNTHETIC_DIR.mkdir(parents=True, exist_ok=True)
+UPLOADED_DIR.mkdir(parents=True, exist_ok=True)
 
 TRACE_SETS = {
     'fcc-2016-sept':  {'label': 'FCC 2016 – September', 'dir': ROOT / 'traces' / 'fcc-2016-sept',  'glob': '*.csv'},
     'fcc-2016-jul':   {'label': 'FCC 2016 – July',      'dir': ROOT / 'traces' / 'fcc-2016-jul',   'glob': '*.csv'},
     'fcc-2016-jun':   {'label': 'FCC 2016 – June',      'dir': ROOT / 'traces' / 'fcc-2016-jun',   'glob': '*.csv'},
-    'starlink-11-24': {'label': 'Starlink Nov 2024',     'dir': ROOT / 'traces' / 'starlink-11-24', 'glob': '*_tc.csv'},
+    'starlink-11-24': {'label': 'Starlink Nov 2024',     'dir': ROOT / 'traces' / 'starlink-11-24', 'glob': '*.csv'},
     'hsdpa':          {'label': 'HSDPA Mobile',          'dir': ROOT / 'traces' / 'hsdpa',          'glob': '*.csv'},
+    'synthetic':      {'label': 'Synthetic',             'dir': SYNTHETIC_DIR,                       'glob': '*.csv'},
+    'uploaded':       {'label': 'Uploaded',              'dir': UPLOADED_DIR,                        'glob': '*.csv'},
 }
 DEFAULT_TRACE_SET = 'fcc-2016-sept'
 
@@ -290,6 +300,64 @@ def api_runs():
              'started_at': r['started_at']}
             for rid, r in _runs.items()
         ])
+
+
+@app.route('/api/upload-trace', methods=['POST'])
+def api_upload_trace():
+    f = request.files.get('file')
+    if not f:
+        return jsonify({'error': 'No file provided'}), 400
+    if not f.filename.lower().endswith('.csv'):
+        return jsonify({'error': 'Only CSV files are accepted'}), 400
+    try:
+        content = f.read().decode('utf-8')
+    except UnicodeDecodeError:
+        return jsonify({'error': 'File must be UTF-8 text'}), 400
+    lines = [l for l in content.strip().splitlines() if l.strip()]
+    if len(lines) < 2:
+        return jsonify({'error': 'File has fewer than 2 rows'}), 400
+    header = {h.strip() for h in lines[0].split(',')}
+    required = {'since', 'relative_seconds', 'rtt', 'bandwidth_kbps'}
+    if not required.issubset(header):
+        missing = required - header
+        return jsonify({'error': f'Missing columns: {", ".join(sorted(missing))}'}), 400
+    safe = re.sub(r'[^a-zA-Z0-9_\-.]', '_', f.filename)
+    (UPLOADED_DIR / safe).write_text(content)
+    return jsonify({'ok': True, 'file': safe, 'rows': len(lines) - 1})
+
+
+@app.route('/api/profiles')
+def api_profiles():
+    return jsonify(_tgen.PROFILE_PRESETS)
+
+
+@app.route('/api/generate-trace', methods=['POST'])
+def api_generate_trace():
+    body   = request.json or {}
+    model  = body.get('model', 'constant')
+    params = body.get('params', {})
+    name   = re.sub(r'[^a-zA-Z0-9_\-]', '_', (body.get('name') or '').strip())
+
+    if not name:
+        name = f'synth_{model}_{int(time.time())}'
+    if not name.endswith('.csv'):
+        name += '_tc.csv'
+
+    try:
+        stats = _tgen.generate(model, params, SYNTHETIC_DIR / name)
+        return jsonify({'ok': True, 'file': name, 'stats': stats})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+
+
+@app.route('/api/synthetic-trace/<name>', methods=['DELETE'])
+def api_delete_synthetic(name: str):
+    safe = re.sub(r'[^a-zA-Z0-9_\-.]', '', name)
+    fpath = SYNTHETIC_DIR / safe
+    if not fpath.exists():
+        return jsonify({'error': 'not found'}), 404
+    fpath.unlink()
+    return jsonify({'ok': True})
 
 
 if __name__ == '__main__':
