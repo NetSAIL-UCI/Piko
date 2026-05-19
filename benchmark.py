@@ -1344,24 +1344,29 @@ class WebRTCBenchmark:
             }
             
             consume_info = None
-            try:
-                consume_info = self._api_post('/consume', {
-                    'clientId': self.client_id,
-                    'rtpCapabilities': consumer_rtp_caps,
-                })
-                self.consumer_id = consume_info['id']
-                print(f"   Consumer created: {self.consumer_id[:8]}...")
-                # Debug: show negotiated RTP params
-                rtp_p = consume_info.get('rtpParameters', {})
-                hdr_exts = rtp_p.get('headerExtensions', [])
-                print(f"   Header extensions: {[e.get('uri','').split('/')[-1] for e in hdr_exts]}")
-                codecs = rtp_p.get('codecs', [])
-                for c in codecs:
-                    fbs = [f['type'] + ((' ' + f['parameter']) if f.get('parameter') else '') for f in c.get('rtcpFeedback', [])]
-                    print(f"   Codec {c.get('mimeType')}: rtcpFeedback={fbs}")
-            except Exception as e:
-                print(f"   [WARN] Could not create consumer: {e}")
-                print("   (Video producer may not be active yet)")
+            for _attempt in range(8):
+                try:
+                    consume_info = self._api_post('/consume', {
+                        'clientId': self.client_id,
+                        'rtpCapabilities': consumer_rtp_caps,
+                    })
+                    self.consumer_id = consume_info['id']
+                    print(f"   Consumer created: {self.consumer_id[:8]}...")
+                    rtp_p = consume_info.get('rtpParameters', {})
+                    hdr_exts = rtp_p.get('headerExtensions', [])
+                    print(f"   Header extensions: {[e.get('uri','').split('/')[-1] for e in hdr_exts]}")
+                    codecs = rtp_p.get('codecs', [])
+                    for c in codecs:
+                        fbs = [f['type'] + ((' ' + f['parameter']) if f.get('parameter') else '') for f in c.get('rtcpFeedback', [])]
+                        print(f"   Codec {c.get('mimeType')}: rtcpFeedback={fbs}")
+                    break
+                except Exception as e:
+                    if _attempt < 7:
+                        print(f"   [WARN] Could not create consumer (attempt {_attempt+1}/8): {e} — retrying in 2s")
+                        await asyncio.sleep(2)
+                    else:
+                        print(f"   [WARN] Could not create consumer after 8 attempts: {e}")
+                        print("   (Video producer may not be active yet)")
             
             # Step 4: Build synthetic SDP from server transport params +
             # consumer RTP params and establish the PeerConnection.
