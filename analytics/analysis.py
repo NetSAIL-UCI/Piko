@@ -69,7 +69,7 @@ def load_results(results_dir: Path) -> dict:
     Returns dict: protocol -> list of record dicts, each with flattened metrics.
     """
     by_protocol = {}
-    for f in sorted(results_dir.glob('benchmark_*.json')):
+    for f in sorted(results_dir.rglob('benchmark_*.json')):
         proto, trace_id = parse_filename(f.name)
         if not proto:
             continue

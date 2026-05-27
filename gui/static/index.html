@@ -203,6 +203,13 @@ button:disabled { opacity: .35; cursor: default; }
 .empty { text-align: center; padding: 64px; color: var(--muted); font-size: .92rem; }
 .dim   { color: var(--muted); }
 
+/* ── network tabs ── */
+.net-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.net-tab { padding: 7px 18px; border-radius: 20px; font-size: .82rem; font-weight: 500;
+  border: 1px solid var(--border); background: var(--surface); color: var(--muted);
+  cursor: pointer; transition: all .12s; }
+.net-tab.active { border-color: var(--accent); color: var(--accent); background: rgba(79,124,247,.1); }
+
 /* ── trace generator ── */
 .model-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
 .model-tab { padding: 7px 16px; border-radius: 20px; font-size: .82rem; font-weight: 500;
@@ -242,6 +249,7 @@ button:disabled { opacity: .35; cursor: default; }
     <div class="nav-label">Analysis</div>
     <div class="nav-item" data-page="compare"><span class="icon">⊞</span> Compare</div>
     <div class="nav-item" data-page="results"><span class="icon">◫</span> Results</div>
+    <div class="nav-item" data-page="conditions"><span class="icon">⌁</span> Conditions</div>
   </div>
 
   <!-- upload zone -->
@@ -270,6 +278,7 @@ button:disabled { opacity: .35; cursor: default; }
     <h1>Overview</h1>
     <p>Aggregate performance across all benchmarked runs</p>
   </div>
+  <div class="net-tabs" id="ov-net-tabs"></div>
   <div class="stat-row" id="ov-stats">
     <div class="stat-box"><div class="stat-label">Total Runs</div><div class="stat-value" id="ov-total">—</div></div>
     <div class="stat-box"><div class="stat-label">Protocols</div><div class="stat-value" id="ov-protos">—</div></div>
@@ -404,6 +413,7 @@ button:disabled { opacity: .35; cursor: default; }
 <!-- ── Compare ── -->
 <div class="page" id="page-compare">
   <div class="page-header"><h1>Compare</h1><p>Protocol performance across all traces</p></div>
+  <div class="net-tabs" id="cmp-net-tabs"></div>
   <div class="proto-toggles" id="proto-toggles"></div>
 
   <div class="grid2">
@@ -436,6 +446,12 @@ button:disabled { opacity: .35; cursor: default; }
   <div class="page-header">
     <div class="flex gap12">
       <div class="grow"><h1>Results</h1><p>All saved benchmark runs</p></div>
+      <select id="rf-net" onchange="renderResults()">
+        <option value="">All Networks</option>
+        <option value="5g-ireland">5G/4G Ireland</option>
+        <option value="starlink-2024">Starlink 2024</option>
+        <option value="fcc">FCC</option>
+      </select>
       <select id="rf-proto" onchange="renderResults()">
         <option value="">All Protocols</option>
         <option value="dash">DASH</option>
@@ -450,13 +466,46 @@ button:disabled { opacity: .35; cursor: default; }
   <div class="card">
     <table class="tbl">
       <thead><tr>
-        <th>Protocol</th><th>Unit</th><th>Timestamp</th>
+        <th>Protocol</th><th>Network</th><th>Unit</th><th>Timestamp</th>
         <th class="r">Bitrate</th><th class="r">Buffer</th>
         <th class="r">Rebuf #</th><th class="r">Rebuf ms</th>
         <th class="r">Startup</th><th class="r">Throughput</th>
         <th style="width:80px"></th>
       </tr></thead>
       <tbody id="res-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── Conditions ── -->
+<div class="page" id="page-conditions">
+  <div class="page-header">
+    <h1>Network Conditions</h1>
+    <p>Trace group characterization — bandwidth distribution, variability, and RTT</p>
+  </div>
+
+  <div id="cond-summary-row" class="stat-row"></div>
+
+  <div id="cond-hist-grid" class="grid2" style="margin-bottom:20px"></div>
+
+  <div class="card">
+    <div class="flex gap12" style="margin-bottom:16px;align-items:center">
+      <div class="card-title grow" style="margin-bottom:0">Per-Trace Breakdown</div>
+      <select id="cond-filter-net" onchange="renderCondTraceTable()">
+        <option value="">All Networks</option>
+        <option value="5g-ireland">5G/4G Ireland</option>
+        <option value="starlink-2024">Starlink 2024</option>
+        <option value="fcc">FCC</option>
+      </select>
+    </div>
+    <table class="tbl" id="cond-trace-tbl">
+      <thead><tr>
+        <th>Trace</th><th>Network</th>
+        <th class="r">Avg BW</th><th class="r">Median BW</th>
+        <th class="r">Min BW</th><th class="r">Max BW</th>
+        <th class="r">Std Dev</th><th class="r">CV</th><th class="r">Avg RTT</th>
+      </tr></thead>
+      <tbody id="cond-trace-body"></tbody>
     </table>
   </div>
 </div>
@@ -478,10 +527,18 @@ const PROTOS = ['dash','lldash-gpac','hls','webrtc','moq2'];
 const PC = { dash:'#4f7cf7', 'lldash-gpac':'#2dd4a0', hls:'#e07840', webrtc:'#a87cf7', moq2:'#f76490' };
 
 // ── state ────────────────────────────────────────────────────────────────────
-let allResults  = {};
+let allResults   = {};
 let allTraceSets = {};   // set_id → {label, traces:[]}
 let activeProtos = new Set(PROTOS);
+let activeNetwork = 'all';
 let charts = {};
+
+const NET_LABELS = {
+  'all':          'All Networks',
+  '5g-ireland':   '5G/4G Ireland',
+  'starlink-2024':'Starlink 2024',
+  'fcc':          'FCC',
+};
 
 // ── nav ──────────────────────────────────────────────────────────────────────
 document.querySelectorAll('.nav-item').forEach(el => {
@@ -491,11 +548,12 @@ document.querySelectorAll('.nav-item').forEach(el => {
     el.classList.add('active');
     document.getElementById('page-' + el.dataset.page).classList.add('active');
     const p = el.dataset.page;
-    if (p === 'overview') renderOverview();
-    if (p === 'compare')  renderCompare();
-    if (p === 'results')  renderResults();
-    if (p === 'progress') renderProgress();
-    if (p === 'traces')   renderTracesPage();
+    if (p === 'overview')    renderOverview();
+    if (p === 'compare')    renderCompare();
+    if (p === 'results')    renderResults();
+    if (p === 'progress')   renderProgress();
+    if (p === 'traces')     renderTracesPage();
+    if (p === 'conditions') renderConditionsPage();
   });
 });
 
@@ -524,6 +582,43 @@ async function loadAll() {
   return res;
 }
 
+// ── network condition helpers ─────────────────────────────────────────────────
+function getAvailableNetworks() {
+  const nets = new Set();
+  for (const entries of Object.values(allResults))
+    for (const e of entries)
+      if (e.trace_set) nets.add(e.trace_set);
+  return ['all', ...Array.from(nets).sort()];
+}
+
+function filteredResults() {
+  if (activeNetwork === 'all') return allResults;
+  const out = {};
+  for (const [proto, entries] of Object.entries(allResults))
+    out[proto] = entries.filter(e => e.trace_set === activeNetwork);
+  return out;
+}
+
+function buildNetworkTabs(containerId) {
+  const nets = getAvailableNetworks();
+  document.getElementById(containerId).innerHTML = nets.map(n => `
+    <button class="net-tab${activeNetwork===n?' active':''}" onclick="setNetwork('${n}')">${NET_LABELS[n]||n}</button>
+  `).join('');
+}
+
+function setNetwork(net) {
+  activeNetwork = net;
+  // refresh tabs in both containers
+  ['ov-net-tabs','cmp-net-tabs'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.querySelectorAll('.net-tab').forEach(b =>
+      b.classList.toggle('active', b.textContent.trim() === (NET_LABELS[net]||net))
+    );
+  });
+  if (document.querySelector('#page-overview.active')) renderOverview();
+  if (document.querySelector('#page-compare.active'))  renderCompare();
+}
+
 // ── trace list ────────────────────────────────────────────────────────────────
 function renderTraceList() {
   const setId  = document.getElementById('run-trace-set')?.value || Object.keys(allTraceSets)[0];
@@ -545,9 +640,11 @@ function selTraces(v) { document.querySelectorAll('.tcb').forEach(cb => cb.check
 
 // ── overview ──────────────────────────────────────────────────────────────────
 function renderOverview() {
+  buildNetworkTabs('ov-net-tabs');
+  const res = filteredResults();
   let total = 0;
   const rows = [];
-  for (const [proto, entries] of Object.entries(allResults)) {
+  for (const [proto, entries] of Object.entries(res)) {
     if (!entries.length) continue;
     total += entries.length;
     const avg = k => {
@@ -770,34 +867,28 @@ function toggleProto(p) {
   renderCompare();
 }
 
-function bestEntry(proto, unit) {
-  return ((allResults[proto]||[]).filter(e=>e.unit===unit)
-    .sort((a,b)=>b.timestamp.localeCompare(a.timestamp))[0]) || null;
-}
-
-function protoAvg(proto, key) {
-  const vs = Object.keys(allResults[proto]||{}).concat(
-    (allResults[proto]||[]).map(e=>e.unit)
-  );
-  const entries = allResults[proto] || [];
-  const vals = entries.map(e=>e[key]).filter(v=>v!=null&&v>=0);
-  return vals.length ? vals.reduce((a,b)=>a+b,0)/vals.length : null;
-}
-
 function renderCompare() {
+  buildNetworkTabs('cmp-net-tabs');
   const protos = PROTOS.filter(p => activeProtos.has(p));
+  const res = filteredResults();
 
-  // aggregate bar charts
-  mkBar('c-bitrate',   protos, protos.map(p=>protoAvg(p,'avg_bitrate')),    'Bitrate');
-  mkBar('c-rebuf-ms',  protos, protos.map(p=>protoAvg(p,'rebuf_ms')),        'Rebuffer ms');
-  mkBar('c-startup',   protos, protos.map(p=>protoAvg(p,'startup_ms')),      'Startup');
-  mkBar('c-buffer',    protos, protos.map(p=>protoAvg(p,'avg_buffer_s')),    'Buffer');
+  const avg = (proto, key) => {
+    const vals = (res[proto]||[]).map(e=>e[key]).filter(v=>v!=null&&v>=0);
+    return vals.length ? vals.reduce((a,b)=>a+b,0)/vals.length : null;
+  };
 
-  // per-trace grouped bar
-  const allUnits = [...new Set(PROTOS.flatMap(p=>(allResults[p]||[]).map(e=>e.unit).filter(Boolean)))].sort();
+  mkBar('c-bitrate',   protos, protos.map(p=>avg(p,'avg_bitrate')),   'Bitrate');
+  mkBar('c-rebuf-ms',  protos, protos.map(p=>avg(p,'rebuf_ms')),       'Rebuffer ms');
+  mkBar('c-startup',   protos, protos.map(p=>avg(p,'startup_ms')),     'Startup');
+  mkBar('c-buffer',    protos, protos.map(p=>avg(p,'avg_buffer_s')),   'Buffer');
+
+  const allUnits = [...new Set(PROTOS.flatMap(p=>(res[p]||[]).map(e=>e.unit).filter(Boolean)))].sort();
   const datasets = protos.map(p => ({
     label: p,
-    data: allUnits.map(u => bestEntry(p,u)?.rebuf_ms ?? null),
+    data: allUnits.map(u => {
+      const matches = (res[p]||[]).filter(e=>e.unit===u).sort((a,b)=>b.timestamp.localeCompare(a.timestamp));
+      return matches[0]?.rebuf_ms ?? null;
+    }),
     backgroundColor: PC[p] + 'bb',
     borderColor: PC[p],
     borderWidth: 1, borderRadius: 3,
@@ -807,13 +898,15 @@ function renderCompare() {
 
 // ── results ───────────────────────────────────────────────────────────────────
 function renderResults() {
-  const fp = document.getElementById('rf-proto').value;
-  const fu = document.getElementById('rf-unit').value.trim().toLowerCase();
+  const fp  = document.getElementById('rf-proto').value;
+  const fn  = document.getElementById('rf-net').value;
+  const fu  = document.getElementById('rf-unit').value.trim().toLowerCase();
 
   let rows = [];
   for (const [proto, entries] of Object.entries(allResults)) {
     if (fp && proto !== fp) continue;
     for (const e of entries) {
+      if (fn && e.trace_set !== fn) continue;
       if (fu && !(e.unit||'').includes(fu)) continue;
       rows.push(e);
     }
@@ -828,6 +921,7 @@ function renderResults() {
   document.getElementById('res-body').innerHTML = rows.map(e => `
     <tr>
       <td><span class="badge b-${e.protocol}">${e.protocol}</span></td>
+      <td class="dim" style="font-size:.75rem">${NET_LABELS[e.trace_set]||e.trace_set||'—'}</td>
       <td class="dim" style="font-size:.78rem">${e.unit||'—'}</td>
       <td class="dim" style="font-size:.72rem">${(e.timestamp||'').replace('T',' ').slice(0,16)}</td>
       <td class="r">${f(e.avg_bitrate)}</td>
@@ -1213,6 +1307,118 @@ async function deleteSynthTrace(name) {
   await fetch(`/api/synthetic-trace/${encodeURIComponent(name)}`, { method: 'DELETE' });
   await loadAll();
   renderSynthList();
+}
+
+// ── conditions page ───────────────────────────────────────────────────────────
+let _netStats = null;
+
+async function renderConditionsPage() {
+  if (!_netStats) {
+    _netStats = await fetch('/api/network-stats').then(r => r.json());
+  }
+  renderCondSummary();
+  renderCondHistograms();
+  renderCondTraceTable();
+}
+
+function renderCondSummary() {
+  const NET_COLORS = { '5g-ireland': 'var(--c-webrtc)', 'starlink-2024': 'var(--c-lldash-gpac)', 'fcc': 'var(--c-dash)' };
+  const order = ['5g-ireland', 'starlink-2024', 'fcc'];
+  document.getElementById('cond-summary-row').innerHTML = order.filter(n => _netStats[n]).map(n => {
+    const s = _netStats[n];
+    const col = NET_COLORS[n] || 'var(--text)';
+    return `
+      <div class="card" style="border-color:${col}33">
+        <div class="card-title" style="color:${col}">${s.label}</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+          <div>
+            <div class="stat-label" style="font-size:.65rem">Avg BW</div>
+            <div style="font-size:1.5rem;font-weight:700;color:#fff">${fmbps(s.avg_bw)}</div>
+            <div class="dim" style="font-size:.7rem">median ${fmbps(s.median_bw)}</div>
+          </div>
+          <div>
+            <div class="stat-label" style="font-size:.65rem">Variability (CV)</div>
+            <div style="font-size:1.5rem;font-weight:700;color:${s.cv > 1 ? 'var(--red)' : s.cv > 0.5 ? 'var(--yellow)' : 'var(--green)'}">${(s.cv * 100).toFixed(0)}%</div>
+            <div class="dim" style="font-size:.7rem">std ${fmbps(s.std_bw)}</div>
+          </div>
+        </div>
+        <table class="tbl" style="font-size:.75rem">
+          <tr><td class="dim">Range</td><td class="r">${fmbps(s.min_bw)} – ${fmbps(s.max_bw)}</td></tr>
+          <tr><td class="dim">P10 / P90</td><td class="r">${fmbps(s.p10)} / ${fmbps(s.p90)}</td></tr>
+          <tr><td class="dim">Avg RTT</td><td class="r">${s.avg_rtt != null ? s.avg_rtt + ' ms' : '—'}</td></tr>
+          <tr><td class="dim">Traces</td><td class="r">${s.count}</td></tr>
+        </table>
+      </div>`;
+  }).join('');
+}
+
+function renderCondHistograms() {
+  const NET_COLORS = { '5g-ireland': '#a87cf7', 'starlink-2024': '#2dd4a0', 'fcc': '#4f7cf7' };
+  const order = ['5g-ireland', 'starlink-2024', 'fcc'];
+  const nets = order.filter(n => _netStats[n]);
+  // span full width if 3 nets, otherwise grid2
+  const gridId = 'cond-hist-grid';
+  const grid = document.getElementById(gridId);
+  grid.style.gridTemplateColumns = nets.length === 3 ? 'repeat(3,1fr)' : '1fr 1fr';
+  grid.innerHTML = nets.map(n => `
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title">${_netStats[n].label} — BW Distribution</div>
+      <div style="position:relative;height:160px"><canvas id="hist-${n}"></canvas></div>
+      <div class="dim" style="font-size:.7rem;margin-top:8px;text-align:center">bandwidth (kbps)</div>
+    </div>`).join('');
+
+  nets.forEach(n => {
+    const s = _netStats[n];
+    const col = NET_COLORS[n] || '#4f7cf7';
+    const labels = s.histogram.map(b => b.lo >= 1000 ? (b.lo/1000).toFixed(0)+'k' : b.lo);
+    const data   = s.histogram.map(b => b.count);
+    const ctx = document.getElementById(`hist-${n}`)?.getContext('2d');
+    if (!ctx) return;
+    new Chart(ctx, {
+      type: 'bar',
+      data: { labels, datasets: [{ data, backgroundColor: col + 'bb', borderColor: col, borderWidth: 1, borderRadius: 3 }] },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false },
+          tooltip: { callbacks: { label: ctx => `${ctx.parsed.y} samples` } } },
+        scales: {
+          x: { ticks: { color: '#506070', font:{size:9} }, grid: { color: '#1e2a3a40' } },
+          y: { ticks: { color: '#506070', font:{size:9} }, grid: { color: '#1e2a3a' } },
+        },
+        animation: { duration: 200 },
+      },
+    });
+  });
+}
+
+function renderCondTraceTable() {
+  const fn = document.getElementById('cond-filter-net').value;
+  const order = ['5g-ireland', 'starlink-2024', 'fcc'];
+  const NET_LABELS_LOCAL = { '5g-ireland': '5G/4G Ireland', 'starlink-2024': 'Starlink 2024', 'fcc': 'FCC' };
+  let rows = [];
+  for (const n of order) {
+    if (fn && n !== fn) continue;
+    if (!_netStats[n]) continue;
+    for (const t of _netStats[n].traces) rows.push({ ...t, net_id: n, net_label: NET_LABELS_LOCAL[n] });
+  }
+  document.getElementById('cond-trace-body').innerHTML = rows.map(t => `
+    <tr>
+      <td style="font-family:monospace;font-size:.75rem">${t.name}</td>
+      <td class="dim" style="font-size:.75rem">${t.net_label}</td>
+      <td class="r">${fmbps(t.avg_bw)}</td>
+      <td class="r">${fmbps(t.median_bw)}</td>
+      <td class="r dim">${fmbps(t.min_bw)}</td>
+      <td class="r dim">${fmbps(t.max_bw)}</td>
+      <td class="r">${fmbps(t.std_bw)}</td>
+      <td class="r ${t.cv > 1 ? 'bad' : t.cv > 0.5 ? 'warn' : 'good'}">${(t.cv * 100).toFixed(0)}%</td>
+      <td class="r dim">${t.avg_rtt != null ? t.avg_rtt + ' ms' : '—'}</td>
+    </tr>`).join('');
+}
+
+function fmbps(kbps) {
+  if (kbps == null) return '<span class="dim">—</span>';
+  if (kbps >= 1000) return (kbps / 1000).toFixed(1) + ' <span class="dim">Mbps</span>';
+  return Math.round(kbps) + ' <span class="dim">kbps</span>';
 }
 
 // ── chart helpers ─────────────────────────────────────────────────────────────

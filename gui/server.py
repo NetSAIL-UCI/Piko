@@ -5,10 +5,12 @@ Benchmarking GUI backend — Flask server.
 Provides REST + SSE endpoints consumed by the single-page frontend.
 """
 
+import csv
 import json
 import os
 import queue
 import re
+import statistics
 import subprocess
 import sys
 import threading
@@ -30,15 +32,13 @@ SYNTHETIC_DIR.mkdir(parents=True, exist_ok=True)
 UPLOADED_DIR.mkdir(parents=True, exist_ok=True)
 
 TRACE_SETS = {
-    'fcc-2016-sept':  {'label': 'FCC 2016 – September', 'dir': ROOT / 'traces' / 'fcc-2016-sept',  'glob': '*.csv'},
-    'fcc-2016-jul':   {'label': 'FCC 2016 – July',      'dir': ROOT / 'traces' / 'fcc-2016-jul',   'glob': '*.csv'},
-    'fcc-2016-jun':   {'label': 'FCC 2016 – June',      'dir': ROOT / 'traces' / 'fcc-2016-jun',   'glob': '*.csv'},
-    'starlink-11-24': {'label': 'Starlink Nov 2024',     'dir': ROOT / 'traces' / 'starlink-11-24', 'glob': '*.csv'},
-    'hsdpa':          {'label': 'HSDPA Mobile',          'dir': ROOT / 'traces' / 'hsdpa',          'glob': '*.csv'},
-    'synthetic':      {'label': 'Synthetic',             'dir': SYNTHETIC_DIR,                       'glob': '*.csv'},
-    'uploaded':       {'label': 'Uploaded',              'dir': UPLOADED_DIR,                        'glob': '*.csv'},
+    'fcc-2021':       {'label': 'FCC 2021 – September',     'dir': ROOT / 'traces' / 'fcc-2021',       'glob': '*.csv'},
+    'starlink-2024':  {'label': 'Starlink 2024 (Mobile)',   'dir': ROOT / 'traces' / 'starlink-2024', 'glob': '*.csv'},
+    '5g-ireland':     {'label': '5G/4G Ireland (UCC)',      'dir': ROOT / 'traces' / '5g-ireland',    'glob': '*.csv'},
+    'synthetic':      {'label': 'Synthetic',                'dir': SYNTHETIC_DIR,                      'glob': '*.csv'},
+    'uploaded':       {'label': 'Uploaded',                 'dir': UPLOADED_DIR,                       'glob': '*.csv'},
 }
-DEFAULT_TRACE_SET = 'fcc-2016-sept'
+DEFAULT_TRACE_SET = 'fcc-2021'
 
 app = Flask(__name__, static_folder='static', static_url_path='')
 
@@ -73,11 +73,14 @@ def _list_results():
             fname = fpath.name
             m = re.search(r'unit(\d+)', fname)
             unit = m.group(1) if m else None
+            dir_name = fpath.parent.name
+            trace_set = dir_name[len(proto)+1:] if dir_name.startswith(proto + '_') else None
             md = r.get('metrics', {})
             entry = {
                 'file':      str(fpath.relative_to(ROOT)),
                 'timestamp': r.get('timestamp', ''),
                 'protocol':  proto,
+                'trace_set': trace_set,
                 'unit':      unit,
                 'trace_bw':  r.get('trace_bandwidth', {}).get('average_kbps'),
                 'avg_bitrate':   md.get('bitrate',    {}).get('average_kbps'),
@@ -102,6 +105,87 @@ def _list_results():
     for bucket in groups.values():
         bucket.sort(key=lambda x: x['timestamp'], reverse=True)
     return groups
+
+
+TRACE_NETWORK_DIRS = {
+    '5g-ireland':    (ROOT / 'traces' / '5g-ireland',    '*.csv'),
+    'starlink-2024': (ROOT / 'traces' / 'starlink-2024', '*.csv'),
+    'fcc':           (ROOT / 'traces' / 'fcc',           '*_tc.csv'),
+}
+
+NET_DISPLAY = {
+    '5g-ireland':    '5G/4G Ireland',
+    'starlink-2024': 'Starlink 2024',
+    'fcc':           'FCC (3G)',
+}
+
+def _network_stats():
+    result = {}
+    for net_id, (trace_dir, glob) in TRACE_NETWORK_DIRS.items():
+        traces = []
+        all_bws = []
+        for f in sorted(trace_dir.glob(glob)):
+            bws, rtts = [], []
+            try:
+                with open(f, newline='') as fh:
+                    for row in csv.DictReader(fh):
+                        bw  = float(row.get('bandwidth_kbps') or 0)
+                        rtt = float(row.get('rtt') or 0)
+                        bws.append(bw)
+                        if rtt > 0:
+                            rtts.append(rtt)
+            except Exception:
+                continue
+            if not bws:
+                continue
+            nonzero = [b for b in bws if b > 0]
+            all_bws.extend(nonzero)
+            traces.append({
+                'name':      f.stem,
+                'samples':   len(bws),
+                'avg_bw':    round(statistics.mean(bws),  1),
+                'median_bw': round(statistics.median(nonzero), 1) if nonzero else 0,
+                'min_bw':    round(min(nonzero), 1)       if nonzero else 0,
+                'max_bw':    round(max(nonzero), 1)       if nonzero else 0,
+                'std_bw':    round(statistics.stdev(bws), 1) if len(bws) > 1 else 0,
+                'cv':        round(statistics.stdev(bws) / statistics.mean(bws), 3)
+                              if len(bws) > 1 and statistics.mean(bws) > 0 else 0,
+                'avg_rtt':   round(statistics.mean(rtts), 1) if rtts else None,
+            })
+
+        if not all_bws:
+            continue
+
+        # histogram: 10 equal-width bins over [0, max_bw]
+        lo, hi = 0.0, max(all_bws)
+        step = (hi - lo) / 10 if hi > 0 else 1.0
+        bins = [0] * 10
+        for b in all_bws:
+            idx = min(int((b - lo) / step), 9)
+            bins[idx] += 1
+        histogram = [
+            {'lo': round(lo + i * step), 'hi': round(lo + (i+1) * step), 'count': bins[i]}
+            for i in range(10)
+        ]
+
+        avg_bw = statistics.mean(all_bws)
+        result[net_id] = {
+            'label':     NET_DISPLAY.get(net_id, net_id),
+            'count':     len(traces),
+            'avg_bw':    round(avg_bw, 1),
+            'median_bw': round(statistics.median(all_bws), 1),
+            'min_bw':    round(min(all_bws), 1),
+            'max_bw':    round(max(all_bws), 1),
+            'std_bw':    round(statistics.stdev(all_bws), 1) if len(all_bws) > 1 else 0,
+            'cv':        round(statistics.stdev(all_bws) / avg_bw, 3) if avg_bw > 0 else 0,
+            'p10':       round(sorted(all_bws)[int(len(all_bws) * 0.10)], 1),
+            'p90':       round(sorted(all_bws)[int(len(all_bws) * 0.90)], 1),
+            'avg_rtt':   round(statistics.mean([t['avg_rtt'] for t in traces if t['avg_rtt'] is not None]), 1)
+                          if any(t['avg_rtt'] for t in traces) else None,
+            'histogram': histogram,
+            'traces':    traces,
+        }
+    return result
 
 
 def _stream_proc(run_id: str, proc: subprocess.Popen, log_q: queue.Queue):
@@ -131,6 +215,11 @@ def api_traces():
 @app.route('/api/results')
 def api_results():
     return jsonify(_list_results())
+
+
+@app.route('/api/network-stats')
+def api_network_stats():
+    return jsonify(_network_stats())
 
 
 @app.route('/api/result-detail')

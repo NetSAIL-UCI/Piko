@@ -480,7 +480,14 @@ class DASHJSBenchmark:
             import re as _re
 
             def _patch_dash_html(route, request):
-                resp = route.fetch()
+                try:
+                    resp = route.fetch()
+                except Exception as _fe:
+                    print(f"\n[ERROR] DASH server unreachable at {self.base_url}")
+                    print(f"        Make sure hls-dash-server is running on the correct port.")
+                    print(f"        (route.fetch failed: {_fe})")
+                    route.abort()
+                    return
                 body_bytes = resp.body()
                 html = body_bytes.decode('utf-8', errors='replace')
 
@@ -924,6 +931,19 @@ class HLSBenchmark:
 
             print("[BROWSER] Launching headless Chromium...")
             startup_start = time.time()
+
+            # Wait for the HLS server to accept connections cleanly before navigating.
+            # /startShaping briefly resets connections while tc-trace reconfigures rules.
+            _server_host = 'localhost'
+            _server_port = 8080
+            import socket as _socket
+            for _attempt in range(30):
+                try:
+                    with _socket.create_connection((_server_host, _server_port), timeout=2):
+                        break
+                except OSError:
+                    time.sleep(1)
+
             page.goto(self.player_url, timeout=120000, wait_until='domcontentloaded')
 
             print("[BROWSER] Waiting for playback to start...")
@@ -1876,8 +1896,8 @@ class MOQBenchmark:
     detects moov boxes and calls changeType() to reconfigure the decoder.
     """
 
-    RELAY_BIN  = Path('/tmp/moq-dev/target/release/moq-relay')
-    MOQ_CLI    = Path('/tmp/moq-dev/target/release/moq-cli')
+    RELAY_BIN  = Path('/srv/disk00/ajhunjh1/tmp/moq-dev/target/release/moq-relay')
+    MOQ_CLI    = Path('/srv/disk00/ajhunjh1/tmp/moq-dev/target/release/moq-cli')
     MOQ_DIR    = Path(__file__).parent / 'moq-dev'
     RELAY_PORT = 4446
     HTTP_PORT  = 8095
@@ -2192,7 +2212,7 @@ class MOQ2Benchmark:
     Chunks are paced at the current trace bandwidth to simulate network delay.
     """
 
-    RELAY_BIN  = Path('/tmp/moq-dev/target/release/moq-relay')
+    RELAY_BIN  = Path('/srv/disk00/ajhunjh1/tmp/moq-dev/target/release/moq-relay')
     MOQ_DIR    = Path(__file__).parent / 'moq-dev'
     RELAY_PORT = 4446
     HTTP_PORT  = 8095
