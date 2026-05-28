@@ -22,7 +22,7 @@ from flask import Flask, jsonify, request, Response, send_from_directory
 sys.path.insert(0, str(Path(__file__).parent))
 import trace_gen as _tgen
 
-ROOT        = Path(__file__).parent.parent
+ROOT        = Path(__file__).resolve().parent.parent
 RESULTS_DIR = ROOT / 'results'
 BENCHMARK   = ROOT / 'benchmark.py'
 
@@ -32,7 +32,7 @@ SYNTHETIC_DIR.mkdir(parents=True, exist_ok=True)
 UPLOADED_DIR.mkdir(parents=True, exist_ok=True)
 
 TRACE_SETS = {
-    'fcc-2021':       {'label': 'FCC 2021 – September',     'dir': ROOT / 'traces' / 'fcc-2021',       'glob': '*.csv'},
+    'fcc-2021':       {'label': 'FCC 2021 – September',     'dir': ROOT / 'traces' / 'fcc',            'glob': '*.csv'},
     'starlink-2024':  {'label': 'Starlink 2024 (Mobile)',   'dir': ROOT / 'traces' / 'starlink-2024', 'glob': '*.csv'},
     '5g-ireland':     {'label': '5G/4G Ireland (UCC)',      'dir': ROOT / 'traces' / '5g-ireland',    'glob': '*.csv'},
     'synthetic':      {'label': 'Synthetic',                'dir': SYNTHETIC_DIR,                      'glob': '*.csv'},
