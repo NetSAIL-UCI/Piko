@@ -5,9 +5,6 @@
 *.m3u8
 content/
 
-# Results (keep structure, ignore data)
-results/*.json
-results/**/*.json
 
 # Node.js
 node_modules/
