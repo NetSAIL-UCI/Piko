@@ -1,0 +1,1229 @@
+
+======================================================================
+  BATCH RUN: 21 trace(s) from traces/fcc
+======================================================================
+
+
+──────────────────────────────────────────────────────────────────────
+  [1/21] trace_12743_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/fcc/trace_12743_3g_tc.csv
+======================================================================
+
+   Publisher quality: 800 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [26/May/2026 20:42:55] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [26/May/2026 20:42:55] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 154ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.7s | quality: 800 kbps | trace_bw: 1035 kbps
+   t=20s | buffer: 11.6s | quality: 800 kbps | trace_bw: 1081 kbps
+   t=30s | buffer: 13.4s | quality: 800 kbps | trace_bw: 965 kbps
+   t=41s | buffer: 19.3s | quality: 800 kbps | trace_bw: 1078 kbps
+   t=51s | buffer: 25.2s | quality: 800 kbps | trace_bw: 1036 kbps
+   t=61s | buffer: 19.0s | quality: 800 kbps | trace_bw: 1075 kbps
+   t=71s | buffer: 28.9s | quality: 800 kbps | trace_bw: 925 kbps
+   t=81s | buffer: 30.7s | quality: 800 kbps | trace_bw: 1148 kbps
+   t=91s | buffer: 32.6s | quality: 800 kbps | trace_bw: 1015 kbps
+   t=101s | buffer: 34.4s | quality: 800 kbps | trace_bw: 1097 kbps
+   t=112s | buffer: 36.3s | quality: 800 kbps | trace_bw: 1128 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     154 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  800 kbps
+      Average (effective): 800 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        3 ms
+      Ratio:             0.0025%
+
+  [THROUGHPUT]
+      Average:           1,031 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,031 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/moq2_fcc/benchmark_moq2_trace_12743_3g_tc_20260526_204250.json
+
+──────────────────────────────────────────────────────────────────────
+  [2/21] trace_27001_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/fcc/trace_27001_3g_tc.csv
+======================================================================
+
+   Publisher quality: 2000 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [26/May/2026 20:45:01] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [26/May/2026 20:45:01] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 173ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.7s | quality: 2000 kbps | trace_bw: 2870 kbps
+   t=20s | buffer: 15.6s | quality: 2000 kbps | trace_bw: 3007 kbps
+   t=30s | buffer: 21.5s | quality: 2000 kbps | trace_bw: 2786 kbps
+   t=41s | buffer: 31.3s | quality: 2000 kbps | trace_bw: 2782 kbps
+   t=51s | buffer: 33.2s | quality: 2000 kbps | trace_bw: 3286 kbps
+   t=61s | buffer: 43.0s | quality: 2000 kbps | trace_bw: 3332 kbps
+   t=71s | buffer: 40.9s | quality: 2000 kbps | trace_bw: 1 kbps
+   t=81s | buffer: 38.8s | quality: 2000 kbps | trace_bw: 2893 kbps
+   t=91s | buffer: 40.6s | quality: 2000 kbps | trace_bw: 3184 kbps
+   t=101s | buffer: 46.5s | quality: 2000 kbps | trace_bw: 2996 kbps
+   t=112s | buffer: 52.3s | quality: 2000 kbps | trace_bw: 2631 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     173 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  2,000 kbps
+      Average (effective): 2,000 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        6 ms
+      Ratio:             0.0054%
+
+  [THROUGHPUT]
+      Average:           2,987 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           2,987 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/moq2_fcc/benchmark_moq2_trace_27001_3g_tc_20260526_204456.json
+
+──────────────────────────────────────────────────────────────────────
+  [3/21] trace_27161_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/fcc/trace_27161_3g_tc.csv
+======================================================================
+
+   Publisher quality: 3000 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [26/May/2026 20:47:07] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [26/May/2026 20:47:07] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 194ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.7s | quality: 3000 kbps | trace_bw: 3020 kbps
+   t=20s | buffer: 7.6s | quality: 3000 kbps | trace_bw: 1530 kbps
+   t=30s | buffer: 5.4s | quality: 3000 kbps | trace_bw: 4453 kbps
+   t=41s | buffer: 3.3s | quality: 3000 kbps | trace_bw: 13 kbps
+   t=51s | buffer: 9.1s | quality: 3000 kbps | trace_bw: 4391 kbps
+   t=61s | buffer: 7.0s | quality: 3000 kbps | trace_bw: 3571 kbps
+   t=71s | buffer: 4.8s | quality: 3000 kbps | trace_bw: 0 kbps
+   t=81s | buffer: 2.7s | quality: 3000 kbps | trace_bw: 5069 kbps
+   t=91s | buffer: 12.5s | quality: 3000 kbps | trace_bw: 3342 kbps
+   t=102s | buffer: 14.3s | quality: 3000 kbps | trace_bw: 3124 kbps
+   t=112s | buffer: 12.2s | quality: 3000 kbps | trace_bw: 3994 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     194 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  3,000 kbps
+      Average (effective): 3,000 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        12 ms
+      Ratio:             0.0104%
+
+  [THROUGHPUT]
+      Average:           3,209 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           3,209 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/moq2_fcc/benchmark_moq2_trace_27161_3g_tc_20260526_204702.json
+
+──────────────────────────────────────────────────────────────────────
+  [4/21] trace_27447_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/fcc/trace_27447_3g_tc.csv
+======================================================================
+
+   Publisher quality: 3000 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [26/May/2026 20:49:13] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [26/May/2026 20:49:13] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 190ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.1s | quality: 3000 kbps | trace_bw: 3684 kbps
+   t=20s | buffer: 8.3s | quality: 3000 kbps | trace_bw: 3434 kbps
+   t=30s | buffer: 6.2s | quality: 3000 kbps | trace_bw: 3485 kbps
+   t=41s | buffer: 12.0s | quality: 3000 kbps | trace_bw: 3515 kbps
+   t=51s | buffer: 17.9s | quality: 3000 kbps | trace_bw: 2677 kbps
+   t=61s | buffer: 19.7s | quality: 3000 kbps | trace_bw: 3798 kbps
+   t=71s | buffer: 21.6s | quality: 3000 kbps | trace_bw: 4294 kbps
+   t=81s | buffer: 31.5s | quality: 3000 kbps | trace_bw: 3522 kbps
+   t=91s | buffer: 25.3s | quality: 3000 kbps | trace_bw: 3589 kbps
+   t=101s | buffer: 27.2s | quality: 3000 kbps | trace_bw: 3898 kbps
+   t=112s | buffer: 29.1s | quality: 3000 kbps | trace_bw: 3728 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     190 ms
+      Playback time:     115.6 s
+
+  [BITRATE]
+      Average (selected):  3,000 kbps
+      Average (effective): 2,882 kbps
+
+  [REBUFFERING]
+      Events:            3
+      Total time:        4,730 ms
+      Ratio:             3.9324%
+
+  [THROUGHPUT]
+      Average:           3,630 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           3,630 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/moq2_fcc/benchmark_moq2_trace_27447_3g_tc_20260526_204908.json
+
+──────────────────────────────────────────────────────────────────────
+  [5/21] trace_5407_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/fcc/trace_5407_3g_tc.csv
+======================================================================
+
+   Publisher quality: 800 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [26/May/2026 20:51:20] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [26/May/2026 20:51:20] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 159ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.7s | quality: 800 kbps | trace_bw: 1219 kbps
+   t=20s | buffer: 15.6s | quality: 800 kbps | trace_bw: 1260 kbps
+   t=30s | buffer: 25.5s | quality: 800 kbps | trace_bw: 1273 kbps
+   t=41s | buffer: 31.3s | quality: 800 kbps | trace_bw: 1295 kbps
+   t=51s | buffer: 33.2s | quality: 800 kbps | trace_bw: 1268 kbps
+   t=61s | buffer: 47.0s | quality: 800 kbps | trace_bw: 1232 kbps
+   t=71s | buffer: 48.9s | quality: 800 kbps | trace_bw: 1328 kbps
+   t=81s | buffer: 54.8s | quality: 800 kbps | trace_bw: 1264 kbps
+   t=91s | buffer: 60.6s | quality: 800 kbps | trace_bw: 1095 kbps
+   t=101s | buffer: 66.5s | quality: 800 kbps | trace_bw: 1227 kbps
+   t=112s | buffer: 72.4s | quality: 800 kbps | trace_bw: 1320 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     159 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  800 kbps
+      Average (effective): 800 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        4 ms
+      Ratio:             0.0034%
+
+  [THROUGHPUT]
+      Average:           1,249 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,249 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/moq2_fcc/benchmark_moq2_trace_5407_3g_tc_20260526_205114.json
+
+──────────────────────────────────────────────────────────────────────
+  [6/21] trace_797466_http---www.amazon_part1_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/fcc/trace_797466_http---www.amazon_part1_tc.csv
+======================================================================
+
+   Publisher quality: 600 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [26/May/2026 20:53:26] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [26/May/2026 20:53:26] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 151ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 17.7s | quality: 600 kbps | trace_bw: 2758 kbps
+   t=20s | buffer: 23.6s | quality: 600 kbps | trace_bw: 386 kbps
+   t=30s | buffer: 49.5s | quality: 600 kbps | trace_bw: 2780 kbps
+   t=41s | buffer: 83.3s | quality: 600 kbps | trace_bw: 2760 kbps
+   t=51s | buffer: 121.2s | quality: 600 kbps | trace_bw: 2647 kbps
+   t=61s | buffer: 151.0s | quality: 600 kbps | trace_bw: 2101 kbps
+   t=71s | buffer: 148.9s | quality: 600 kbps | trace_bw: 483 kbps
+   t=81s | buffer: 142.7s | quality: 600 kbps | trace_bw: 525 kbps
+   t=91s | buffer: 144.6s | quality: 600 kbps | trace_bw: 792 kbps
+   t=101s | buffer: 146.4s | quality: 600 kbps | trace_bw: 762 kbps
+   t=112s | buffer: 148.3s | quality: 600 kbps | trace_bw: 788 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     151 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  600 kbps
+      Average (effective): 600 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        3 ms
+      Ratio:             0.0026%
+
+  [THROUGHPUT]
+      Average:           1,388 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,388 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/moq2_fcc/benchmark_moq2_trace_797466_http---www.amazon_part1_tc_20260526_205320.json
+
+──────────────────────────────────────────────────────────────────────
+  [7/21] trace_797466_http---www.amazon_part2_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/fcc/trace_797466_http---www.amazon_part2_tc.csv
+======================================================================
+
+   Publisher quality: 600 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [26/May/2026 20:55:32] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [26/May/2026 20:55:32] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 146ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.7s | quality: 600 kbps | trace_bw: 761 kbps
+   t=20s | buffer: 7.6s | quality: 600 kbps | trace_bw: 754 kbps
+   t=30s | buffer: 9.5s | quality: 600 kbps | trace_bw: 771 kbps
+   t=41s | buffer: 11.3s | quality: 600 kbps | trace_bw: 434 kbps
+   t=51s | buffer: 13.1s | quality: 600 kbps | trace_bw: 714 kbps
+   t=61s | buffer: 11.0s | quality: 600 kbps | trace_bw: 755 kbps
+   t=71s | buffer: 8.9s | quality: 600 kbps | trace_bw: 477 kbps
+   t=81s | buffer: 2.7s | quality: 600 kbps | trace_bw: 770 kbps
+   t=91s | buffer: 12.6s | quality: 600 kbps | trace_bw: 755 kbps
+   t=101s | buffer: 14.5s | quality: 600 kbps | trace_bw: 748 kbps
+   t=112s | buffer: 12.3s | quality: 600 kbps | trace_bw: 575 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     146 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  600 kbps
+      Average (effective): 600 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        3 ms
+      Ratio:             0.0022%
+
+  [THROUGHPUT]
+      Average:           643 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           643 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/moq2_fcc/benchmark_moq2_trace_797466_http---www.amazon_part2_tc_20260526_205526.json
+
+──────────────────────────────────────────────────────────────────────
+  [8/21] trace_799296_http---www.amazon_part0_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/fcc/trace_799296_http---www.amazon_part0_tc.csv
+======================================================================
+
+   Publisher quality: 1500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [26/May/2026 20:57:38] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [26/May/2026 20:57:38] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 172ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.7s | quality: 1500 kbps | trace_bw: 1791 kbps
+   t=20s | buffer: 7.6s | quality: 1500 kbps | trace_bw: 1884 kbps
+   t=30s | buffer: 9.4s | quality: 1500 kbps | trace_bw: 1677 kbps
+   t=41s | buffer: 11.3s | quality: 1500 kbps | trace_bw: 1766 kbps
+   t=51s | buffer: 17.1s | quality: 1500 kbps | trace_bw: 1564 kbps
+   t=61s | buffer: 19.0s | quality: 1500 kbps | trace_bw: 1657 kbps
+   t=71s | buffer: 20.9s | quality: 1500 kbps | trace_bw: 1877 kbps
+   t=81s | buffer: 26.7s | quality: 1500 kbps | trace_bw: 1703 kbps
+   t=91s | buffer: 28.6s | quality: 1500 kbps | trace_bw: 2061 kbps
+   t=101s | buffer: 26.4s | quality: 1500 kbps | trace_bw: 1654 kbps
+   t=112s | buffer: 32.3s | quality: 1500 kbps | trace_bw: 1676 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     172 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  1,500 kbps
+      Average (effective): 1,500 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        7 ms
+      Ratio:             0.0059%
+
+  [THROUGHPUT]
+      Average:           1,806 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,806 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/moq2_fcc/benchmark_moq2_trace_799296_http---www.amazon_part0_tc_20260526_205732.json
+
+──────────────────────────────────────────────────────────────────────
+  [9/21] trace_799448_http---www.facebook_part6_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/fcc/trace_799448_http---www.facebook_part6_tc.csv
+======================================================================
+
+   Publisher quality: 800 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [26/May/2026 20:59:44] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [26/May/2026 20:59:44] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 166ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 9.7s | quality: 800 kbps | trace_bw: 1300 kbps
+   t=20s | buffer: 11.6s | quality: 800 kbps | trace_bw: 719 kbps
+   t=30s | buffer: 17.4s | quality: 800 kbps | trace_bw: 1251 kbps
+   t=41s | buffer: 27.3s | quality: 800 kbps | trace_bw: 938 kbps
+   t=51s | buffer: 25.2s | quality: 800 kbps | trace_bw: 1298 kbps
+   t=61s | buffer: 39.0s | quality: 800 kbps | trace_bw: 1253 kbps
+   t=71s | buffer: 44.8s | quality: 800 kbps | trace_bw: 1146 kbps
+   t=81s | buffer: 46.7s | quality: 800 kbps | trace_bw: 1299 kbps
+   t=91s | buffer: 48.5s | quality: 800 kbps | trace_bw: 1295 kbps
+   t=101s | buffer: 54.4s | quality: 800 kbps | trace_bw: 1052 kbps
+   t=112s | buffer: 60.2s | quality: 800 kbps | trace_bw: 1299 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     166 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  800 kbps
+      Average (effective): 800 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        8 ms
+      Ratio:             0.0062%
+
+  [THROUGHPUT]
+      Average:           1,192 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,192 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/moq2_fcc/benchmark_moq2_trace_799448_http---www.facebook_part6_tc_20260526_205939.json
+
+──────────────────────────────────────────────────────────────────────
+  [10/21] trace_800156_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/fcc/trace_800156_3g_tc.csv
+======================================================================
+
+   Publisher quality: 1200 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [26/May/2026 21:01:50] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [26/May/2026 21:01:50] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 171ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 2.4s | quality: 1200 kbps | trace_bw: 393 kbps
+   t=20s | buffer: 3.8s | quality: 1200 kbps | trace_bw: 649 kbps
+   t=30s | buffer: 5.6s | quality: 1200 kbps | trace_bw: 1609 kbps
+   t=41s | buffer: 0.1s | quality: 1200 kbps | trace_bw: 1844 kbps
+   t=51s | buffer: 3.0s | quality: 1200 kbps | trace_bw: 503 kbps
+   t=61s | buffer: 6.3s | quality: 1200 kbps | trace_bw: 1648 kbps
+   t=71s | buffer: 12.1s | quality: 1200 kbps | trace_bw: 1715 kbps
+   t=81s | buffer: 22.0s | quality: 1200 kbps | trace_bw: 3227 kbps
+   t=91s | buffer: 31.8s | quality: 1200 kbps | trace_bw: 2776 kbps
+   t=102s | buffer: 45.7s | quality: 1200 kbps | trace_bw: 2245 kbps
+   t=112s | buffer: 51.5s | quality: 1200 kbps | trace_bw: 2459 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     171 ms
+      Playback time:     113.1 s
+
+  [BITRATE]
+      Average (selected):  1,200 kbps
+      Average (effective): 1,127 kbps
+
+  [REBUFFERING]
+      Events:            5
+      Total time:        7,305 ms
+      Ratio:             6.0652%
+
+  [THROUGHPUT]
+      Average:           1,858 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,858 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/moq2_fcc/benchmark_moq2_trace_800156_3g_tc_20260526_210145.json
+
+──────────────────────────────────────────────────────────────────────
+  [11/21] trace_806172_http---www.amazon_part0_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/fcc/trace_806172_http---www.amazon_part0_tc.csv
+======================================================================
+
+   Publisher quality: 800 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [26/May/2026 21:03:56] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [26/May/2026 21:03:56] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 166ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 9.7s | quality: 800 kbps | trace_bw: 1376 kbps
+   t=20s | buffer: 15.6s | quality: 800 kbps | trace_bw: 1327 kbps
+   t=30s | buffer: 17.4s | quality: 800 kbps | trace_bw: 1337 kbps
+   t=41s | buffer: 27.3s | quality: 800 kbps | trace_bw: 1195 kbps
+   t=51s | buffer: 29.2s | quality: 800 kbps | trace_bw: 1341 kbps
+   t=61s | buffer: 39.0s | quality: 800 kbps | trace_bw: 885 kbps
+   t=71s | buffer: 44.9s | quality: 800 kbps | trace_bw: 1260 kbps
+   t=81s | buffer: 46.7s | quality: 800 kbps | trace_bw: 1308 kbps
+   t=91s | buffer: 52.6s | quality: 800 kbps | trace_bw: 959 kbps
+   t=101s | buffer: 58.5s | quality: 800 kbps | trace_bw: 1268 kbps
+   t=112s | buffer: 56.3s | quality: 800 kbps | trace_bw: 1276 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     166 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  800 kbps
+      Average (effective): 800 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        2 ms
+      Ratio:             0.0019%
+
+  [THROUGHPUT]
+      Average:           1,160 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,160 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/moq2_fcc/benchmark_moq2_trace_806172_http---www.amazon_part0_tc_20260526_210351.json
+
+──────────────────────────────────────────────────────────────────────
+  [12/21] trace_806330_http---www.amazon_part0_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/fcc/trace_806330_http---www.amazon_part0_tc.csv
+======================================================================
+
+   Publisher quality: 800 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [26/May/2026 21:06:02] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [26/May/2026 21:06:02] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 160ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 2.4s | quality: 800 kbps | trace_bw: 623 kbps
+   t=20s | buffer: 0.1s | quality: 800 kbps | trace_bw: 889 kbps
+   t=30s | buffer: 6.2s | quality: 800 kbps | trace_bw: 1327 kbps
+   t=41s | buffer: 16.1s | quality: 800 kbps | trace_bw: 1294 kbps
+   t=51s | buffer: 17.9s | quality: 800 kbps | trace_bw: 1377 kbps
+   t=61s | buffer: 23.8s | quality: 800 kbps | trace_bw: 1419 kbps
+   t=71s | buffer: 33.6s | quality: 800 kbps | trace_bw: 1261 kbps
+   t=81s | buffer: 43.5s | quality: 800 kbps | trace_bw: 1329 kbps
+   t=91s | buffer: 45.3s | quality: 800 kbps | trace_bw: 1401 kbps
+   t=101s | buffer: 55.2s | quality: 800 kbps | trace_bw: 1395 kbps
+   t=112s | buffer: 61.0s | quality: 800 kbps | trace_bw: 1264 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     160 ms
+      Playback time:     115.6 s
+
+  [BITRATE]
+      Average (selected):  800 kbps
+      Average (effective): 768 kbps
+
+  [REBUFFERING]
+      Events:            4
+      Total time:        4,755 ms
+      Ratio:             3.9510%
+
+  [THROUGHPUT]
+      Average:           1,177 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,177 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/moq2_fcc/benchmark_moq2_trace_806330_http---www.amazon_part0_tc_20260526_210557.json
+
+──────────────────────────────────────────────────────────────────────
+  [13/21] trace_8327_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/fcc/trace_8327_3g_tc.csv
+======================================================================
+
+   Publisher quality: 800 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [26/May/2026 21:08:08] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [26/May/2026 21:08:08] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 174ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 1.7s | quality: 800 kbps | trace_bw: 745 kbps
+   t=20s | buffer: 4.1s | quality: 800 kbps | trace_bw: 745 kbps
+   t=30s | buffer: 2.5s | quality: 800 kbps | trace_bw: 745 kbps
+   t=41s | buffer: 5.7s | quality: 800 kbps | trace_bw: 1101 kbps
+   t=51s | buffer: 7.5s | quality: 800 kbps | trace_bw: 1074 kbps
+   t=61s | buffer: 17.4s | quality: 800 kbps | trace_bw: 1046 kbps
+   t=71s | buffer: 11.2s | quality: 800 kbps | trace_bw: 931 kbps
+   t=81s | buffer: 17.1s | quality: 800 kbps | trace_bw: 1066 kbps
+   t=91s | buffer: 22.9s | quality: 800 kbps | trace_bw: 1066 kbps
+   t=101s | buffer: 20.8s | quality: 800 kbps | trace_bw: 1080 kbps
+   t=112s | buffer: 18.7s | quality: 800 kbps | trace_bw: 470 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     174 ms
+      Playback time:     118.0 s
+
+  [BITRATE]
+      Average (selected):  800 kbps
+      Average (effective): 784 kbps
+
+  [REBUFFERING]
+      Events:            4
+      Total time:        2,355 ms
+      Ratio:             1.9572%
+
+  [THROUGHPUT]
+      Average:           843 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           843 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/moq2_fcc/benchmark_moq2_trace_8327_3g_tc_20260526_210803.json
+
+──────────────────────────────────────────────────────────────────────
+  [14/21] trace_8465_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/fcc/trace_8465_3g_tc.csv
+======================================================================
+
+   Publisher quality: 800 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [26/May/2026 21:10:15] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [26/May/2026 21:10:15] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 162ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.7s | quality: 800 kbps | trace_bw: 975 kbps
+   t=20s | buffer: 7.6s | quality: 800 kbps | trace_bw: 1040 kbps
+   t=30s | buffer: 9.4s | quality: 800 kbps | trace_bw: 898 kbps
+   t=41s | buffer: 11.3s | quality: 800 kbps | trace_bw: 951 kbps
+   t=51s | buffer: 21.1s | quality: 800 kbps | trace_bw: 1033 kbps
+   t=61s | buffer: 19.0s | quality: 800 kbps | trace_bw: 1051 kbps
+   t=71s | buffer: 24.8s | quality: 800 kbps | trace_bw: 982 kbps
+   t=81s | buffer: 30.7s | quality: 800 kbps | trace_bw: 970 kbps
+   t=91s | buffer: 28.5s | quality: 800 kbps | trace_bw: 873 kbps
+   t=101s | buffer: 30.4s | quality: 800 kbps | trace_bw: 1002 kbps
+   t=112s | buffer: 28.3s | quality: 800 kbps | trace_bw: 1012 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     162 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  800 kbps
+      Average (effective): 800 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        4 ms
+      Ratio:             0.0035%
+
+  [THROUGHPUT]
+      Average:           950 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           950 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/moq2_fcc/benchmark_moq2_trace_8465_3g_tc_20260526_211009.json
+
+──────────────────────────────────────────────────────────────────────
+  [15/21] trace_849842_http---www.facebook_part1_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/fcc/trace_849842_http---www.facebook_part1_tc.csv
+======================================================================
+
+   Publisher quality: 400 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [26/May/2026 21:12:21] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [26/May/2026 21:12:21] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 141ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.7s | quality: 400 kbps | trace_bw: 471 kbps
+   t=20s | buffer: 7.6s | quality: 400 kbps | trace_bw: 478 kbps
+   t=30s | buffer: 5.5s | quality: 400 kbps | trace_bw: 479 kbps
+   t=41s | buffer: 7.3s | quality: 400 kbps | trace_bw: 455 kbps
+   t=51s | buffer: 9.2s | quality: 400 kbps | trace_bw: 478 kbps
+   t=61s | buffer: 11.0s | quality: 400 kbps | trace_bw: 0 kbps
+   t=71s | buffer: 8.9s | quality: 400 kbps | trace_bw: 475 kbps
+   t=81s | buffer: 10.8s | quality: 400 kbps | trace_bw: 118 kbps
+   t=91s | buffer: 12.6s | quality: 400 kbps | trace_bw: 478 kbps
+   t=101s | buffer: 14.5s | quality: 400 kbps | trace_bw: 475 kbps
+   t=112s | buffer: 12.3s | quality: 400 kbps | trace_bw: 477 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     141 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  400 kbps
+      Average (effective): 400 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        3 ms
+      Ratio:             0.0024%
+
+  [THROUGHPUT]
+      Average:           426 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           426 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/moq2_fcc/benchmark_moq2_trace_849842_http---www.facebook_part1_tc_20260526_211215.json
+
+──────────────────────────────────────────────────────────────────────
+  [16/21] trace_901648_http---www.amazon_part1_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/fcc/trace_901648_http---www.amazon_part1_tc.csv
+======================================================================
+
+   Publisher quality: 1500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [26/May/2026 21:14:27] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [26/May/2026 21:14:27] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 186ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.7s | quality: 1500 kbps | trace_bw: 3043 kbps
+   t=20s | buffer: 23.6s | quality: 1500 kbps | trace_bw: 2789 kbps
+   t=30s | buffer: 29.5s | quality: 1500 kbps | trace_bw: 1025 kbps
+   t=41s | buffer: 31.3s | quality: 1500 kbps | trace_bw: 2318 kbps
+   t=51s | buffer: 41.2s | quality: 1500 kbps | trace_bw: 2990 kbps
+   t=61s | buffer: 55.0s | quality: 1500 kbps | trace_bw: 3259 kbps
+   t=71s | buffer: 60.9s | quality: 1500 kbps | trace_bw: 2752 kbps
+   t=81s | buffer: 74.8s | quality: 1500 kbps | trace_bw: 3275 kbps
+   t=91s | buffer: 80.6s | quality: 1500 kbps | trace_bw: 2355 kbps
+   t=101s | buffer: 82.5s | quality: 1500 kbps | trace_bw: 2316 kbps
+   t=112s | buffer: 88.3s | quality: 1500 kbps | trace_bw: 2357 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     186 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  1,500 kbps
+      Average (effective): 1,500 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        19 ms
+      Ratio:             0.0155%
+
+  [THROUGHPUT]
+      Average:           2,576 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           2,576 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/moq2_fcc/benchmark_moq2_trace_901648_http---www.amazon_part1_tc_20260526_211421.json
+
+──────────────────────────────────────────────────────────────────────
+  [17/21] trace_9108_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/fcc/trace_9108_3g_tc.csv
+======================================================================
+
+   Publisher quality: 800 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [26/May/2026 21:16:33] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [26/May/2026 21:16:33] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 190ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.7s | quality: 800 kbps | trace_bw: 1178 kbps
+   t=20s | buffer: 7.6s | quality: 800 kbps | trace_bw: 1257 kbps
+   t=30s | buffer: 17.5s | quality: 800 kbps | trace_bw: 1319 kbps
+   t=41s | buffer: 27.3s | quality: 800 kbps | trace_bw: 1224 kbps
+   t=51s | buffer: 29.2s | quality: 800 kbps | trace_bw: 1209 kbps
+   t=61s | buffer: 39.0s | quality: 800 kbps | trace_bw: 1232 kbps
+   t=71s | buffer: 44.9s | quality: 800 kbps | trace_bw: 1279 kbps
+   t=81s | buffer: 50.7s | quality: 800 kbps | trace_bw: 1240 kbps
+   t=91s | buffer: 56.6s | quality: 800 kbps | trace_bw: 1246 kbps
+   t=101s | buffer: 62.4s | quality: 800 kbps | trace_bw: 1221 kbps
+   t=112s | buffer: 68.3s | quality: 800 kbps | trace_bw: 1271 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     190 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  800 kbps
+      Average (effective): 800 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        15 ms
+      Ratio:             0.0123%
+
+  [THROUGHPUT]
+      Average:           1,247 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,247 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/moq2_fcc/benchmark_moq2_trace_9108_3g_tc_20260526_211627.json
+
+──────────────────────────────────────────────────────────────────────
+  [18/21] trace_925800_http---www.ebay_part0_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/fcc/trace_925800_http---www.ebay_part0_tc.csv
+======================================================================
+
+   Publisher quality: 600 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [26/May/2026 21:18:39] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [26/May/2026 21:18:39] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 160ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.7s | quality: 600 kbps | trace_bw: 864 kbps
+   t=20s | buffer: 11.6s | quality: 600 kbps | trace_bw: 869 kbps
+   t=30s | buffer: 17.5s | quality: 600 kbps | trace_bw: 873 kbps
+   t=41s | buffer: 23.3s | quality: 600 kbps | trace_bw: 845 kbps
+   t=51s | buffer: 29.2s | quality: 600 kbps | trace_bw: 879 kbps
+   t=61s | buffer: 35.0s | quality: 600 kbps | trace_bw: 869 kbps
+   t=71s | buffer: 36.9s | quality: 600 kbps | trace_bw: 502 kbps
+   t=81s | buffer: 38.8s | quality: 600 kbps | trace_bw: 866 kbps
+   t=91s | buffer: 44.6s | quality: 600 kbps | trace_bw: 879 kbps
+   t=101s | buffer: 46.5s | quality: 600 kbps | trace_bw: 886 kbps
+   t=112s | buffer: 52.3s | quality: 600 kbps | trace_bw: 826 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     160 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  600 kbps
+      Average (effective): 600 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        3 ms
+      Ratio:             0.0024%
+
+  [THROUGHPUT]
+      Average:           810 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           810 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/moq2_fcc/benchmark_moq2_trace_925800_http---www.ebay_part0_tc_20260526_211834.json
+
+──────────────────────────────────────────────────────────────────────
+  [19/21] trace_939562_http---www.google_part1_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/fcc/trace_939562_http---www.google_part1_tc.csv
+======================================================================
+
+   Publisher quality: 2000 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [26/May/2026 21:20:45] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [26/May/2026 21:20:45] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 188ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.7s | quality: 2000 kbps | trace_bw: 2397 kbps
+   t=20s | buffer: 11.6s | quality: 2000 kbps | trace_bw: 3303 kbps
+   t=30s | buffer: 13.4s | quality: 2000 kbps | trace_bw: 2593 kbps
+   t=41s | buffer: 19.3s | quality: 2000 kbps | trace_bw: 3042 kbps
+   t=51s | buffer: 25.1s | quality: 2000 kbps | trace_bw: 3150 kbps
+   t=61s | buffer: 23.0s | quality: 2000 kbps | trace_bw: 2176 kbps
+   t=71s | buffer: 36.8s | quality: 2000 kbps | trace_bw: 3211 kbps
+   t=81s | buffer: 34.7s | quality: 2000 kbps | trace_bw: 2558 kbps
+   t=91s | buffer: 32.5s | quality: 2000 kbps | trace_bw: 3625 kbps
+   t=101s | buffer: 38.4s | quality: 2000 kbps | trace_bw: 3566 kbps
+   t=112s | buffer: 44.2s | quality: 2000 kbps | trace_bw: 2435 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     188 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  2,000 kbps
+      Average (effective): 2,000 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        6 ms
+      Ratio:             0.0050%
+
+  [THROUGHPUT]
+      Average:           2,649 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           2,649 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/moq2_fcc/benchmark_moq2_trace_939562_http---www.google_part1_tc_20260526_212040.json
+
+──────────────────────────────────────────────────────────────────────
+  [20/21] trace_939592_http---www.facebook_part0_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/fcc/trace_939592_http---www.facebook_part0_tc.csv
+======================================================================
+
+   Publisher quality: 800 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [26/May/2026 21:22:51] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [26/May/2026 21:22:51] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 164ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 9.7s | quality: 800 kbps | trace_bw: 1080 kbps
+   t=20s | buffer: 11.6s | quality: 800 kbps | trace_bw: 1454 kbps
+   t=30s | buffer: 21.5s | quality: 800 kbps | trace_bw: 1442 kbps
+   t=41s | buffer: 31.3s | quality: 800 kbps | trace_bw: 1408 kbps
+   t=51s | buffer: 41.2s | quality: 800 kbps | trace_bw: 1379 kbps
+   t=61s | buffer: 51.0s | quality: 800 kbps | trace_bw: 1360 kbps
+   t=71s | buffer: 48.9s | quality: 800 kbps | trace_bw: 1038 kbps
+   t=81s | buffer: 58.8s | quality: 800 kbps | trace_bw: 1432 kbps
+   t=91s | buffer: 68.6s | quality: 800 kbps | trace_bw: 1386 kbps
+   t=101s | buffer: 74.5s | quality: 800 kbps | trace_bw: 1331 kbps
+   t=112s | buffer: 72.4s | quality: 800 kbps | trace_bw: 1130 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     164 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  800 kbps
+      Average (effective): 800 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        14 ms
+      Ratio:             0.0119%
+
+  [THROUGHPUT]
+      Average:           1,305 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,305 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/moq2_fcc/benchmark_moq2_trace_939592_http---www.facebook_part0_tc_20260526_212246.json
+
+──────────────────────────────────────────────────────────────────────
+  [21/21] trace_9542_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/fcc/trace_9542_3g_tc.csv
+======================================================================
+
+   Publisher quality: 800 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [26/May/2026 21:24:57] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [26/May/2026 21:24:57] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 161ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.7s | quality: 800 kbps | trace_bw: 927 kbps
+   t=20s | buffer: 7.6s | quality: 800 kbps | trace_bw: 1105 kbps
+   t=30s | buffer: 13.5s | quality: 800 kbps | trace_bw: 1177 kbps
+   t=41s | buffer: 15.3s | quality: 800 kbps | trace_bw: 1006 kbps
+   t=51s | buffer: 25.2s | quality: 800 kbps | trace_bw: 954 kbps
+   t=61s | buffer: 23.0s | quality: 800 kbps | trace_bw: 1093 kbps
+   t=71s | buffer: 32.9s | quality: 800 kbps | trace_bw: 1094 kbps
+   t=81s | buffer: 34.7s | quality: 800 kbps | trace_bw: 1050 kbps
+   t=91s | buffer: 36.6s | quality: 800 kbps | trace_bw: 1054 kbps
+   t=101s | buffer: 38.4s | quality: 800 kbps | trace_bw: 1081 kbps
+   t=112s | buffer: 44.3s | quality: 800 kbps | trace_bw: 1059 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     161 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  800 kbps
+      Average (effective): 800 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        4 ms
+      Ratio:             0.0034%
+
+  [THROUGHPUT]
+      Average:           1,052 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,052 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/moq2_fcc/benchmark_moq2_trace_9542_3g_tc_20260526_212452.json
+
+======================================================================
+  BATCH COMPLETE: 21/21 succeeded
+  Results saved to: results/results/run_all_20260525_151403/moq2_fcc/
+======================================================================
+

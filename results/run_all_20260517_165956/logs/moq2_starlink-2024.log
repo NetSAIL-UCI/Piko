@@ -1,0 +1,2331 @@
+
+======================================================================
+  BATCH RUN: 40 trace(s) from traces/starlink-2024
+======================================================================
+
+
+──────────────────────────────────────────────────────────────────────
+  [1/40] starlink_road_000_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_000_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 10:22:29] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 10:22:29] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 222ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 261.7s | quality: 4500 kbps | trace_bw: 205685 kbps
+   t=20s | buffer: 272.0s | quality: 4500 kbps | trace_bw: 30583 kbps
+   t=31s | buffer: 269.8s | quality: 4500 kbps | trace_bw: 76507 kbps
+   t=41s | buffer: 272.1s | quality: 4500 kbps | trace_bw: 79883 kbps
+   t=51s | buffer: 269.9s | quality: 4500 kbps | trace_bw: 221498 kbps
+   t=61s | buffer: 275.8s | quality: 4500 kbps | trace_bw: 136608 kbps
+   t=71s | buffer: 277.5s | quality: 4500 kbps | trace_bw: 145147 kbps
+   t=81s | buffer: 283.8s | quality: 4500 kbps | trace_bw: 122084 kbps
+   t=92s | buffer: 281.7s | quality: 4500 kbps | trace_bw: 59596 kbps
+   t=102s | buffer: 291.5s | quality: 4500 kbps | trace_bw: 80613 kbps
+   t=112s | buffer: 289.3s | quality: 4500 kbps | trace_bw: 187993 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     222 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,499 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        28 ms
+      Ratio:             0.0235%
+
+  [THROUGHPUT]
+      Average:           145,175 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           145,175 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_000_tc_20260518_102224.json
+
+──────────────────────────────────────────────────────────────────────
+  [2/40] starlink_road_001_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_001_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 10:24:35] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 10:24:35] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 239ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 281.6s | quality: 4500 kbps | trace_bw: 226300 kbps
+   t=20s | buffer: 283.5s | quality: 4500 kbps | trace_bw: 307646 kbps
+   t=31s | buffer: 281.7s | quality: 4500 kbps | trace_bw: 224577 kbps
+   t=41s | buffer: 291.5s | quality: 4500 kbps | trace_bw: 159758 kbps
+   t=51s | buffer: 289.8s | quality: 4500 kbps | trace_bw: 250530 kbps
+   t=61s | buffer: 296.1s | quality: 4500 kbps | trace_bw: 200805 kbps
+   t=71s | buffer: 294.3s | quality: 4500 kbps | trace_bw: 268279 kbps
+   t=82s | buffer: 300.6s | quality: 4500 kbps | trace_bw: 297054 kbps
+   t=92s | buffer: 306.9s | quality: 4500 kbps | trace_bw: 338367 kbps
+   t=102s | buffer: 313.1s | quality: 4500 kbps | trace_bw: 190000 kbps
+   t=112s | buffer: 323.3s | quality: 4500 kbps | trace_bw: 283129 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     239 ms
+      Playback time:     120.6 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,499 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        35 ms
+      Ratio:             0.0288%
+
+  [THROUGHPUT]
+      Average:           259,412 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           259,412 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_001_tc_20260518_102430.json
+
+──────────────────────────────────────────────────────────────────────
+  [3/40] starlink_road_002_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_002_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 10:26:42] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 10:26:42] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 201ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 278.1s | quality: 4500 kbps | trace_bw: 198341 kbps
+   t=20s | buffer: 283.9s | quality: 4500 kbps | trace_bw: 174362 kbps
+   t=31s | buffer: 286.2s | quality: 4500 kbps | trace_bw: 265601 kbps
+   t=41s | buffer: 292.1s | quality: 4500 kbps | trace_bw: 306339 kbps
+   t=51s | buffer: 294.3s | quality: 4500 kbps | trace_bw: 269270 kbps
+   t=61s | buffer: 304.2s | quality: 4500 kbps | trace_bw: 245835 kbps
+   t=71s | buffer: 306.0s | quality: 4500 kbps | trace_bw: 277189 kbps
+   t=81s | buffer: 308.2s | quality: 4500 kbps | trace_bw: 424419 kbps
+   t=92s | buffer: 310.5s | quality: 4500 kbps | trace_bw: 214341 kbps
+   t=102s | buffer: 316.8s | quality: 4500 kbps | trace_bw: 196233 kbps
+   t=112s | buffer: 326.6s | quality: 4500 kbps | trace_bw: 217601 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     201 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,499 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        28 ms
+      Ratio:             0.0230%
+
+  [THROUGHPUT]
+      Average:           238,938 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           238,938 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_002_tc_20260518_102636.json
+
+──────────────────────────────────────────────────────────────────────
+  [4/40] starlink_road_003_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_003_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 10:28:48] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 10:28:48] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 194ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 269.7s | quality: 4500 kbps | trace_bw: 336052 kbps
+   t=20s | buffer: 271.9s | quality: 4500 kbps | trace_bw: 274722 kbps
+   t=31s | buffer: 270.6s | quality: 4500 kbps | trace_bw: 350577 kbps
+   t=41s | buffer: 272.9s | quality: 4500 kbps | trace_bw: 395258 kbps
+   t=51s | buffer: 274.7s | quality: 4500 kbps | trace_bw: 358259 kbps
+   t=61s | buffer: 276.5s | quality: 4500 kbps | trace_bw: 358097 kbps
+   t=71s | buffer: 279.3s | quality: 4500 kbps | trace_bw: 385956 kbps
+   t=82s | buffer: 289.6s | quality: 4500 kbps | trace_bw: 357030 kbps
+   t=92s | buffer: 287.8s | quality: 4500 kbps | trace_bw: 384959 kbps
+   t=102s | buffer: 290.5s | quality: 4500 kbps | trace_bw: 427725 kbps
+   t=112s | buffer: 296.3s | quality: 4500 kbps | trace_bw: 409780 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     194 ms
+      Playback time:     120.5 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,498 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        43 ms
+      Ratio:             0.0353%
+
+  [THROUGHPUT]
+      Average:           360,498 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           360,498 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_003_tc_20260518_102842.json
+
+──────────────────────────────────────────────────────────────────────
+  [5/40] starlink_road_004_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_004_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 10:30:54] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 10:30:54] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 194ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 269.7s | quality: 4500 kbps | trace_bw: 239545 kbps
+   t=20s | buffer: 271.9s | quality: 4500 kbps | trace_bw: 265265 kbps
+   t=31s | buffer: 270.2s | quality: 4500 kbps | trace_bw: 222654 kbps
+   t=41s | buffer: 276.0s | quality: 4500 kbps | trace_bw: 323422 kbps
+   t=51s | buffer: 274.3s | quality: 4500 kbps | trace_bw: 286032 kbps
+   t=61s | buffer: 284.5s | quality: 4500 kbps | trace_bw: 381120 kbps
+   t=71s | buffer: 286.8s | quality: 4500 kbps | trace_bw: 364895 kbps
+   t=82s | buffer: 289.1s | quality: 4500 kbps | trace_bw: 339147 kbps
+   t=92s | buffer: 290.9s | quality: 4500 kbps | trace_bw: 51583 kbps
+   t=102s | buffer: 296.7s | quality: 4500 kbps | trace_bw: 285805 kbps
+   t=112s | buffer: 303.0s | quality: 4500 kbps | trace_bw: 238723 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     194 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,499 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        30 ms
+      Ratio:             0.0247%
+
+  [THROUGHPUT]
+      Average:           288,098 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           288,098 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_004_tc_20260518_103049.json
+
+──────────────────────────────────────────────────────────────────────
+  [6/40] starlink_road_005_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_005_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 10:33:00] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 10:33:00] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 227ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 262.1s | quality: 4500 kbps | trace_bw: 360784 kbps
+   t=20s | buffer: 271.9s | quality: 4500 kbps | trace_bw: 427022 kbps
+   t=31s | buffer: 270.7s | quality: 4500 kbps | trace_bw: 333249 kbps
+   t=41s | buffer: 272.9s | quality: 4500 kbps | trace_bw: 425147 kbps
+   t=51s | buffer: 275.3s | quality: 4500 kbps | trace_bw: 294488 kbps
+   t=61s | buffer: 277.5s | quality: 4500 kbps | trace_bw: 421043 kbps
+   t=71s | buffer: 279.8s | quality: 4500 kbps | trace_bw: 343570 kbps
+   t=81s | buffer: 286.1s | quality: 4500 kbps | trace_bw: 337764 kbps
+   t=92s | buffer: 284.3s | quality: 4500 kbps | trace_bw: 426245 kbps
+   t=102s | buffer: 290.6s | quality: 4500 kbps | trace_bw: 418420 kbps
+   t=112s | buffer: 300.4s | quality: 4500 kbps | trace_bw: 215426 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     227 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,498 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        56 ms
+      Ratio:             0.0464%
+
+  [THROUGHPUT]
+      Average:           341,519 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           341,519 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_005_tc_20260518_103255.json
+
+──────────────────────────────────────────────────────────────────────
+  [7/40] starlink_road_006_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_006_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 10:35:06] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 10:35:06] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 206ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 274.2s | quality: 4500 kbps | trace_bw: 294772 kbps
+   t=20s | buffer: 280.5s | quality: 4500 kbps | trace_bw: 266233 kbps
+   t=31s | buffer: 278.2s | quality: 4500 kbps | trace_bw: 351432 kbps
+   t=41s | buffer: 281.0s | quality: 4500 kbps | trace_bw: 421835 kbps
+   t=51s | buffer: 274.8s | quality: 4500 kbps | trace_bw: 137073 kbps
+   t=61s | buffer: 285.1s | quality: 4500 kbps | trace_bw: 407348 kbps
+   t=71s | buffer: 291.3s | quality: 4500 kbps | trace_bw: 356404 kbps
+   t=82s | buffer: 301.6s | quality: 4500 kbps | trace_bw: 243324 kbps
+   t=92s | buffer: 303.3s | quality: 4500 kbps | trace_bw: 319286 kbps
+   t=102s | buffer: 309.6s | quality: 4500 kbps | trace_bw: 310707 kbps
+   t=112s | buffer: 315.9s | quality: 4500 kbps | trace_bw: 318529 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     206 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,499 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        35 ms
+      Ratio:             0.0290%
+
+  [THROUGHPUT]
+      Average:           313,209 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           313,209 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_006_tc_20260518_103501.json
+
+──────────────────────────────────────────────────────────────────────
+  [8/40] starlink_road_007_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_007_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 10:37:12] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 10:37:12] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 225ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 270.1s | quality: 4500 kbps | trace_bw: 230893 kbps
+   t=20s | buffer: 276.0s | quality: 4500 kbps | trace_bw: 384452 kbps
+   t=31s | buffer: 278.3s | quality: 4500 kbps | trace_bw: 269542 kbps
+   t=41s | buffer: 280.5s | quality: 4500 kbps | trace_bw: 309434 kbps
+   t=51s | buffer: 278.8s | quality: 4500 kbps | trace_bw: 348530 kbps
+   t=61s | buffer: 288.6s | quality: 4500 kbps | trace_bw: 290000 kbps
+   t=71s | buffer: 290.8s | quality: 4500 kbps | trace_bw: 407240 kbps
+   t=82s | buffer: 293.1s | quality: 4500 kbps | trace_bw: 407408 kbps
+   t=92s | buffer: 294.9s | quality: 4500 kbps | trace_bw: 355026 kbps
+   t=102s | buffer: 301.2s | quality: 4500 kbps | trace_bw: 304420 kbps
+   t=112s | buffer: 303.5s | quality: 4500 kbps | trace_bw: 223662 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     225 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,499 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        34 ms
+      Ratio:             0.0282%
+
+  [THROUGHPUT]
+      Average:           303,684 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           303,684 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_007_tc_20260518_103707.json
+
+──────────────────────────────────────────────────────────────────────
+  [9/40] starlink_road_008_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_008_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 10:39:19] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 10:39:19] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 245ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 278.1s | quality: 4500 kbps | trace_bw: 383175 kbps
+   t=20s | buffer: 280.4s | quality: 4500 kbps | trace_bw: 225711 kbps
+   t=31s | buffer: 282.7s | quality: 4500 kbps | trace_bw: 204838 kbps
+   t=41s | buffer: 285.3s | quality: 4500 kbps | trace_bw: 374152 kbps
+   t=51s | buffer: 287.1s | quality: 4500 kbps | trace_bw: 411019 kbps
+   t=61s | buffer: 293.4s | quality: 4500 kbps | trace_bw: 394355 kbps
+   t=71s | buffer: 295.6s | quality: 4500 kbps | trace_bw: 407537 kbps
+   t=82s | buffer: 301.9s | quality: 4500 kbps | trace_bw: 343083 kbps
+   t=92s | buffer: 300.2s | quality: 4500 kbps | trace_bw: 381646 kbps
+   t=102s | buffer: 306.9s | quality: 4500 kbps | trace_bw: 410421 kbps
+   t=112s | buffer: 316.6s | quality: 4500 kbps | trace_bw: 318388 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     245 ms
+      Playback time:     120.6 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,499 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        30 ms
+      Ratio:             0.0246%
+
+  [THROUGHPUT]
+      Average:           361,852 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           361,852 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_008_tc_20260518_103913.json
+
+──────────────────────────────────────────────────────────────────────
+  [10/40] starlink_road_009_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_009_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 10:41:25] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 10:41:25] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 223ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 277.6s | quality: 4500 kbps | trace_bw: 346640 kbps
+   t=20s | buffer: 279.9s | quality: 4500 kbps | trace_bw: 282936 kbps
+   t=31s | buffer: 278.2s | quality: 4500 kbps | trace_bw: 149329 kbps
+   t=41s | buffer: 284.5s | quality: 4500 kbps | trace_bw: 223316 kbps
+   t=51s | buffer: 286.8s | quality: 4500 kbps | trace_bw: 225886 kbps
+   t=61s | buffer: 288.7s | quality: 4500 kbps | trace_bw: 154462 kbps
+   t=71s | buffer: 290.9s | quality: 4500 kbps | trace_bw: 197135 kbps
+   t=81s | buffer: 301.2s | quality: 4500 kbps | trace_bw: 263930 kbps
+   t=92s | buffer: 299.4s | quality: 4500 kbps | trace_bw: 215913 kbps
+   t=102s | buffer: 309.3s | quality: 4500 kbps | trace_bw: 241659 kbps
+   t=112s | buffer: 307.1s | quality: 4500 kbps | trace_bw: 0 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     223 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,498 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        50 ms
+      Ratio:             0.0414%
+
+  [THROUGHPUT]
+      Average:           219,677 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           219,677 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_009_tc_20260518_104120.json
+
+──────────────────────────────────────────────────────────────────────
+  [11/40] starlink_road_010_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_010_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 10:43:31] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 10:43:31] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 205ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 266.1s | quality: 4500 kbps | trace_bw: 362305 kbps
+   t=20s | buffer: 275.9s | quality: 4500 kbps | trace_bw: 315749 kbps
+   t=31s | buffer: 274.1s | quality: 4500 kbps | trace_bw: 187625 kbps
+   t=41s | buffer: 276.4s | quality: 4500 kbps | trace_bw: 322013 kbps
+   t=51s | buffer: 278.6s | quality: 4500 kbps | trace_bw: 370220 kbps
+   t=61s | buffer: 284.9s | quality: 4500 kbps | trace_bw: 349825 kbps
+   t=72s | buffer: 282.6s | quality: 4500 kbps | trace_bw: 282100 kbps
+   t=82s | buffer: 289.4s | quality: 4500 kbps | trace_bw: 348666 kbps
+   t=92s | buffer: 287.2s | quality: 4500 kbps | trace_bw: 169451 kbps
+   t=102s | buffer: 293.0s | quality: 4500 kbps | trace_bw: 352244 kbps
+   t=112s | buffer: 295.2s | quality: 4500 kbps | trace_bw: 358270 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     205 ms
+      Playback time:     120.6 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,499 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        29 ms
+      Ratio:             0.0244%
+
+  [THROUGHPUT]
+      Average:           303,809 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           303,809 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_010_tc_20260518_104326.json
+
+──────────────────────────────────────────────────────────────────────
+  [12/40] starlink_road_011_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_011_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 10:45:38] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 10:45:38] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 231ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 270.1s | quality: 4500 kbps | trace_bw: 424459 kbps
+   t=20s | buffer: 272.4s | quality: 4500 kbps | trace_bw: 413319 kbps
+   t=31s | buffer: 274.7s | quality: 4500 kbps | trace_bw: 350102 kbps
+   t=41s | buffer: 280.5s | quality: 4500 kbps | trace_bw: 275589 kbps
+   t=51s | buffer: 278.8s | quality: 4500 kbps | trace_bw: 327479 kbps
+   t=61s | buffer: 289.5s | quality: 4500 kbps | trace_bw: 424827 kbps
+   t=71s | buffer: 291.3s | quality: 4500 kbps | trace_bw: 347797 kbps
+   t=82s | buffer: 293.5s | quality: 4500 kbps | trace_bw: 407405 kbps
+   t=92s | buffer: 291.8s | quality: 4500 kbps | trace_bw: 350087 kbps
+   t=102s | buffer: 294.0s | quality: 4500 kbps | trace_bw: 424244 kbps
+   t=112s | buffer: 295.8s | quality: 4500 kbps | trace_bw: 288133 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     231 ms
+      Playback time:     120.5 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,498 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        44 ms
+      Ratio:             0.0364%
+
+  [THROUGHPUT]
+      Average:           348,140 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           348,140 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_011_tc_20260518_104532.json
+
+──────────────────────────────────────────────────────────────────────
+  [13/40] starlink_road_012_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_012_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 10:47:45] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 10:47:45] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 200ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 274.1s | quality: 4500 kbps | trace_bw: 394865 kbps
+   t=20s | buffer: 279.9s | quality: 4500 kbps | trace_bw: 242061 kbps
+   t=31s | buffer: 277.7s | quality: 4500 kbps | trace_bw: 53735 kbps
+   t=41s | buffer: 283.5s | quality: 4500 kbps | trace_bw: 57206 kbps
+   t=51s | buffer: 281.4s | quality: 4500 kbps | trace_bw: 60539 kbps
+   t=61s | buffer: 287.7s | quality: 4500 kbps | trace_bw: 274619 kbps
+   t=71s | buffer: 289.9s | quality: 4500 kbps | trace_bw: 252089 kbps
+   t=82s | buffer: 300.2s | quality: 4500 kbps | trace_bw: 307715 kbps
+   t=92s | buffer: 301.9s | quality: 4500 kbps | trace_bw: 382682 kbps
+   t=102s | buffer: 304.2s | quality: 4500 kbps | trace_bw: 413479 kbps
+   t=112s | buffer: 306.0s | quality: 4500 kbps | trace_bw: 277387 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     200 ms
+      Playback time:     120.5 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,499 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        36 ms
+      Ratio:             0.0295%
+
+  [THROUGHPUT]
+      Average:           248,405 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           248,405 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_012_tc_20260518_104739.json
+
+──────────────────────────────────────────────────────────────────────
+  [14/40] starlink_road_013_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_013_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 10:49:51] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 10:49:51] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 206ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 278.2s | quality: 4500 kbps | trace_bw: 243403 kbps
+   t=20s | buffer: 280.4s | quality: 4500 kbps | trace_bw: 299772 kbps
+   t=31s | buffer: 278.7s | quality: 4500 kbps | trace_bw: 216724 kbps
+   t=41s | buffer: 277.0s | quality: 4500 kbps | trace_bw: 268581 kbps
+   t=51s | buffer: 283.3s | quality: 4500 kbps | trace_bw: 353189 kbps
+   t=61s | buffer: 289.5s | quality: 4500 kbps | trace_bw: 243970 kbps
+   t=71s | buffer: 291.8s | quality: 4500 kbps | trace_bw: 378377 kbps
+   t=81s | buffer: 302.1s | quality: 4500 kbps | trace_bw: 201584 kbps
+   t=92s | buffer: 299.9s | quality: 4500 kbps | trace_bw: 149281 kbps
+   t=102s | buffer: 309.8s | quality: 4500 kbps | trace_bw: 177872 kbps
+   t=112s | buffer: 316.1s | quality: 4500 kbps | trace_bw: 68820 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     206 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,499 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        27 ms
+      Ratio:             0.0225%
+
+  [THROUGHPUT]
+      Average:           254,411 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           254,411 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_013_tc_20260518_104946.json
+
+──────────────────────────────────────────────────────────────────────
+  [15/40] starlink_road_014_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_014_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 10:51:57] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 10:51:57] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 258ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 274.1s | quality: 4500 kbps | trace_bw: 299891 kbps
+   t=20s | buffer: 279.9s | quality: 4500 kbps | trace_bw: 418297 kbps
+   t=31s | buffer: 278.2s | quality: 4500 kbps | trace_bw: 439805 kbps
+   t=41s | buffer: 280.4s | quality: 4500 kbps | trace_bw: 443831 kbps
+   t=51s | buffer: 286.7s | quality: 4500 kbps | trace_bw: 425144 kbps
+   t=61s | buffer: 292.9s | quality: 4500 kbps | trace_bw: 374628 kbps
+   t=71s | buffer: 295.2s | quality: 4500 kbps | trace_bw: 343154 kbps
+   t=82s | buffer: 301.5s | quality: 4500 kbps | trace_bw: 209459 kbps
+   t=92s | buffer: 299.7s | quality: 4500 kbps | trace_bw: 261844 kbps
+   t=102s | buffer: 309.5s | quality: 4500 kbps | trace_bw: 313694 kbps
+   t=112s | buffer: 311.8s | quality: 4500 kbps | trace_bw: 364408 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     258 ms
+      Playback time:     120.5 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,498 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        57 ms
+      Ratio:             0.0471%
+
+  [THROUGHPUT]
+      Average:           343,359 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           343,359 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_014_tc_20260518_105152.json
+
+──────────────────────────────────────────────────────────────────────
+  [16/40] starlink_road_015_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_015_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 10:54:04] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 10:54:04] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 274ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 277.7s | quality: 4500 kbps | trace_bw: 325141 kbps
+   t=20s | buffer: 283.5s | quality: 4500 kbps | trace_bw: 167726 kbps
+   t=31s | buffer: 281.8s | quality: 4500 kbps | trace_bw: 169018 kbps
+   t=41s | buffer: 283.6s | quality: 4500 kbps | trace_bw: 131618 kbps
+   t=51s | buffer: 277.4s | quality: 4500 kbps | trace_bw: 50783 kbps
+   t=61s | buffer: 287.8s | quality: 4500 kbps | trace_bw: 145984 kbps
+   t=71s | buffer: 286.1s | quality: 4500 kbps | trace_bw: 213690 kbps
+   t=81s | buffer: 291.9s | quality: 4500 kbps | trace_bw: 29574 kbps
+   t=92s | buffer: 298.2s | quality: 4500 kbps | trace_bw: 280807 kbps
+   t=102s | buffer: 304.0s | quality: 4500 kbps | trace_bw: 156327 kbps
+   t=112s | buffer: 310.2s | quality: 4500 kbps | trace_bw: 265305 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     274 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,498 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        45 ms
+      Ratio:             0.0374%
+
+  [THROUGHPUT]
+      Average:           186,262 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           186,262 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_015_tc_20260518_105358.json
+
+──────────────────────────────────────────────────────────────────────
+  [17/40] starlink_road_016_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_016_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 10:56:10] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 10:56:10] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 221ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 274.1s | quality: 4500 kbps | trace_bw: 338554 kbps
+   t=20s | buffer: 284.0s | quality: 4500 kbps | trace_bw: 168849 kbps
+   t=31s | buffer: 281.8s | quality: 4500 kbps | trace_bw: 388685 kbps
+   t=41s | buffer: 288.0s | quality: 4500 kbps | trace_bw: 281410 kbps
+   t=51s | buffer: 286.3s | quality: 4500 kbps | trace_bw: 377938 kbps
+   t=61s | buffer: 288.5s | quality: 4500 kbps | trace_bw: 382585 kbps
+   t=71s | buffer: 286.8s | quality: 4500 kbps | trace_bw: 353276 kbps
+   t=82s | buffer: 293.1s | quality: 4500 kbps | trace_bw: 292282 kbps
+   t=92s | buffer: 291.4s | quality: 4500 kbps | trace_bw: 143402 kbps
+   t=102s | buffer: 293.6s | quality: 4500 kbps | trace_bw: 243549 kbps
+   t=112s | buffer: 295.9s | quality: 4500 kbps | trace_bw: 352120 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     221 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,499 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        37 ms
+      Ratio:             0.0309%
+
+  [THROUGHPUT]
+      Average:           285,554 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           285,554 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_016_tc_20260518_105604.json
+
+──────────────────────────────────────────────────────────────────────
+  [18/40] starlink_road_017_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_017_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 10:58:16] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 10:58:16] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 228ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 261.6s | quality: 4500 kbps | trace_bw: 347509 kbps
+   t=20s | buffer: 271.9s | quality: 4500 kbps | trace_bw: 342267 kbps
+   t=31s | buffer: 273.7s | quality: 4500 kbps | trace_bw: 297313 kbps
+   t=41s | buffer: 276.0s | quality: 4500 kbps | trace_bw: 234228 kbps
+   t=51s | buffer: 277.8s | quality: 4500 kbps | trace_bw: 423685 kbps
+   t=61s | buffer: 284.1s | quality: 4500 kbps | trace_bw: 338891 kbps
+   t=71s | buffer: 282.3s | quality: 4500 kbps | trace_bw: 419272 kbps
+   t=82s | buffer: 284.6s | quality: 4500 kbps | trace_bw: 375057 kbps
+   t=92s | buffer: 286.9s | quality: 4500 kbps | trace_bw: 257184 kbps
+   t=102s | buffer: 293.1s | quality: 4500 kbps | trace_bw: 247829 kbps
+   t=112s | buffer: 302.9s | quality: 4500 kbps | trace_bw: 349815 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     228 ms
+      Playback time:     120.5 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,499 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        33 ms
+      Ratio:             0.0276%
+
+  [THROUGHPUT]
+      Average:           305,284 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           305,284 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_017_tc_20260518_105811.json
+
+──────────────────────────────────────────────────────────────────────
+  [19/40] starlink_road_018_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_018_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 11:00:23] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 11:00:23] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 237ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 282.1s | quality: 4500 kbps | trace_bw: 240882 kbps
+   t=20s | buffer: 283.9s | quality: 4500 kbps | trace_bw: 353396 kbps
+   t=31s | buffer: 286.2s | quality: 4500 kbps | trace_bw: 310709 kbps
+   t=41s | buffer: 292.5s | quality: 4500 kbps | trace_bw: 357852 kbps
+   t=51s | buffer: 290.3s | quality: 4500 kbps | trace_bw: 22059 kbps
+   t=61s | buffer: 296.6s | quality: 4500 kbps | trace_bw: 289653 kbps
+   t=71s | buffer: 298.9s | quality: 4500 kbps | trace_bw: 336862 kbps
+   t=82s | buffer: 301.1s | quality: 4500 kbps | trace_bw: 356813 kbps
+   t=92s | buffer: 302.9s | quality: 4500 kbps | trace_bw: 339943 kbps
+   t=102s | buffer: 309.0s | quality: 4500 kbps | trace_bw: 343753 kbps
+   t=112s | buffer: 323.3s | quality: 4500 kbps | trace_bw: 349407 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     237 ms
+      Playback time:     120.5 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,499 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        28 ms
+      Ratio:             0.0228%
+
+  [THROUGHPUT]
+      Average:           297,581 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           297,581 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_018_tc_20260518_110017.json
+
+──────────────────────────────────────────────────────────────────────
+  [20/40] starlink_road_019_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_019_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 11:02:29] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 11:02:29] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 232ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 278.1s | quality: 4500 kbps | trace_bw: 259500 kbps
+   t=20s | buffer: 275.9s | quality: 4500 kbps | trace_bw: 405415 kbps
+   t=31s | buffer: 277.7s | quality: 4500 kbps | trace_bw: 268016 kbps
+   t=41s | buffer: 287.6s | quality: 4500 kbps | trace_bw: 173514 kbps
+   t=51s | buffer: 289.4s | quality: 4500 kbps | trace_bw: 260906 kbps
+   t=61s | buffer: 295.2s | quality: 4500 kbps | trace_bw: 312073 kbps
+   t=71s | buffer: 293.5s | quality: 4500 kbps | trace_bw: 215809 kbps
+   t=82s | buffer: 295.7s | quality: 4500 kbps | trace_bw: 297643 kbps
+   t=92s | buffer: 294.0s | quality: 4500 kbps | trace_bw: 344952 kbps
+   t=102s | buffer: 300.3s | quality: 4500 kbps | trace_bw: 248907 kbps
+   t=112s | buffer: 310.6s | quality: 4500 kbps | trace_bw: 237750 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     232 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,499 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        35 ms
+      Ratio:             0.0294%
+
+  [THROUGHPUT]
+      Average:           275,638 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           275,638 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_019_tc_20260518_110224.json
+
+──────────────────────────────────────────────────────────────────────
+  [21/40] starlink_road_020_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_020_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 11:04:35] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 11:04:35] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 209ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 274.2s | quality: 4500 kbps | trace_bw: 168513 kbps
+   t=20s | buffer: 276.4s | quality: 4500 kbps | trace_bw: 422665 kbps
+   t=31s | buffer: 274.2s | quality: 4500 kbps | trace_bw: 289464 kbps
+   t=41s | buffer: 284.0s | quality: 4500 kbps | trace_bw: 282092 kbps
+   t=51s | buffer: 282.3s | quality: 4500 kbps | trace_bw: 214580 kbps
+   t=61s | buffer: 288.7s | quality: 4500 kbps | trace_bw: 163047 kbps
+   t=71s | buffer: 290.5s | quality: 4500 kbps | trace_bw: 270354 kbps
+   t=81s | buffer: 296.7s | quality: 4500 kbps | trace_bw: 273695 kbps
+   t=92s | buffer: 294.6s | quality: 4500 kbps | trace_bw: 247812 kbps
+   t=102s | buffer: 300.9s | quality: 4500 kbps | trace_bw: 374348 kbps
+   t=112s | buffer: 303.2s | quality: 4500 kbps | trace_bw: 422264 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     209 ms
+      Playback time:     120.1 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,498 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        48 ms
+      Ratio:             0.0403%
+
+  [THROUGHPUT]
+      Average:           276,369 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           276,369 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_020_tc_20260518_110430.json
+
+──────────────────────────────────────────────────────────────────────
+  [22/40] starlink_road_021_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_021_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 11:06:41] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 11:06:41] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 235ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 278.1s | quality: 4500 kbps | trace_bw: 319209 kbps
+   t=20s | buffer: 284.3s | quality: 4500 kbps | trace_bw: 282244 kbps
+   t=31s | buffer: 287.1s | quality: 4500 kbps | trace_bw: 380521 kbps
+   t=41s | buffer: 292.9s | quality: 4500 kbps | trace_bw: 263061 kbps
+   t=51s | buffer: 291.1s | quality: 4500 kbps | trace_bw: 334291 kbps
+   t=61s | buffer: 305.4s | quality: 4500 kbps | trace_bw: 28763 kbps
+   t=71s | buffer: 307.3s | quality: 4500 kbps | trace_bw: 91866 kbps
+   t=82s | buffer: 313.1s | quality: 4500 kbps | trace_bw: 235885 kbps
+   t=92s | buffer: 310.9s | quality: 4500 kbps | trace_bw: 253388 kbps
+   t=102s | buffer: 312.7s | quality: 4500 kbps | trace_bw: 178060 kbps
+   t=112s | buffer: 310.5s | quality: 4500 kbps | trace_bw: 342460 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     235 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,498 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        46 ms
+      Ratio:             0.0378%
+
+  [THROUGHPUT]
+      Average:           268,752 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           268,752 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_021_tc_20260518_110636.json
+
+──────────────────────────────────────────────────────────────────────
+  [23/40] starlink_road_022_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_022_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 11:08:48] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 11:08:48] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 205ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 273.7s | quality: 4500 kbps | trace_bw: 135890 kbps
+   t=20s | buffer: 280.0s | quality: 4500 kbps | trace_bw: 137801 kbps
+   t=30s | buffer: 282.3s | quality: 4500 kbps | trace_bw: 212682 kbps
+   t=41s | buffer: 292.6s | quality: 4500 kbps | trace_bw: 230230 kbps
+   t=51s | buffer: 294.3s | quality: 4500 kbps | trace_bw: 424480 kbps
+   t=61s | buffer: 300.1s | quality: 4500 kbps | trace_bw: 220594 kbps
+   t=71s | buffer: 298.4s | quality: 4500 kbps | trace_bw: 161976 kbps
+   t=82s | buffer: 304.6s | quality: 4500 kbps | trace_bw: 393240 kbps
+   t=92s | buffer: 302.9s | quality: 4500 kbps | trace_bw: 341980 kbps
+   t=102s | buffer: 305.1s | quality: 4500 kbps | trace_bw: 342956 kbps
+   t=112s | buffer: 310.9s | quality: 4500 kbps | trace_bw: 325639 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     205 ms
+      Playback time:     120.5 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,498 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        49 ms
+      Ratio:             0.0405%
+
+  [THROUGHPUT]
+      Average:           280,366 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           280,366 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_022_tc_20260518_110842.json
+
+──────────────────────────────────────────────────────────────────────
+  [24/40] starlink_road_023_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_023_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 11:10:54] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 11:10:54] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 223ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.7s | quality: 4500 kbps | trace_bw: 0 kbps
+   t=20s | buffer: 283.6s | quality: 4500 kbps | trace_bw: 355409 kbps
+   t=30s | buffer: 285.9s | quality: 4500 kbps | trace_bw: 352490 kbps
+   t=41s | buffer: 288.2s | quality: 4500 kbps | trace_bw: 290778 kbps
+   t=51s | buffer: 286.0s | quality: 4500 kbps | trace_bw: 157501 kbps
+   t=61s | buffer: 287.8s | quality: 4500 kbps | trace_bw: 373476 kbps
+   t=71s | buffer: 293.7s | quality: 4500 kbps | trace_bw: 269653 kbps
+   t=81s | buffer: 299.9s | quality: 4500 kbps | trace_bw: 223665 kbps
+   t=92s | buffer: 297.7s | quality: 4500 kbps | trace_bw: 356853 kbps
+   t=102s | buffer: 300.0s | quality: 4500 kbps | trace_bw: 351013 kbps
+   t=112s | buffer: 297.9s | quality: 4500 kbps | trace_bw: 323358 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     223 ms
+      Playback time:     120.6 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        9 ms
+      Ratio:             0.0077%
+
+  [THROUGHPUT]
+      Average:           244,233 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           244,233 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_023_tc_20260518_111049.json
+
+──────────────────────────────────────────────────────────────────────
+  [25/40] starlink_road_024_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_024_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 11:13:01] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 11:13:01] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 224ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 278.1s | quality: 4500 kbps | trace_bw: 423166 kbps
+   t=21s | buffer: 284.3s | quality: 4500 kbps | trace_bw: 336611 kbps
+   t=31s | buffer: 286.5s | quality: 4500 kbps | trace_bw: 286485 kbps
+   t=41s | buffer: 292.3s | quality: 4500 kbps | trace_bw: 331713 kbps
+   t=51s | buffer: 294.5s | quality: 4500 kbps | trace_bw: 288171 kbps
+   t=61s | buffer: 300.3s | quality: 4500 kbps | trace_bw: 330595 kbps
+   t=72s | buffer: 298.6s | quality: 4500 kbps | trace_bw: 337559 kbps
+   t=82s | buffer: 305.3s | quality: 4500 kbps | trace_bw: 321446 kbps
+   t=92s | buffer: 315.6s | quality: 4500 kbps | trace_bw: 325175 kbps
+   t=102s | buffer: 317.8s | quality: 4500 kbps | trace_bw: 346326 kbps
+   t=112s | buffer: 316.0s | quality: 4500 kbps | trace_bw: 338810 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     224 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,499 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        30 ms
+      Ratio:             0.0254%
+
+  [THROUGHPUT]
+      Average:           330,790 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           330,790 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_024_tc_20260518_111255.json
+
+──────────────────────────────────────────────────────────────────────
+  [26/40] starlink_road_025_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_025_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 11:15:07] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 11:15:07] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 199ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 278.1s | quality: 4500 kbps | trace_bw: 339459 kbps
+   t=21s | buffer: 280.3s | quality: 4500 kbps | trace_bw: 387750 kbps
+   t=31s | buffer: 278.1s | quality: 4500 kbps | trace_bw: 303375 kbps
+   t=41s | buffer: 284.8s | quality: 4500 kbps | trace_bw: 327068 kbps
+   t=51s | buffer: 283.0s | quality: 4500 kbps | trace_bw: 295401 kbps
+   t=61s | buffer: 288.9s | quality: 4500 kbps | trace_bw: 130483 kbps
+   t=71s | buffer: 290.7s | quality: 4500 kbps | trace_bw: 301057 kbps
+   t=82s | buffer: 296.5s | quality: 4500 kbps | trace_bw: 66265 kbps
+   t=92s | buffer: 298.8s | quality: 4500 kbps | trace_bw: 315999 kbps
+   t=102s | buffer: 305.0s | quality: 4500 kbps | trace_bw: 318301 kbps
+   t=112s | buffer: 310.8s | quality: 4500 kbps | trace_bw: 346908 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     199 ms
+      Playback time:     120.6 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,498 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        45 ms
+      Ratio:             0.0375%
+
+  [THROUGHPUT]
+      Average:           306,648 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           306,648 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_025_tc_20260518_111502.json
+
+──────────────────────────────────────────────────────────────────────
+  [27/40] starlink_road_026_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_026_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 11:17:14] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 11:17:14] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 229ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 278.1s | quality: 4500 kbps | trace_bw: 350509 kbps
+   t=20s | buffer: 284.0s | quality: 4500 kbps | trace_bw: 134512 kbps
+   t=31s | buffer: 281.8s | quality: 4500 kbps | trace_bw: 283390 kbps
+   t=41s | buffer: 288.1s | quality: 4500 kbps | trace_bw: 236499 kbps
+   t=51s | buffer: 286.3s | quality: 4500 kbps | trace_bw: 326145 kbps
+   t=61s | buffer: 288.6s | quality: 4500 kbps | trace_bw: 337976 kbps
+   t=71s | buffer: 286.9s | quality: 4500 kbps | trace_bw: 221524 kbps
+   t=81s | buffer: 289.2s | quality: 4500 kbps | trace_bw: 350121 kbps
+   t=92s | buffer: 291.4s | quality: 4500 kbps | trace_bw: 304142 kbps
+   t=102s | buffer: 297.7s | quality: 4500 kbps | trace_bw: 275992 kbps
+   t=112s | buffer: 304.0s | quality: 4500 kbps | trace_bw: 121839 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     229 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,499 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        33 ms
+      Ratio:             0.0274%
+
+  [THROUGHPUT]
+      Average:           254,080 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           254,080 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_026_tc_20260518_111708.json
+
+──────────────────────────────────────────────────────────────────────
+  [28/40] starlink_road_027_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_027_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 11:19:20] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 11:19:20] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 272ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 269.7s | quality: 4500 kbps | trace_bw: 270127 kbps
+   t=20s | buffer: 272.4s | quality: 4500 kbps | trace_bw: 336745 kbps
+   t=31s | buffer: 270.7s | quality: 4500 kbps | trace_bw: 248290 kbps
+   t=41s | buffer: 281.0s | quality: 4500 kbps | trace_bw: 253456 kbps
+   t=51s | buffer: 283.2s | quality: 4500 kbps | trace_bw: 371280 kbps
+   t=61s | buffer: 285.5s | quality: 4500 kbps | trace_bw: 153082 kbps
+   t=71s | buffer: 287.3s | quality: 4500 kbps | trace_bw: 76697 kbps
+   t=81s | buffer: 289.7s | quality: 4500 kbps | trace_bw: 135129 kbps
+   t=92s | buffer: 287.5s | quality: 4500 kbps | trace_bw: 400783 kbps
+   t=102s | buffer: 289.7s | quality: 4500 kbps | trace_bw: 124992 kbps
+   t=112s | buffer: 295.6s | quality: 4500 kbps | trace_bw: 203011 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     272 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,498 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        46 ms
+      Ratio:             0.0383%
+
+  [THROUGHPUT]
+      Average:           230,326 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           230,326 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_027_tc_20260518_111914.json
+
+──────────────────────────────────────────────────────────────────────
+  [29/40] starlink_road_028_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_028_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 11:21:26] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 11:21:26] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 227ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 277.7s | quality: 4500 kbps | trace_bw: 167080 kbps
+   t=20s | buffer: 283.5s | quality: 4500 kbps | trace_bw: 175220 kbps
+   t=31s | buffer: 285.3s | quality: 4500 kbps | trace_bw: 96430 kbps
+   t=41s | buffer: 291.6s | quality: 4500 kbps | trace_bw: 176274 kbps
+   t=51s | buffer: 293.9s | quality: 4500 kbps | trace_bw: 356440 kbps
+   t=61s | buffer: 300.2s | quality: 4500 kbps | trace_bw: 290840 kbps
+   t=71s | buffer: 302.5s | quality: 4500 kbps | trace_bw: 273691 kbps
+   t=81s | buffer: 304.3s | quality: 4500 kbps | trace_bw: 167586 kbps
+   t=92s | buffer: 302.7s | quality: 4500 kbps | trace_bw: 233649 kbps
+   t=102s | buffer: 300.5s | quality: 4500 kbps | trace_bw: 0 kbps
+   t=112s | buffer: 302.4s | quality: 4500 kbps | trace_bw: 0 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     227 ms
+      Playback time:     120.5 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,498 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        58 ms
+      Ratio:             0.0484%
+
+  [THROUGHPUT]
+      Average:           168,781 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           168,781 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_028_tc_20260518_112120.json
+
+──────────────────────────────────────────────────────────────────────
+  [30/40] starlink_road_029_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_029_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 11:23:32] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 11:23:32] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 226ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 266.2s | quality: 4500 kbps | trace_bw: 184884 kbps
+   t=20s | buffer: 276.0s | quality: 4500 kbps | trace_bw: 290950 kbps
+   t=30s | buffer: 269.8s | quality: 4500 kbps | trace_bw: 393586 kbps
+   t=41s | buffer: 280.0s | quality: 4500 kbps | trace_bw: 330611 kbps
+   t=51s | buffer: 278.3s | quality: 4500 kbps | trace_bw: 280981 kbps
+   t=61s | buffer: 280.2s | quality: 4500 kbps | trace_bw: 339998 kbps
+   t=71s | buffer: 278.5s | quality: 4500 kbps | trace_bw: 63534 kbps
+   t=81s | buffer: 280.8s | quality: 4500 kbps | trace_bw: 338884 kbps
+   t=92s | buffer: 286.6s | quality: 4500 kbps | trace_bw: 281603 kbps
+   t=102s | buffer: 288.3s | quality: 4500 kbps | trace_bw: 245583 kbps
+   t=112s | buffer: 306.5s | quality: 4500 kbps | trace_bw: 379735 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     226 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,498 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        50 ms
+      Ratio:             0.0418%
+
+  [THROUGHPUT]
+      Average:           266,820 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           266,820 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_029_tc_20260518_112327.json
+
+──────────────────────────────────────────────────────────────────────
+  [31/40] starlink_road_030_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_030_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 11:25:39] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 11:25:39] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 239ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 274.1s | quality: 4500 kbps | trace_bw: 362242 kbps
+   t=20s | buffer: 271.9s | quality: 4500 kbps | trace_bw: 110326 kbps
+   t=31s | buffer: 278.2s | quality: 4500 kbps | trace_bw: 336238 kbps
+   t=41s | buffer: 280.4s | quality: 4500 kbps | trace_bw: 320318 kbps
+   t=51s | buffer: 286.2s | quality: 4500 kbps | trace_bw: 289438 kbps
+   t=61s | buffer: 292.5s | quality: 4500 kbps | trace_bw: 312993 kbps
+   t=71s | buffer: 290.3s | quality: 4500 kbps | trace_bw: 230263 kbps
+   t=82s | buffer: 304.6s | quality: 4500 kbps | trace_bw: 362489 kbps
+   t=92s | buffer: 306.8s | quality: 4500 kbps | trace_bw: 264894 kbps
+   t=102s | buffer: 309.0s | quality: 4500 kbps | trace_bw: 259458 kbps
+   t=112s | buffer: 311.3s | quality: 4500 kbps | trace_bw: 260173 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     239 ms
+      Playback time:     120.5 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,499 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        38 ms
+      Ratio:             0.0316%
+
+  [THROUGHPUT]
+      Average:           294,090 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           294,090 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_030_tc_20260518_112533.json
+
+──────────────────────────────────────────────────────────────────────
+  [32/40] starlink_road_031_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_031_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 11:27:45] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 11:27:45] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 224ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 277.7s | quality: 4500 kbps | trace_bw: 207828 kbps
+   t=20s | buffer: 279.9s | quality: 4500 kbps | trace_bw: 262058 kbps
+   t=31s | buffer: 278.2s | quality: 4500 kbps | trace_bw: 322350 kbps
+   t=41s | buffer: 288.0s | quality: 4500 kbps | trace_bw: 282273 kbps
+   t=51s | buffer: 286.3s | quality: 4500 kbps | trace_bw: 203984 kbps
+   t=61s | buffer: 296.5s | quality: 4500 kbps | trace_bw: 285534 kbps
+   t=71s | buffer: 298.8s | quality: 4500 kbps | trace_bw: 275515 kbps
+   t=82s | buffer: 309.0s | quality: 4500 kbps | trace_bw: 304145 kbps
+   t=92s | buffer: 307.3s | quality: 4500 kbps | trace_bw: 311617 kbps
+   t=102s | buffer: 313.5s | quality: 4500 kbps | trace_bw: 163785 kbps
+   t=112s | buffer: 319.8s | quality: 4500 kbps | trace_bw: 246290 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     224 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,499 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        38 ms
+      Ratio:             0.0320%
+
+  [THROUGHPUT]
+      Average:           277,359 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           277,359 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_031_tc_20260518_112740.json
+
+──────────────────────────────────────────────────────────────────────
+  [33/40] starlink_road_032_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_032_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 11:29:51] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 11:29:51] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 228ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 282.1s | quality: 4500 kbps | trace_bw: 341506 kbps
+   t=20s | buffer: 284.0s | quality: 4500 kbps | trace_bw: 332024 kbps
+   t=31s | buffer: 282.3s | quality: 4500 kbps | trace_bw: 181856 kbps
+   t=41s | buffer: 288.6s | quality: 4500 kbps | trace_bw: 139008 kbps
+   t=51s | buffer: 286.9s | quality: 4500 kbps | trace_bw: 262750 kbps
+   t=61s | buffer: 293.2s | quality: 4500 kbps | trace_bw: 188493 kbps
+   t=71s | buffer: 295.4s | quality: 4500 kbps | trace_bw: 298553 kbps
+   t=81s | buffer: 297.6s | quality: 4500 kbps | trace_bw: 271656 kbps
+   t=92s | buffer: 299.5s | quality: 4500 kbps | trace_bw: 158130 kbps
+   t=102s | buffer: 305.8s | quality: 4500 kbps | trace_bw: 164539 kbps
+   t=112s | buffer: 303.6s | quality: 4500 kbps | trace_bw: 128689 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     228 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,498 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        48 ms
+      Ratio:             0.0400%
+
+  [THROUGHPUT]
+      Average:           231,183 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           231,183 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_032_tc_20260518_112946.json
+
+──────────────────────────────────────────────────────────────────────
+  [34/40] starlink_road_033_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_033_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 11:31:57] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 11:31:57] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 236ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 278.2s | quality: 4500 kbps | trace_bw: 258137 kbps
+   t=20s | buffer: 288.0s | quality: 4500 kbps | trace_bw: 314568 kbps
+   t=31s | buffer: 290.3s | quality: 4500 kbps | trace_bw: 373711 kbps
+   t=41s | buffer: 296.6s | quality: 4500 kbps | trace_bw: 350568 kbps
+   t=51s | buffer: 302.8s | quality: 4500 kbps | trace_bw: 383441 kbps
+   t=61s | buffer: 308.6s | quality: 4500 kbps | trace_bw: 337437 kbps
+   t=71s | buffer: 306.5s | quality: 4500 kbps | trace_bw: 183548 kbps
+   t=81s | buffer: 312.7s | quality: 4500 kbps | trace_bw: 307553 kbps
+   t=92s | buffer: 322.6s | quality: 4500 kbps | trace_bw: 384021 kbps
+   t=102s | buffer: 324.3s | quality: 4500 kbps | trace_bw: 408252 kbps
+   t=112s | buffer: 327.1s | quality: 4500 kbps | trace_bw: 347173 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     236 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,498 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        59 ms
+      Ratio:             0.0488%
+
+  [THROUGHPUT]
+      Average:           321,109 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           321,109 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_033_tc_20260518_113152.json
+
+──────────────────────────────────────────────────────────────────────
+  [35/40] starlink_road_034_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_034_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 11:34:04] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 11:34:04] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 254ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 278.1s | quality: 4500 kbps | trace_bw: 276637 kbps
+   t=20s | buffer: 280.0s | quality: 4500 kbps | trace_bw: 70447 kbps
+   t=31s | buffer: 278.2s | quality: 4500 kbps | trace_bw: 365635 kbps
+   t=41s | buffer: 284.9s | quality: 4500 kbps | trace_bw: 321537 kbps
+   t=51s | buffer: 286.8s | quality: 4500 kbps | trace_bw: 308083 kbps
+   t=61s | buffer: 288.6s | quality: 4500 kbps | trace_bw: 28358 kbps
+   t=71s | buffer: 290.9s | quality: 4500 kbps | trace_bw: 106561 kbps
+   t=82s | buffer: 297.1s | quality: 4500 kbps | trace_bw: 269696 kbps
+   t=92s | buffer: 298.9s | quality: 4500 kbps | trace_bw: 177651 kbps
+   t=102s | buffer: 304.7s | quality: 4500 kbps | trace_bw: 145970 kbps
+   t=112s | buffer: 311.0s | quality: 4500 kbps | trace_bw: 354748 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     254 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,499 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        32 ms
+      Ratio:             0.0263%
+
+  [THROUGHPUT]
+      Average:           229,304 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           229,304 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_034_tc_20260518_113358.json
+
+──────────────────────────────────────────────────────────────────────
+  [36/40] starlink_road_035_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_035_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 11:36:10] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 11:36:10] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 207ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 265.7s | quality: 4500 kbps | trace_bw: 179701 kbps
+   t=20s | buffer: 268.0s | quality: 4500 kbps | trace_bw: 292506 kbps
+   t=31s | buffer: 274.3s | quality: 4500 kbps | trace_bw: 146740 kbps
+   t=41s | buffer: 272.1s | quality: 4500 kbps | trace_bw: 176461 kbps
+   t=51s | buffer: 278.4s | quality: 4500 kbps | trace_bw: 323929 kbps
+   t=61s | buffer: 284.7s | quality: 4500 kbps | trace_bw: 351150 kbps
+   t=71s | buffer: 282.9s | quality: 4500 kbps | trace_bw: 286732 kbps
+   t=82s | buffer: 289.1s | quality: 4500 kbps | trace_bw: 242273 kbps
+   t=92s | buffer: 287.4s | quality: 4500 kbps | trace_bw: 297130 kbps
+   t=102s | buffer: 293.7s | quality: 4500 kbps | trace_bw: 338404 kbps
+   t=112s | buffer: 299.9s | quality: 4500 kbps | trace_bw: 338352 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     207 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,499 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        35 ms
+      Ratio:             0.0291%
+
+  [THROUGHPUT]
+      Average:           255,313 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           255,313 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_035_tc_20260518_113604.json
+
+──────────────────────────────────────────────────────────────────────
+  [37/40] starlink_road_036_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_036_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 11:38:16] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 11:38:16] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 241ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 261.7s | quality: 4500 kbps | trace_bw: 283031 kbps
+   t=20s | buffer: 276.4s | quality: 4500 kbps | trace_bw: 249358 kbps
+   t=31s | buffer: 274.2s | quality: 4500 kbps | trace_bw: 304199 kbps
+   t=41s | buffer: 276.5s | quality: 4500 kbps | trace_bw: 258753 kbps
+   t=51s | buffer: 274.8s | quality: 4500 kbps | trace_bw: 276568 kbps
+   t=61s | buffer: 280.6s | quality: 4500 kbps | trace_bw: 41110 kbps
+   t=71s | buffer: 282.8s | quality: 4500 kbps | trace_bw: 339526 kbps
+   t=82s | buffer: 289.1s | quality: 4500 kbps | trace_bw: 341391 kbps
+   t=92s | buffer: 290.9s | quality: 4500 kbps | trace_bw: 338230 kbps
+   t=102s | buffer: 297.1s | quality: 4500 kbps | trace_bw: 346291 kbps
+   t=112s | buffer: 307.3s | quality: 4500 kbps | trace_bw: 420286 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     241 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,499 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        32 ms
+      Ratio:             0.0265%
+
+  [THROUGHPUT]
+      Average:           294,395 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           294,395 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_036_tc_20260518_113810.json
+
+──────────────────────────────────────────────────────────────────────
+  [38/40] starlink_road_037_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_037_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 11:40:22] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 11:40:22] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 225ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 278.1s | quality: 4500 kbps | trace_bw: 201527 kbps
+   t=20s | buffer: 280.0s | quality: 4500 kbps | trace_bw: 190380 kbps
+   t=30s | buffer: 281.9s | quality: 4500 kbps | trace_bw: 158447 kbps
+   t=41s | buffer: 287.7s | quality: 4500 kbps | trace_bw: 209940 kbps
+   t=51s | buffer: 285.5s | quality: 4500 kbps | trace_bw: 296622 kbps
+   t=61s | buffer: 291.3s | quality: 4500 kbps | trace_bw: 420169 kbps
+   t=71s | buffer: 297.6s | quality: 4500 kbps | trace_bw: 422352 kbps
+   t=81s | buffer: 303.9s | quality: 4500 kbps | trace_bw: 252347 kbps
+   t=92s | buffer: 302.2s | quality: 4500 kbps | trace_bw: 319719 kbps
+   t=102s | buffer: 304.0s | quality: 4500 kbps | trace_bw: 299068 kbps
+   t=112s | buffer: 301.8s | quality: 4500 kbps | trace_bw: 257281 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     225 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,499 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        30 ms
+      Ratio:             0.0245%
+
+  [THROUGHPUT]
+      Average:           266,973 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           266,973 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_037_tc_20260518_114017.json
+
+──────────────────────────────────────────────────────────────────────
+  [39/40] starlink_road_038_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_038_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 11:42:29] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 11:42:29] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 236ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 278.1s | quality: 4500 kbps | trace_bw: 106145 kbps
+   t=20s | buffer: 284.4s | quality: 4500 kbps | trace_bw: 263524 kbps
+   t=31s | buffer: 290.7s | quality: 4500 kbps | trace_bw: 341039 kbps
+   t=41s | buffer: 292.5s | quality: 4500 kbps | trace_bw: 335438 kbps
+   t=51s | buffer: 294.8s | quality: 4500 kbps | trace_bw: 98540 kbps
+   t=61s | buffer: 301.1s | quality: 4500 kbps | trace_bw: 254438 kbps
+   t=71s | buffer: 303.4s | quality: 4500 kbps | trace_bw: 317672 kbps
+   t=81s | buffer: 309.2s | quality: 4500 kbps | trace_bw: 68700 kbps
+   t=92s | buffer: 315.5s | quality: 4500 kbps | trace_bw: 316506 kbps
+   t=102s | buffer: 321.3s | quality: 4500 kbps | trace_bw: 278445 kbps
+   t=112s | buffer: 323.6s | quality: 4500 kbps | trace_bw: 286611 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     236 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,499 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        28 ms
+      Ratio:             0.0235%
+
+  [THROUGHPUT]
+      Average:           264,826 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           264,826 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_038_tc_20260518_114223.json
+
+──────────────────────────────────────────────────────────────────────
+  [40/40] starlink_road_039_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Player:  http://127.0.0.1:8095/player.html
+  Trace:   traces/starlink-2024/starlink_road_039_tc.csv
+======================================================================
+
+   Publisher quality: 4500 kbps
+[BROWSER] Launching headless Chromium (MOQ2)...
+127.0.0.1 - - [18/May/2026 11:44:35] "GET /player.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/May/2026 11:44:35] "GET /moq-bundle.js HTTP/1.1" 200 -
+   Startup delay: 217ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 273.7s | quality: 4500 kbps | trace_bw: 238749 kbps
+   t=20s | buffer: 271.9s | quality: 4500 kbps | trace_bw: 217653 kbps
+   t=31s | buffer: 274.2s | quality: 4500 kbps | trace_bw: 220509 kbps
+   t=41s | buffer: 276.0s | quality: 4500 kbps | trace_bw: 298271 kbps
+   t=51s | buffer: 281.8s | quality: 4500 kbps | trace_bw: 321722 kbps
+   t=61s | buffer: 287.7s | quality: 4500 kbps | trace_bw: 94022 kbps
+   t=71s | buffer: 285.5s | quality: 4500 kbps | trace_bw: 154507 kbps
+   t=81s | buffer: 291.8s | quality: 4500 kbps | trace_bw: 215312 kbps
+   t=92s | buffer: 290.0s | quality: 4500 kbps | trace_bw: 229421 kbps
+   t=102s | buffer: 296.3s | quality: 4500 kbps | trace_bw: 302989 kbps
+   t=112s | buffer: 298.1s | quality: 4500 kbps | trace_bw: 243961 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     217 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,499 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        27 ms
+      Ratio:             0.0224%
+
+  [THROUGHPUT]
+      Average:           205,917 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           205,917 kbps
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/moq2_starlink-2024/benchmark_moq2_starlink_road_039_tc_20260518_114429.json
+
+======================================================================
+  BATCH COMPLETE: 40/40 succeeded
+  Results saved to: results/results/run_all_20260517_165956/moq2_starlink-2024/
+======================================================================
+

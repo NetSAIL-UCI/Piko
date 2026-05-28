@@ -1,0 +1,1754 @@
+
+======================================================================
+  BATCH RUN: 21 trace(s) from traces/fcc
+======================================================================
+
+
+──────────────────────────────────────────────────────────────────────
+  [1/21] trace_12743_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_12743_3g_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 288 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 14531ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 440 kbps | tp: 1035 kbps | trace_bw: 1035 kbps
+   t=20s | buffer: 7.8s | bitrate: 440 kbps | tp: 1081 kbps | trace_bw: 1081 kbps
+   t=30s | buffer: 9.6s | bitrate: 440 kbps | tp: 965 kbps | trace_bw: 965 kbps
+   t=41s | buffer: 3.5s | bitrate: 440 kbps | tp: 1078 kbps | trace_bw: 1078 kbps
+   t=51s | buffer: 5.3s | bitrate: 220 kbps | tp: 1036 kbps | trace_bw: 1036 kbps
+   t=61s | buffer: 7.2s | bitrate: 220 kbps | tp: 1075 kbps | trace_bw: 1075 kbps
+   t=71s | buffer: 9.1s | bitrate: 220 kbps | tp: 925 kbps | trace_bw: 925 kbps
+   t=81s | buffer: 14.9s | bitrate: 220 kbps | tp: 1148 kbps | trace_bw: 1148 kbps
+   t=91s | buffer: 20.8s | bitrate: 220 kbps | tp: 1015 kbps | trace_bw: 1015 kbps
+   t=101s | buffer: 22.6s | bitrate: 220 kbps | tp: 1097 kbps | trace_bw: 1097 kbps
+   t=112s | buffer: 28.5s | bitrate: 220 kbps | tp: 1128 kbps | trace_bw: 1128 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     14,531 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  301 kbps
+      Average (effective): 287 kbps
+      Min / Max:           220 / 440 kbps
+      Median:              220 kbps
+      Std deviation:       106.0 kbps
+      Variance:            11,239.6
+      25th/75th %ile:      220 / 440 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         0 / 1
+      Avg magnitude:     220 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        5,529 ms
+      Ratio:             4.3966%
+      Frequency:         0.499 per minute
+      Avg duration:      5,529 ms
+      Max duration:      5,529 ms
+
+  [THROUGHPUT]
+      Average:           1,031 kbps
+      Median:            1,051 kbps
+      Min / Max:         780 / 1,148 kbps
+      Std deviation:     79.2 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,031 kbps
+      Min / Max:         780 / 1,148 kbps
+      Utilisation:       101.9%
+
+  [BUFFER]
+      Average level:     12.0 s
+      Min / Max:         0.0 / 31.4 s
+
+  [UTILIZATION]
+      Bandwidth:         28.6%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/hls_fcc/benchmark_hls_trace_12743_3g_tc_20260526_115446.json
+
+──────────────────────────────────────────────────────────────────────
+  [2/21] trace_27001_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_27001_3g_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 259 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 5992ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 9.9s | bitrate: 880 kbps | tp: 2870 kbps | trace_bw: 2870 kbps
+   t=20s | buffer: 15.8s | bitrate: 880 kbps | tp: 3007 kbps | trace_bw: 3007 kbps
+   t=30s | buffer: 29.6s | bitrate: 880 kbps | tp: 2786 kbps | trace_bw: 2786 kbps
+   t=41s | buffer: 31.5s | bitrate: 880 kbps | tp: 2782 kbps | trace_bw: 2782 kbps
+   t=51s | buffer: 29.3s | bitrate: 880 kbps | tp: 3286 kbps | trace_bw: 3286 kbps
+   t=61s | buffer: 27.2s | bitrate: 880 kbps | tp: 3332 kbps | trace_bw: 3332 kbps
+   t=71s | buffer: 17.0s | bitrate: 880 kbps | tp: 1 kbps | trace_bw: 1 kbps
+   t=81s | buffer: 6.9s | bitrate: 880 kbps | tp: 2893 kbps | trace_bw: 2893 kbps
+   t=91s | buffer: 12.7s | bitrate: 220 kbps | tp: 3184 kbps | trace_bw: 3184 kbps
+   t=101s | buffer: 18.6s | bitrate: 440 kbps | tp: 2996 kbps | trace_bw: 2996 kbps
+   t=112s | buffer: 24.5s | bitrate: 440 kbps | tp: 2631 kbps | trace_bw: 2631 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     5,992 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  733 kbps
+      Average (effective): 719 kbps
+      Min / Max:           220 / 880 kbps
+      Median:              880 kbps
+      Std deviation:       215.1 kbps
+      Variance:            46,248.9
+      25th/75th %ile:      440 / 880 kbps
+
+  [SWITCHES]
+      Total count:       4
+      Up / Down:         3 / 1
+      Avg magnitude:     330 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        2,384 ms
+      Ratio:             1.9442%
+      Frequency:         0.499 per minute
+      Avg duration:      2,384 ms
+      Max duration:      2,384 ms
+
+  [THROUGHPUT]
+      Average:           2,988 kbps
+      Median:            3,001 kbps
+      Min / Max:         1 / 3,500 kbps
+      Std deviation:     401.3 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           2,988 kbps
+      Min / Max:         1 / 3,500 kbps
+      Utilisation:       100.4%
+
+  [BUFFER]
+      Average level:     19.6 s
+      Min / Max:         0.0 / 32.0 s
+
+  [UTILIZATION]
+      Bandwidth:         24.4%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/hls_fcc/benchmark_hls_trace_27001_3g_tc_20260526_115708.json
+
+──────────────────────────────────────────────────────────────────────
+  [3/21] trace_27161_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_27161_3g_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 282 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 6365ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 9.9s | bitrate: 660 kbps | tp: 3020 kbps | trace_bw: 3020 kbps
+   t=20s | buffer: 11.8s | bitrate: 660 kbps | tp: 1530 kbps | trace_bw: 1530 kbps
+   t=30s | buffer: 17.6s | bitrate: 660 kbps | tp: 4453 kbps | trace_bw: 4453 kbps
+   t=41s | buffer: 27.5s | bitrate: 660 kbps | tp: 13 kbps | trace_bw: 13 kbps
+   t=51s | buffer: 25.3s | bitrate: 660 kbps | tp: 4391 kbps | trace_bw: 4391 kbps
+   t=61s | buffer: 27.2s | bitrate: 660 kbps | tp: 3571 kbps | trace_bw: 3571 kbps
+   t=71s | buffer: 29.0s | bitrate: 660 kbps | tp: 0 kbps | trace_bw: 0 kbps
+   t=81s | buffer: 30.9s | bitrate: 660 kbps | tp: 5069 kbps | trace_bw: 5069 kbps
+   t=91s | buffer: 28.8s | bitrate: 660 kbps | tp: 3342 kbps | trace_bw: 3342 kbps
+   t=101s | buffer: 30.6s | bitrate: 440 kbps | tp: 3124 kbps | trace_bw: 3124 kbps
+   t=112s | buffer: 28.5s | bitrate: 660 kbps | tp: 3994 kbps | trace_bw: 3994 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     6,365 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  598 kbps
+      Average (effective): 584 kbps
+      Min / Max:           110 / 660 kbps
+      Median:              660 kbps
+      Std deviation:       126.0 kbps
+      Variance:            15,877.9
+      25th/75th %ile:      660 / 660 kbps
+
+  [SWITCHES]
+      Total count:       7
+      Up / Down:         4 / 3
+      Avg magnitude:     314 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        2,746 ms
+      Ratio:             2.2331%
+      Frequency:         0.499 per minute
+      Avg duration:      2,746 ms
+      Max duration:      2,746 ms
+
+  [THROUGHPUT]
+      Average:           3,186 kbps
+      Median:            3,538 kbps
+      Min / Max:         0 / 5,633 kbps
+      Std deviation:     1,165.8 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           3,186 kbps
+      Min / Max:         0 / 5,633 kbps
+      Utilisation:       111.1%
+
+  [BUFFER]
+      Average level:     24.1 s
+      Min / Max:         0.0 / 32.6 s
+
+  [UTILIZATION]
+      Bandwidth:         16.9%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/hls_fcc/benchmark_hls_trace_27161_3g_tc_20260526_115918.json
+
+──────────────────────────────────────────────────────────────────────
+  [4/21] trace_27447_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_27447_3g_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 265 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 6691ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 9.9s | bitrate: 660 kbps | tp: 3684 kbps | trace_bw: 3684 kbps
+   t=20s | buffer: 19.8s | bitrate: 880 kbps | tp: 3434 kbps | trace_bw: 3434 kbps
+   t=30s | buffer: 29.6s | bitrate: 880 kbps | tp: 3485 kbps | trace_bw: 3485 kbps
+   t=41s | buffer: 31.5s | bitrate: 880 kbps | tp: 3515 kbps | trace_bw: 3515 kbps
+   t=51s | buffer: 29.3s | bitrate: 880 kbps | tp: 2677 kbps | trace_bw: 2677 kbps
+   t=61s | buffer: 31.2s | bitrate: 880 kbps | tp: 3798 kbps | trace_bw: 3798 kbps
+   t=71s | buffer: 29.1s | bitrate: 880 kbps | tp: 4294 kbps | trace_bw: 4294 kbps
+   t=81s | buffer: 30.9s | bitrate: 880 kbps | tp: 3522 kbps | trace_bw: 3522 kbps
+   t=91s | buffer: 28.8s | bitrate: 880 kbps | tp: 3589 kbps | trace_bw: 3589 kbps
+   t=101s | buffer: 30.6s | bitrate: 880 kbps | tp: 3898 kbps | trace_bw: 3898 kbps
+   t=112s | buffer: 28.5s | bitrate: 880 kbps | tp: 3728 kbps | trace_bw: 3728 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     6,691 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  845 kbps
+      Average (effective): 817 kbps
+      Min / Max:           440 / 1,320 kbps
+      Median:              880 kbps
+      Std deviation:       118.6 kbps
+      Variance:            14,059.8
+      25th/75th %ile:      880 / 880 kbps
+
+  [SWITCHES]
+      Total count:       3
+      Up / Down:         3 / 0
+      Avg magnitude:     293 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        4,151 ms
+      Ratio:             3.3380%
+      Frequency:         0.499 per minute
+      Avg duration:      4,151 ms
+      Max duration:      4,151 ms
+
+  [THROUGHPUT]
+      Average:           3,622 kbps
+      Median:            3,765 kbps
+      Min / Max:         1,070 / 5,551 kbps
+      Std deviation:     789.7 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           3,622 kbps
+      Min / Max:         1,070 / 5,551 kbps
+      Utilisation:       103.9%
+
+  [BUFFER]
+      Average level:     25.9 s
+      Min / Max:         0.0 / 32.8 s
+
+  [UTILIZATION]
+      Bandwidth:         22.5%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/hls_fcc/benchmark_hls_trace_27447_3g_tc_20260526_120128.json
+
+──────────────────────────────────────────────────────────────────────
+  [5/21] trace_5407_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_5407_3g_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 370 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 12476ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 3.5s | bitrate: 110 kbps | tp: 1219 kbps | trace_bw: 1219 kbps
+   t=20s | buffer: 13.4s | bitrate: 220 kbps | tp: 1260 kbps | trace_bw: 1260 kbps
+   t=30s | buffer: 19.2s | bitrate: 220 kbps | tp: 1273 kbps | trace_bw: 1273 kbps
+   t=41s | buffer: 25.1s | bitrate: 220 kbps | tp: 1295 kbps | trace_bw: 1295 kbps
+   t=51s | buffer: 26.9s | bitrate: 220 kbps | tp: 1268 kbps | trace_bw: 1268 kbps
+   t=61s | buffer: 28.8s | bitrate: 220 kbps | tp: 1232 kbps | trace_bw: 1232 kbps
+   t=71s | buffer: 30.6s | bitrate: 220 kbps | tp: 1328 kbps | trace_bw: 1328 kbps
+   t=81s | buffer: 28.5s | bitrate: 220 kbps | tp: 1264 kbps | trace_bw: 1264 kbps
+   t=91s | buffer: 26.4s | bitrate: 220 kbps | tp: 1095 kbps | trace_bw: 1095 kbps
+   t=101s | buffer: 28.2s | bitrate: 220 kbps | tp: 1227 kbps | trace_bw: 1227 kbps
+   t=112s | buffer: 30.1s | bitrate: 220 kbps | tp: 1320 kbps | trace_bw: 1320 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     12,476 ms
+      Playback time:     118.6 s
+
+  [BITRATE]
+      Average (selected):  223 kbps
+      Average (effective): 210 kbps
+      Min / Max:           110 / 440 kbps
+      Median:              220 kbps
+      Std deviation:       54.8 kbps
+      Variance:            3,004.9
+      25th/75th %ile:      220 / 220 kbps
+
+  [SWITCHES]
+      Total count:       2
+      Up / Down:         1 / 1
+      Avg magnitude:     220 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        7,133 ms
+      Ratio:             5.6720%
+      Frequency:         1.012 per minute
+      Avg duration:      3,566 ms
+      Max duration:      5,546 ms
+
+  [THROUGHPUT]
+      Average:           1,248 kbps
+      Median:            1,264 kbps
+      Min / Max:         974 / 1,426 kbps
+      Std deviation:     96.6 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,248 kbps
+      Min / Max:         974 / 1,426 kbps
+      Utilisation:       101.3%
+
+  [BUFFER]
+      Average level:     23.4 s
+      Min / Max:         0.0 / 31.8 s
+
+  [UTILIZATION]
+      Bandwidth:         17.6%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/hls_fcc/benchmark_hls_trace_5407_3g_tc_20260526_120339.json
+
+──────────────────────────────────────────────────────────────────────
+  [6/21] trace_797466_http---www.amazon_part1_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_797466_http---www.amazon_part1_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 36 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 19183ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 3.9s | bitrate: 220 kbps | tp: 463 kbps | trace_bw: 463 kbps
+   t=20s | buffer: 5.7s | bitrate: 220 kbps | tp: 463 kbps | trace_bw: 463 kbps
+   t=30s | buffer: 11.6s | bitrate: 220 kbps | tp: 463 kbps | trace_bw: 463 kbps
+   t=41s | buffer: 13.4s | bitrate: 220 kbps | tp: 463 kbps | trace_bw: 463 kbps
+   t=51s | buffer: 19.3s | bitrate: 220 kbps | tp: 463 kbps | trace_bw: 463 kbps
+   t=61s | buffer: 17.2s | bitrate: 220 kbps | tp: 463 kbps | trace_bw: 463 kbps
+   t=71s | buffer: 27.0s | bitrate: 220 kbps | tp: 463 kbps | trace_bw: 463 kbps
+   t=81s | buffer: 28.9s | bitrate: 220 kbps | tp: 463 kbps | trace_bw: 463 kbps
+   t=91s | buffer: 26.7s | bitrate: 220 kbps | tp: 463 kbps | trace_bw: 463 kbps
+   t=101s | buffer: 28.6s | bitrate: 220 kbps | tp: 463 kbps | trace_bw: 463 kbps
+   t=112s | buffer: 30.5s | bitrate: 220 kbps | tp: 463 kbps | trace_bw: 463 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     19,183 ms
+      Playback time:     118.2 s
+
+  [BITRATE]
+      Average (selected):  232 kbps
+      Average (effective): 215 kbps
+      Min / Max:           220 / 440 kbps
+      Median:              220 kbps
+      Std deviation:       49.7 kbps
+      Variance:            2,470.0
+      25th/75th %ile:      220 / 220 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         0 / 1
+      Avg magnitude:     220 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        9,446 ms
+      Ratio:             7.3976%
+      Frequency:         1.015 per minute
+      Avg duration:      4,723 ms
+      Max duration:      7,478 ms
+
+  [THROUGHPUT]
+      Average:           463 kbps
+      Median:            463 kbps
+      Min / Max:         463 / 463 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           463 kbps
+      Min / Max:         463 / 463 kbps
+      Utilisation:       100.0%
+
+  [BUFFER]
+      Average level:     18.6 s
+      Min / Max:         0.0 / 31.1 s
+
+  [UTILIZATION]
+      Bandwidth:         50.1%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/hls_fcc/benchmark_hls_trace_797466_http---www.amazon_part1_tc_20260526_120557.json
+
+──────────────────────────────────────────────────────────────────────
+  [7/21] trace_797466_http---www.amazon_part2_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_797466_http---www.amazon_part2_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 36 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 15750ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.4s | bitrate: 440 kbps | tp: 788 kbps | trace_bw: 788 kbps
+   t=20s | buffer: 6.6s | bitrate: 220 kbps | tp: 788 kbps | trace_bw: 788 kbps
+   t=30s | buffer: 12.5s | bitrate: 220 kbps | tp: 788 kbps | trace_bw: 788 kbps
+   t=41s | buffer: 18.4s | bitrate: 220 kbps | tp: 788 kbps | trace_bw: 788 kbps
+   t=51s | buffer: 24.2s | bitrate: 220 kbps | tp: 788 kbps | trace_bw: 788 kbps
+   t=61s | buffer: 30.1s | bitrate: 220 kbps | tp: 788 kbps | trace_bw: 788 kbps
+   t=71s | buffer: 27.9s | bitrate: 220 kbps | tp: 788 kbps | trace_bw: 788 kbps
+   t=81s | buffer: 29.8s | bitrate: 220 kbps | tp: 788 kbps | trace_bw: 788 kbps
+   t=91s | buffer: 27.6s | bitrate: 220 kbps | tp: 788 kbps | trace_bw: 788 kbps
+   t=101s | buffer: 29.5s | bitrate: 220 kbps | tp: 788 kbps | trace_bw: 788 kbps
+   t=112s | buffer: 27.4s | bitrate: 220 kbps | tp: 788 kbps | trace_bw: 788 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     15,750 ms
+      Playback time:     117.3 s
+
+  [BITRATE]
+      Average (selected):  236 kbps
+      Average (effective): 220 kbps
+      Min / Max:           110 / 440 kbps
+      Median:              220 kbps
+      Std deviation:       67.6 kbps
+      Variance:            4,567.8
+      25th/75th %ile:      220 / 220 kbps
+
+  [SWITCHES]
+      Total count:       2
+      Up / Down:         1 / 1
+      Avg magnitude:     220 kbps
+
+  [REBUFFERING]
+      Events:            3
+      Total time:        9,029 ms
+      Ratio:             7.1447%
+      Frequency:         1.534 per minute
+      Avg duration:      3,010 ms
+      Max duration:      6,051 ms
+
+  [THROUGHPUT]
+      Average:           788 kbps
+      Median:            788 kbps
+      Min / Max:         788 / 788 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           788 kbps
+      Min / Max:         788 / 788 kbps
+      Utilisation:       100.0%
+
+  [BUFFER]
+      Average level:     21.1 s
+      Min / Max:         0.0 / 31.5 s
+
+  [UTILIZATION]
+      Bandwidth:         30.0%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/hls_fcc/benchmark_hls_trace_797466_http---www.amazon_part2_tc_20260526_120823.json
+
+──────────────────────────────────────────────────────────────────────
+  [8/21] trace_799296_http---www.amazon_part0_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_799296_http---www.amazon_part0_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 38 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 9112ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 440 kbps | tp: 1791 kbps | trace_bw: 1791 kbps
+   t=20s | buffer: 7.7s | bitrate: 440 kbps | tp: 1884 kbps | trace_bw: 1884 kbps
+   t=30s | buffer: 13.6s | bitrate: 440 kbps | tp: 1677 kbps | trace_bw: 1677 kbps
+   t=41s | buffer: 15.4s | bitrate: 440 kbps | tp: 1766 kbps | trace_bw: 1766 kbps
+   t=51s | buffer: 17.3s | bitrate: 440 kbps | tp: 1564 kbps | trace_bw: 1564 kbps
+   t=61s | buffer: 19.1s | bitrate: 440 kbps | tp: 1657 kbps | trace_bw: 1657 kbps
+   t=71s | buffer: 29.0s | bitrate: 440 kbps | tp: 1877 kbps | trace_bw: 1877 kbps
+   t=81s | buffer: 30.9s | bitrate: 440 kbps | tp: 1703 kbps | trace_bw: 1703 kbps
+   t=91s | buffer: 28.7s | bitrate: 440 kbps | tp: 2061 kbps | trace_bw: 2061 kbps
+   t=101s | buffer: 30.6s | bitrate: 440 kbps | tp: 1654 kbps | trace_bw: 1654 kbps
+   t=112s | buffer: 28.4s | bitrate: 440 kbps | tp: 1676 kbps | trace_bw: 1676 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     9,112 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  440 kbps
+      Average (effective): 426 kbps
+      Min / Max:           440 / 440 kbps
+      Median:              440 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      440 / 440 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        4,015 ms
+      Ratio:             3.2308%
+      Frequency:         0.499 per minute
+      Avg duration:      4,015 ms
+      Max duration:      4,015 ms
+
+  [THROUGHPUT]
+      Average:           1,807 kbps
+      Median:            1,813 kbps
+      Min / Max:         1,564 / 2,350 kbps
+      Std deviation:     158.5 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,807 kbps
+      Min / Max:         1,564 / 2,350 kbps
+      Utilisation:       100.3%
+
+  [BUFFER]
+      Average level:     20.2 s
+      Min / Max:         0.0 / 32.1 s
+
+  [UTILIZATION]
+      Bandwidth:         24.3%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/hls_fcc/benchmark_hls_trace_799296_http---www.amazon_part0_tc_20260526_121046.json
+
+──────────────────────────────────────────────────────────────────────
+  [9/21] trace_799448_http---www.facebook_part6_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_799448_http---www.facebook_part6_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 35 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 12137ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 440 kbps | tp: 1287 kbps | trace_bw: 1287 kbps
+   t=20s | buffer: 7.8s | bitrate: 440 kbps | tp: 1287 kbps | trace_bw: 1287 kbps
+   t=30s | buffer: 9.6s | bitrate: 440 kbps | tp: 1287 kbps | trace_bw: 1287 kbps
+   t=41s | buffer: 15.5s | bitrate: 440 kbps | tp: 1287 kbps | trace_bw: 1287 kbps
+   t=51s | buffer: 17.3s | bitrate: 440 kbps | tp: 1287 kbps | trace_bw: 1287 kbps
+   t=61s | buffer: 19.2s | bitrate: 440 kbps | tp: 1287 kbps | trace_bw: 1287 kbps
+   t=71s | buffer: 25.0s | bitrate: 440 kbps | tp: 1287 kbps | trace_bw: 1287 kbps
+   t=81s | buffer: 26.9s | bitrate: 440 kbps | tp: 1287 kbps | trace_bw: 1287 kbps
+   t=91s | buffer: 28.8s | bitrate: 440 kbps | tp: 1287 kbps | trace_bw: 1287 kbps
+   t=101s | buffer: 30.6s | bitrate: 440 kbps | tp: 1287 kbps | trace_bw: 1287 kbps
+   t=112s | buffer: 28.5s | bitrate: 440 kbps | tp: 1287 kbps | trace_bw: 1287 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     12,137 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  440 kbps
+      Average (effective): 424 kbps
+      Min / Max:           440 / 440 kbps
+      Median:              440 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      440 / 440 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        4,615 ms
+      Ratio:             3.6973%
+      Frequency:         0.499 per minute
+      Avg duration:      4,615 ms
+      Max duration:      4,615 ms
+
+  [THROUGHPUT]
+      Average:           1,287 kbps
+      Median:            1,287 kbps
+      Min / Max:         1,287 / 1,287 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,287 kbps
+      Min / Max:         1,287 / 1,287 kbps
+      Utilisation:       100.0%
+
+  [BUFFER]
+      Average level:     19.1 s
+      Min / Max:         0.0 / 31.1 s
+
+  [UTILIZATION]
+      Bandwidth:         34.2%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/hls_fcc/benchmark_hls_trace_799448_http---www.facebook_part6_tc_20260526_121259.json
+
+──────────────────────────────────────────────────────────────────────
+  [10/21] trace_800156_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_800156_3g_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 366 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 18554ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 220 kbps | tp: 393 kbps | trace_bw: 393 kbps
+   t=20s | buffer: 11.8s | bitrate: 220 kbps | tp: 649 kbps | trace_bw: 649 kbps
+   t=30s | buffer: 17.6s | bitrate: 220 kbps | tp: 1609 kbps | trace_bw: 1609 kbps
+   t=41s | buffer: 27.5s | bitrate: 220 kbps | tp: 1844 kbps | trace_bw: 1844 kbps
+   t=51s | buffer: 29.3s | bitrate: 220 kbps | tp: 503 kbps | trace_bw: 503 kbps
+   t=61s | buffer: 31.2s | bitrate: 220 kbps | tp: 1648 kbps | trace_bw: 1648 kbps
+   t=71s | buffer: 29.0s | bitrate: 220 kbps | tp: 1715 kbps | trace_bw: 1715 kbps
+   t=81s | buffer: 30.9s | bitrate: 220 kbps | tp: 3227 kbps | trace_bw: 3227 kbps
+   t=91s | buffer: 28.7s | bitrate: 220 kbps | tp: 2776 kbps | trace_bw: 2776 kbps
+   t=101s | buffer: 30.6s | bitrate: 220 kbps | tp: 2245 kbps | trace_bw: 2245 kbps
+   t=112s | buffer: 28.5s | bitrate: 220 kbps | tp: 2459 kbps | trace_bw: 2459 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     18,554 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  224 kbps
+      Average (effective): 208 kbps
+      Min / Max:           110 / 440 kbps
+      Median:              220 kbps
+      Std deviation:       44.7 kbps
+      Variance:            1,995.0
+      25th/75th %ile:      220 / 220 kbps
+
+  [SWITCHES]
+      Total count:       2
+      Up / Down:         1 / 1
+      Avg magnitude:     220 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        9,248 ms
+      Ratio:             7.1413%
+      Frequency:         0.499 per minute
+      Avg duration:      9,248 ms
+      Max duration:      9,248 ms
+
+  [THROUGHPUT]
+      Average:           1,861 kbps
+      Median:            1,829 kbps
+      Min / Max:         0 / 3,748 kbps
+      Std deviation:     945.2 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,861 kbps
+      Min / Max:         0 / 3,748 kbps
+      Utilisation:       98.3%
+
+  [BUFFER]
+      Average level:     24.3 s
+      Min / Max:         0.0 / 32.7 s
+
+  [UTILIZATION]
+      Bandwidth:         12.2%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/hls_fcc/benchmark_hls_trace_800156_3g_tc_20260526_121517.json
+
+──────────────────────────────────────────────────────────────────────
+  [11/21] trace_806172_http---www.amazon_part0_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_806172_http---www.amazon_part0_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 38 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 13751ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 4.0s | bitrate: 110 kbps | tp: 1376 kbps | trace_bw: 1376 kbps
+   t=20s | buffer: 9.8s | bitrate: 220 kbps | tp: 1327 kbps | trace_bw: 1327 kbps
+   t=30s | buffer: 15.7s | bitrate: 220 kbps | tp: 1337 kbps | trace_bw: 1337 kbps
+   t=41s | buffer: 17.5s | bitrate: 220 kbps | tp: 1195 kbps | trace_bw: 1195 kbps
+   t=51s | buffer: 23.4s | bitrate: 220 kbps | tp: 1341 kbps | trace_bw: 1341 kbps
+   t=61s | buffer: 21.3s | bitrate: 220 kbps | tp: 885 kbps | trace_bw: 885 kbps
+   t=71s | buffer: 27.1s | bitrate: 220 kbps | tp: 1260 kbps | trace_bw: 1260 kbps
+   t=81s | buffer: 29.0s | bitrate: 220 kbps | tp: 1308 kbps | trace_bw: 1308 kbps
+   t=91s | buffer: 26.8s | bitrate: 220 kbps | tp: 959 kbps | trace_bw: 959 kbps
+   t=101s | buffer: 28.7s | bitrate: 220 kbps | tp: 1268 kbps | trace_bw: 1268 kbps
+   t=112s | buffer: 26.5s | bitrate: 220 kbps | tp: 1276 kbps | trace_bw: 1276 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     13,751 ms
+      Playback time:     118.2 s
+
+  [BITRATE]
+      Average (selected):  235 kbps
+      Average (effective): 221 kbps
+      Min / Max:           110 / 440 kbps
+      Median:              220 kbps
+      Std deviation:       65.0 kbps
+      Variance:            4,221.6
+      25th/75th %ile:      220 / 220 kbps
+
+  [SWITCHES]
+      Total count:       2
+      Up / Down:         1 / 1
+      Avg magnitude:     220 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        7,489 ms
+      Ratio:             5.9599%
+      Frequency:         1.016 per minute
+      Avg duration:      3,744 ms
+      Max duration:      5,415 ms
+
+  [THROUGHPUT]
+      Average:           1,155 kbps
+      Median:            1,247 kbps
+      Min / Max:         384 / 1,376 kbps
+      Std deviation:     228.3 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,155 kbps
+      Min / Max:         384 / 1,376 kbps
+      Utilisation:       107.9%
+
+  [BUFFER]
+      Average level:     20.1 s
+      Min / Max:         0.0 / 31.2 s
+
+  [UTILIZATION]
+      Bandwidth:         18.8%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/hls_fcc/benchmark_hls_trace_806172_http---www.amazon_part0_tc_20260526_121740.json
+
+──────────────────────────────────────────────────────────────────────
+  [12/21] trace_806330_http---www.amazon_part0_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_806330_http---www.amazon_part0_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 38 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 17446ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 3.0s | bitrate: 440 kbps | tp: 623 kbps | trace_bw: 623 kbps
+   t=20s | buffer: 12.8s | bitrate: 440 kbps | tp: 889 kbps | trace_bw: 889 kbps
+   t=30s | buffer: 14.7s | bitrate: 440 kbps | tp: 1327 kbps | trace_bw: 1327 kbps
+   t=41s | buffer: 20.5s | bitrate: 440 kbps | tp: 1294 kbps | trace_bw: 1294 kbps
+   t=51s | buffer: 22.4s | bitrate: 440 kbps | tp: 1377 kbps | trace_bw: 1377 kbps
+   t=61s | buffer: 24.3s | bitrate: 440 kbps | tp: 1419 kbps | trace_bw: 1419 kbps
+   t=71s | buffer: 30.1s | bitrate: 440 kbps | tp: 1261 kbps | trace_bw: 1261 kbps
+   t=81s | buffer: 28.0s | bitrate: 440 kbps | tp: 1329 kbps | trace_bw: 1329 kbps
+   t=91s | buffer: 25.8s | bitrate: 440 kbps | tp: 1401 kbps | trace_bw: 1401 kbps
+   t=101s | buffer: 31.7s | bitrate: 440 kbps | tp: 1395 kbps | trace_bw: 1395 kbps
+   t=112s | buffer: 29.6s | bitrate: 440 kbps | tp: 1264 kbps | trace_bw: 1264 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     17,446 ms
+      Playback time:     119.1 s
+
+  [BITRATE]
+      Average (selected):  440 kbps
+      Average (effective): 416 kbps
+      Min / Max:           440 / 440 kbps
+      Median:              440 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      440 / 440 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        6,931 ms
+      Ratio:             5.4976%
+      Frequency:         1.007 per minute
+      Avg duration:      3,466 ms
+      Max duration:      5,873 ms
+
+  [THROUGHPUT]
+      Average:           1,177 kbps
+      Median:            1,329 kbps
+      Min / Max:         399 / 1,435 kbps
+      Std deviation:     329.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,177 kbps
+      Min / Max:         399 / 1,435 kbps
+      Utilisation:       112.9%
+
+  [BUFFER]
+      Average level:     21.4 s
+      Min / Max:         0.0 / 32.2 s
+
+  [UTILIZATION]
+      Bandwidth:         33.1%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/hls_fcc/benchmark_hls_trace_806330_http---www.amazon_part0_tc_20260526_122001.json
+
+──────────────────────────────────────────────────────────────────────
+  [13/21] trace_8327_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_8327_3g_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 256 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 14811ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.5s | bitrate: 440 kbps | tp: 745 kbps | trace_bw: 745 kbps
+   t=20s | buffer: 6.7s | bitrate: 220 kbps | tp: 745 kbps | trace_bw: 745 kbps
+   t=30s | buffer: 12.6s | bitrate: 220 kbps | tp: 745 kbps | trace_bw: 745 kbps
+   t=41s | buffer: 22.5s | bitrate: 220 kbps | tp: 1101 kbps | trace_bw: 1101 kbps
+   t=51s | buffer: 28.3s | bitrate: 220 kbps | tp: 1074 kbps | trace_bw: 1074 kbps
+   t=61s | buffer: 30.2s | bitrate: 220 kbps | tp: 1046 kbps | trace_bw: 1046 kbps
+   t=71s | buffer: 28.0s | bitrate: 220 kbps | tp: 931 kbps | trace_bw: 931 kbps
+   t=81s | buffer: 29.9s | bitrate: 220 kbps | tp: 1066 kbps | trace_bw: 1066 kbps
+   t=91s | buffer: 27.7s | bitrate: 220 kbps | tp: 1066 kbps | trace_bw: 1066 kbps
+   t=101s | buffer: 29.6s | bitrate: 220 kbps | tp: 1080 kbps | trace_bw: 1080 kbps
+   t=112s | buffer: 27.4s | bitrate: 220 kbps | tp: 470 kbps | trace_bw: 470 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     14,811 ms
+      Playback time:     117.3 s
+
+  [BITRATE]
+      Average (selected):  236 kbps
+      Average (effective): 219 kbps
+      Min / Max:           110 / 440 kbps
+      Median:              220 kbps
+      Std deviation:       67.6 kbps
+      Variance:            4,567.8
+      25th/75th %ile:      220 / 220 kbps
+
+  [SWITCHES]
+      Total count:       2
+      Up / Down:         1 / 1
+      Avg magnitude:     220 kbps
+
+  [REBUFFERING]
+      Events:            3
+      Total time:        9,253 ms
+      Ratio:             7.3125%
+      Frequency:         1.535 per minute
+      Avg duration:      3,084 ms
+      Max duration:      6,174 ms
+
+  [THROUGHPUT]
+      Average:           840 kbps
+      Median:            745 kbps
+      Min / Max:         470 / 1,106 kbps
+      Std deviation:     213.6 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           840 kbps
+      Min / Max:         470 / 1,106 kbps
+      Utilisation:       88.7%
+
+  [BUFFER]
+      Average level:     21.6 s
+      Min / Max:         0.0 / 31.7 s
+
+  [UTILIZATION]
+      Bandwidth:         31.7%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/hls_fcc/benchmark_hls_trace_8327_3g_tc_20260526_122223.json
+
+──────────────────────────────────────────────────────────────────────
+  [14/21] trace_8465_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_8465_3g_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 313 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 15032ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.4s | bitrate: 440 kbps | tp: 975 kbps | trace_bw: 975 kbps
+   t=20s | buffer: 6.5s | bitrate: 220 kbps | tp: 1040 kbps | trace_bw: 1040 kbps
+   t=30s | buffer: 12.4s | bitrate: 220 kbps | tp: 898 kbps | trace_bw: 898 kbps
+   t=41s | buffer: 14.2s | bitrate: 220 kbps | tp: 951 kbps | trace_bw: 951 kbps
+   t=51s | buffer: 20.1s | bitrate: 220 kbps | tp: 1033 kbps | trace_bw: 1033 kbps
+   t=61s | buffer: 21.9s | bitrate: 220 kbps | tp: 1051 kbps | trace_bw: 1051 kbps
+   t=71s | buffer: 27.8s | bitrate: 220 kbps | tp: 982 kbps | trace_bw: 982 kbps
+   t=81s | buffer: 29.6s | bitrate: 220 kbps | tp: 970 kbps | trace_bw: 970 kbps
+   t=91s | buffer: 27.5s | bitrate: 220 kbps | tp: 873 kbps | trace_bw: 873 kbps
+   t=101s | buffer: 29.4s | bitrate: 220 kbps | tp: 1002 kbps | trace_bw: 1002 kbps
+   t=112s | buffer: 27.2s | bitrate: 220 kbps | tp: 1012 kbps | trace_bw: 1012 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     15,032 ms
+      Playback time:     117.5 s
+
+  [BITRATE]
+      Average (selected):  236 kbps
+      Average (effective): 220 kbps
+      Min / Max:           110 / 440 kbps
+      Median:              220 kbps
+      Std deviation:       67.6 kbps
+      Variance:            4,567.8
+      25th/75th %ile:      220 / 220 kbps
+
+  [SWITCHES]
+      Total count:       2
+      Up / Down:         1 / 1
+      Avg magnitude:     220 kbps
+
+  [REBUFFERING]
+      Events:            3
+      Total time:        9,062 ms
+      Ratio:             7.1615%
+      Frequency:         1.532 per minute
+      Avg duration:      3,021 ms
+      Max duration:      6,196 ms
+
+  [THROUGHPUT]
+      Average:           950 kbps
+      Median:            980 kbps
+      Min / Max:         19 / 1,114 kbps
+      Std deviation:     162.7 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           950 kbps
+      Min / Max:         19 / 1,114 kbps
+      Utilisation:       103.2%
+
+  [BUFFER]
+      Average level:     19.3 s
+      Min / Max:         0.0 / 31.1 s
+
+  [UTILIZATION]
+      Bandwidth:         24.1%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/hls_fcc/benchmark_hls_trace_8465_3g_tc_20260526_122445.json
+
+──────────────────────────────────────────────────────────────────────
+  [15/21] trace_849842_http---www.facebook_part1_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_849842_http---www.facebook_part1_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 37 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 18900ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 3.8s | bitrate: 220 kbps | tp: 477 kbps | trace_bw: 477 kbps
+   t=20s | buffer: 5.7s | bitrate: 220 kbps | tp: 477 kbps | trace_bw: 477 kbps
+   t=30s | buffer: 11.6s | bitrate: 220 kbps | tp: 477 kbps | trace_bw: 477 kbps
+   t=41s | buffer: 13.4s | bitrate: 220 kbps | tp: 477 kbps | trace_bw: 477 kbps
+   t=51s | buffer: 19.3s | bitrate: 220 kbps | tp: 477 kbps | trace_bw: 477 kbps
+   t=61s | buffer: 21.1s | bitrate: 220 kbps | tp: 477 kbps | trace_bw: 477 kbps
+   t=71s | buffer: 27.0s | bitrate: 220 kbps | tp: 477 kbps | trace_bw: 477 kbps
+   t=81s | buffer: 28.8s | bitrate: 220 kbps | tp: 477 kbps | trace_bw: 477 kbps
+   t=91s | buffer: 26.7s | bitrate: 220 kbps | tp: 477 kbps | trace_bw: 477 kbps
+   t=101s | buffer: 28.5s | bitrate: 220 kbps | tp: 477 kbps | trace_bw: 477 kbps
+   t=112s | buffer: 30.4s | bitrate: 220 kbps | tp: 477 kbps | trace_bw: 477 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     18,900 ms
+      Playback time:     118.3 s
+
+  [BITRATE]
+      Average (selected):  231 kbps
+      Average (effective): 214 kbps
+      Min / Max:           220 / 440 kbps
+      Median:              220 kbps
+      Std deviation:       47.9 kbps
+      Variance:            2,290.0
+      25th/75th %ile:      220 / 220 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         0 / 1
+      Avg magnitude:     220 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        9,298 ms
+      Ratio:             7.2862%
+      Frequency:         1.014 per minute
+      Avg duration:      4,649 ms
+      Max duration:      7,362 ms
+
+  [THROUGHPUT]
+      Average:           477 kbps
+      Median:            477 kbps
+      Min / Max:         477 / 477 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           477 kbps
+      Min / Max:         477 / 477 kbps
+      Utilisation:       100.0%
+
+  [BUFFER]
+      Average level:     19.0 s
+      Min / Max:         0.0 / 31.3 s
+
+  [UTILIZATION]
+      Bandwidth:         48.4%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/hls_fcc/benchmark_hls_trace_849842_http---www.facebook_part1_tc_20260526_122706.json
+
+──────────────────────────────────────────────────────────────────────
+  [16/21] trace_901648_http---www.amazon_part1_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_901648_http---www.amazon_part1_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] Warning: could not reach /startShaping: HTTPConnectionPool(host='localhost', port=8080): Read timed out. (read timeout=5)
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 36 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 4443ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 1320 kbps | tp: 2948 kbps | trace_bw: 2948 kbps
+   t=20s | buffer: 11.8s | bitrate: 1650 kbps | tp: 2948 kbps | trace_bw: 2948 kbps
+   t=30s | buffer: 17.6s | bitrate: 1650 kbps | tp: 2948 kbps | trace_bw: 2948 kbps
+   t=41s | buffer: 23.5s | bitrate: 1650 kbps | tp: 2948 kbps | trace_bw: 2948 kbps
+   t=51s | buffer: 25.3s | bitrate: 1650 kbps | tp: 2948 kbps | trace_bw: 2948 kbps
+   t=61s | buffer: 31.2s | bitrate: 1650 kbps | tp: 2948 kbps | trace_bw: 2948 kbps
+   t=71s | buffer: 29.0s | bitrate: 1650 kbps | tp: 2948 kbps | trace_bw: 2948 kbps
+   t=81s | buffer: 30.9s | bitrate: 1650 kbps | tp: 2948 kbps | trace_bw: 2948 kbps
+   t=91s | buffer: 28.7s | bitrate: 1650 kbps | tp: 2948 kbps | trace_bw: 2948 kbps
+   t=101s | buffer: 30.6s | bitrate: 1650 kbps | tp: 2948 kbps | trace_bw: 2948 kbps
+   t=112s | buffer: 28.4s | bitrate: 1650 kbps | tp: 2948 kbps | trace_bw: 2948 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     4,443 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  1,573 kbps
+      Average (effective): 1,548 kbps
+      Min / Max:           440 / 1,650 kbps
+      Median:              1,650 kbps
+      Std deviation:       256.9 kbps
+      Variance:            66,017.2
+      25th/75th %ile:      1,650 / 1,650 kbps
+
+  [SWITCHES]
+      Total count:       3
+      Up / Down:         3 / 0
+      Avg magnitude:     403 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        1,954 ms
+      Ratio:             1.5989%
+      Frequency:         0.499 per minute
+      Avg duration:      1,954 ms
+      Max duration:      1,954 ms
+
+  [THROUGHPUT]
+      Average:           2,948 kbps
+      Median:            2,948 kbps
+      Min / Max:         2,948 / 2,948 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           2,948 kbps
+      Min / Max:         2,948 / 2,948 kbps
+      Utilisation:       100.0%
+
+  [BUFFER]
+      Average level:     22.3 s
+      Min / Max:         0.0 / 32.1 s
+
+  [UTILIZATION]
+      Bandwidth:         53.4%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/hls_fcc/benchmark_hls_trace_901648_http---www.amazon_part1_tc_20260526_122933.json
+
+──────────────────────────────────────────────────────────────────────
+  [17/21] trace_9108_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_9108_3g_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 341 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 11552ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 440 kbps | tp: 1178 kbps | trace_bw: 1178 kbps
+   t=20s | buffer: 11.8s | bitrate: 440 kbps | tp: 1257 kbps | trace_bw: 1257 kbps
+   t=30s | buffer: 17.6s | bitrate: 440 kbps | tp: 1319 kbps | trace_bw: 1319 kbps
+   t=41s | buffer: 19.5s | bitrate: 440 kbps | tp: 1224 kbps | trace_bw: 1224 kbps
+   t=51s | buffer: 25.3s | bitrate: 440 kbps | tp: 1209 kbps | trace_bw: 1209 kbps
+   t=61s | buffer: 31.2s | bitrate: 440 kbps | tp: 1232 kbps | trace_bw: 1232 kbps
+   t=71s | buffer: 29.0s | bitrate: 440 kbps | tp: 1279 kbps | trace_bw: 1279 kbps
+   t=81s | buffer: 26.9s | bitrate: 440 kbps | tp: 1240 kbps | trace_bw: 1240 kbps
+   t=91s | buffer: 28.7s | bitrate: 440 kbps | tp: 1246 kbps | trace_bw: 1246 kbps
+   t=101s | buffer: 26.6s | bitrate: 440 kbps | tp: 1221 kbps | trace_bw: 1221 kbps
+   t=112s | buffer: 28.5s | bitrate: 440 kbps | tp: 1271 kbps | trace_bw: 1271 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     11,552 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  440 kbps
+      Average (effective): 423 kbps
+      Min / Max:           440 / 440 kbps
+      Median:              440 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      440 / 440 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        4,821 ms
+      Ratio:             3.8550%
+      Frequency:         0.499 per minute
+      Avg duration:      4,821 ms
+      Max duration:      4,821 ms
+
+  [THROUGHPUT]
+      Average:           1,247 kbps
+      Median:            1,253 kbps
+      Min / Max:         925 / 1,374 kbps
+      Std deviation:     73.3 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,247 kbps
+      Min / Max:         925 / 1,374 kbps
+      Utilisation:       100.5%
+
+  [BUFFER]
+      Average level:     21.7 s
+      Min / Max:         0.0 / 31.6 s
+
+  [UTILIZATION]
+      Bandwidth:         35.1%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/hls_fcc/benchmark_hls_trace_9108_3g_tc_20260526_123142.json
+
+──────────────────────────────────────────────────────────────────────
+  [18/21] trace_925800_http---www.ebay_part0_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_925800_http---www.ebay_part0_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 38 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 15391ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.3s | bitrate: 440 kbps | tp: 864 kbps | trace_bw: 864 kbps
+   t=20s | buffer: 6.5s | bitrate: 220 kbps | tp: 869 kbps | trace_bw: 869 kbps
+   t=30s | buffer: 12.4s | bitrate: 220 kbps | tp: 873 kbps | trace_bw: 873 kbps
+   t=41s | buffer: 18.2s | bitrate: 220 kbps | tp: 845 kbps | trace_bw: 845 kbps
+   t=51s | buffer: 24.1s | bitrate: 220 kbps | tp: 879 kbps | trace_bw: 879 kbps
+   t=61s | buffer: 21.9s | bitrate: 220 kbps | tp: 869 kbps | trace_bw: 869 kbps
+   t=71s | buffer: 27.8s | bitrate: 220 kbps | tp: 502 kbps | trace_bw: 502 kbps
+   t=81s | buffer: 29.6s | bitrate: 220 kbps | tp: 866 kbps | trace_bw: 866 kbps
+   t=91s | buffer: 27.5s | bitrate: 220 kbps | tp: 879 kbps | trace_bw: 879 kbps
+   t=102s | buffer: 25.3s | bitrate: 220 kbps | tp: 886 kbps | trace_bw: 886 kbps
+   t=112s | buffer: 31.2s | bitrate: 220 kbps | tp: 826 kbps | trace_bw: 826 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     15,391 ms
+      Playback time:     117.5 s
+
+  [BITRATE]
+      Average (selected):  236 kbps
+      Average (effective): 220 kbps
+      Min / Max:           110 / 440 kbps
+      Median:              220 kbps
+      Std deviation:       67.5 kbps
+      Variance:            4,549.9
+      25th/75th %ile:      220 / 220 kbps
+
+  [SWITCHES]
+      Total count:       2
+      Up / Down:         1 / 1
+      Avg magnitude:     220 kbps
+
+  [REBUFFERING]
+      Events:            3
+      Total time:        8,754 ms
+      Ratio:             6.9332%
+      Frequency:         1.532 per minute
+      Avg duration:      2,918 ms
+      Max duration:      5,873 ms
+
+  [THROUGHPUT]
+      Average:           809 kbps
+      Median:            869 kbps
+      Min / Max:         0 / 886 kbps
+      Std deviation:     186.8 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           809 kbps
+      Min / Max:         0 / 886 kbps
+      Utilisation:       107.4%
+
+  [BUFFER]
+      Average level:     20.3 s
+      Min / Max:         0.0 / 31.7 s
+
+  [UTILIZATION]
+      Bandwidth:         27.2%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/hls_fcc/benchmark_hls_trace_925800_http---www.ebay_part0_tc_20260526_123359.json
+
+──────────────────────────────────────────────────────────────────────
+  [19/21] trace_939562_http---www.google_part1_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_939562_http---www.google_part1_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 37 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 9988ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 9.9s | bitrate: 440 kbps | tp: 1676 kbps | trace_bw: 1676 kbps
+   t=20s | buffer: 11.8s | bitrate: 440 kbps | tp: 1676 kbps | trace_bw: 1676 kbps
+   t=30s | buffer: 13.6s | bitrate: 440 kbps | tp: 1676 kbps | trace_bw: 1676 kbps
+   t=41s | buffer: 15.4s | bitrate: 440 kbps | tp: 1676 kbps | trace_bw: 1676 kbps
+   t=51s | buffer: 21.3s | bitrate: 440 kbps | tp: 1676 kbps | trace_bw: 1676 kbps
+   t=61s | buffer: 31.2s | bitrate: 440 kbps | tp: 1676 kbps | trace_bw: 1676 kbps
+   t=71s | buffer: 29.0s | bitrate: 220 kbps | tp: 1676 kbps | trace_bw: 1676 kbps
+   t=81s | buffer: 30.9s | bitrate: 220 kbps | tp: 1676 kbps | trace_bw: 1676 kbps
+   t=91s | buffer: 28.7s | bitrate: 220 kbps | tp: 1676 kbps | trace_bw: 1676 kbps
+   t=101s | buffer: 30.6s | bitrate: 220 kbps | tp: 1676 kbps | trace_bw: 1676 kbps
+   t=112s | buffer: 28.5s | bitrate: 220 kbps | tp: 1676 kbps | trace_bw: 1676 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     9,988 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  337 kbps
+      Average (effective): 326 kbps
+      Min / Max:           220 / 440 kbps
+      Median:              440 kbps
+      Std deviation:       109.8 kbps
+      Variance:            12,046.2
+      25th/75th %ile:      220 / 440 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         0 / 1
+      Avg magnitude:     220 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        4,029 ms
+      Ratio:             3.2426%
+      Frequency:         0.499 per minute
+      Avg duration:      4,029 ms
+      Max duration:      4,029 ms
+
+  [THROUGHPUT]
+      Average:           1,676 kbps
+      Median:            1,676 kbps
+      Min / Max:         1,676 / 1,676 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,676 kbps
+      Min / Max:         1,676 / 1,676 kbps
+      Utilisation:       100.0%
+
+  [BUFFER]
+      Average level:     21.6 s
+      Min / Max:         0.0 / 32.1 s
+
+  [UTILIZATION]
+      Bandwidth:         20.1%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/hls_fcc/benchmark_hls_trace_939562_http---www.google_part1_tc_20260526_123622.json
+
+──────────────────────────────────────────────────────────────────────
+  [20/21] trace_939592_http---www.facebook_part0_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_939592_http---www.facebook_part0_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 38 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 13531ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 440 kbps | tp: 1080 kbps | trace_bw: 1080 kbps
+   t=20s | buffer: 11.8s | bitrate: 440 kbps | tp: 1454 kbps | trace_bw: 1454 kbps
+   t=30s | buffer: 17.6s | bitrate: 440 kbps | tp: 1442 kbps | trace_bw: 1442 kbps
+   t=41s | buffer: 23.5s | bitrate: 440 kbps | tp: 1408 kbps | trace_bw: 1408 kbps
+   t=51s | buffer: 25.3s | bitrate: 440 kbps | tp: 1379 kbps | trace_bw: 1379 kbps
+   t=61s | buffer: 27.1s | bitrate: 440 kbps | tp: 1360 kbps | trace_bw: 1360 kbps
+   t=71s | buffer: 29.0s | bitrate: 440 kbps | tp: 1038 kbps | trace_bw: 1038 kbps
+   t=81s | buffer: 26.8s | bitrate: 440 kbps | tp: 1432 kbps | trace_bw: 1432 kbps
+   t=91s | buffer: 24.7s | bitrate: 440 kbps | tp: 1386 kbps | trace_bw: 1386 kbps
+   t=102s | buffer: 26.5s | bitrate: 440 kbps | tp: 1331 kbps | trace_bw: 1331 kbps
+   t=112s | buffer: 28.4s | bitrate: 440 kbps | tp: 1130 kbps | trace_bw: 1130 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     13,531 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  433 kbps
+      Average (effective): 415 kbps
+      Min / Max:           220 / 440 kbps
+      Median:              440 kbps
+      Std deviation:       39.5 kbps
+      Variance:            1,559.6
+      25th/75th %ile:      440 / 440 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         0 / 1
+      Avg magnitude:     220 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        5,212 ms
+      Ratio:             4.1525%
+      Frequency:         0.499 per minute
+      Avg duration:      5,212 ms
+      Max duration:      5,212 ms
+
+  [THROUGHPUT]
+      Average:           1,305 kbps
+      Median:            1,386 kbps
+      Min / Max:         1,028 / 1,454 kbps
+      Std deviation:     154.1 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,305 kbps
+      Min / Max:         1,028 / 1,454 kbps
+      Utilisation:       106.2%
+
+  [BUFFER]
+      Average level:     22.4 s
+      Min / Max:         0.0 / 31.6 s
+
+  [UTILIZATION]
+      Bandwidth:         31.2%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/hls_fcc/benchmark_hls_trace_939592_http---www.facebook_part0_tc_20260526_123836.json
+
+──────────────────────────────────────────────────────────────────────
+  [21/21] trace_9542_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_9542_3g_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 333 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 14310ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 1.9s | bitrate: 440 kbps | tp: 927 kbps | trace_bw: 927 kbps
+   t=20s | buffer: 3.8s | bitrate: 110 kbps | tp: 1105 kbps | trace_bw: 1105 kbps
+   t=30s | buffer: 5.6s | bitrate: 220 kbps | tp: 1177 kbps | trace_bw: 1177 kbps
+   t=41s | buffer: 11.5s | bitrate: 220 kbps | tp: 1006 kbps | trace_bw: 1006 kbps
+   t=51s | buffer: 17.3s | bitrate: 220 kbps | tp: 954 kbps | trace_bw: 954 kbps
+   t=61s | buffer: 19.2s | bitrate: 220 kbps | tp: 1093 kbps | trace_bw: 1093 kbps
+   t=71s | buffer: 29.0s | bitrate: 220 kbps | tp: 1094 kbps | trace_bw: 1094 kbps
+   t=81s | buffer: 30.9s | bitrate: 220 kbps | tp: 1050 kbps | trace_bw: 1050 kbps
+   t=91s | buffer: 28.7s | bitrate: 220 kbps | tp: 1054 kbps | trace_bw: 1054 kbps
+   t=102s | buffer: 30.6s | bitrate: 220 kbps | tp: 1081 kbps | trace_bw: 1081 kbps
+   t=112s | buffer: 28.4s | bitrate: 220 kbps | tp: 1059 kbps | trace_bw: 1059 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     14,310 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  242 kbps
+      Average (effective): 231 kbps
+      Min / Max:           110 / 440 kbps
+      Median:              220 kbps
+      Std deviation:       82.3 kbps
+      Variance:            6,776.0
+      25th/75th %ile:      220 / 220 kbps
+
+  [SWITCHES]
+      Total count:       2
+      Up / Down:         1 / 1
+      Avg magnitude:     220 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        5,551 ms
+      Ratio:             4.4121%
+      Frequency:         0.499 per minute
+      Avg duration:      5,551 ms
+      Max duration:      5,551 ms
+
+  [THROUGHPUT]
+      Average:           1,051 kbps
+      Median:            1,055 kbps
+      Min / Max:         813 / 1,177 kbps
+      Std deviation:     64.5 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,051 kbps
+      Min / Max:         813 / 1,177 kbps
+      Utilisation:       100.4%
+
+  [BUFFER]
+      Average level:     18.0 s
+      Min / Max:         0.0 / 31.4 s
+
+  [UTILIZATION]
+      Bandwidth:         22.9%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/hls_fcc/benchmark_hls_trace_9542_3g_tc_20260526_124057.json
+
+======================================================================
+  BATCH COMPLETE: 21/21 succeeded
+  Results saved to: results/results/run_all_20260525_151403/hls_fcc/
+======================================================================
+

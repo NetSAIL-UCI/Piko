@@ -1,0 +1,3503 @@
+
+======================================================================
+  BATCH RUN: 40 trace(s) from traces/starlink-2024
+======================================================================
+
+
+──────────────────────────────────────────────────────────────────────
+  [1/40] starlink_road_000_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_000_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1091ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 4500 kbps | tp: 205685 kbps | trace_bw: 205685 kbps
+   t=20s | buffer: 7.7s | bitrate: 4500 kbps | tp: 30583 kbps | trace_bw: 30583 kbps
+   t=31s | buffer: 21.4s | bitrate: 4500 kbps | tp: 76507 kbps | trace_bw: 76507 kbps
+   t=41s | buffer: 27.0s | bitrate: 4500 kbps | tp: 111235 kbps | trace_bw: 111235 kbps
+   t=51s | buffer: 24.9s | bitrate: 4500 kbps | tp: 202129 kbps | trace_bw: 202129 kbps
+   t=62s | buffer: 26.6s | bitrate: 4500 kbps | tp: 136608 kbps | trace_bw: 136608 kbps
+   t=72s | buffer: 27.9s | bitrate: 4500 kbps | tp: 151117 kbps | trace_bw: 151117 kbps
+   t=82s | buffer: 26.1s | bitrate: 4500 kbps | tp: 143027 kbps | trace_bw: 143027 kbps
+   t=93s | buffer: 27.5s | bitrate: 4500 kbps | tp: 207067 kbps | trace_bw: 207067 kbps
+   t=103s | buffer: 25.4s | bitrate: 4500 kbps | tp: 102020 kbps | trace_bw: 102020 kbps
+   t=113s | buffer: 27.3s | bitrate: 4500 kbps | tp: 242320 kbps | trace_bw: 242320 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,091 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  4,133 kbps
+      Average (effective): 4,127 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       1,216.1 kbps
+      Variance:            1,478,888.9
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        186 ms
+      Ratio:             0.1544%
+      Frequency:         0.499 per minute
+      Avg duration:      186 ms
+      Max duration:      186 ms
+
+  [THROUGHPUT]
+      Average:           147,172 kbps
+      Median:            136,608 kbps
+      Min / Max:         16,878 / 347,519 kbps
+      Std deviation:     77,078.5 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           147,172 kbps
+      Min / Max:         16,878 / 347,519 kbps
+      Utilisation:       92.8%
+
+  [BUFFER]
+      Average level:     22.4 s
+      Min / Max:         3.7 / 28.4 s
+
+  [UTILIZATION]
+      Bandwidth:         3.0%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_000_tc_20260526_044423.json
+
+──────────────────────────────────────────────────────────────────────
+  [2/40] starlink_road_001_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_001_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1296ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 226300 kbps | trace_bw: 226300 kbps
+   t=20s | buffer: 15.7s | bitrate: 100 kbps | tp: 307646 kbps | trace_bw: 307646 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 224577 kbps | trace_bw: 224577 kbps
+   t=41s | buffer: 15.3s | bitrate: 100 kbps | tp: 159758 kbps | trace_bw: 159758 kbps
+   t=51s | buffer: 4.7s | bitrate: 4500 kbps | tp: 236095 kbps | trace_bw: 236095 kbps
+   t=61s | buffer: 14.8s | bitrate: 4500 kbps | tp: 200805 kbps | trace_bw: 200805 kbps
+   t=71s | buffer: 24.7s | bitrate: 4500 kbps | tp: 268279 kbps | trace_bw: 268279 kbps
+   t=82s | buffer: 26.4s | bitrate: 4500 kbps | tp: 297054 kbps | trace_bw: 297054 kbps
+   t=92s | buffer: 28.0s | bitrate: 4500 kbps | tp: 305047 kbps | trace_bw: 305047 kbps
+   t=102s | buffer: 25.9s | bitrate: 4500 kbps | tp: 190000 kbps | trace_bw: 190000 kbps
+   t=112s | buffer: 27.8s | bitrate: 4500 kbps | tp: 283129 kbps | trace_bw: 283129 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,296 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  2,960 kbps
+      Average (effective): 2,955 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       2,098.7 kbps
+      Variance:            4,404,400.0
+      25th/75th %ile:      100 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        191 ms
+      Ratio:             0.1584%
+      Frequency:         0.498 per minute
+      Avg duration:      191 ms
+      Max duration:      191 ms
+
+  [THROUGHPUT]
+      Average:           258,691 kbps
+      Median:            254,256 kbps
+      Min / Max:         49,046 / 404,908 kbps
+      Std deviation:     68,526.5 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           258,691 kbps
+      Min / Max:         49,046 / 404,908 kbps
+      Utilisation:       98.3%
+
+  [BUFFER]
+      Average level:     19.4 s
+      Min / Max:         3.7 / 28.4 s
+
+  [UTILIZATION]
+      Bandwidth:         1.2%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_001_tc_20260526_044628.json
+
+──────────────────────────────────────────────────────────────────────
+  [3/40] starlink_road_002_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_002_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1275ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 198341 kbps | trace_bw: 198341 kbps
+   t=20s | buffer: 15.8s | bitrate: 100 kbps | tp: 174362 kbps | trace_bw: 174362 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 265601 kbps | trace_bw: 265601 kbps
+   t=41s | buffer: 15.0s | bitrate: 100 kbps | tp: 306339 kbps | trace_bw: 306339 kbps
+   t=51s | buffer: 12.9s | bitrate: 100 kbps | tp: 235468 kbps | trace_bw: 235468 kbps
+   t=61s | buffer: 14.6s | bitrate: 100 kbps | tp: 245835 kbps | trace_bw: 245835 kbps
+   t=72s | buffer: 16.5s | bitrate: 100 kbps | tp: 277189 kbps | trace_bw: 277189 kbps
+   t=82s | buffer: 14.1s | bitrate: 100 kbps | tp: 424419 kbps | trace_bw: 424419 kbps
+   t=92s | buffer: 12.0s | bitrate: 4500 kbps | tp: 213400 kbps | trace_bw: 213400 kbps
+   t=103s | buffer: 5.7s | bitrate: 4500 kbps | tp: 273028 kbps | trace_bw: 273028 kbps
+   t=113s | buffer: 19.6s | bitrate: 4500 kbps | tp: 217601 kbps | trace_bw: 217601 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8080/chunk-stream9-00037.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8080/
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,275 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  1,182 kbps
+      Average (effective): 1,180 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              100 kbps
+      Std deviation:       1,894.6 kbps
+      Variance:            3,589,330.6
+      25th/75th %ile:      100 / 100 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        197 ms
+      Ratio:             0.1635%
+      Frequency:         0.499 per minute
+      Avg duration:      197 ms
+      Max duration:      197 ms
+
+  [THROUGHPUT]
+      Average:           238,446 kbps
+      Median:            243,472 kbps
+      Min / Max:         0 / 424,419 kbps
+      Std deviation:     69,489.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           238,446 kbps
+      Min / Max:         0 / 424,419 kbps
+      Utilisation:       102.1%
+
+  [BUFFER]
+      Average level:     14.3 s
+      Min / Max:         3.3 / 23.1 s
+
+  [UTILIZATION]
+      Bandwidth:         0.5%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_002_tc_20260526_044833.json
+
+──────────────────────────────────────────────────────────────────────
+  [4/40] starlink_road_003_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_003_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1646ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 336052 kbps | trace_bw: 336052 kbps
+   t=21s | buffer: 15.7s | bitrate: 100 kbps | tp: 274722 kbps | trace_bw: 274722 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 350577 kbps | trace_bw: 350577 kbps
+   t=41s | buffer: 11.0s | bitrate: 4500 kbps | tp: 357608 kbps | trace_bw: 357608 kbps
+   t=51s | buffer: 8.9s | bitrate: 4500 kbps | tp: 358259 kbps | trace_bw: 358259 kbps
+   t=61s | buffer: 22.8s | bitrate: 4500 kbps | tp: 358097 kbps | trace_bw: 358097 kbps
+   t=71s | buffer: 25.0s | bitrate: 4500 kbps | tp: 385956 kbps | trace_bw: 385956 kbps
+   t=81s | buffer: 26.6s | bitrate: 4500 kbps | tp: 357030 kbps | trace_bw: 357030 kbps
+   t=92s | buffer: 24.6s | bitrate: 4500 kbps | tp: 384959 kbps | trace_bw: 384959 kbps
+   t=102s | buffer: 25.9s | bitrate: 4500 kbps | tp: 425921 kbps | trace_bw: 425921 kbps
+   t=112s | buffer: 27.8s | bitrate: 4500 kbps | tp: 409780 kbps | trace_bw: 409780 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,646 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  3,107 kbps
+      Average (effective): 3,102 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       2,046.8 kbps
+      Variance:            4,189,288.9
+      25th/75th %ile:      100 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        196 ms
+      Ratio:             0.1626%
+      Frequency:         0.499 per minute
+      Avg duration:      196 ms
+      Max duration:      196 ms
+
+  [THROUGHPUT]
+      Average:           361,806 kbps
+      Median:            358,647 kbps
+      Min / Max:         234,805 / 427,736 kbps
+      Std deviation:     49,696.7 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           361,806 kbps
+      Min / Max:         234,805 / 427,736 kbps
+      Utilisation:       99.1%
+
+  [BUFFER]
+      Average level:     19.4 s
+      Min / Max:         3.7 / 28.2 s
+
+  [UTILIZATION]
+      Bandwidth:         0.9%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_003_tc_20260526_045038.json
+
+──────────────────────────────────────────────────────────────────────
+  [5/40] starlink_road_004_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_004_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 104 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1292ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 10.1s | bitrate: 4500 kbps | tp: 239545 kbps | trace_bw: 239545 kbps
+   t=20s | buffer: 8.0s | bitrate: 4500 kbps | tp: 265265 kbps | trace_bw: 265265 kbps
+   t=30s | buffer: 17.9s | bitrate: 4500 kbps | tp: 222654 kbps | trace_bw: 222654 kbps
+   t=40s | buffer: 27.8s | bitrate: 4500 kbps | tp: 323422 kbps | trace_bw: 323422 kbps
+   t=51s | buffer: 25.7s | bitrate: 4500 kbps | tp: 286032 kbps | trace_bw: 286032 kbps
+   t=61s | buffer: 27.1s | bitrate: 4500 kbps | tp: 408033 kbps | trace_bw: 408033 kbps
+   t=71s | buffer: 24.8s | bitrate: 4500 kbps | tp: 364895 kbps | trace_bw: 364895 kbps
+   t=82s | buffer: 26.4s | bitrate: 4500 kbps | tp: 339147 kbps | trace_bw: 339147 kbps
+   t=92s | buffer: 24.3s | bitrate: 4500 kbps | tp: 51583 kbps | trace_bw: 51583 kbps
+   t=102s | buffer: 25.9s | bitrate: 4500 kbps | tp: 235025 kbps | trace_bw: 235025 kbps
+   t=112s | buffer: 23.6s | bitrate: 4500 kbps | tp: 251799 kbps | trace_bw: 251799 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,292 ms
+      Playback time:     120.5 s
+
+  [BITRATE]
+      Average (selected):  4,262 kbps
+      Average (effective): 4,255 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       995.9 kbps
+      Variance:            991,863.9
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        192 ms
+      Ratio:             0.1591%
+      Frequency:         0.498 per minute
+      Avg duration:      192 ms
+      Max duration:      192 ms
+
+  [THROUGHPUT]
+      Average:           287,887 kbps
+      Median:            289,204 kbps
+      Min / Max:         0 / 425,662 kbps
+      Std deviation:     71,330.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           287,887 kbps
+      Min / Max:         0 / 425,662 kbps
+      Utilisation:       100.5%
+
+  [BUFFER]
+      Average level:     21.8 s
+      Min / Max:         3.7 / 28.2 s
+
+  [UTILIZATION]
+      Bandwidth:         1.5%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_004_tc_20260526_045243.json
+
+──────────────────────────────────────────────────────────────────────
+  [6/40] starlink_road_005_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_005_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1252ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 360784 kbps | trace_bw: 360784 kbps
+   t=20s | buffer: 15.7s | bitrate: 100 kbps | tp: 427022 kbps | trace_bw: 427022 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 333249 kbps | trace_bw: 333249 kbps
+   t=41s | buffer: 15.0s | bitrate: 100 kbps | tp: 425147 kbps | trace_bw: 425147 kbps
+   t=51s | buffer: 16.9s | bitrate: 100 kbps | tp: 350610 kbps | trace_bw: 350610 kbps
+   t=61s | buffer: 6.8s | bitrate: 4500 kbps | tp: 421043 kbps | trace_bw: 421043 kbps
+   t=72s | buffer: 8.5s | bitrate: 4500 kbps | tp: 343570 kbps | trace_bw: 343570 kbps
+   t=82s | buffer: 22.0s | bitrate: 4500 kbps | tp: 337334 kbps | trace_bw: 337334 kbps
+   t=92s | buffer: 27.8s | bitrate: 4500 kbps | tp: 425567 kbps | trace_bw: 425567 kbps
+   t=102s | buffer: 25.7s | bitrate: 4500 kbps | tp: 420676 kbps | trace_bw: 420676 kbps
+   t=113s | buffer: 27.3s | bitrate: 4500 kbps | tp: 215426 kbps | trace_bw: 215426 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,252 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  2,502 kbps
+      Average (effective): 2,498 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       2,190.7 kbps
+      Variance:            4,799,330.6
+      25th/75th %ile:      100 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        193 ms
+      Ratio:             0.1602%
+      Frequency:         0.499 per minute
+      Avg duration:      193 ms
+      Max duration:      193 ms
+
+  [THROUGHPUT]
+      Average:           340,012 kbps
+      Median:            343,570 kbps
+      Min / Max:         85,160 / 427,022 kbps
+      Std deviation:     67,164.1 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           340,012 kbps
+      Min / Max:         85,160 / 427,022 kbps
+      Utilisation:       101.0%
+
+  [BUFFER]
+      Average level:     17.4 s
+      Min / Max:         3.7 / 28.4 s
+
+  [UTILIZATION]
+      Bandwidth:         0.7%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_005_tc_20260526_045449.json
+
+──────────────────────────────────────────────────────────────────────
+  [7/40] starlink_road_006_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_006_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1330ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 3.9s | bitrate: 4500 kbps | tp: 294772 kbps | trace_bw: 294772 kbps
+   t=20s | buffer: 13.8s | bitrate: 3000 kbps | tp: 266233 kbps | trace_bw: 266233 kbps
+   t=31s | buffer: 15.7s | bitrate: 3000 kbps | tp: 351432 kbps | trace_bw: 351432 kbps
+   t=41s | buffer: 13.3s | bitrate: 3000 kbps | tp: 421835 kbps | trace_bw: 421835 kbps
+   t=51s | buffer: 14.7s | bitrate: 3000 kbps | tp: 82895 kbps | trace_bw: 82895 kbps
+   t=62s | buffer: 8.6s | bitrate: 4500 kbps | tp: 407348 kbps | trace_bw: 407348 kbps
+   t=72s | buffer: 6.2s | bitrate: 4500 kbps | tp: 356404 kbps | trace_bw: 356404 kbps
+   t=82s | buffer: 23.9s | bitrate: 4500 kbps | tp: 248336 kbps | trace_bw: 248336 kbps
+   t=93s | buffer: 25.5s | bitrate: 4500 kbps | tp: 312406 kbps | trace_bw: 312406 kbps
+   t=103s | buffer: 27.2s | bitrate: 4500 kbps | tp: 305252 kbps | trace_bw: 305252 kbps
+   t=113s | buffer: 25.1s | bitrate: 4500 kbps | tp: 286952 kbps | trace_bw: 286952 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,330 ms
+      Playback time:     118.1 s
+
+  [BITRATE]
+      Average (selected):  3,979 kbps
+      Average (effective): 3,902 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       804.1 kbps
+      Variance:            646,552.0
+      25th/75th %ile:      3,000 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       4
+      Up / Down:         2 / 2
+      Avg magnitude:     2,950 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        2,323 ms
+      Ratio:             1.9294%
+      Frequency:         1.016 per minute
+      Avg duration:      1,162 ms
+      Max duration:      2,126 ms
+
+  [THROUGHPUT]
+      Average:           314,692 kbps
+      Median:            312,406 kbps
+      Min / Max:         0 / 473,148 kbps
+      Std deviation:     75,176.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           314,692 kbps
+      Min / Max:         0 / 473,148 kbps
+      Utilisation:       99.3%
+
+  [BUFFER]
+      Average level:     15.8 s
+      Min / Max:         0.1 / 28.2 s
+
+  [UTILIZATION]
+      Bandwidth:         1.3%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_006_tc_20260526_045654.json
+
+──────────────────────────────────────────────────────────────────────
+  [8/40] starlink_road_007_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_007_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1190ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 7.1s | bitrate: 4500 kbps | tp: 230893 kbps | trace_bw: 230893 kbps
+   t=20s | buffer: 17.0s | bitrate: 4500 kbps | tp: 384452 kbps | trace_bw: 384452 kbps
+   t=30s | buffer: 27.2s | bitrate: 4500 kbps | tp: 269542 kbps | trace_bw: 269542 kbps
+   t=41s | buffer: 24.6s | bitrate: 4500 kbps | tp: 309434 kbps | trace_bw: 309434 kbps
+   t=51s | buffer: 26.5s | bitrate: 4500 kbps | tp: 368238 kbps | trace_bw: 368238 kbps
+   t=61s | buffer: 28.1s | bitrate: 4500 kbps | tp: 290000 kbps | trace_bw: 290000 kbps
+   t=72s | buffer: 25.5s | bitrate: 4500 kbps | tp: 407240 kbps | trace_bw: 407240 kbps
+   t=82s | buffer: 27.4s | bitrate: 4500 kbps | tp: 409312 kbps | trace_bw: 409312 kbps
+   t=92s | buffer: 25.3s | bitrate: 4500 kbps | tp: 356139 kbps | trace_bw: 356139 kbps
+   t=103s | buffer: 27.0s | bitrate: 4500 kbps | tp: 323899 kbps | trace_bw: 323899 kbps
+   t=113s | buffer: 24.9s | bitrate: 4500 kbps | tp: 223662 kbps | trace_bw: 223662 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8080/chunk-stream9-00037.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8080/
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+  - ← 200 OK
+  -   server: SimpleHTTP/0.6 Python/3.11.15
+  -   date: Tue, 26 May 2026 12:01:00 GMT
+  -   content-type: video/iso.segment
+  -   content-length: 1739376
+  -   last-modified: Wed, 22 Apr 2026 18:42:42 GMT
+  -   access-control-allow-origin: *
+  -   access-control-allow-methods: GET, OPTIONS
+  -   access-control-allow-headers: Content-Type, Range
+  -   access-control-expose-headers: Content-Length, Content-Range
+  -   cache-control: public, max-age=31536000
+)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,190 ms
+      Playback time:     118.8 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,441 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        1,575 ms
+      Ratio:             1.3080%
+      Frequency:         1.010 per minute
+      Avg duration:      788 ms
+      Max duration:      1,377 ms
+
+  [THROUGHPUT]
+      Average:           302,894 kbps
+      Median:            300,147 kbps
+      Min / Max:         185,574 / 458,440 kbps
+      Std deviation:     59,488.2 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           302,894 kbps
+      Min / Max:         185,574 / 458,440 kbps
+      Utilisation:       99.1%
+
+  [BUFFER]
+      Average level:     22.9 s
+      Min / Max:         0.1 / 28.6 s
+
+  [UTILIZATION]
+      Bandwidth:         1.5%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_007_tc_20260526_045859.json
+
+──────────────────────────────────────────────────────────────────────
+  [9/40] starlink_road_008_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_008_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1536ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 4.4s | bitrate: 4500 kbps | tp: 383175 kbps | trace_bw: 383175 kbps
+   t=20s | buffer: 14.3s | bitrate: 3000 kbps | tp: 225711 kbps | trace_bw: 225711 kbps
+   t=31s | buffer: 16.2s | bitrate: 3000 kbps | tp: 204838 kbps | trace_bw: 204838 kbps
+   t=41s | buffer: 13.9s | bitrate: 3000 kbps | tp: 374152 kbps | trace_bw: 374152 kbps
+   t=51s | buffer: 15.3s | bitrate: 3000 kbps | tp: 411019 kbps | trace_bw: 411019 kbps
+   t=61s | buffer: 9.2s | bitrate: 4500 kbps | tp: 394355 kbps | trace_bw: 394355 kbps
+   t=72s | buffer: 6.8s | bitrate: 4500 kbps | tp: 407537 kbps | trace_bw: 407537 kbps
+   t=82s | buffer: 16.7s | bitrate: 4500 kbps | tp: 343083 kbps | trace_bw: 343083 kbps
+   t=92s | buffer: 26.6s | bitrate: 4500 kbps | tp: 402455 kbps | trace_bw: 402455 kbps
+   t=102s | buffer: 24.5s | bitrate: 4500 kbps | tp: 410421 kbps | trace_bw: 410421 kbps
+   t=113s | buffer: 26.2s | bitrate: 4500 kbps | tp: 318388 kbps | trace_bw: 318388 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,536 ms
+      Playback time:     117.4 s
+
+  [BITRATE]
+      Average (selected):  3,984 kbps
+      Average (effective): 3,889 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       768.1 kbps
+      Variance:            589,942.3
+      25th/75th %ile:      3,000 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       4
+      Up / Down:         2 / 2
+      Avg magnitude:     2,950 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        2,861 ms
+      Ratio:             2.3793%
+      Frequency:         1.022 per minute
+      Avg duration:      1,430 ms
+      Max duration:      2,665 ms
+
+  [THROUGHPUT]
+      Average:           362,860 kbps
+      Median:            374,152 kbps
+      Min / Max:         96,415 / 427,006 kbps
+      Std deviation:     53,852.6 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           362,860 kbps
+      Min / Max:         96,415 / 427,006 kbps
+      Utilisation:       103.1%
+
+  [BUFFER]
+      Average level:     15.2 s
+      Min / Max:         0.1 / 28.0 s
+
+  [UTILIZATION]
+      Bandwidth:         1.1%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_008_tc_20260526_050104.json
+
+──────────────────────────────────────────────────────────────────────
+  [10/40] starlink_road_009_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_009_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1549ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 346640 kbps | trace_bw: 346640 kbps
+   t=21s | buffer: 15.5s | bitrate: 100 kbps | tp: 282936 kbps | trace_bw: 282936 kbps
+   t=31s | buffer: 4.9s | bitrate: 4500 kbps | tp: 149329 kbps | trace_bw: 149329 kbps
+   t=41s | buffer: 18.8s | bitrate: 4500 kbps | tp: 231522 kbps | trace_bw: 231522 kbps
+   t=52s | buffer: 24.4s | bitrate: 4500 kbps | tp: 240677 kbps | trace_bw: 240677 kbps
+   t=62s | buffer: 26.0s | bitrate: 4500 kbps | tp: 149029 kbps | trace_bw: 149029 kbps
+   t=72s | buffer: 27.9s | bitrate: 4500 kbps | tp: 252049 kbps | trace_bw: 252049 kbps
+   t=82s | buffer: 25.9s | bitrate: 4500 kbps | tp: 255312 kbps | trace_bw: 255312 kbps
+   t=93s | buffer: 27.5s | bitrate: 4500 kbps | tp: 197987 kbps | trace_bw: 197987 kbps
+   t=103s | buffer: 25.4s | bitrate: 4500 kbps | tp: 267707 kbps | trace_bw: 267707 kbps
+   t=113s | buffer: 23.6s | bitrate: 4500 kbps | tp: 0 kbps | trace_bw: 0 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,549 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  3,675 kbps
+      Average (effective): 3,669 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       1,717.4 kbps
+      Variance:            2,949,375.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        195 ms
+      Ratio:             0.1618%
+      Frequency:         0.499 per minute
+      Avg duration:      195 ms
+      Max duration:      195 ms
+
+  [THROUGHPUT]
+      Average:           216,815 kbps
+      Median:            240,677 kbps
+      Min / Max:         0 / 385,283 kbps
+      Std deviation:     104,560.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           216,815 kbps
+      Min / Max:         0 / 385,283 kbps
+      Utilisation:       111.0%
+
+  [BUFFER]
+      Average level:     20.4 s
+      Min / Max:         3.3 / 28.3 s
+
+  [UTILIZATION]
+      Bandwidth:         1.5%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_009_tc_20260526_050309.json
+
+──────────────────────────────────────────────────────────────────────
+  [11/40] starlink_road_010_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_010_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1254ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 7.9s | bitrate: 4500 kbps | tp: 362305 kbps | trace_bw: 362305 kbps
+   t=20s | buffer: 13.5s | bitrate: 4500 kbps | tp: 315749 kbps | trace_bw: 315749 kbps
+   t=31s | buffer: 27.5s | bitrate: 4500 kbps | tp: 187625 kbps | trace_bw: 187625 kbps
+   t=41s | buffer: 24.8s | bitrate: 4500 kbps | tp: 293411 kbps | trace_bw: 293411 kbps
+   t=51s | buffer: 26.7s | bitrate: 4500 kbps | tp: 370220 kbps | trace_bw: 370220 kbps
+   t=62s | buffer: 28.1s | bitrate: 4500 kbps | tp: 349825 kbps | trace_bw: 349825 kbps
+   t=72s | buffer: 25.7s | bitrate: 4500 kbps | tp: 275978 kbps | trace_bw: 275978 kbps
+   t=82s | buffer: 27.7s | bitrate: 4500 kbps | tp: 373200 kbps | trace_bw: 373200 kbps
+   t=93s | buffer: 25.6s | bitrate: 4500 kbps | tp: 188818 kbps | trace_bw: 188818 kbps
+   t=103s | buffer: 26.9s | bitrate: 4500 kbps | tp: 344831 kbps | trace_bw: 344831 kbps
+   t=113s | buffer: 24.8s | bitrate: 4500 kbps | tp: 356403 kbps | trace_bw: 356403 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8080/chunk-stream9-00037.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8080/
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,254 ms
+      Playback time:     118.2 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,422 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        2,081 ms
+      Ratio:             1.7298%
+      Frequency:         1.015 per minute
+      Avg duration:      1,040 ms
+      Max duration:      1,889 ms
+
+  [THROUGHPUT]
+      Average:           304,023 kbps
+      Median:            315,171 kbps
+      Min / Max:         150,765 / 416,604 kbps
+      Std deviation:     64,646.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           304,023 kbps
+      Min / Max:         150,765 / 416,604 kbps
+      Utilisation:       103.7%
+
+  [BUFFER]
+      Average level:     22.7 s
+      Min / Max:         0.1 / 28.4 s
+
+  [UTILIZATION]
+      Bandwidth:         1.4%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_010_tc_20260526_050514.json
+
+──────────────────────────────────────────────────────────────────────
+  [12/40] starlink_road_011_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_011_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1262ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 424459 kbps | trace_bw: 424459 kbps
+   t=20s | buffer: 15.8s | bitrate: 100 kbps | tp: 413319 kbps | trace_bw: 413319 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 350102 kbps | trace_bw: 350102 kbps
+   t=41s | buffer: 15.0s | bitrate: 100 kbps | tp: 275589 kbps | trace_bw: 275589 kbps
+   t=51s | buffer: 4.7s | bitrate: 4500 kbps | tp: 278017 kbps | trace_bw: 278017 kbps
+   t=62s | buffer: 14.3s | bitrate: 4500 kbps | tp: 424827 kbps | trace_bw: 424827 kbps
+   t=72s | buffer: 28.0s | bitrate: 4500 kbps | tp: 352770 kbps | trace_bw: 352770 kbps
+   t=82s | buffer: 25.9s | bitrate: 4500 kbps | tp: 407305 kbps | trace_bw: 407305 kbps
+   t=93s | buffer: 27.5s | bitrate: 4500 kbps | tp: 350812 kbps | trace_bw: 350812 kbps
+   t=103s | buffer: 25.4s | bitrate: 4500 kbps | tp: 425328 kbps | trace_bw: 425328 kbps
+   t=113s | buffer: 27.3s | bitrate: 4500 kbps | tp: 288133 kbps | trace_bw: 288133 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,262 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  2,960 kbps
+      Average (effective): 2,955 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       2,098.7 kbps
+      Variance:            4,404,400.0
+      25th/75th %ile:      100 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        194 ms
+      Ratio:             0.1610%
+      Frequency:         0.499 per minute
+      Avg duration:      194 ms
+      Max duration:      194 ms
+
+  [THROUGHPUT]
+      Average:           345,871 kbps
+      Median:            348,352 kbps
+      Min / Max:         0 / 437,832 kbps
+      Std deviation:     79,045.3 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           345,871 kbps
+      Min / Max:         0 / 437,832 kbps
+      Utilisation:       100.7%
+
+  [BUFFER]
+      Average level:     18.9 s
+      Min / Max:         3.7 / 28.4 s
+
+  [UTILIZATION]
+      Bandwidth:         0.8%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_011_tc_20260526_050719.json
+
+──────────────────────────────────────────────────────────────────────
+  [13/40] starlink_road_012_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_012_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1209ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 6.1s | bitrate: 4500 kbps | tp: 394865 kbps | trace_bw: 394865 kbps
+   t=20s | buffer: 12.0s | bitrate: 4500 kbps | tp: 242061 kbps | trace_bw: 242061 kbps
+   t=30s | buffer: 21.9s | bitrate: 4500 kbps | tp: 53735 kbps | trace_bw: 53735 kbps
+   t=40s | buffer: 23.8s | bitrate: 4500 kbps | tp: 57206 kbps | trace_bw: 57206 kbps
+   t=51s | buffer: 25.5s | bitrate: 4500 kbps | tp: 60539 kbps | trace_bw: 60539 kbps
+   t=61s | buffer: 27.1s | bitrate: 4500 kbps | tp: 274619 kbps | trace_bw: 274619 kbps
+   t=71s | buffer: 24.7s | bitrate: 4500 kbps | tp: 252089 kbps | trace_bw: 252089 kbps
+   t=82s | buffer: 26.4s | bitrate: 4500 kbps | tp: 307715 kbps | trace_bw: 307715 kbps
+   t=92s | buffer: 24.3s | bitrate: 4500 kbps | tp: 382682 kbps | trace_bw: 382682 kbps
+   t=102s | buffer: 25.9s | bitrate: 4500 kbps | tp: 413479 kbps | trace_bw: 413479 kbps
+   t=112s | buffer: 27.6s | bitrate: 4500 kbps | tp: 277387 kbps | trace_bw: 277387 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,209 ms
+      Playback time:     120.5 s
+
+  [BITRATE]
+      Average (selected):  4,427 kbps
+      Average (effective): 4,419 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       563.3 kbps
+      Variance:            317,288.9
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        197 ms
+      Ratio:             0.1632%
+      Frequency:         0.498 per minute
+      Avg duration:      197 ms
+      Max duration:      197 ms
+
+  [THROUGHPUT]
+      Average:           247,284 kbps
+      Median:            280,744 kbps
+      Min / Max:         50,542 / 423,024 kbps
+      Std deviation:     121,020.7 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           247,284 kbps
+      Min / Max:         50,542 / 423,024 kbps
+      Utilisation:       113.5%
+
+  [BUFFER]
+      Average level:     22.2 s
+      Min / Max:         3.7 / 28.3 s
+
+  [UTILIZATION]
+      Bandwidth:         1.6%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_012_tc_20260526_050924.json
+
+──────────────────────────────────────────────────────────────────────
+  [14/40] starlink_road_013_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_013_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1252ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 243403 kbps | trace_bw: 243403 kbps
+   t=21s | buffer: 15.5s | bitrate: 100 kbps | tp: 299772 kbps | trace_bw: 299772 kbps
+   t=31s | buffer: 5.7s | bitrate: 4500 kbps | tp: 216724 kbps | trace_bw: 216724 kbps
+   t=41s | buffer: 11.3s | bitrate: 400 kbps | tp: 268581 kbps | trace_bw: 268581 kbps
+   t=51s | buffer: 12.7s | bitrate: 3000 kbps | tp: 349814 kbps | trace_bw: 349814 kbps
+   t=61s | buffer: 14.6s | bitrate: 3000 kbps | tp: 243970 kbps | trace_bw: 243970 kbps
+   t=71s | buffer: 12.7s | bitrate: 4500 kbps | tp: 378377 kbps | trace_bw: 378377 kbps
+   t=82s | buffer: 2.4s | bitrate: 4500 kbps | tp: 201584 kbps | trace_bw: 201584 kbps
+   t=92s | buffer: 12.0s | bitrate: 4500 kbps | tp: 109960 kbps | trace_bw: 109960 kbps
+   t=102s | buffer: 17.9s | bitrate: 4500 kbps | tp: 310906 kbps | trace_bw: 310906 kbps
+   t=112s | buffer: 27.8s | bitrate: 4500 kbps | tp: 77797 kbps | trace_bw: 77797 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,252 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  3,171 kbps
+      Average (effective): 3,166 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       1,737.8 kbps
+      Variance:            3,019,798.4
+      25th/75th %ile:      3,000 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       4
+      Up / Down:         3 / 1
+      Avg magnitude:     3,150 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        191 ms
+      Ratio:             0.1587%
+      Frequency:         0.499 per minute
+      Avg duration:      191 ms
+      Max duration:      191 ms
+
+  [THROUGHPUT]
+      Average:           253,899 kbps
+      Median:            272,398 kbps
+      Min / Max:         0 / 421,411 kbps
+      Std deviation:     114,508.7 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           253,899 kbps
+      Min / Max:         0 / 421,411 kbps
+      Utilisation:       107.3%
+
+  [BUFFER]
+      Average level:     13.6 s
+      Min / Max:         1.9 / 28.4 s
+
+  [UTILIZATION]
+      Bandwidth:         1.2%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_013_tc_20260526_051129.json
+
+──────────────────────────────────────────────────────────────────────
+  [15/40] starlink_road_014_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_014_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1336ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.8s | bitrate: 4500 kbps | tp: 299891 kbps | trace_bw: 299891 kbps
+   t=20s | buffer: 15.7s | bitrate: 4500 kbps | tp: 418297 kbps | trace_bw: 418297 kbps
+   t=31s | buffer: 25.4s | bitrate: 4500 kbps | tp: 439805 kbps | trace_bw: 439805 kbps
+   t=41s | buffer: 23.0s | bitrate: 4500 kbps | tp: 314199 kbps | trace_bw: 314199 kbps
+   t=51s | buffer: 24.7s | bitrate: 4500 kbps | tp: 425144 kbps | trace_bw: 425144 kbps
+   t=62s | buffer: 26.3s | bitrate: 4500 kbps | tp: 374628 kbps | trace_bw: 374628 kbps
+   t=72s | buffer: 23.9s | bitrate: 4500 kbps | tp: 338970 kbps | trace_bw: 338970 kbps
+   t=82s | buffer: 25.9s | bitrate: 4500 kbps | tp: 281862 kbps | trace_bw: 281862 kbps
+   t=93s | buffer: 27.5s | bitrate: 4500 kbps | tp: 186897 kbps | trace_bw: 186897 kbps
+   t=103s | buffer: 25.4s | bitrate: 4500 kbps | tp: 313694 kbps | trace_bw: 313694 kbps
+   t=113s | buffer: 27.0s | bitrate: 4500 kbps | tp: 347811 kbps | trace_bw: 347811 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,336 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,445 kbps
+      Average (effective): 4,438 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       488.9 kbps
+      Variance:            238,975.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        195 ms
+      Ratio:             0.1622%
+      Frequency:         0.500 per minute
+      Avg duration:      195 ms
+      Max duration:      195 ms
+
+  [THROUGHPUT]
+      Average:           343,853 kbps
+      Median:            347,811 kbps
+      Min / Max:         80,323 / 495,080 kbps
+      Std deviation:     73,033.8 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           343,853 kbps
+      Min / Max:         80,323 / 495,080 kbps
+      Utilisation:       101.2%
+
+  [BUFFER]
+      Average level:     22.9 s
+      Min / Max:         2.4 / 28.3 s
+
+  [UTILIZATION]
+      Bandwidth:         1.3%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_014_tc_20260526_051334.json
+
+──────────────────────────────────────────────────────────────────────
+  [16/40] starlink_road_015_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_015_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1208ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 325141 kbps | trace_bw: 325141 kbps
+   t=21s | buffer: 15.5s | bitrate: 100 kbps | tp: 167726 kbps | trace_bw: 167726 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 169018 kbps | trace_bw: 169018 kbps
+   t=41s | buffer: 15.0s | bitrate: 100 kbps | tp: 131618 kbps | trace_bw: 131618 kbps
+   t=51s | buffer: 16.9s | bitrate: 100 kbps | tp: 43334 kbps | trace_bw: 43334 kbps
+   t=61s | buffer: 14.6s | bitrate: 100 kbps | tp: 145984 kbps | trace_bw: 145984 kbps
+   t=72s | buffer: 16.5s | bitrate: 100 kbps | tp: 213690 kbps | trace_bw: 213690 kbps
+   t=82s | buffer: 14.1s | bitrate: 100 kbps | tp: 29574 kbps | trace_bw: 29574 kbps
+   t=92s | buffer: 16.0s | bitrate: 100 kbps | tp: 287062 kbps | trace_bw: 287062 kbps
+   t=102s | buffer: 13.7s | bitrate: 100 kbps | tp: 240048 kbps | trace_bw: 240048 kbps
+   t=113s | buffer: 15.6s | bitrate: 100 kbps | tp: 278131 kbps | trace_bw: 278131 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,208 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  100 kbps
+      Average (effective): 100 kbps
+      Min / Max:           100 / 100 kbps
+      Median:              100 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      100 / 100 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        195 ms
+      Ratio:             0.1619%
+      Frequency:         0.499 per minute
+      Avg duration:      195 ms
+      Max duration:      195 ms
+
+  [THROUGHPUT]
+      Average:           183,774 kbps
+      Median:            214,830 kbps
+      Min / Max:         16,322 / 388,294 kbps
+      Std deviation:     105,144.7 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           183,774 kbps
+      Min / Max:         16,322 / 388,294 kbps
+      Utilisation:       116.9%
+
+  [BUFFER]
+      Average level:     14.8 s
+      Min / Max:         3.7 / 16.9 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_015_tc_20260526_051539.json
+
+──────────────────────────────────────────────────────────────────────
+  [17/40] starlink_road_016_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_016_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 2047ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 338554 kbps | trace_bw: 338554 kbps
+   t=21s | buffer: 15.5s | bitrate: 100 kbps | tp: 168849 kbps | trace_bw: 168849 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 388685 kbps | trace_bw: 388685 kbps
+   t=41s | buffer: 15.3s | bitrate: 100 kbps | tp: 281410 kbps | trace_bw: 281410 kbps
+   t=51s | buffer: 16.9s | bitrate: 100 kbps | tp: 373262 kbps | trace_bw: 373262 kbps
+   t=61s | buffer: 14.8s | bitrate: 100 kbps | tp: 382585 kbps | trace_bw: 382585 kbps
+   t=72s | buffer: 16.5s | bitrate: 100 kbps | tp: 353276 kbps | trace_bw: 353276 kbps
+   t=82s | buffer: 14.4s | bitrate: 100 kbps | tp: 292282 kbps | trace_bw: 292282 kbps
+   t=92s | buffer: 16.0s | bitrate: 100 kbps | tp: 121273 kbps | trace_bw: 121273 kbps
+   t=102s | buffer: 13.9s | bitrate: 4500 kbps | tp: 236527 kbps | trace_bw: 236527 kbps
+   t=113s | buffer: 3.6s | bitrate: 4500 kbps | tp: 352120 kbps | trace_bw: 352120 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8080/chunk-stream9-00031.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8080/
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+  - ← 200 OK
+  -   server: SimpleHTTP/0.6 Python/3.11.15
+  -   date: Tue, 26 May 2026 12:19:45 GMT
+  -   content-type: video/iso.segment
+  -   content-length: 2546042
+  -   last-modified: Wed, 22 Apr 2026 18:42:39 GMT
+  -   access-control-allow-origin: *
+  -   access-control-allow-methods: GET, OPTIONS
+  -   access-control-allow-headers: Content-Type, Range
+  -   access-control-expose-headers: Content-Length, Content-Range
+  -   cache-control: public, max-age=31536000
+)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     2,047 ms
+      Playback time:     117.9 s
+
+  [BITRATE]
+      Average (selected):  821 kbps
+      Average (effective): 804 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              100 kbps
+      Std deviation:       1,629.0 kbps
+      Variance:            2,653,480.2
+      25th/75th %ile:      100 / 100 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        2,513 ms
+      Ratio:             2.0868%
+      Frequency:         1.018 per minute
+      Avg duration:      1,256 ms
+      Max duration:      2,321 ms
+
+  [THROUGHPUT]
+      Average:           285,324 kbps
+      Median:            325,896 kbps
+      Min / Max:         18,685 / 420,094 kbps
+      Std deviation:     94,763.5 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           285,324 kbps
+      Min / Max:         18,685 / 420,094 kbps
+      Utilisation:       114.2%
+
+  [BUFFER]
+      Average level:     13.5 s
+      Min / Max:         0.1 / 16.9 s
+
+  [UTILIZATION]
+      Bandwidth:         0.3%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_016_tc_20260526_051744.json
+
+──────────────────────────────────────────────────────────────────────
+  [18/40] starlink_road_017_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_017_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1529ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 347509 kbps | trace_bw: 347509 kbps
+   t=20s | buffer: 11.7s | bitrate: 4500 kbps | tp: 342267 kbps | trace_bw: 342267 kbps
+   t=30s | buffer: 1.7s | bitrate: 4500 kbps | tp: 297313 kbps | trace_bw: 297313 kbps
+   t=41s | buffer: 7.5s | bitrate: 4500 kbps | tp: 234228 kbps | trace_bw: 234228 kbps
+   t=51s | buffer: 25.1s | bitrate: 4500 kbps | tp: 416706 kbps | trace_bw: 416706 kbps
+   t=62s | buffer: 26.8s | bitrate: 4500 kbps | tp: 338891 kbps | trace_bw: 338891 kbps
+   t=72s | buffer: 28.1s | bitrate: 4500 kbps | tp: 369066 kbps | trace_bw: 369066 kbps
+   t=82s | buffer: 26.3s | bitrate: 4500 kbps | tp: 384659 kbps | trace_bw: 384659 kbps
+   t=92s | buffer: 24.2s | bitrate: 4500 kbps | tp: 261656 kbps | trace_bw: 261656 kbps
+   t=103s | buffer: 25.8s | bitrate: 4500 kbps | tp: 251328 kbps | trace_bw: 251328 kbps
+   t=113s | buffer: 23.8s | bitrate: 4500 kbps | tp: 349815 kbps | trace_bw: 349815 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,529 ms
+      Playback time:     120.1 s
+
+  [BITRATE]
+      Average (selected):  4,120 kbps
+      Average (effective): 4,101 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       1,235.7 kbps
+      Variance:            1,527,076.2
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        569 ms
+      Ratio:             0.4714%
+      Frequency:         0.999 per minute
+      Avg duration:      284 ms
+      Max duration:      375 ms
+
+  [THROUGHPUT]
+      Average:           305,292 kbps
+      Median:            326,919 kbps
+      Min / Max:         9,058 / 423,685 kbps
+      Std deviation:     83,171.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           305,292 kbps
+      Min / Max:         9,058 / 423,685 kbps
+      Utilisation:       107.1%
+
+  [BUFFER]
+      Average level:     19.8 s
+      Min / Max:         0.1 / 28.9 s
+
+  [UTILIZATION]
+      Bandwidth:         1.3%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_017_tc_20260526_051950.json
+
+──────────────────────────────────────────────────────────────────────
+  [19/40] starlink_road_018_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_018_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1264ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 240882 kbps | trace_bw: 240882 kbps
+   t=20s | buffer: 15.7s | bitrate: 100 kbps | tp: 353396 kbps | trace_bw: 353396 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 310709 kbps | trace_bw: 310709 kbps
+   t=41s | buffer: 15.3s | bitrate: 100 kbps | tp: 357852 kbps | trace_bw: 357852 kbps
+   t=51s | buffer: 16.9s | bitrate: 100 kbps | tp: 31578 kbps | trace_bw: 31578 kbps
+   t=61s | buffer: 14.8s | bitrate: 100 kbps | tp: 289653 kbps | trace_bw: 289653 kbps
+   t=72s | buffer: 16.5s | bitrate: 100 kbps | tp: 336862 kbps | trace_bw: 336862 kbps
+   t=82s | buffer: 14.4s | bitrate: 100 kbps | tp: 356813 kbps | trace_bw: 356813 kbps
+   t=92s | buffer: 7.8s | bitrate: 4500 kbps | tp: 359427 kbps | trace_bw: 359427 kbps
+   t=102s | buffer: 13.7s | bitrate: 4500 kbps | tp: 343753 kbps | trace_bw: 343753 kbps
+   t=113s | buffer: 23.3s | bitrate: 4500 kbps | tp: 349407 kbps | trace_bw: 349407 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,264 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  1,347 kbps
+      Average (effective): 1,345 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              100 kbps
+      Std deviation:       1,982.7 kbps
+      Variance:            3,931,155.6
+      25th/75th %ile:      100 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        194 ms
+      Ratio:             0.1609%
+      Frequency:         0.498 per minute
+      Avg duration:      195 ms
+      Max duration:      195 ms
+
+  [THROUGHPUT]
+      Average:           295,172 kbps
+      Median:            322,729 kbps
+      Min / Max:         22,059 / 401,614 kbps
+      Std deviation:     92,740.7 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           295,172 kbps
+      Min / Max:         22,059 / 401,614 kbps
+      Utilisation:       109.3%
+
+  [BUFFER]
+      Average level:     14.8 s
+      Min / Max:         3.7 / 28.1 s
+
+  [UTILIZATION]
+      Bandwidth:         0.4%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_018_tc_20260526_052156.json
+
+──────────────────────────────────────────────────────────────────────
+  [20/40] starlink_road_019_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_019_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1270ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 259500 kbps | trace_bw: 259500 kbps
+   t=20s | buffer: 15.7s | bitrate: 100 kbps | tp: 405415 kbps | trace_bw: 405415 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 268016 kbps | trace_bw: 268016 kbps
+   t=41s | buffer: 7.0s | bitrate: 4500 kbps | tp: 173514 kbps | trace_bw: 173514 kbps
+   t=51s | buffer: 16.9s | bitrate: 4500 kbps | tp: 324444 kbps | trace_bw: 324444 kbps
+   t=61s | buffer: 26.8s | bitrate: 4500 kbps | tp: 312073 kbps | trace_bw: 312073 kbps
+   t=72s | buffer: 28.2s | bitrate: 4500 kbps | tp: 215809 kbps | trace_bw: 215809 kbps
+   t=82s | buffer: 26.1s | bitrate: 4500 kbps | tp: 297643 kbps | trace_bw: 297643 kbps
+   t=92s | buffer: 24.0s | bitrate: 4500 kbps | tp: 334791 kbps | trace_bw: 334791 kbps
+   t=102s | buffer: 25.7s | bitrate: 4500 kbps | tp: 245300 kbps | trace_bw: 245300 kbps
+   t=113s | buffer: 27.3s | bitrate: 4500 kbps | tp: 237750 kbps | trace_bw: 237750 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,270 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  3,253 kbps
+      Average (effective): 3,248 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       1,982.7 kbps
+      Variance:            3,931,155.6
+      25th/75th %ile:      100 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        191 ms
+      Ratio:             0.1586%
+      Frequency:         0.499 per minute
+      Avg duration:      191 ms
+      Max duration:      191 ms
+
+  [THROUGHPUT]
+      Average:           273,950 kbps
+      Median:            281,548 kbps
+      Min / Max:         38,771 / 426,844 kbps
+      Std deviation:     83,946.5 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           273,950 kbps
+      Min / Max:         38,771 / 426,844 kbps
+      Utilisation:       102.8%
+
+  [BUFFER]
+      Average level:     20.1 s
+      Min / Max:         3.7 / 28.7 s
+
+  [UTILIZATION]
+      Bandwidth:         1.2%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_019_tc_20260526_052401.json
+
+──────────────────────────────────────────────────────────────────────
+  [21/40] starlink_road_020_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_020_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1336ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 168513 kbps | trace_bw: 168513 kbps
+   t=21s | buffer: 11.5s | bitrate: 4500 kbps | tp: 422665 kbps | trace_bw: 422665 kbps
+   t=31s | buffer: 5.1s | bitrate: 4500 kbps | tp: 289464 kbps | trace_bw: 289464 kbps
+   t=41s | buffer: 19.0s | bitrate: 4500 kbps | tp: 300511 kbps | trace_bw: 300511 kbps
+   t=51s | buffer: 24.7s | bitrate: 4500 kbps | tp: 216923 kbps | trace_bw: 216923 kbps
+   t=62s | buffer: 26.3s | bitrate: 4500 kbps | tp: 163047 kbps | trace_bw: 163047 kbps
+   t=72s | buffer: 28.2s | bitrate: 4500 kbps | tp: 270354 kbps | trace_bw: 270354 kbps
+   t=82s | buffer: 26.1s | bitrate: 4500 kbps | tp: 266375 kbps | trace_bw: 266375 kbps
+   t=92s | buffer: 24.0s | bitrate: 4500 kbps | tp: 241677 kbps | trace_bw: 241677 kbps
+   t=103s | buffer: 25.7s | bitrate: 4500 kbps | tp: 240055 kbps | trace_bw: 240055 kbps
+   t=113s | buffer: 27.3s | bitrate: 4500 kbps | tp: 422002 kbps | trace_bw: 422002 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,336 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  3,840 kbps
+      Average (effective): 3,834 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       1,571.1 kbps
+      Variance:            2,468,400.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        196 ms
+      Ratio:             0.1627%
+      Frequency:         0.499 per minute
+      Avg duration:      196 ms
+      Max duration:      196 ms
+
+  [THROUGHPUT]
+      Average:           277,222 kbps
+      Median:            270,354 kbps
+      Min / Max:         100,960 / 425,072 kbps
+      Std deviation:     81,789.8 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           277,222 kbps
+      Min / Max:         100,960 / 425,072 kbps
+      Utilisation:       97.5%
+
+  [BUFFER]
+      Average level:     20.8 s
+      Min / Max:         3.0 / 28.5 s
+
+  [UTILIZATION]
+      Bandwidth:         1.4%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_020_tc_20260526_052606.json
+
+──────────────────────────────────────────────────────────────────────
+  [22/40] starlink_road_021_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_021_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1218ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 319209 kbps | trace_bw: 319209 kbps
+   t=20s | buffer: 15.8s | bitrate: 100 kbps | tp: 282244 kbps | trace_bw: 282244 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 380521 kbps | trace_bw: 380521 kbps
+   t=41s | buffer: 7.0s | bitrate: 4500 kbps | tp: 263061 kbps | trace_bw: 263061 kbps
+   t=51s | buffer: 16.9s | bitrate: 4500 kbps | tp: 334291 kbps | trace_bw: 334291 kbps
+   t=61s | buffer: 26.8s | bitrate: 4500 kbps | tp: 28763 kbps | trace_bw: 28763 kbps
+   t=72s | buffer: 28.2s | bitrate: 4500 kbps | tp: 91866 kbps | trace_bw: 91866 kbps
+   t=82s | buffer: 26.1s | bitrate: 4500 kbps | tp: 235885 kbps | trace_bw: 235885 kbps
+   t=92s | buffer: 24.0s | bitrate: 4500 kbps | tp: 302563 kbps | trace_bw: 302563 kbps
+   t=103s | buffer: 25.7s | bitrate: 4500 kbps | tp: 299744 kbps | trace_bw: 299744 kbps
+   t=113s | buffer: 27.3s | bitrate: 4500 kbps | tp: 342460 kbps | trace_bw: 342460 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,218 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  3,253 kbps
+      Average (effective): 3,248 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       1,982.7 kbps
+      Variance:            3,931,155.6
+      25th/75th %ile:      100 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        195 ms
+      Ratio:             0.1619%
+      Frequency:         0.499 per minute
+      Avg duration:      195 ms
+      Max duration:      195 ms
+
+  [THROUGHPUT]
+      Average:           268,038 kbps
+      Median:            280,149 kbps
+      Min / Max:         28,763 / 426,173 kbps
+      Std deviation:     98,673.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           268,038 kbps
+      Min / Max:         28,763 / 426,173 kbps
+      Utilisation:       104.5%
+
+  [BUFFER]
+      Average level:     20.0 s
+      Min / Max:         3.7 / 28.2 s
+
+  [UTILIZATION]
+      Bandwidth:         1.2%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_021_tc_20260526_052811.json
+
+──────────────────────────────────────────────────────────────────────
+  [23/40] starlink_road_022_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_022_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1302ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 135890 kbps | trace_bw: 135890 kbps
+   t=20s | buffer: 15.7s | bitrate: 100 kbps | tp: 137801 kbps | trace_bw: 137801 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 212682 kbps | trace_bw: 212682 kbps
+   t=41s | buffer: 15.3s | bitrate: 100 kbps | tp: 230230 kbps | trace_bw: 230230 kbps
+   t=51s | buffer: 16.9s | bitrate: 100 kbps | tp: 423158 kbps | trace_bw: 423158 kbps
+   t=61s | buffer: 10.6s | bitrate: 4500 kbps | tp: 220594 kbps | trace_bw: 220594 kbps
+   t=72s | buffer: 4.2s | bitrate: 4500 kbps | tp: 161976 kbps | trace_bw: 161976 kbps
+   t=82s | buffer: 14.1s | bitrate: 4500 kbps | tp: 393240 kbps | trace_bw: 393240 kbps
+   t=92s | buffer: 24.0s | bitrate: 4500 kbps | tp: 309653 kbps | trace_bw: 309653 kbps
+   t=102s | buffer: 25.6s | bitrate: 4500 kbps | tp: 337465 kbps | trace_bw: 337465 kbps
+   t=113s | buffer: 27.6s | bitrate: 4500 kbps | tp: 325639 kbps | trace_bw: 325639 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,302 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  2,373 kbps
+      Average (effective): 2,369 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       2,198.8 kbps
+      Variance:            4,834,622.2
+      25th/75th %ile:      100 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        195 ms
+      Ratio:             0.1620%
+      Frequency:         0.499 per minute
+      Avg duration:      195 ms
+      Max duration:      195 ms
+
+  [THROUGHPUT]
+      Average:           280,448 kbps
+      Median:            260,853 kbps
+      Min / Max:         80,555 / 458,328 kbps
+      Std deviation:     100,261.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           280,448 kbps
+      Min / Max:         80,555 / 458,328 kbps
+      Utilisation:       93.0%
+
+  [BUFFER]
+      Average level:     16.3 s
+      Min / Max:         2.9 / 28.2 s
+
+  [UTILIZATION]
+      Bandwidth:         0.9%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_022_tc_20260526_053016.json
+
+──────────────────────────────────────────────────────────────────────
+  [24/40] starlink_road_023_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_023_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1179ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 25.8s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 0 kbps
+   t=21s | buffer: 23.5s | bitrate: 100 kbps | tp: 355409 kbps | trace_bw: 355409 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 352490 kbps | trace_bw: 352490 kbps
+   t=41s | buffer: 15.0s | bitrate: 100 kbps | tp: 290778 kbps | trace_bw: 290778 kbps
+   t=51s | buffer: 16.9s | bitrate: 100 kbps | tp: 189122 kbps | trace_bw: 189122 kbps
+   t=61s | buffer: 14.8s | bitrate: 100 kbps | tp: 372245 kbps | trace_bw: 372245 kbps
+   t=72s | buffer: 4.2s | bitrate: 4500 kbps | tp: 269653 kbps | trace_bw: 269653 kbps
+   t=82s | buffer: 18.1s | bitrate: 4500 kbps | tp: 228507 kbps | trace_bw: 228507 kbps
+   t=93s | buffer: 27.2s | bitrate: 4500 kbps | tp: 360513 kbps | trace_bw: 360513 kbps
+   t=103s | buffer: 25.1s | bitrate: 4500 kbps | tp: 357495 kbps | trace_bw: 357495 kbps
+   t=113s | buffer: 27.0s | bitrate: 4500 kbps | tp: 406982 kbps | trace_bw: 406982 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,179 ms
+      Playback time:     120.1 s
+
+  [BITRATE]
+      Average (selected):  2,227 kbps
+      Average (effective): 2,223 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              100 kbps
+      Std deviation:       2,198.8 kbps
+      Variance:            4,834,622.2
+      25th/75th %ile:      100 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        192 ms
+      Ratio:             0.1595%
+      Frequency:         0.499 per minute
+      Avg duration:      192 ms
+      Max duration:      192 ms
+
+  [THROUGHPUT]
+      Average:           244,780 kbps
+      Median:            279,924 kbps
+      Min / Max:         0 / 406,982 kbps
+      Std deviation:     118,720.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           244,780 kbps
+      Min / Max:         0 / 406,982 kbps
+      Utilisation:       114.4%
+
+  [BUFFER]
+      Average level:     19.0 s
+      Min / Max:         3.7 / 28.8 s
+
+  [UTILIZATION]
+      Bandwidth:         0.8%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_023_tc_20260526_053221.json
+
+──────────────────────────────────────────────────────────────────────
+  [25/40] starlink_road_024_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_024_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1455ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 423166 kbps | trace_bw: 423166 kbps
+   t=20s | buffer: 11.7s | bitrate: 4500 kbps | tp: 336611 kbps | trace_bw: 336611 kbps
+   t=31s | buffer: 1.6s | bitrate: 4500 kbps | tp: 286485 kbps | trace_bw: 286485 kbps
+   t=41s | buffer: 11.0s | bitrate: 4500 kbps | tp: 329980 kbps | trace_bw: 329980 kbps
+   t=51s | buffer: 16.7s | bitrate: 4500 kbps | tp: 288171 kbps | trace_bw: 288171 kbps
+   t=62s | buffer: 26.6s | bitrate: 4500 kbps | tp: 330595 kbps | trace_bw: 330595 kbps
+   t=72s | buffer: 27.9s | bitrate: 4500 kbps | tp: 323739 kbps | trace_bw: 323739 kbps
+   t=82s | buffer: 25.8s | bitrate: 4500 kbps | tp: 307784 kbps | trace_bw: 307784 kbps
+   t=93s | buffer: 27.5s | bitrate: 4500 kbps | tp: 338961 kbps | trace_bw: 338961 kbps
+   t=103s | buffer: 25.4s | bitrate: 4500 kbps | tp: 346326 kbps | trace_bw: 346326 kbps
+   t=113s | buffer: 27.0s | bitrate: 4500 kbps | tp: 338810 kbps | trace_bw: 338810 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,455 ms
+      Playback time:     120.5 s
+
+  [BITRATE]
+      Average (selected):  3,840 kbps
+      Average (effective): 3,834 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       1,571.1 kbps
+      Variance:            2,468,400.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        190 ms
+      Ratio:             0.1574%
+      Frequency:         0.498 per minute
+      Avg duration:      190 ms
+      Max duration:      190 ms
+
+  [THROUGHPUT]
+      Average:           330,819 kbps
+      Median:            325,175 kbps
+      Min / Max:         72,388 / 463,596 kbps
+      Std deviation:     57,909.7 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           330,819 kbps
+      Min / Max:         72,388 / 463,596 kbps
+      Utilisation:       98.3%
+
+  [BUFFER]
+      Average level:     19.1 s
+      Min / Max:         0.6 / 28.2 s
+
+  [UTILIZATION]
+      Bandwidth:         1.2%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_024_tc_20260526_053426.json
+
+──────────────────────────────────────────────────────────────────────
+  [26/40] starlink_road_025_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_025_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1338ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.8s | bitrate: 4500 kbps | tp: 339459 kbps | trace_bw: 339459 kbps
+   t=21s | buffer: 19.5s | bitrate: 4500 kbps | tp: 387750 kbps | trace_bw: 387750 kbps
+   t=31s | buffer: 25.1s | bitrate: 4500 kbps | tp: 303375 kbps | trace_bw: 303375 kbps
+   t=41s | buffer: 27.0s | bitrate: 4500 kbps | tp: 354553 kbps | trace_bw: 354553 kbps
+   t=51s | buffer: 24.9s | bitrate: 4500 kbps | tp: 295401 kbps | trace_bw: 295401 kbps
+   t=61s | buffer: 26.6s | bitrate: 4500 kbps | tp: 130483 kbps | trace_bw: 130483 kbps
+   t=72s | buffer: 28.0s | bitrate: 4500 kbps | tp: 272583 kbps | trace_bw: 272583 kbps
+   t=82s | buffer: 26.1s | bitrate: 4500 kbps | tp: 103311 kbps | trace_bw: 103311 kbps
+   t=92s | buffer: 24.0s | bitrate: 4500 kbps | tp: 318291 kbps | trace_bw: 318291 kbps
+   t=103s | buffer: 25.4s | bitrate: 4500 kbps | tp: 318301 kbps | trace_bw: 318301 kbps
+   t=113s | buffer: 27.3s | bitrate: 4500 kbps | tp: 346908 kbps | trace_bw: 346908 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,338 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  4,482 kbps
+      Average (effective): 4,474 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       283.4 kbps
+      Variance:            80,330.6
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        193 ms
+      Ratio:             0.1602%
+      Frequency:         0.499 per minute
+      Avg duration:      193 ms
+      Max duration:      193 ms
+
+  [THROUGHPUT]
+      Average:           306,870 kbps
+      Median:            314,415 kbps
+      Min / Max:         66,265 / 419,601 kbps
+      Std deviation:     65,405.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           306,870 kbps
+      Min / Max:         66,265 / 419,601 kbps
+      Utilisation:       102.5%
+
+  [BUFFER]
+      Average level:     23.2 s
+      Min / Max:         0.8 / 28.4 s
+
+  [UTILIZATION]
+      Bandwidth:         1.4%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_025_tc_20260526_053631.json
+
+──────────────────────────────────────────────────────────────────────
+  [27/40] starlink_road_026_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_026_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 2257ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 350509 kbps | trace_bw: 350509 kbps
+   t=21s | buffer: 15.7s | bitrate: 100 kbps | tp: 134512 kbps | trace_bw: 134512 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 283390 kbps | trace_bw: 283390 kbps
+   t=41s | buffer: 11.0s | bitrate: 4500 kbps | tp: 165173 kbps | trace_bw: 165173 kbps
+   t=52s | buffer: 8.4s | bitrate: 4500 kbps | tp: 330789 kbps | trace_bw: 330789 kbps
+   t=62s | buffer: 18.0s | bitrate: 4500 kbps | tp: 337186 kbps | trace_bw: 337186 kbps
+   t=72s | buffer: 27.7s | bitrate: 4500 kbps | tp: 222719 kbps | trace_bw: 222719 kbps
+   t=82s | buffer: 25.6s | bitrate: 4500 kbps | tp: 319940 kbps | trace_bw: 319940 kbps
+   t=93s | buffer: 27.2s | bitrate: 4500 kbps | tp: 305468 kbps | trace_bw: 305468 kbps
+   t=103s | buffer: 25.1s | bitrate: 4500 kbps | tp: 272681 kbps | trace_bw: 272681 kbps
+   t=113s | buffer: 27.0s | bitrate: 4500 kbps | tp: 140209 kbps | trace_bw: 140209 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     2,257 ms
+      Playback time:     120.1 s
+
+  [BITRATE]
+      Average (selected):  3,107 kbps
+      Average (effective): 3,102 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       2,046.8 kbps
+      Variance:            4,189,288.9
+      25th/75th %ile:      100 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        186 ms
+      Ratio:             0.1546%
+      Frequency:         0.500 per minute
+      Avg duration:      186 ms
+      Max duration:      186 ms
+
+  [THROUGHPUT]
+      Average:           250,948 kbps
+      Median:            273,570 kbps
+      Min / Max:         0 / 360,403 kbps
+      Std deviation:     87,469.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           250,948 kbps
+      Min / Max:         0 / 360,403 kbps
+      Utilisation:       109.0%
+
+  [BUFFER]
+      Average level:     19.1 s
+      Min / Max:         2.8 / 28.3 s
+
+  [UTILIZATION]
+      Bandwidth:         1.1%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_026_tc_20260526_053836.json
+
+──────────────────────────────────────────────────────────────────────
+  [28/40] starlink_road_027_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_027_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1362ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 270127 kbps | trace_bw: 270127 kbps
+   t=21s | buffer: 15.5s | bitrate: 100 kbps | tp: 336745 kbps | trace_bw: 336745 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 248290 kbps | trace_bw: 248290 kbps
+   t=41s | buffer: 15.0s | bitrate: 100 kbps | tp: 253456 kbps | trace_bw: 253456 kbps
+   t=51s | buffer: 16.9s | bitrate: 100 kbps | tp: 356071 kbps | trace_bw: 356071 kbps
+   t=61s | buffer: 14.6s | bitrate: 100 kbps | tp: 153082 kbps | trace_bw: 153082 kbps
+   t=72s | buffer: 16.5s | bitrate: 100 kbps | tp: 76697 kbps | trace_bw: 76697 kbps
+   t=82s | buffer: 14.1s | bitrate: 100 kbps | tp: 135129 kbps | trace_bw: 135129 kbps
+   t=92s | buffer: 7.8s | bitrate: 4500 kbps | tp: 385415 kbps | trace_bw: 385415 kbps
+   t=103s | buffer: 17.4s | bitrate: 4500 kbps | tp: 167447 kbps | trace_bw: 167447 kbps
+   t=113s | buffer: 18.8s | bitrate: 4500 kbps | tp: 193893 kbps | trace_bw: 193893 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,362 ms
+      Playback time:     120.5 s
+
+  [BITRATE]
+      Average (selected):  1,493 kbps
+      Average (effective): 1,491 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              100 kbps
+      Std deviation:       2,046.8 kbps
+      Variance:            4,189,288.9
+      25th/75th %ile:      100 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        195 ms
+      Ratio:             0.1616%
+      Frequency:         0.498 per minute
+      Avg duration:      195 ms
+      Max duration:      195 ms
+
+  [THROUGHPUT]
+      Average:           231,156 kbps
+      Median:            244,898 kbps
+      Min / Max:         41,031 / 422,157 kbps
+      Std deviation:     98,815.1 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           231,156 kbps
+      Min / Max:         41,031 / 422,157 kbps
+      Utilisation:       105.9%
+
+  [BUFFER]
+      Average level:     14.9 s
+      Min / Max:         3.7 / 28.1 s
+
+  [UTILIZATION]
+      Bandwidth:         0.6%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_027_tc_20260526_054042.json
+
+──────────────────────────────────────────────────────────────────────
+  [29/40] starlink_road_028_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_028_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1238ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 167080 kbps | trace_bw: 167080 kbps
+   t=21s | buffer: 15.5s | bitrate: 100 kbps | tp: 175220 kbps | trace_bw: 175220 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 96430 kbps | trace_bw: 96430 kbps
+   t=41s | buffer: 15.0s | bitrate: 100 kbps | tp: 176274 kbps | trace_bw: 176274 kbps
+   t=51s | buffer: 12.9s | bitrate: 100 kbps | tp: 363283 kbps | trace_bw: 363283 kbps
+   t=61s | buffer: 14.6s | bitrate: 100 kbps | tp: 290840 kbps | trace_bw: 290840 kbps
+   t=72s | buffer: 16.5s | bitrate: 100 kbps | tp: 273691 kbps | trace_bw: 273691 kbps
+   t=82s | buffer: 14.1s | bitrate: 100 kbps | tp: 167586 kbps | trace_bw: 167586 kbps
+   t=92s | buffer: 16.0s | bitrate: 100 kbps | tp: 261531 kbps | trace_bw: 261531 kbps
+   t=102s | buffer: 13.7s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 0 kbps
+   t=113s | buffer: 27.6s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 0 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,238 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  100 kbps
+      Average (effective): 100 kbps
+      Min / Max:           100 / 100 kbps
+      Median:              100 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      100 / 100 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        195 ms
+      Ratio:             0.1619%
+      Frequency:         0.499 per minute
+      Avg duration:      195 ms
+      Max duration:      195 ms
+
+  [THROUGHPUT]
+      Average:           168,881 kbps
+      Median:            196,987 kbps
+      Min / Max:         0 / 366,660 kbps
+      Std deviation:     108,044.2 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           168,881 kbps
+      Min / Max:         0 / 366,660 kbps
+      Utilisation:       116.6%
+
+  [BUFFER]
+      Average level:     16.3 s
+      Min / Max:         3.7 / 28.9 s
+
+  [UTILIZATION]
+      Bandwidth:         0.1%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_028_tc_20260526_054248.json
+
+──────────────────────────────────────────────────────────────────────
+  [30/40] starlink_road_029_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_029_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 2011ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 3.1s | bitrate: 4500 kbps | tp: 184884 kbps | trace_bw: 184884 kbps
+   t=21s | buffer: 12.5s | bitrate: 4500 kbps | tp: 290950 kbps | trace_bw: 290950 kbps
+   t=31s | buffer: 14.4s | bitrate: 4500 kbps | tp: 393586 kbps | trace_bw: 393586 kbps
+   t=41s | buffer: 24.0s | bitrate: 4500 kbps | tp: 242592 kbps | trace_bw: 242592 kbps
+   t=52s | buffer: 25.7s | bitrate: 4500 kbps | tp: 351841 kbps | trace_bw: 351841 kbps
+   t=62s | buffer: 27.3s | bitrate: 4500 kbps | tp: 339998 kbps | trace_bw: 339998 kbps
+   t=72s | buffer: 25.0s | bitrate: 4500 kbps | tp: 20966 kbps | trace_bw: 20966 kbps
+   t=83s | buffer: 26.6s | bitrate: 4500 kbps | tp: 317318 kbps | trace_bw: 317318 kbps
+   t=93s | buffer: 24.5s | bitrate: 4500 kbps | tp: 274561 kbps | trace_bw: 274561 kbps
+   t=103s | buffer: 26.2s | bitrate: 4500 kbps | tp: 107719 kbps | trace_bw: 107719 kbps
+   t=113s | buffer: 27.8s | bitrate: 4500 kbps | tp: 331686 kbps | trace_bw: 331686 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8080/chunk-stream9-00037.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8080/
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+  - ← 200 OK
+  -   server: SimpleHTTP/0.6 Python/3.11.15
+  -   date: Tue, 26 May 2026 12:46:55 GMT
+  -   content-type: video/iso.segment
+  -   content-length: 1739376
+  -   last-modified: Wed, 22 Apr 2026 18:42:42 GMT
+  -   access-control-allow-origin: *
+  -   access-control-allow-methods: GET, OPTIONS
+  -   access-control-allow-headers: Content-Type, Range
+  -   access-control-expose-headers: Content-Length, Content-Range
+  -   cache-control: public, max-age=31536000
+)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     2,011 ms
+      Playback time:     119.1 s
+
+  [BITRATE]
+      Average (selected):  4,490 kbps
+      Average (effective): 4,441 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       204.5 kbps
+      Variance:            41,814.1
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        1,317 ms
+      Ratio:             1.0940%
+      Frequency:         1.008 per minute
+      Avg duration:      658 ms
+      Max duration:      1,121 ms
+
+  [THROUGHPUT]
+      Average:           269,046 kbps
+      Median:            292,760 kbps
+      Min / Max:         0 / 404,920 kbps
+      Std deviation:     94,282.5 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           269,046 kbps
+      Min / Max:         0 / 404,920 kbps
+      Utilisation:       108.8%
+
+  [BUFFER]
+      Average level:     21.0 s
+      Min / Max:         0.1 / 28.4 s
+
+  [UTILIZATION]
+      Bandwidth:         1.5%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_029_tc_20260526_054453.json
+
+──────────────────────────────────────────────────────────────────────
+  [31/40] starlink_road_030_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_030_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1203ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 362242 kbps | trace_bw: 362242 kbps
+   t=21s | buffer: 15.5s | bitrate: 100 kbps | tp: 110326 kbps | trace_bw: 110326 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 336238 kbps | trace_bw: 336238 kbps
+   t=41s | buffer: 15.0s | bitrate: 100 kbps | tp: 320318 kbps | trace_bw: 320318 kbps
+   t=51s | buffer: 16.9s | bitrate: 100 kbps | tp: 289438 kbps | trace_bw: 289438 kbps
+   t=61s | buffer: 14.6s | bitrate: 100 kbps | tp: 312993 kbps | trace_bw: 312993 kbps
+   t=72s | buffer: 16.5s | bitrate: 100 kbps | tp: 230263 kbps | trace_bw: 230263 kbps
+   t=82s | buffer: 14.4s | bitrate: 100 kbps | tp: 362489 kbps | trace_bw: 362489 kbps
+   t=92s | buffer: 16.0s | bitrate: 100 kbps | tp: 269676 kbps | trace_bw: 269676 kbps
+   t=102s | buffer: 13.9s | bitrate: 100 kbps | tp: 259458 kbps | trace_bw: 259458 kbps
+   t=112s | buffer: 15.6s | bitrate: 100 kbps | tp: 260173 kbps | trace_bw: 260173 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,203 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  100 kbps
+      Average (effective): 100 kbps
+      Min / Max:           100 / 100 kbps
+      Median:              100 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      100 / 100 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        194 ms
+      Ratio:             0.1612%
+      Frequency:         0.499 per minute
+      Avg duration:      194 ms
+      Max duration:      194 ms
+
+  [THROUGHPUT]
+      Average:           293,274 kbps
+      Median:            310,474 kbps
+      Min / Max:         39,813 / 426,964 kbps
+      Std deviation:     89,832.5 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           293,274 kbps
+      Min / Max:         39,813 / 426,964 kbps
+      Utilisation:       105.9%
+
+  [BUFFER]
+      Average level:     14.8 s
+      Min / Max:         3.7 / 17.0 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_030_tc_20260526_054658.json
+
+──────────────────────────────────────────────────────────────────────
+  [32/40] starlink_road_031_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_031_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1595ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 207828 kbps | trace_bw: 207828 kbps
+   t=20s | buffer: 15.7s | bitrate: 100 kbps | tp: 262058 kbps | trace_bw: 262058 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 322350 kbps | trace_bw: 322350 kbps
+   t=41s | buffer: 15.3s | bitrate: 100 kbps | tp: 282273 kbps | trace_bw: 282273 kbps
+   t=51s | buffer: 16.9s | bitrate: 100 kbps | tp: 192468 kbps | trace_bw: 192468 kbps
+   t=61s | buffer: 14.6s | bitrate: 100 kbps | tp: 285534 kbps | trace_bw: 285534 kbps
+   t=72s | buffer: 16.5s | bitrate: 100 kbps | tp: 275515 kbps | trace_bw: 275515 kbps
+   t=82s | buffer: 14.1s | bitrate: 100 kbps | tp: 304145 kbps | trace_bw: 304145 kbps
+   t=92s | buffer: 16.0s | bitrate: 100 kbps | tp: 323601 kbps | trace_bw: 323601 kbps
+   t=102s | buffer: 13.9s | bitrate: 100 kbps | tp: 163785 kbps | trace_bw: 163785 kbps
+   t=113s | buffer: 15.6s | bitrate: 100 kbps | tp: 246290 kbps | trace_bw: 246290 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,595 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  100 kbps
+      Average (effective): 100 kbps
+      Min / Max:           100 / 100 kbps
+      Median:              100 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      100 / 100 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        191 ms
+      Ratio:             0.1586%
+      Frequency:         0.499 per minute
+      Avg duration:      191 ms
+      Max duration:      191 ms
+
+  [THROUGHPUT]
+      Average:           275,516 kbps
+      Median:            275,515 kbps
+      Min / Max:         62,245 / 424,224 kbps
+      Std deviation:     64,875.6 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           275,516 kbps
+      Min / Max:         62,245 / 424,224 kbps
+      Utilisation:       100.0%
+
+  [BUFFER]
+      Average level:     14.7 s
+      Min / Max:         3.7 / 16.9 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_031_tc_20260526_054903.json
+
+──────────────────────────────────────────────────────────────────────
+  [33/40] starlink_road_032_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_032_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1549ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 341506 kbps | trace_bw: 341506 kbps
+   t=20s | buffer: 15.7s | bitrate: 100 kbps | tp: 332024 kbps | trace_bw: 332024 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 181856 kbps | trace_bw: 181856 kbps
+   t=41s | buffer: 15.3s | bitrate: 100 kbps | tp: 139008 kbps | trace_bw: 139008 kbps
+   t=51s | buffer: 16.9s | bitrate: 100 kbps | tp: 336875 kbps | trace_bw: 336875 kbps
+   t=61s | buffer: 14.6s | bitrate: 100 kbps | tp: 260767 kbps | trace_bw: 260767 kbps
+   t=72s | buffer: 16.5s | bitrate: 100 kbps | tp: 298553 kbps | trace_bw: 298553 kbps
+   t=82s | buffer: 14.1s | bitrate: 100 kbps | tp: 271656 kbps | trace_bw: 271656 kbps
+   t=92s | buffer: 16.0s | bitrate: 100 kbps | tp: 210372 kbps | trace_bw: 210372 kbps
+   t=102s | buffer: 13.7s | bitrate: 100 kbps | tp: 144412 kbps | trace_bw: 144412 kbps
+   t=112s | buffer: 7.6s | bitrate: 4500 kbps | tp: 190453 kbps | trace_bw: 190453 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,549 ms
+      Playback time:     120.6 s
+
+  [BITRATE]
+      Average (selected):  629 kbps
+      Average (effective): 628 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              100 kbps
+      Std deviation:       1,431.5 kbps
+      Variance:            2,049,298.0
+      25th/75th %ile:      100 / 100 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        197 ms
+      Ratio:             0.1631%
+      Frequency:         0.497 per minute
+      Avg duration:      197 ms
+      Max duration:      197 ms
+
+  [THROUGHPUT]
+      Average:           230,003 kbps
+      Median:            262,750 kbps
+      Min / Max:         14,039 / 383,624 kbps
+      Std deviation:     98,822.1 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           230,003 kbps
+      Min / Max:         14,039 / 383,624 kbps
+      Utilisation:       114.2%
+
+  [BUFFER]
+      Average level:     13.9 s
+      Min / Max:         1.5 / 16.9 s
+
+  [UTILIZATION]
+      Bandwidth:         0.2%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_032_tc_20260526_055108.json
+
+──────────────────────────────────────────────────────────────────────
+  [34/40] starlink_road_033_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_033_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1247ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 258137 kbps | trace_bw: 258137 kbps
+   t=20s | buffer: 15.7s | bitrate: 100 kbps | tp: 314568 kbps | trace_bw: 314568 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 373711 kbps | trace_bw: 373711 kbps
+   t=41s | buffer: 15.3s | bitrate: 100 kbps | tp: 350568 kbps | trace_bw: 350568 kbps
+   t=51s | buffer: 16.9s | bitrate: 100 kbps | tp: 393824 kbps | trace_bw: 393824 kbps
+   t=61s | buffer: 14.8s | bitrate: 100 kbps | tp: 337437 kbps | trace_bw: 337437 kbps
+   t=72s | buffer: 16.5s | bitrate: 100 kbps | tp: 183548 kbps | trace_bw: 183548 kbps
+   t=82s | buffer: 14.4s | bitrate: 100 kbps | tp: 307553 kbps | trace_bw: 307553 kbps
+   t=92s | buffer: 16.0s | bitrate: 100 kbps | tp: 389742 kbps | trace_bw: 389742 kbps
+   t=102s | buffer: 13.9s | bitrate: 100 kbps | tp: 345516 kbps | trace_bw: 345516 kbps
+   t=112s | buffer: 15.6s | bitrate: 100 kbps | tp: 347173 kbps | trace_bw: 347173 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8080/chunk-stream9-00030.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8080/
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+  - ← 200 OK
+  -   server: SimpleHTTP/0.6 Python/3.11.15
+  -   date: Tue, 26 May 2026 12:55:15 GMT
+  -   content-type: video/iso.segment
+  -   content-length: 3606941
+  -   last-modified: Wed, 22 Apr 2026 18:42:38 GMT
+  -   access-control-allow-origin: *
+  -   access-control-allow-methods: GET, OPTIONS
+  -   access-control-allow-headers: Content-Type, Range
+  -   access-control-expose-headers: Content-Length, Content-Range
+  -   cache-control: public, max-age=31536000
+)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,247 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  173 kbps
+      Average (effective): 173 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              100 kbps
+      Std deviation:       563.3 kbps
+      Variance:            317,288.9
+      25th/75th %ile:      100 / 100 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        189 ms
+      Ratio:             0.1570%
+      Frequency:         0.499 per minute
+      Avg duration:      189 ms
+      Max duration:      189 ms
+
+  [THROUGHPUT]
+      Average:           321,240 kbps
+      Median:            330,066 kbps
+      Min / Max:         96,645 / 425,070 kbps
+      Std deviation:     73,393.1 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           321,240 kbps
+      Min / Max:         96,645 / 425,070 kbps
+      Utilisation:       102.7%
+
+  [BUFFER]
+      Average level:     14.7 s
+      Min / Max:         3.7 / 16.9 s
+
+  [UTILIZATION]
+      Bandwidth:         0.1%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_033_tc_20260526_055314.json
+
+──────────────────────────────────────────────────────────────────────
+  [35/40] starlink_road_034_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_034_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1684ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 276637 kbps | trace_bw: 276637 kbps
+   t=21s | buffer: 15.5s | bitrate: 100 kbps | tp: 70447 kbps | trace_bw: 70447 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 365635 kbps | trace_bw: 365635 kbps
+   t=41s | buffer: 15.0s | bitrate: 100 kbps | tp: 321537 kbps | trace_bw: 321537 kbps
+   t=51s | buffer: 16.9s | bitrate: 100 kbps | tp: 257762 kbps | trace_bw: 257762 kbps
+   t=61s | buffer: 14.6s | bitrate: 100 kbps | tp: 28358 kbps | trace_bw: 28358 kbps
+   t=72s | buffer: 16.5s | bitrate: 100 kbps | tp: 106561 kbps | trace_bw: 106561 kbps
+   t=82s | buffer: 14.1s | bitrate: 100 kbps | tp: 269696 kbps | trace_bw: 269696 kbps
+   t=92s | buffer: 16.0s | bitrate: 100 kbps | tp: 173820 kbps | trace_bw: 173820 kbps
+   t=102s | buffer: 13.7s | bitrate: 100 kbps | tp: 162420 kbps | trace_bw: 162420 kbps
+   t=113s | buffer: 15.6s | bitrate: 100 kbps | tp: 354748 kbps | trace_bw: 354748 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,684 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  100 kbps
+      Average (effective): 100 kbps
+      Min / Max:           100 / 100 kbps
+      Median:              100 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      100 / 100 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        190 ms
+      Ratio:             0.1577%
+      Frequency:         0.499 per minute
+      Avg duration:      190 ms
+      Max duration:      190 ms
+
+  [THROUGHPUT]
+      Average:           229,206 kbps
+      Median:            250,812 kbps
+      Min / Max:         28,358 / 378,299 kbps
+      Std deviation:     90,887.5 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           229,206 kbps
+      Min / Max:         28,358 / 378,299 kbps
+      Utilisation:       109.4%
+
+  [BUFFER]
+      Average level:     14.7 s
+      Min / Max:         3.7 / 16.9 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_034_tc_20260526_055519.json
+
+──────────────────────────────────────────────────────────────────────
+  [36/40] starlink_road_035_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_035_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 2066ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 179701 kbps | trace_bw: 179701 kbps
+   t=20s | buffer: 15.8s | bitrate: 100 kbps | tp: 292506 kbps | trace_bw: 292506 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 146740 kbps | trace_bw: 146740 kbps
+   t=41s | buffer: 15.3s | bitrate: 100 kbps | tp: 176461 kbps | trace_bw: 176461 kbps
+   t=51s | buffer: 12.9s | bitrate: 100 kbps | tp: 290812 kbps | trace_bw: 290812 kbps
+   t=61s | buffer: 14.8s | bitrate: 100 kbps | tp: 351150 kbps | trace_bw: 351150 kbps
+   t=72s | buffer: 16.5s | bitrate: 100 kbps | tp: 286732 kbps | trace_bw: 286732 kbps
+   t=82s | buffer: 14.4s | bitrate: 100 kbps | tp: 242273 kbps | trace_bw: 242273 kbps
+   t=92s | buffer: 16.0s | bitrate: 100 kbps | tp: 280586 kbps | trace_bw: 280586 kbps
+   t=102s | buffer: 13.9s | bitrate: 100 kbps | tp: 341774 kbps | trace_bw: 341774 kbps
+   t=112s | buffer: 15.6s | bitrate: 100 kbps | tp: 338352 kbps | trace_bw: 338352 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     2,066 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  100 kbps
+      Average (effective): 100 kbps
+      Min / Max:           100 / 100 kbps
+      Median:              100 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      100 / 100 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        196 ms
+      Ratio:             0.1628%
+      Frequency:         0.499 per minute
+      Avg duration:      196 ms
+      Max duration:      196 ms
+
+  [THROUGHPUT]
+      Average:           255,613 kbps
+      Median:            268,875 kbps
+      Min / Max:         39,745 / 412,038 kbps
+      Std deviation:     83,966.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           255,613 kbps
+      Min / Max:         39,745 / 412,038 kbps
+      Utilisation:       105.2%
+
+  [BUFFER]
+      Average level:     14.6 s
+      Min / Max:         3.7 / 16.9 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_035_tc_20260526_055725.json
+
+──────────────────────────────────────────────────────────────────────
+  [37/40] starlink_road_036_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_036_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1666ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 283031 kbps | trace_bw: 283031 kbps
+   t=20s | buffer: 15.7s | bitrate: 100 kbps | tp: 249358 kbps | trace_bw: 249358 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 304199 kbps | trace_bw: 304199 kbps
+   t=41s | buffer: 15.3s | bitrate: 100 kbps | tp: 258753 kbps | trace_bw: 258753 kbps
+   t=51s | buffer: 16.9s | bitrate: 100 kbps | tp: 269838 kbps | trace_bw: 269838 kbps
+   t=61s | buffer: 14.8s | bitrate: 100 kbps | tp: 41110 kbps | trace_bw: 41110 kbps
+   t=72s | buffer: 16.5s | bitrate: 100 kbps | tp: 339526 kbps | trace_bw: 339526 kbps
+   t=82s | buffer: 14.4s | bitrate: 100 kbps | tp: 341391 kbps | trace_bw: 341391 kbps
+   t=92s | buffer: 16.0s | bitrate: 100 kbps | tp: 335304 kbps | trace_bw: 335304 kbps
+   t=102s | buffer: 13.9s | bitrate: 100 kbps | tp: 274861 kbps | trace_bw: 274861 kbps
+   t=112s | buffer: 15.6s | bitrate: 100 kbps | tp: 420286 kbps | trace_bw: 420286 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,666 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  100 kbps
+      Average (effective): 100 kbps
+      Min / Max:           100 / 100 kbps
+      Median:              100 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      100 / 100 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        197 ms
+      Ratio:             0.1637%
+      Frequency:         0.499 per minute
+      Avg duration:      197 ms
+      Max duration:      197 ms
+
+  [THROUGHPUT]
+      Average:           295,200 kbps
+      Median:            307,011 kbps
+      Min / Max:         41,110 / 434,817 kbps
+      Std deviation:     75,938.5 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           295,200 kbps
+      Min / Max:         41,110 / 434,817 kbps
+      Utilisation:       104.0%
+
+  [BUFFER]
+      Average level:     14.7 s
+      Min / Max:         3.7 / 16.9 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_036_tc_20260526_055930.json
+
+──────────────────────────────────────────────────────────────────────
+  [38/40] starlink_road_037_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_037_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1569ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 201527 kbps | trace_bw: 201527 kbps
+   t=21s | buffer: 15.5s | bitrate: 100 kbps | tp: 190380 kbps | trace_bw: 190380 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 158447 kbps | trace_bw: 158447 kbps
+   t=41s | buffer: 15.0s | bitrate: 100 kbps | tp: 209940 kbps | trace_bw: 209940 kbps
+   t=51s | buffer: 16.9s | bitrate: 100 kbps | tp: 328830 kbps | trace_bw: 328830 kbps
+   t=61s | buffer: 14.6s | bitrate: 100 kbps | tp: 420169 kbps | trace_bw: 420169 kbps
+   t=72s | buffer: 16.5s | bitrate: 100 kbps | tp: 422352 kbps | trace_bw: 422352 kbps
+   t=82s | buffer: 14.1s | bitrate: 100 kbps | tp: 252347 kbps | trace_bw: 252347 kbps
+   t=92s | buffer: 7.8s | bitrate: 4500 kbps | tp: 304024 kbps | trace_bw: 304024 kbps
+   t=103s | buffer: 17.4s | bitrate: 4500 kbps | tp: 303785 kbps | trace_bw: 303785 kbps
+   t=113s | buffer: 27.3s | bitrate: 4500 kbps | tp: 248063 kbps | trace_bw: 248063 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,569 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  1,493 kbps
+      Average (effective): 1,491 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              100 kbps
+      Std deviation:       2,046.8 kbps
+      Variance:            4,189,288.9
+      25th/75th %ile:      100 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        195 ms
+      Ratio:             0.1618%
+      Frequency:         0.499 per minute
+      Avg duration:      195 ms
+      Max duration:      195 ms
+
+  [THROUGHPUT]
+      Average:           265,273 kbps
+      Median:            254,208 kbps
+      Min / Max:         122,001 / 422,910 kbps
+      Std deviation:     79,777.4 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           265,273 kbps
+      Min / Max:         122,001 / 422,910 kbps
+      Utilisation:       95.8%
+
+  [BUFFER]
+      Average level:     15.4 s
+      Min / Max:         3.7 / 28.2 s
+
+  [UTILIZATION]
+      Bandwidth:         0.6%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_037_tc_20260526_060136.json
+
+──────────────────────────────────────────────────────────────────────
+  [39/40] starlink_road_038_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_038_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 114 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1290ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 106145 kbps | trace_bw: 106145 kbps
+   t=20s | buffer: 15.8s | bitrate: 100 kbps | tp: 263524 kbps | trace_bw: 263524 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 341039 kbps | trace_bw: 341039 kbps
+   t=41s | buffer: 15.3s | bitrate: 100 kbps | tp: 335438 kbps | trace_bw: 335438 kbps
+   t=51s | buffer: 12.9s | bitrate: 100 kbps | tp: 96396 kbps | trace_bw: 96396 kbps
+   t=61s | buffer: 14.8s | bitrate: 100 kbps | tp: 254438 kbps | trace_bw: 254438 kbps
+   t=72s | buffer: 16.5s | bitrate: 100 kbps | tp: 317672 kbps | trace_bw: 317672 kbps
+   t=82s | buffer: 14.1s | bitrate: 100 kbps | tp: 68700 kbps | trace_bw: 68700 kbps
+   t=92s | buffer: 16.0s | bitrate: 100 kbps | tp: 298513 kbps | trace_bw: 298513 kbps
+   t=102s | buffer: 13.9s | bitrate: 100 kbps | tp: 269838 kbps | trace_bw: 269838 kbps
+   t=113s | buffer: 15.6s | bitrate: 100 kbps | tp: 342226 kbps | trace_bw: 342226 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,290 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  100 kbps
+      Average (effective): 100 kbps
+      Min / Max:           100 / 100 kbps
+      Median:              100 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      100 / 100 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        192 ms
+      Ratio:             0.1595%
+      Frequency:         0.499 per minute
+      Avg duration:      192 ms
+      Max duration:      192 ms
+
+  [THROUGHPUT]
+      Average:           264,136 kbps
+      Median:            301,972 kbps
+      Min / Max:         51,602 / 394,974 kbps
+      Std deviation:     94,863.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           264,136 kbps
+      Min / Max:         51,602 / 394,974 kbps
+      Utilisation:       114.3%
+
+  [BUFFER]
+      Average level:     14.7 s
+      Min / Max:         3.7 / 16.9 s
+
+  [UTILIZATION]
+      Bandwidth:         0.0%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_038_tc_20260526_060341.json
+
+──────────────────────────────────────────────────────────────────────
+  [40/40] starlink_road_039_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_039_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1360ms
+
+[PLAYBACK] Collecting metrics...
+   t=11s | buffer: 3.9s | bitrate: 4500 kbps | tp: 238749 kbps | trace_bw: 238749 kbps
+   t=21s | buffer: 13.5s | bitrate: 4500 kbps | tp: 217653 kbps | trace_bw: 217653 kbps
+   t=31s | buffer: 23.4s | bitrate: 4500 kbps | tp: 220509 kbps | trace_bw: 220509 kbps
+   t=41s | buffer: 25.3s | bitrate: 4500 kbps | tp: 298271 kbps | trace_bw: 298271 kbps
+   t=51s | buffer: 27.2s | bitrate: 4500 kbps | tp: 293087 kbps | trace_bw: 293087 kbps
+   t=61s | buffer: 28.9s | bitrate: 4500 kbps | tp: 94022 kbps | trace_bw: 94022 kbps
+   t=72s | buffer: 26.5s | bitrate: 4500 kbps | tp: 154507 kbps | trace_bw: 154507 kbps
+   t=82s | buffer: 23.9s | bitrate: 4500 kbps | tp: 235237 kbps | trace_bw: 235237 kbps
+   t=93s | buffer: 25.5s | bitrate: 4500 kbps | tp: 203207 kbps | trace_bw: 203207 kbps
+   t=103s | buffer: 27.2s | bitrate: 4500 kbps | tp: 345064 kbps | trace_bw: 345064 kbps
+   t=113s | buffer: 25.1s | bitrate: 4500 kbps | tp: 207540 kbps | trace_bw: 207540 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,360 ms
+      Playback time:     118.0 s
+
+  [BITRATE]
+      Average (selected):  4,490 kbps
+      Average (effective): 4,403 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       204.9 kbps
+      Variance:            41,995.5
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        2,333 ms
+      Ratio:             1.9393%
+      Frequency:         1.017 per minute
+      Avg duration:      1,166 ms
+      Max duration:      2,137 ms
+
+  [THROUGHPUT]
+      Average:           206,490 kbps
+      Median:            211,246 kbps
+      Min / Max:         21,896 / 372,495 kbps
+      Std deviation:     67,720.5 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           206,490 kbps
+      Min / Max:         21,896 / 372,495 kbps
+      Utilisation:       102.3%
+
+  [BUFFER]
+      Average level:     21.9 s
+      Min / Max:         0.1 / 28.9 s
+
+  [UTILIZATION]
+      Bandwidth:         2.1%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_starlink-2024/benchmark_dash_starlink_road_039_tc_20260526_060546.json
+
+======================================================================
+  BATCH COMPLETE: 40/40 succeeded
+  Results saved to: results/results/run_all_20260525_151403/dash_starlink-2024/
+======================================================================
+

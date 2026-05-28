@@ -1,0 +1,2110 @@
+
+======================================================================
+  BATCH RUN: 21 trace(s) from traces/fcc
+======================================================================
+
+
+──────────────────────────────────────────────────────────────────────
+  [1/21] trace_12743_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_12743_3g_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 288 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 15599ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.1s | bitrate: 4500 kbps | tp: 1035 kbps | trace_bw: 1035 kbps
+   t=20s | buffer: 0.1s | bitrate: 4500 kbps | tp: 1081 kbps | trace_bw: 1081 kbps
+   t=31s | buffer: 0.1s | bitrate: 4500 kbps | tp: 965 kbps | trace_bw: 965 kbps
+   t=41s | buffer: 0.1s | bitrate: 4500 kbps | tp: 1078 kbps | trace_bw: 1078 kbps
+   t=51s | buffer: 0.1s | bitrate: 4500 kbps | tp: 1036 kbps | trace_bw: 1036 kbps
+   t=61s | buffer: 0.1s | bitrate: 4500 kbps | tp: 1075 kbps | trace_bw: 1075 kbps
+   t=71s | buffer: 0.1s | bitrate: 4500 kbps | tp: 925 kbps | trace_bw: 925 kbps
+   t=81s | buffer: 0.1s | bitrate: 4500 kbps | tp: 1148 kbps | trace_bw: 1148 kbps
+[BROWSER-ERROR] Player error: {error: e.A, type: error}
+   t=92s | buffer: 0.1s | bitrate: 4500 kbps | tp: 1015 kbps | trace_bw: 1015 kbps
+   t=102s | buffer: 0.1s | bitrate: 4500 kbps | tp: 1097 kbps | trace_bw: 1097 kbps
+   t=112s | buffer: 0.1s | bitrate: 4500 kbps | tp: 1128 kbps | trace_bw: 1128 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8080/chunk-stream9-00001.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8080/
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+  - ← 200 OK
+  -   server: SimpleHTTP/0.6 Python/3.11.15
+  -   date: Tue, 26 May 2026 17:23:26 GMT
+  -   content-type: video/iso.segment
+  -   content-length: 3676331
+  -   last-modified: Wed, 22 Apr 2026 18:42:20 GMT
+  -   access-control-allow-origin: *
+  -   access-control-allow-methods: GET, OPTIONS
+  -   access-control-allow-headers: Content-Type, Range
+  -   access-control-expose-headers: Content-Length, Content-Range
+  -   cache-control: public, max-age=31536000
+)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     15,599 ms
+      Playback time:     3.9 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 143 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        118,182 ms
+      Ratio:             96.8139%
+      Frequency:         30.853 per minute
+      Avg duration:      2,008 ms
+      Max duration:      2,008 ms
+
+  [THROUGHPUT]
+      Average:           1,031 kbps
+      Median:            1,051 kbps
+      Min / Max:         780 / 1,148 kbps
+      Std deviation:     80.3 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,031 kbps
+      Min / Max:         780 / 1,148 kbps
+      Utilisation:       102.0%
+
+  [BUFFER]
+      Average level:     0.2 s
+      Min / Max:         0.1 / 4.0 s
+
+  [UTILIZATION]
+      Bandwidth:         428.2%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_fcc/benchmark_dash_trace_12743_3g_tc_20260526_102156.json
+
+──────────────────────────────────────────────────────────────────────
+  [2/21] trace_27001_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_27001_3g_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] Warning: could not reach /startShaping: HTTPConnectionPool(host='localhost', port=8080): Read timed out. (read timeout=5)
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 259 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 5556ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.9s | bitrate: 100 kbps | tp: 2870 kbps | trace_bw: 2870 kbps
+   t=20s | buffer: 15.8s | bitrate: 100 kbps | tp: 3007 kbps | trace_bw: 3007 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 2786 kbps | trace_bw: 2786 kbps
+   t=41s | buffer: 15.3s | bitrate: 100 kbps | tp: 2782 kbps | trace_bw: 2782 kbps
+   t=51s | buffer: 13.0s | bitrate: 2000 kbps | tp: 3286 kbps | trace_bw: 3286 kbps
+   t=61s | buffer: 2.9s | bitrate: 2000 kbps | tp: 3332 kbps | trace_bw: 3332 kbps
+   t=72s | buffer: 0.1s | bitrate: 2000 kbps | tp: 1 kbps | trace_bw: 1 kbps
+   t=82s | buffer: 0.1s | bitrate: 2000 kbps | tp: 2893 kbps | trace_bw: 2893 kbps
+   t=92s | buffer: 0.1s | bitrate: 100 kbps | tp: 3020 kbps | trace_bw: 3020 kbps
+   t=102s | buffer: 0.1s | bitrate: 100 kbps | tp: 3001 kbps | trace_bw: 3001 kbps
+   t=113s | buffer: 0.1s | bitrate: 100 kbps | tp: 2903 kbps | trace_bw: 2903 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8080/chunk-stream0-00019.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8080/
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     5,556 ms
+      Playback time:     75.9 s
+
+  [BITRATE]
+      Average (selected):  960 kbps
+      Average (effective): 603 kbps
+      Min / Max:           100 / 2,000 kbps
+      Median:              1,500 kbps
+      Std deviation:       869.8 kbps
+      Variance:            756,609.1
+      25th/75th %ile:      100 / 2,000 kbps
+
+  [SWITCHES]
+      Total count:       8
+      Up / Down:         4 / 4
+      Avg magnitude:     1,650 kbps
+
+  [REBUFFERING]
+      Events:            5
+      Total time:        44,954 ms
+      Ratio:             37.1995%
+      Frequency:         3.953 per minute
+      Avg duration:      10,692 ms
+      Max duration:      33,460 ms
+
+  [THROUGHPUT]
+      Average:           2,980 kbps
+      Median:            3,001 kbps
+      Min / Max:         1 / 3,500 kbps
+      Std deviation:     422.2 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           2,980 kbps
+      Min / Max:         1 / 3,500 kbps
+      Utilisation:       100.7%
+
+  [BUFFER]
+      Average level:     6.8 s
+      Min / Max:         0.1 / 16.7 s
+
+  [UTILIZATION]
+      Bandwidth:         32.0%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_fcc/benchmark_dash_trace_27001_3g_tc_20260526_102420.json
+
+──────────────────────────────────────────────────────────────────────
+  [3/21] trace_27161_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_27161_3g_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 282 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 5193ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 3020 kbps | trace_bw: 3020 kbps
+   t=21s | buffer: 15.7s | bitrate: 100 kbps | tp: 1530 kbps | trace_bw: 1530 kbps
+   t=31s | buffer: 13.3s | bitrate: 100 kbps | tp: 4453 kbps | trace_bw: 4453 kbps
+   t=41s | buffer: 15.2s | bitrate: 100 kbps | tp: 13 kbps | trace_bw: 13 kbps
+   t=51s | buffer: 12.9s | bitrate: 100 kbps | tp: 4391 kbps | trace_bw: 4391 kbps
+   t=61s | buffer: 14.8s | bitrate: 100 kbps | tp: 3571 kbps | trace_bw: 3571 kbps
+   t=72s | buffer: 16.4s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 0 kbps
+   t=82s | buffer: 18.3s | bitrate: 100 kbps | tp: 5069 kbps | trace_bw: 5069 kbps
+   t=92s | buffer: 16.0s | bitrate: 100 kbps | tp: 3342 kbps | trace_bw: 3342 kbps
+   t=102s | buffer: 13.9s | bitrate: 100 kbps | tp: 3124 kbps | trace_bw: 3124 kbps
+   t=112s | buffer: 15.5s | bitrate: 100 kbps | tp: 3386 kbps | trace_bw: 3386 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8080/chunk-stream7-00030.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8080/
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     5,193 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  195 kbps
+      Average (effective): 194 kbps
+      Min / Max:           100 / 2,000 kbps
+      Median:              100 kbps
+      Std deviation:       414.1 kbps
+      Variance:            171,475.0
+      25th/75th %ile:      100 / 100 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     1,900 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        665 ms
+      Ratio:             0.5498%
+      Frequency:         0.499 per minute
+      Avg duration:      665 ms
+      Max duration:      665 ms
+
+  [THROUGHPUT]
+      Average:           3,191 kbps
+      Median:            3,538 kbps
+      Min / Max:         0 / 5,633 kbps
+      Std deviation:     1,164.7 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           3,191 kbps
+      Min / Max:         0 / 5,633 kbps
+      Utilisation:       110.9%
+
+  [BUFFER]
+      Average level:     14.5 s
+      Min / Max:         3.1 / 26.0 s
+
+  [UTILIZATION]
+      Bandwidth:         5.5%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_fcc/benchmark_dash_trace_27161_3g_tc_20260526_102630.json
+
+──────────────────────────────────────────────────────────────────────
+  [4/21] trace_27447_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_27447_3g_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 265 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 6154ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.9s | bitrate: 100 kbps | tp: 3684 kbps | trace_bw: 3684 kbps
+   t=20s | buffer: 15.6s | bitrate: 100 kbps | tp: 3434 kbps | trace_bw: 3434 kbps
+   t=31s | buffer: 13.5s | bitrate: 100 kbps | tp: 3485 kbps | trace_bw: 3485 kbps
+   t=41s | buffer: 15.1s | bitrate: 100 kbps | tp: 3515 kbps | trace_bw: 3515 kbps
+   t=51s | buffer: 13.0s | bitrate: 100 kbps | tp: 2677 kbps | trace_bw: 2677 kbps
+   t=61s | buffer: 14.7s | bitrate: 100 kbps | tp: 3798 kbps | trace_bw: 3798 kbps
+   t=72s | buffer: 12.6s | bitrate: 100 kbps | tp: 4294 kbps | trace_bw: 4294 kbps
+   t=82s | buffer: 6.2s | bitrate: 2000 kbps | tp: 3522 kbps | trace_bw: 3522 kbps
+   t=92s | buffer: 2.8s | bitrate: 2000 kbps | tp: 3825 kbps | trace_bw: 3825 kbps
+   t=103s | buffer: 0.1s | bitrate: 100 kbps | tp: 3773 kbps | trace_bw: 3773 kbps
+   t=113s | buffer: 2.6s | bitrate: 2000 kbps | tp: 3728 kbps | trace_bw: 3728 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8080/chunk-stream7-00029.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8080/
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+  - ← 200 OK
+  -   server: SimpleHTTP/0.6 Python/3.11.15
+  -   date: Tue, 26 May 2026 17:30:46 GMT
+  -   content-type: video/iso.segment
+  -   content-length: 1182352
+  -   last-modified: Wed, 22 Apr 2026 18:42:37 GMT
+  -   access-control-allow-origin: *
+  -   access-control-allow-methods: GET, OPTIONS
+  -   access-control-allow-headers: Content-Type, Range
+  -   access-control-expose-headers: Content-Length, Content-Range
+  -   cache-control: public, max-age=31536000
+)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     6,154 ms
+      Playback time:     108.6 s
+
+  [BITRATE]
+      Average (selected):  1,142 kbps
+      Average (effective): 1,023 kbps
+      Min / Max:           100 / 3,000 kbps
+      Median:              1,500 kbps
+      Std deviation:       1,024.7 kbps
+      Variance:            1,049,998.8
+      25th/75th %ile:      100 / 2,000 kbps
+
+  [SWITCHES]
+      Total count:       11
+      Up / Down:         6 / 5
+      Avg magnitude:     1,736 kbps
+
+  [REBUFFERING]
+      Events:            6
+      Total time:        12,654 ms
+      Ratio:             10.4402%
+      Frequency:         3.316 per minute
+      Avg duration:      2,109 ms
+      Max duration:      3,288 ms
+
+  [THROUGHPUT]
+      Average:           3,625 kbps
+      Median:            3,765 kbps
+      Min / Max:         1,070 / 5,551 kbps
+      Std deviation:     779.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           3,625 kbps
+      Min / Max:         1,070 / 5,551 kbps
+      Utilisation:       103.9%
+
+  [BUFFER]
+      Average level:     9.8 s
+      Min / Max:         0.1 / 16.8 s
+
+  [UTILIZATION]
+      Bandwidth:         30.3%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_fcc/benchmark_dash_trace_27447_3g_tc_20260526_102839.json
+
+──────────────────────────────────────────────────────────────────────
+  [5/21] trace_5407_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_5407_3g_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 370 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 12525ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 9.7s | bitrate: 100 kbps | tp: 1219 kbps | trace_bw: 1219 kbps
+   t=21s | buffer: 15.7s | bitrate: 100 kbps | tp: 1260 kbps | trace_bw: 1260 kbps
+   t=31s | buffer: 5.3s | bitrate: 800 kbps | tp: 1273 kbps | trace_bw: 1273 kbps
+   t=41s | buffer: 0.1s | bitrate: 100 kbps | tp: 1295 kbps | trace_bw: 1295 kbps
+   t=51s | buffer: 0.1s | bitrate: 800 kbps | tp: 1268 kbps | trace_bw: 1268 kbps
+   t=62s | buffer: 0.1s | bitrate: 600 kbps | tp: 1232 kbps | trace_bw: 1232 kbps
+   t=72s | buffer: 0.8s | bitrate: 600 kbps | tp: 1328 kbps | trace_bw: 1328 kbps
+   t=82s | buffer: 1.6s | bitrate: 600 kbps | tp: 1295 kbps | trace_bw: 1295 kbps
+   t=92s | buffer: 3.2s | bitrate: 400 kbps | tp: 1386 kbps | trace_bw: 1386 kbps
+   t=103s | buffer: 0.1s | bitrate: 400 kbps | tp: 974 kbps | trace_bw: 974 kbps
+   t=113s | buffer: 0.1s | bitrate: 100 kbps | tp: 1407 kbps | trace_bw: 1407 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8080/init-stream0.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8080/
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     12,525 ms
+      Playback time:     63.9 s
+
+  [BITRATE]
+      Average (selected):  318 kbps
+      Average (effective): 167 kbps
+      Min / Max:           100 / 800 kbps
+      Median:              400 kbps
+      Std deviation:       233.9 kbps
+      Variance:            54,702.9
+      25th/75th %ile:      100 / 400 kbps
+
+  [SWITCHES]
+      Total count:       16
+      Up / Down:         8 / 8
+      Avg magnitude:     475 kbps
+
+  [REBUFFERING]
+      Events:            9
+      Total time:        57,958 ms
+      Ratio:             47.5630%
+      Frequency:         8.451 per minute
+      Avg duration:      7,104 ms
+      Max duration:      10,387 ms
+
+  [THROUGHPUT]
+      Average:           1,251 kbps
+      Median:            1,265 kbps
+      Min / Max:         974 / 1,426 kbps
+      Std deviation:     92.3 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,251 kbps
+      Min / Max:         974 / 1,426 kbps
+      Utilisation:       101.1%
+
+  [BUFFER]
+      Average level:     3.0 s
+      Min / Max:         0.1 / 15.7 s
+
+  [UTILIZATION]
+      Bandwidth:         25.2%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_fcc/benchmark_dash_trace_5407_3g_tc_20260526_103050.json
+
+──────────────────────────────────────────────────────────────────────
+  [6/21] trace_797466_http---www.amazon_part1_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_797466_http---www.amazon_part1_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 36 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 25458ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 6.0s | bitrate: 100 kbps | tp: 463 kbps | trace_bw: 463 kbps
+   t=20s | buffer: 7.6s | bitrate: 100 kbps | tp: 463 kbps | trace_bw: 463 kbps
+   t=31s | buffer: 13.5s | bitrate: 100 kbps | tp: 463 kbps | trace_bw: 463 kbps
+   t=41s | buffer: 11.2s | bitrate: 100 kbps | tp: 463 kbps | trace_bw: 463 kbps
+   t=51s | buffer: 13.1s | bitrate: 100 kbps | tp: 463 kbps | trace_bw: 463 kbps
+   t=61s | buffer: 14.7s | bitrate: 100 kbps | tp: 463 kbps | trace_bw: 463 kbps
+   t=72s | buffer: 12.6s | bitrate: 100 kbps | tp: 463 kbps | trace_bw: 463 kbps
+   t=82s | buffer: 14.5s | bitrate: 100 kbps | tp: 463 kbps | trace_bw: 463 kbps
+   t=92s | buffer: 12.2s | bitrate: 100 kbps | tp: 463 kbps | trace_bw: 463 kbps
+   t=102s | buffer: 14.1s | bitrate: 100 kbps | tp: 463 kbps | trace_bw: 463 kbps
+   t=112s | buffer: 3.7s | bitrate: 200 kbps | tp: 463 kbps | trace_bw: 463 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8080/init-stream0.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8080/
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     25,458 ms
+      Playback time:     115.9 s
+
+  [BITRATE]
+      Average (selected):  114 kbps
+      Average (effective): 108 kbps
+      Min / Max:           100 / 200 kbps
+      Median:              100 kbps
+      Std deviation:       34.4 kbps
+      Variance:            1,185.9
+      25th/75th %ile:      100 / 100 kbps
+
+  [SWITCHES]
+      Total count:       2
+      Up / Down:         1 / 1
+      Avg magnitude:     100 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        6,386 ms
+      Ratio:             5.2232%
+      Frequency:         1.036 per minute
+      Avg duration:      2,180 ms
+      Max duration:      2,180 ms
+
+  [THROUGHPUT]
+      Average:           463 kbps
+      Median:            463 kbps
+      Min / Max:         463 / 463 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           463 kbps
+      Min / Max:         463 / 463 kbps
+      Utilisation:       100.0%
+
+  [BUFFER]
+      Average level:     10.7 s
+      Min / Max:         0.1 / 15.6 s
+
+  [UTILIZATION]
+      Bandwidth:         24.6%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_fcc/benchmark_dash_trace_797466_http---www.amazon_part1_tc_20260526_103308.json
+
+──────────────────────────────────────────────────────────────────────
+  [7/21] trace_797466_http---www.amazon_part2_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_797466_http---www.amazon_part2_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] Warning: could not reach /startShaping: HTTPConnectionPool(host='localhost', port=8080): Read timed out. (read timeout=5)
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 36 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 19379ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 100 kbps | tp: 788 kbps | trace_bw: 788 kbps
+   t=20s | buffer: 11.5s | bitrate: 100 kbps | tp: 788 kbps | trace_bw: 788 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 788 kbps | trace_bw: 788 kbps
+   t=41s | buffer: 11.1s | bitrate: 100 kbps | tp: 788 kbps | trace_bw: 788 kbps
+   t=51s | buffer: 13.0s | bitrate: 100 kbps | tp: 788 kbps | trace_bw: 788 kbps
+   t=61s | buffer: 14.8s | bitrate: 100 kbps | tp: 788 kbps | trace_bw: 788 kbps
+   t=72s | buffer: 12.5s | bitrate: 100 kbps | tp: 788 kbps | trace_bw: 788 kbps
+   t=82s | buffer: 14.4s | bitrate: 100 kbps | tp: 788 kbps | trace_bw: 788 kbps
+   t=92s | buffer: 12.1s | bitrate: 100 kbps | tp: 788 kbps | trace_bw: 788 kbps
+   t=102s | buffer: 14.0s | bitrate: 100 kbps | tp: 788 kbps | trace_bw: 788 kbps
+   t=112s | buffer: 7.6s | bitrate: 600 kbps | tp: 788 kbps | trace_bw: 788 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8080/chunk-stream3-00029.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8080/
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     19,379 ms
+      Playback time:     119.9 s
+
+  [BITRATE]
+      Average (selected):  156 kbps
+      Average (effective): 153 kbps
+      Min / Max:           100 / 600 kbps
+      Median:              100 kbps
+      Std deviation:       158.0 kbps
+      Variance:            24,960.9
+      25th/75th %ile:      100 / 100 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     500 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        2,309 ms
+      Ratio:             1.8896%
+      Frequency:         1.001 per minute
+      Avg duration:      2,105 ms
+      Max duration:      2,105 ms
+
+  [THROUGHPUT]
+      Average:           788 kbps
+      Median:            788 kbps
+      Min / Max:         788 / 788 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           788 kbps
+      Min / Max:         788 / 788 kbps
+      Utilisation:       100.0%
+
+  [BUFFER]
+      Average level:     11.2 s
+      Min / Max:         0.5 / 15.5 s
+
+  [UTILIZATION]
+      Bandwidth:         19.8%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_fcc/benchmark_dash_trace_797466_http---www.amazon_part2_tc_20260526_103542.json
+
+──────────────────────────────────────────────────────────────────────
+  [8/21] trace_799296_http---www.amazon_part0_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_799296_http---www.amazon_part0_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] Warning: could not reach /startShaping: HTTPConnectionPool(host='localhost', port=8080): Read timed out. (read timeout=5)
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 38 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 8679ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.1s | bitrate: 4500 kbps | tp: 1791 kbps | trace_bw: 1791 kbps
+   t=21s | buffer: 0.1s | bitrate: 100 kbps | tp: 1884 kbps | trace_bw: 1884 kbps
+   t=31s | buffer: 3.6s | bitrate: 1200 kbps | tp: 1677 kbps | trace_bw: 1677 kbps
+   t=41s | buffer: 0.1s | bitrate: 100 kbps | tp: 1766 kbps | trace_bw: 1766 kbps
+   t=52s | buffer: 0.1s | bitrate: 100 kbps | tp: 1564 kbps | trace_bw: 1564 kbps
+   t=62s | buffer: 0.1s | bitrate: 100 kbps | tp: 1657 kbps | trace_bw: 1657 kbps
+   t=72s | buffer: 0.1s | bitrate: 100 kbps | tp: 1877 kbps | trace_bw: 1877 kbps
+   t=82s | buffer: 0.1s | bitrate: 100 kbps | tp: 1703 kbps | trace_bw: 1703 kbps
+   t=93s | buffer: 0.1s | bitrate: 100 kbps | tp: 2061 kbps | trace_bw: 2061 kbps
+   t=103s | buffer: 0.1s | bitrate: 100 kbps | tp: 1654 kbps | trace_bw: 1654 kbps
+   t=113s | buffer: 0.1s | bitrate: 100 kbps | tp: 1676 kbps | trace_bw: 1676 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8080/chunk-stream2-00012.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8080/
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+  - ← 200 OK
+  -   server: SimpleHTTP/0.6 Python/3.11.15
+  -   date: Tue, 26 May 2026 17:40:19 GMT
+  -   content-type: video/iso.segment
+  -   content-length: 208894
+  -   last-modified: Wed, 22 Apr 2026 18:42:27 GMT
+  -   access-control-allow-origin: *
+  -   access-control-allow-methods: GET, OPTIONS
+  -   access-control-allow-headers: Content-Type, Range
+  -   access-control-expose-headers: Content-Length, Content-Range
+  -   cache-control: public, max-age=31536000
+)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     8,679 ms
+      Playback time:     46.6 s
+
+  [BITRATE]
+      Average (selected):  652 kbps
+      Average (effective): 250 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              600 kbps
+      Std deviation:       806.1 kbps
+      Variance:            649,774.1
+      25th/75th %ile:      100 / 800 kbps
+
+  [SWITCHES]
+      Total count:       20
+      Up / Down:         9 / 11
+      Avg magnitude:     925 kbps
+
+  [REBUFFERING]
+      Events:            11
+      Total time:        75,038 ms
+      Ratio:             61.7116%
+      Frequency:         14.176 per minute
+      Avg duration:      6,822 ms
+      Max duration:      20,035 ms
+
+  [THROUGHPUT]
+      Average:           1,807 kbps
+      Median:            1,813 kbps
+      Min / Max:         1,564 / 2,350 kbps
+      Std deviation:     159.2 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,807 kbps
+      Min / Max:         1,564 / 2,350 kbps
+      Utilisation:       100.3%
+
+  [BUFFER]
+      Average level:     0.9 s
+      Min / Max:         0.1 / 4.6 s
+
+  [UTILIZATION]
+      Bandwidth:         36.0%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_fcc/benchmark_dash_trace_799296_http---www.amazon_part0_tc_20260526_103810.json
+
+──────────────────────────────────────────────────────────────────────
+  [9/21] trace_799448_http---www.facebook_part6_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_799448_http---www.facebook_part6_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 35 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 13383ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 10.0s | bitrate: 100 kbps | tp: 1287 kbps | trace_bw: 1287 kbps
+   t=21s | buffer: 11.6s | bitrate: 100 kbps | tp: 1287 kbps | trace_bw: 1287 kbps
+   t=31s | buffer: 13.5s | bitrate: 100 kbps | tp: 1287 kbps | trace_bw: 1287 kbps
+   t=41s | buffer: 15.1s | bitrate: 100 kbps | tp: 1287 kbps | trace_bw: 1287 kbps
+   t=51s | buffer: 12.8s | bitrate: 100 kbps | tp: 1287 kbps | trace_bw: 1287 kbps
+   t=61s | buffer: 14.7s | bitrate: 100 kbps | tp: 1287 kbps | trace_bw: 1287 kbps
+   t=72s | buffer: 12.3s | bitrate: 800 kbps | tp: 1287 kbps | trace_bw: 1287 kbps
+   t=82s | buffer: 2.2s | bitrate: 800 kbps | tp: 1287 kbps | trace_bw: 1287 kbps
+   t=92s | buffer: 0.1s | bitrate: 100 kbps | tp: 1287 kbps | trace_bw: 1287 kbps
+   t=103s | buffer: 0.1s | bitrate: 100 kbps | tp: 1287 kbps | trace_bw: 1287 kbps
+   t=113s | buffer: 0.1s | bitrate: 100 kbps | tp: 1287 kbps | trace_bw: 1287 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8080/chunk-stream3-00023.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8080/
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     13,383 ms
+      Playback time:     93.9 s
+
+  [BITRATE]
+      Average (selected):  314 kbps
+      Average (effective): 242 kbps
+      Min / Max:           100 / 800 kbps
+      Median:              100 kbps
+      Std deviation:       300.5 kbps
+      Variance:            90,281.6
+      25th/75th %ile:      100 / 600 kbps
+
+  [SWITCHES]
+      Total count:       7
+      Up / Down:         4 / 3
+      Avg magnitude:     614 kbps
+
+  [REBUFFERING]
+      Events:            4
+      Total time:        27,756 ms
+      Ratio:             22.8075%
+      Frequency:         2.555 per minute
+      Avg duration:      6,939 ms
+      Max duration:      13,103 ms
+
+  [THROUGHPUT]
+      Average:           1,287 kbps
+      Median:            1,287 kbps
+      Min / Max:         1,287 / 1,287 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,287 kbps
+      Min / Max:         1,287 / 1,287 kbps
+      Utilisation:       100.0%
+
+  [BUFFER]
+      Average level:     8.1 s
+      Min / Max:         0.1 / 15.6 s
+
+  [UTILIZATION]
+      Bandwidth:         24.4%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_fcc/benchmark_dash_trace_799448_http---www.facebook_part6_tc_20260526_104023.json
+
+──────────────────────────────────────────────────────────────────────
+  [10/21] trace_800156_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_800156_3g_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 366 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 20844ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.7s | bitrate: 100 kbps | tp: 393 kbps | trace_bw: 393 kbps
+   t=21s | buffer: 15.6s | bitrate: 100 kbps | tp: 649 kbps | trace_bw: 649 kbps
+   t=31s | buffer: 13.3s | bitrate: 100 kbps | tp: 1609 kbps | trace_bw: 1609 kbps
+   t=41s | buffer: 11.2s | bitrate: 100 kbps | tp: 1844 kbps | trace_bw: 1844 kbps
+   t=51s | buffer: 12.8s | bitrate: 100 kbps | tp: 503 kbps | trace_bw: 503 kbps
+   t=61s | buffer: 14.7s | bitrate: 100 kbps | tp: 1648 kbps | trace_bw: 1648 kbps
+   t=72s | buffer: 16.4s | bitrate: 100 kbps | tp: 1715 kbps | trace_bw: 1715 kbps
+   t=82s | buffer: 14.3s | bitrate: 100 kbps | tp: 3227 kbps | trace_bw: 3227 kbps
+   t=92s | buffer: 12.2s | bitrate: 100 kbps | tp: 2776 kbps | trace_bw: 2776 kbps
+   t=102s | buffer: 13.8s | bitrate: 100 kbps | tp: 2516 kbps | trace_bw: 2516 kbps
+   t=112s | buffer: 15.7s | bitrate: 100 kbps | tp: 2635 kbps | trace_bw: 2635 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     20,844 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  100 kbps
+      Average (effective): 99 kbps
+      Min / Max:           100 / 100 kbps
+      Median:              100 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      100 / 100 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        631 ms
+      Ratio:             0.5223%
+      Frequency:         0.499 per minute
+      Avg duration:      631 ms
+      Max duration:      631 ms
+
+  [THROUGHPUT]
+      Average:           1,869 kbps
+      Median:            1,829 kbps
+      Min / Max:         0 / 3,748 kbps
+      Std deviation:     955.3 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,869 kbps
+      Min / Max:         0 / 3,748 kbps
+      Utilisation:       97.9%
+
+  [BUFFER]
+      Average level:     13.6 s
+      Min / Max:         3.0 / 16.9 s
+
+  [UTILIZATION]
+      Bandwidth:         5.5%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_fcc/benchmark_dash_trace_800156_3g_tc_20260526_104242.json
+
+──────────────────────────────────────────────────────────────────────
+  [11/21] trace_806172_http---www.amazon_part0_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_806172_http---www.amazon_part0_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 38 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 15337ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 9.9s | bitrate: 100 kbps | tp: 1376 kbps | trace_bw: 1376 kbps
+   t=21s | buffer: 11.6s | bitrate: 100 kbps | tp: 1327 kbps | trace_bw: 1327 kbps
+   t=31s | buffer: 13.3s | bitrate: 100 kbps | tp: 1337 kbps | trace_bw: 1337 kbps
+   t=41s | buffer: 15.2s | bitrate: 100 kbps | tp: 1195 kbps | trace_bw: 1195 kbps
+   t=51s | buffer: 4.8s | bitrate: 800 kbps | tp: 1341 kbps | trace_bw: 1341 kbps
+   t=62s | buffer: 0.1s | bitrate: 100 kbps | tp: 885 kbps | trace_bw: 885 kbps
+   t=72s | buffer: 0.1s | bitrate: 100 kbps | tp: 1260 kbps | trace_bw: 1260 kbps
+   t=82s | buffer: 0.1s | bitrate: 100 kbps | tp: 1308 kbps | trace_bw: 1308 kbps
+   t=92s | buffer: 0.1s | bitrate: 600 kbps | tp: 959 kbps | trace_bw: 959 kbps
+   t=103s | buffer: 2.3s | bitrate: 400 kbps | tp: 1268 kbps | trace_bw: 1268 kbps
+   t=113s | buffer: 0.1s | bitrate: 100 kbps | tp: 1276 kbps | trace_bw: 1276 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8080/init-stream0.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8080/
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     15,337 ms
+      Playback time:     75.9 s
+
+  [BITRATE]
+      Average (selected):  301 kbps
+      Average (effective): 188 kbps
+      Min / Max:           100 / 800 kbps
+      Median:              100 kbps
+      Std deviation:       234.8 kbps
+      Variance:            55,126.1
+      25th/75th %ile:      100 / 400 kbps
+
+  [SWITCHES]
+      Total count:       12
+      Up / Down:         6 / 6
+      Avg magnitude:     467 kbps
+
+  [REBUFFERING]
+      Events:            7
+      Total time:        45,913 ms
+      Ratio:             37.6933%
+      Frequency:         5.534 per minute
+      Avg duration:      7,207 ms
+      Max duration:      9,835 ms
+
+  [THROUGHPUT]
+      Average:           1,157 kbps
+      Median:            1,251 kbps
+      Min / Max:         384 / 1,376 kbps
+      Std deviation:     229.6 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,157 kbps
+      Min / Max:         384 / 1,376 kbps
+      Utilisation:       108.2%
+
+  [BUFFER]
+      Average level:     5.0 s
+      Min / Max:         0.1 / 15.4 s
+
+  [UTILIZATION]
+      Bandwidth:         24.1%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_fcc/benchmark_dash_trace_806172_http---www.amazon_part0_tc_20260526_104507.json
+
+──────────────────────────────────────────────────────────────────────
+  [12/21] trace_806330_http---www.amazon_part0_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_806330_http---www.amazon_part0_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 38 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 19793ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 1.9s | bitrate: 600 kbps | tp: 623 kbps | trace_bw: 623 kbps
+   t=21s | buffer: 1.2s | bitrate: 400 kbps | tp: 889 kbps | trace_bw: 889 kbps
+   t=31s | buffer: 0.1s | bitrate: 800 kbps | tp: 1327 kbps | trace_bw: 1327 kbps
+   t=41s | buffer: 1.2s | bitrate: 600 kbps | tp: 1294 kbps | trace_bw: 1294 kbps
+   t=51s | buffer: 1.0s | bitrate: 200 kbps | tp: 1377 kbps | trace_bw: 1377 kbps
+   t=62s | buffer: 0.1s | bitrate: 100 kbps | tp: 1419 kbps | trace_bw: 1419 kbps
+   t=72s | buffer: 0.1s | bitrate: 100 kbps | tp: 1261 kbps | trace_bw: 1261 kbps
+   t=82s | buffer: 0.1s | bitrate: 100 kbps | tp: 1329 kbps | trace_bw: 1329 kbps
+   t=92s | buffer: 0.1s | bitrate: 400 kbps | tp: 1401 kbps | trace_bw: 1401 kbps
+   t=103s | buffer: 0.1s | bitrate: 100 kbps | tp: 1395 kbps | trace_bw: 1395 kbps
+   t=113s | buffer: 11.9s | bitrate: 200 kbps | tp: 1264 kbps | trace_bw: 1264 kbps
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     19,793 ms
+      Playback time:     75.3 s
+
+  [BITRATE]
+      Average (selected):  298 kbps
+      Average (effective): 184 kbps
+      Min / Max:           100 / 800 kbps
+      Median:              200 kbps
+      Std deviation:       195.6 kbps
+      Variance:            38,264.2
+      25th/75th %ile:      100 / 400 kbps
+
+  [SWITCHES]
+      Total count:       22
+      Up / Down:         12 / 10
+      Avg magnitude:     323 kbps
+
+  [REBUFFERING]
+      Events:            10
+      Total time:        46,764 ms
+      Ratio:             38.3122%
+      Frequency:         7.969 per minute
+      Avg duration:      4,676 ms
+      Max duration:      7,437 ms
+
+  [THROUGHPUT]
+      Average:           1,178 kbps
+      Median:            1,327 kbps
+      Min / Max:         399 / 1,435 kbps
+      Std deviation:     326.1 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,178 kbps
+      Min / Max:         399 / 1,435 kbps
+      Utilisation:       112.7%
+
+  [BUFFER]
+      Average level:     2.5 s
+      Min / Max:         0.1 / 15.9 s
+
+  [UTILIZATION]
+      Bandwidth:         22.4%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_fcc/benchmark_dash_trace_806330_http---www.amazon_part0_tc_20260526_104730.json
+
+──────────────────────────────────────────────────────────────────────
+  [13/21] trace_8327_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_8327_3g_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 256 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 18593ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 100 kbps | tp: 745 kbps | trace_bw: 745 kbps
+   t=20s | buffer: 11.8s | bitrate: 100 kbps | tp: 745 kbps | trace_bw: 745 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 745 kbps | trace_bw: 745 kbps
+   t=41s | buffer: 15.3s | bitrate: 100 kbps | tp: 1101 kbps | trace_bw: 1101 kbps
+   t=51s | buffer: 13.0s | bitrate: 100 kbps | tp: 1074 kbps | trace_bw: 1074 kbps
+   t=61s | buffer: 14.9s | bitrate: 100 kbps | tp: 1046 kbps | trace_bw: 1046 kbps
+   t=72s | buffer: 12.5s | bitrate: 100 kbps | tp: 931 kbps | trace_bw: 931 kbps
+   t=82s | buffer: 14.4s | bitrate: 100 kbps | tp: 1066 kbps | trace_bw: 1066 kbps
+   t=92s | buffer: 12.1s | bitrate: 100 kbps | tp: 1066 kbps | trace_bw: 1066 kbps
+   t=102s | buffer: 14.0s | bitrate: 100 kbps | tp: 1080 kbps | trace_bw: 1080 kbps
+   t=112s | buffer: 11.6s | bitrate: 100 kbps | tp: 470 kbps | trace_bw: 470 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8080/chunk-stream0-00034.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8080/
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+  - ← 200 OK
+  -   server: SimpleHTTP/0.6 Python/3.11.15
+  -   date: Tue, 26 May 2026 17:52:12 GMT
+  -   content-type: video/iso.segment
+  -   content-length: 52304
+  -   last-modified: Wed, 22 Apr 2026 18:42:40 GMT
+  -   access-control-allow-origin: *
+  -   access-control-allow-methods: GET, OPTIONS
+  -   access-control-allow-headers: Content-Type, Range
+  -   access-control-expose-headers: Content-Length, Content-Range
+  -   cache-control: public, max-age=31536000
+)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     18,593 ms
+      Playback time:     120.1 s
+
+  [BITRATE]
+      Average (selected):  100 kbps
+      Average (effective): 98 kbps
+      Min / Max:           100 / 100 kbps
+      Median:              100 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      100 / 100 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        2,112 ms
+      Ratio:             1.7281%
+      Frequency:         0.500 per minute
+      Avg duration:      2,112 ms
+      Max duration:      2,112 ms
+
+  [THROUGHPUT]
+      Average:           842 kbps
+      Median:            745 kbps
+      Min / Max:         470 / 1,106 kbps
+      Std deviation:     213.1 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           842 kbps
+      Min / Max:         470 / 1,106 kbps
+      Utilisation:       88.4%
+
+  [BUFFER]
+      Average level:     11.8 s
+      Min / Max:         1.6 / 15.5 s
+
+  [UTILIZATION]
+      Bandwidth:         13.4%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_fcc/benchmark_dash_trace_8327_3g_tc_20260526_104954.json
+
+──────────────────────────────────────────────────────────────────────
+  [14/21] trace_8465_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_8465_3g_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] Warning: could not reach /startShaping: HTTPConnectionPool(host='localhost', port=8080): Read timed out. (read timeout=5)
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 313 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 17507ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 9.9s | bitrate: 100 kbps | tp: 975 kbps | trace_bw: 975 kbps
+   t=20s | buffer: 7.8s | bitrate: 600 kbps | tp: 1040 kbps | trace_bw: 1040 kbps
+   t=31s | buffer: 0.1s | bitrate: 800 kbps | tp: 898 kbps | trace_bw: 898 kbps
+   t=41s | buffer: 1.7s | bitrate: 400 kbps | tp: 951 kbps | trace_bw: 951 kbps
+   t=51s | buffer: 0.1s | bitrate: 100 kbps | tp: 1033 kbps | trace_bw: 1033 kbps
+   t=61s | buffer: 0.1s | bitrate: 600 kbps | tp: 1051 kbps | trace_bw: 1051 kbps
+   t=72s | buffer: 3.8s | bitrate: 600 kbps | tp: 982 kbps | trace_bw: 982 kbps
+   t=82s | buffer: 0.1s | bitrate: 100 kbps | tp: 970 kbps | trace_bw: 970 kbps
+   t=92s | buffer: 0.1s | bitrate: 100 kbps | tp: 994 kbps | trace_bw: 994 kbps
+   t=102s | buffer: 0.1s | bitrate: 400 kbps | tp: 938 kbps | trace_bw: 938 kbps
+   t=113s | buffer: 2.7s | bitrate: 200 kbps | tp: 640 kbps | trace_bw: 640 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8080/chunk-stream0-00015.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8080/
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     17,507 ms
+      Playback time:     55.9 s
+
+  [BITRATE]
+      Average (selected):  269 kbps
+      Average (effective): 123 kbps
+      Min / Max:           100 / 800 kbps
+      Median:              100 kbps
+      Std deviation:       211.7 kbps
+      Variance:            44,828.8
+      25th/75th %ile:      100 / 400 kbps
+
+  [SWITCHES]
+      Total count:       16
+      Up / Down:         9 / 7
+      Avg magnitude:     338 kbps
+
+  [REBUFFERING]
+      Events:            9
+      Total time:        66,569 ms
+      Ratio:             54.3601%
+      Frequency:         9.662 per minute
+      Avg duration:      7,670 ms
+      Max duration:      10,846 ms
+
+  [THROUGHPUT]
+      Average:           952 kbps
+      Median:            982 kbps
+      Min / Max:         19 / 1,114 kbps
+      Std deviation:     158.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           952 kbps
+      Min / Max:         19 / 1,114 kbps
+      Utilisation:       103.1%
+
+  [BUFFER]
+      Average level:     2.1 s
+      Min / Max:         0.1 / 12.8 s
+
+  [UTILIZATION]
+      Bandwidth:         27.4%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_fcc/benchmark_dash_trace_8465_3g_tc_20260526_105221.json
+
+──────────────────────────────────────────────────────────────────────
+  [15/21] trace_849842_http---www.facebook_part1_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_849842_http---www.facebook_part1_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 37 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 24150ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.8s | bitrate: 100 kbps | tp: 477 kbps | trace_bw: 477 kbps
+   t=20s | buffer: 7.7s | bitrate: 400 kbps | tp: 477 kbps | trace_bw: 477 kbps
+   t=31s | buffer: 0.1s | bitrate: 100 kbps | tp: 477 kbps | trace_bw: 477 kbps
+   t=41s | buffer: 0.1s | bitrate: 400 kbps | tp: 477 kbps | trace_bw: 477 kbps
+   t=51s | buffer: 3.8s | bitrate: 400 kbps | tp: 477 kbps | trace_bw: 477 kbps
+   t=61s | buffer: 0.1s | bitrate: 100 kbps | tp: 477 kbps | trace_bw: 477 kbps
+   t=72s | buffer: 0.1s | bitrate: 100 kbps | tp: 477 kbps | trace_bw: 477 kbps
+   t=82s | buffer: 0.7s | bitrate: 200 kbps | tp: 477 kbps | trace_bw: 477 kbps
+   t=92s | buffer: 0.1s | bitrate: 200 kbps | tp: 477 kbps | trace_bw: 477 kbps
+   t=102s | buffer: 0.1s | bitrate: 100 kbps | tp: 477 kbps | trace_bw: 477 kbps
+   t=113s | buffer: 2.2s | bitrate: 100 kbps | tp: 477 kbps | trace_bw: 477 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8080/chunk-stream0-00018.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8080/
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+  - ← 200 OK
+  -   server: SimpleHTTP/0.6 Python/3.11.15
+  -   date: Tue, 26 May 2026 17:57:10 GMT
+  -   content-type: video/iso.segment
+  -   content-length: 48434
+  -   last-modified: Wed, 22 Apr 2026 18:42:31 GMT
+  -   access-control-allow-origin: *
+  -   access-control-allow-methods: GET, OPTIONS
+  -   access-control-allow-headers: Content-Type, Range
+  -   access-control-expose-headers: Content-Length, Content-Range
+  -   cache-control: public, max-age=31536000
+)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     24,150 ms
+      Playback time:     61.7 s
+
+  [BITRATE]
+      Average (selected):  158 kbps
+      Average (effective): 79 kbps
+      Min / Max:           100 / 400 kbps
+      Median:              100 kbps
+      Std deviation:       98.3 kbps
+      Variance:            9,667.5
+      25th/75th %ile:      100 / 200 kbps
+
+  [SWITCHES]
+      Total count:       12
+      Up / Down:         6 / 6
+      Avg magnitude:     200 kbps
+
+  [REBUFFERING]
+      Events:            7
+      Total time:        60,916 ms
+      Ratio:             49.6972%
+      Frequency:         6.812 per minute
+      Avg duration:      8,702 ms
+      Max duration:      10,364 ms
+
+  [THROUGHPUT]
+      Average:           477 kbps
+      Median:            477 kbps
+      Min / Max:         477 / 477 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           477 kbps
+      Min / Max:         477 / 477 kbps
+      Utilisation:       100.0%
+
+  [BUFFER]
+      Average level:     2.0 s
+      Min / Max:         0.1 / 9.3 s
+
+  [UTILIZATION]
+      Bandwidth:         33.1%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_fcc/benchmark_dash_trace_849842_http---www.facebook_part1_tc_20260526_105446.json
+
+──────────────────────────────────────────────────────────────────────
+  [16/21] trace_901648_http---www.amazon_part1_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_901648_http---www.amazon_part1_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 36 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 7627ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 2000 kbps | tp: 2948 kbps | trace_bw: 2948 kbps
+   t=21s | buffer: 3.5s | bitrate: 2000 kbps | tp: 2948 kbps | trace_bw: 2948 kbps
+   t=31s | buffer: 1.7s | bitrate: 2000 kbps | tp: 2948 kbps | trace_bw: 2948 kbps
+   t=41s | buffer: 0.6s | bitrate: 1500 kbps | tp: 2948 kbps | trace_bw: 2948 kbps
+   t=52s | buffer: 0.1s | bitrate: 1500 kbps | tp: 2948 kbps | trace_bw: 2948 kbps
+   t=62s | buffer: 0.1s | bitrate: 100 kbps | tp: 2948 kbps | trace_bw: 2948 kbps
+   t=72s | buffer: 0.1s | bitrate: 100 kbps | tp: 2948 kbps | trace_bw: 2948 kbps
+   t=82s | buffer: 0.6s | bitrate: 1200 kbps | tp: 2948 kbps | trace_bw: 2948 kbps
+   t=93s | buffer: 3.4s | bitrate: 800 kbps | tp: 2948 kbps | trace_bw: 2948 kbps
+   t=103s | buffer: 1.6s | bitrate: 800 kbps | tp: 2948 kbps | trace_bw: 2948 kbps
+   t=113s | buffer: 4.8s | bitrate: 800 kbps | tp: 2948 kbps | trace_bw: 2948 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8080/chunk-stream4-00025.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8080/
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+  - ← 200 OK
+  -   server: SimpleHTTP/0.6 Python/3.11.15
+  -   date: Tue, 26 May 2026 17:59:25 GMT
+  -   content-type: video/iso.segment
+  -   content-length: 291626
+  -   last-modified: Wed, 22 Apr 2026 18:42:35 GMT
+  -   access-control-allow-origin: *
+  -   access-control-allow-methods: GET, OPTIONS
+  -   access-control-allow-headers: Content-Type, Range
+  -   access-control-expose-headers: Content-Length, Content-Range
+  -   cache-control: public, max-age=31536000
+)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     7,627 ms
+      Playback time:     86.2 s
+
+  [BITRATE]
+      Average (selected):  934 kbps
+      Average (effective): 666 kbps
+      Min / Max:           100 / 2,000 kbps
+      Median:              800 kbps
+      Std deviation:       439.6 kbps
+      Variance:            193,247.9
+      25th/75th %ile:      800 / 1,200 kbps
+
+  [SWITCHES]
+      Total count:       14
+      Up / Down:         7 / 7
+      Avg magnitude:     1,407 kbps
+
+  [REBUFFERING]
+      Events:            11
+      Total time:        34,717 ms
+      Ratio:             28.7219%
+      Frequency:         7.661 per minute
+      Avg duration:      3,156 ms
+      Max duration:      5,819 ms
+
+  [THROUGHPUT]
+      Average:           2,948 kbps
+      Median:            2,948 kbps
+      Min / Max:         2,948 / 2,948 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           2,948 kbps
+      Min / Max:         2,948 / 2,948 kbps
+      Utilisation:       100.0%
+
+  [BUFFER]
+      Average level:     3.1 s
+      Min / Max:         0.1 / 16.0 s
+
+  [UTILIZATION]
+      Bandwidth:         31.7%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_fcc/benchmark_dash_trace_901648_http---www.amazon_part1_tc_20260526_105717.json
+
+──────────────────────────────────────────────────────────────────────
+  [17/21] trace_9108_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_9108_3g_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 341 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 14606ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 9.8s | bitrate: 100 kbps | tp: 1178 kbps | trace_bw: 1178 kbps
+   t=20s | buffer: 11.7s | bitrate: 100 kbps | tp: 1257 kbps | trace_bw: 1257 kbps
+   t=31s | buffer: 13.3s | bitrate: 100 kbps | tp: 1319 kbps | trace_bw: 1319 kbps
+   t=41s | buffer: 15.2s | bitrate: 100 kbps | tp: 1224 kbps | trace_bw: 1224 kbps
+   t=51s | buffer: 13.1s | bitrate: 100 kbps | tp: 1209 kbps | trace_bw: 1209 kbps
+   t=61s | buffer: 6.8s | bitrate: 800 kbps | tp: 1232 kbps | trace_bw: 1232 kbps
+   t=72s | buffer: 0.1s | bitrate: 100 kbps | tp: 1279 kbps | trace_bw: 1279 kbps
+   t=82s | buffer: 0.1s | bitrate: 800 kbps | tp: 1240 kbps | trace_bw: 1240 kbps
+   t=92s | buffer: 2.2s | bitrate: 600 kbps | tp: 1246 kbps | trace_bw: 1246 kbps
+   t=102s | buffer: 2.6s | bitrate: 600 kbps | tp: 1272 kbps | trace_bw: 1272 kbps
+   t=113s | buffer: 0.1s | bitrate: 600 kbps | tp: 1271 kbps | trace_bw: 1271 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     14,606 ms
+      Playback time:     83.9 s
+
+  [BITRATE]
+      Average (selected):  364 kbps
+      Average (effective): 250 kbps
+      Min / Max:           100 / 800 kbps
+      Median:              100 kbps
+      Std deviation:       286.1 kbps
+      Variance:            81,841.8
+      25th/75th %ile:      100 / 600 kbps
+
+  [SWITCHES]
+      Total count:       9
+      Up / Down:         5 / 4
+      Avg magnitude:     589 kbps
+
+  [REBUFFERING]
+      Events:            6
+      Total time:        38,159 ms
+      Ratio:             31.2657%
+      Frequency:         4.291 per minute
+      Avg duration:      6,888 ms
+      Max duration:      10,838 ms
+
+  [THROUGHPUT]
+      Average:           1,247 kbps
+      Median:            1,256 kbps
+      Min / Max:         925 / 1,374 kbps
+      Std deviation:     74.3 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,247 kbps
+      Min / Max:         925 / 1,374 kbps
+      Utilisation:       100.7%
+
+  [BUFFER]
+      Average level:     6.4 s
+      Min / Max:         0.1 / 15.5 s
+
+  [UTILIZATION]
+      Bandwidth:         29.0%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_fcc/benchmark_dash_trace_9108_3g_tc_20260526_105929.json
+
+──────────────────────────────────────────────────────────────────────
+  [18/21] trace_925800_http---www.ebay_part0_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_925800_http---www.ebay_part0_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 38 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 18627ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 100 kbps | tp: 864 kbps | trace_bw: 864 kbps
+   t=20s | buffer: 7.5s | bitrate: 600 kbps | tp: 869 kbps | trace_bw: 869 kbps
+   t=31s | buffer: 0.1s | bitrate: 600 kbps | tp: 873 kbps | trace_bw: 873 kbps
+   t=41s | buffer: 0.6s | bitrate: 600 kbps | tp: 845 kbps | trace_bw: 845 kbps
+   t=51s | buffer: 3.3s | bitrate: 600 kbps | tp: 879 kbps | trace_bw: 879 kbps
+   t=61s | buffer: 2.6s | bitrate: 400 kbps | tp: 869 kbps | trace_bw: 869 kbps
+   t=72s | buffer: 2.1s | bitrate: 400 kbps | tp: 502 kbps | trace_bw: 502 kbps
+   t=82s | buffer: 4.0s | bitrate: 400 kbps | tp: 866 kbps | trace_bw: 866 kbps
+   t=92s | buffer: 2.2s | bitrate: 400 kbps | tp: 879 kbps | trace_bw: 879 kbps
+   t=102s | buffer: 0.7s | bitrate: 600 kbps | tp: 886 kbps | trace_bw: 886 kbps
+   t=113s | buffer: 0.1s | bitrate: 100 kbps | tp: 826 kbps | trace_bw: 826 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8080/chunk-stream2-00021.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8080/
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+  - ← 200 OK
+  -   server: SimpleHTTP/0.6 Python/3.11.15
+  -   date: Tue, 26 May 2026 18:04:07 GMT
+  -   content-type: video/iso.segment
+  -   content-length: 165152
+  -   last-modified: Wed, 22 Apr 2026 18:42:33 GMT
+  -   access-control-allow-origin: *
+  -   access-control-allow-methods: GET, OPTIONS
+  -   access-control-allow-headers: Content-Type, Range
+  -   access-control-expose-headers: Content-Length, Content-Range
+  -   cache-control: public, max-age=31536000
+)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     18,627 ms
+      Playback time:     87.9 s
+
+  [BITRATE]
+      Average (selected):  425 kbps
+      Average (effective): 305 kbps
+      Min / Max:           100 / 600 kbps
+      Median:              400 kbps
+      Std deviation:       156.1 kbps
+      Variance:            24,366.4
+      25th/75th %ile:      400 / 600 kbps
+
+  [SWITCHES]
+      Total count:       7
+      Up / Down:         4 / 3
+      Avg magnitude:     386 kbps
+
+  [REBUFFERING]
+      Events:            13
+      Total time:        34,679 ms
+      Ratio:             28.2912%
+      Frequency:         8.874 per minute
+      Avg duration:      2,883 ms
+      Max duration:      13,448 ms
+
+  [THROUGHPUT]
+      Average:           808 kbps
+      Median:            869 kbps
+      Min / Max:         0 / 886 kbps
+      Std deviation:     187.5 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           808 kbps
+      Min / Max:         0 / 886 kbps
+      Utilisation:       107.5%
+
+  [BUFFER]
+      Average level:     2.4 s
+      Min / Max:         0.1 / 10.7 s
+
+  [UTILIZATION]
+      Bandwidth:         48.9%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_fcc/benchmark_dash_trace_925800_http---www.ebay_part0_tc_20260526_110149.json
+
+──────────────────────────────────────────────────────────────────────
+  [19/21] trace_939562_http---www.google_part1_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_939562_http---www.google_part1_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] Warning: could not reach /startShaping: HTTPConnectionPool(host='localhost', port=8080): Read timed out. (read timeout=5)
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 37 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 9430ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 13.8s | bitrate: 100 kbps | tp: 1676 kbps | trace_bw: 1676 kbps
+   t=20s | buffer: 15.7s | bitrate: 100 kbps | tp: 1676 kbps | trace_bw: 1676 kbps
+   t=31s | buffer: 13.4s | bitrate: 100 kbps | tp: 1676 kbps | trace_bw: 1676 kbps
+   t=41s | buffer: 15.3s | bitrate: 100 kbps | tp: 1676 kbps | trace_bw: 1676 kbps
+   t=51s | buffer: 12.9s | bitrate: 100 kbps | tp: 1676 kbps | trace_bw: 1676 kbps
+   t=61s | buffer: 14.8s | bitrate: 100 kbps | tp: 1676 kbps | trace_bw: 1676 kbps
+   t=72s | buffer: 12.5s | bitrate: 100 kbps | tp: 1676 kbps | trace_bw: 1676 kbps
+   t=82s | buffer: 14.4s | bitrate: 100 kbps | tp: 1676 kbps | trace_bw: 1676 kbps
+   t=92s | buffer: 4.0s | bitrate: 1200 kbps | tp: 1676 kbps | trace_bw: 1676 kbps
+   t=102s | buffer: 2.9s | bitrate: 1200 kbps | tp: 1676 kbps | trace_bw: 1676 kbps
+   t=113s | buffer: 2.7s | bitrate: 1200 kbps | tp: 1676 kbps | trace_bw: 1676 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8080/chunk-stream4-00029.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8080/
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+  - ← 200 OK
+  -   server: SimpleHTTP/0.6 Python/3.11.15
+  -   date: Tue, 26 May 2026 18:06:25 GMT
+  -   content-type: video/iso.segment
+  -   content-length: 481243
+  -   last-modified: Wed, 22 Apr 2026 18:42:37 GMT
+  -   access-control-allow-origin: *
+  -   access-control-allow-methods: GET, OPTIONS
+  -   access-control-allow-headers: Content-Type, Range
+  -   access-control-expose-headers: Content-Length, Content-Range
+  -   cache-control: public, max-age=31536000
+)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     9,430 ms
+      Playback time:     111.9 s
+
+  [BITRATE]
+      Average (selected):  583 kbps
+      Average (effective): 537 kbps
+      Min / Max:           100 / 1,200 kbps
+      Median:              100 kbps
+      Std deviation:       513.8 kbps
+      Variance:            263,965.6
+      25th/75th %ile:      100 / 1,200 kbps
+
+  [SWITCHES]
+      Total count:       4
+      Up / Down:         2 / 2
+      Avg magnitude:     925 kbps
+
+  [REBUFFERING]
+      Events:            6
+      Total time:        9,475 ms
+      Ratio:             7.8072%
+      Frequency:         3.218 per minute
+      Avg duration:      1,875 ms
+      Max duration:      5,098 ms
+
+  [THROUGHPUT]
+      Average:           1,676 kbps
+      Median:            1,676 kbps
+      Min / Max:         1,676 / 1,676 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,676 kbps
+      Min / Max:         1,676 / 1,676 kbps
+      Utilisation:       100.0%
+
+  [BUFFER]
+      Average level:     10.2 s
+      Min / Max:         0.1 / 16.2 s
+
+  [UTILIZATION]
+      Bandwidth:         34.8%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_fcc/benchmark_dash_trace_939562_http---www.google_part1_tc_20260526_110417.json
+
+──────────────────────────────────────────────────────────────────────
+  [20/21] trace_939592_http---www.facebook_part0_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_939592_http---www.facebook_part0_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 38 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 15522ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 2.0s | bitrate: 1200 kbps | tp: 1080 kbps | trace_bw: 1080 kbps
+   t=21s | buffer: 0.1s | bitrate: 100 kbps | tp: 1454 kbps | trace_bw: 1454 kbps
+   t=31s | buffer: 0.1s | bitrate: 100 kbps | tp: 1442 kbps | trace_bw: 1442 kbps
+   t=41s | buffer: 0.1s | bitrate: 1200 kbps | tp: 1408 kbps | trace_bw: 1408 kbps
+   t=51s | buffer: 0.1s | bitrate: 800 kbps | tp: 1379 kbps | trace_bw: 1379 kbps
+   t=62s | buffer: 0.8s | bitrate: 800 kbps | tp: 1360 kbps | trace_bw: 1360 kbps
+   t=72s | buffer: 2.3s | bitrate: 800 kbps | tp: 1038 kbps | trace_bw: 1038 kbps
+   t=82s | buffer: 0.1s | bitrate: 100 kbps | tp: 1432 kbps | trace_bw: 1432 kbps
+   t=92s | buffer: 0.1s | bitrate: 100 kbps | tp: 1386 kbps | trace_bw: 1386 kbps
+   t=103s | buffer: 0.1s | bitrate: 100 kbps | tp: 1331 kbps | trace_bw: 1331 kbps
+   t=113s | buffer: 0.1s | bitrate: 600 kbps | tp: 1130 kbps | trace_bw: 1130 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     15,522 ms
+      Playback time:     43.9 s
+
+  [BITRATE]
+      Average (selected):  429 kbps
+      Average (effective): 154 kbps
+      Min / Max:           100 / 1,200 kbps
+      Median:              600 kbps
+      Std deviation:       348.7 kbps
+      Variance:            121,562.3
+      25th/75th %ile:      100 / 800 kbps
+
+  [SWITCHES]
+      Total count:       18
+      Up / Down:         9 / 9
+      Avg magnitude:     722 kbps
+
+  [REBUFFERING]
+      Events:            10
+      Total time:        78,284 ms
+      Ratio:             64.0765%
+      Frequency:         13.671 per minute
+      Avg duration:      7,721 ms
+      Max duration:      10,775 ms
+
+  [THROUGHPUT]
+      Average:           1,304 kbps
+      Median:            1,379 kbps
+      Min / Max:         1,028 / 1,454 kbps
+      Std deviation:     155.4 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,304 kbps
+      Min / Max:         1,028 / 1,454 kbps
+      Utilisation:       105.8%
+
+  [BUFFER]
+      Average level:     1.0 s
+      Min / Max:         0.1 / 8.0 s
+
+  [UTILIZATION]
+      Bandwidth:         31.1%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_fcc/benchmark_dash_trace_939592_http---www.facebook_part0_tc_20260526_110632.json
+
+──────────────────────────────────────────────────────────────────────
+  [21/21] trace_9542_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_9542_3g_tc.csv
+[DASH-SHAPER] Triggering tc-trace via /startShaping API...
+[DASH-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  DASH Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8080
+======================================================================
+
+[TRACE] Loaded 333 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER-ERROR] Settings parameter streaming.timeouts is not supported
+[BROWSER] Waiting for playback to start...
+   Startup delay: 17637ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 100 kbps | tp: 927 kbps | trace_bw: 927 kbps
+   t=21s | buffer: 7.5s | bitrate: 800 kbps | tp: 1105 kbps | trace_bw: 1105 kbps
+   t=31s | buffer: 1.4s | bitrate: 800 kbps | tp: 1177 kbps | trace_bw: 1177 kbps
+   t=41s | buffer: 0.1s | bitrate: 100 kbps | tp: 1006 kbps | trace_bw: 1006 kbps
+   t=51s | buffer: 0.1s | bitrate: 800 kbps | tp: 954 kbps | trace_bw: 954 kbps
+   t=62s | buffer: 0.7s | bitrate: 600 kbps | tp: 1093 kbps | trace_bw: 1093 kbps
+   t=72s | buffer: 3.1s | bitrate: 600 kbps | tp: 1094 kbps | trace_bw: 1094 kbps
+   t=82s | buffer: 0.1s | bitrate: 100 kbps | tp: 1043 kbps | trace_bw: 1043 kbps
+   t=92s | buffer: 0.1s | bitrate: 100 kbps | tp: 1141 kbps | trace_bw: 1141 kbps
+   t=103s | buffer: 0.1s | bitrate: 100 kbps | tp: 984 kbps | trace_bw: 984 kbps
+   t=113s | buffer: 0.1s | bitrate: 400 kbps | tp: 1176 kbps | trace_bw: 1176 kbps
+
+[ERROR] DASH server unreachable at http://localhost:8080
+        Make sure hls-dash-server is running on the correct port.
+        (route.fetch failed: Route.fetch: Target page, context or browser has been closed
+Call log:
+→ GET http://localhost:8080/init-stream2.m4s
+  -   user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/112.0.5615.49 Safari/537.36
+  -   accept: */*
+  -   accept-encoding: gzip,deflate,br
+  -   referer: http://localhost:8080/
+  -   sec-ch-ua: 
+  -   sec-ch-ua-mobile: ?0
+  -   sec-ch-ua-platform: ""
+)
+
+======================================================================
+  BENCHMARK RESULTS (DASH / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     17,637 ms
+      Playback time:     56.4 s
+
+  [BITRATE]
+      Average (selected):  317 kbps
+      Average (effective): 146 kbps
+      Min / Max:           100 / 800 kbps
+      Median:              100 kbps
+      Std deviation:       246.1 kbps
+      Variance:            60,585.2
+      25th/75th %ile:      100 / 600 kbps
+
+  [SWITCHES]
+      Total count:       15
+      Up / Down:         8 / 7
+      Avg magnitude:     487 kbps
+
+  [REBUFFERING]
+      Events:            8
+      Total time:        66,241 ms
+      Ratio:             54.0132%
+      Frequency:         8.511 per minute
+      Avg duration:      8,280 ms
+      Max duration:      12,348 ms
+
+  [THROUGHPUT]
+      Average:           1,051 kbps
+      Median:            1,055 kbps
+      Min / Max:         813 / 1,177 kbps
+      Std deviation:     64.1 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,051 kbps
+      Min / Max:         813 / 1,177 kbps
+      Utilisation:       100.4%
+
+  [BUFFER]
+      Average level:     2.0 s
+      Min / Max:         0.1 / 11.0 s
+
+  [UTILIZATION]
+      Bandwidth:         30.0%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/dash_fcc/benchmark_dash_trace_9542_3g_tc_20260526_110853.json
+
+======================================================================
+  BATCH COMPLETE: 21/21 succeeded
+  Results saved to: results/results/run_all_20260525_151403/dash_fcc/
+======================================================================
+

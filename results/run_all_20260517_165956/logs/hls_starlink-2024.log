@@ -1,0 +1,3331 @@
+
+======================================================================
+  BATCH RUN: 40 trace(s) from traces/starlink-2024
+======================================================================
+
+
+──────────────────────────────────────────────────────────────────────
+  [1/40] starlink_road_000_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_000_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1262ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 205685 kbps | trace_bw: 205685 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 30583 kbps | trace_bw: 30583 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 76507 kbps | trace_bw: 76507 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 79883 kbps | trace_bw: 79883 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 221498 kbps | trace_bw: 221498 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 131458 kbps | trace_bw: 131458 kbps
+   t=71s | buffer: 33.0s | bitrate: 4950 kbps | tp: 145147 kbps | trace_bw: 145147 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 122084 kbps | trace_bw: 122084 kbps
+   t=91s | buffer: 32.8s | bitrate: 4950 kbps | tp: 59596 kbps | trace_bw: 59596 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 80613 kbps | trace_bw: 80613 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 187993 kbps | trace_bw: 187993 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,262 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,770 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       807.9 kbps
+      Variance:            652,777.1
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        759 ms
+      Ratio:             0.6272%
+      Frequency:         0.499 per minute
+      Avg duration:      759 ms
+      Max duration:      759 ms
+
+  [THROUGHPUT]
+      Average:           147,647 kbps
+      Median:            136,608 kbps
+      Min / Max:         16,878 / 347,519 kbps
+      Std deviation:     78,259.1 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           147,647 kbps
+      Min / Max:         16,878 / 347,519 kbps
+      Utilisation:       92.5%
+
+  [BUFFER]
+      Average level:     30.2 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         3.5%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_000_tc_20260518_015332.json
+
+──────────────────────────────────────────────────────────────────────
+  [2/40] starlink_road_001_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_001_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1052ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 226300 kbps | trace_bw: 226300 kbps
+   t=20s | buffer: 27.8s | bitrate: 4950 kbps | tp: 307646 kbps | trace_bw: 307646 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 224577 kbps | trace_bw: 224577 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 159758 kbps | trace_bw: 159758 kbps
+   t=51s | buffer: 33.3s | bitrate: 4950 kbps | tp: 250530 kbps | trace_bw: 250530 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 325905 kbps | trace_bw: 325905 kbps
+   t=71s | buffer: 33.1s | bitrate: 4950 kbps | tp: 268279 kbps | trace_bw: 268279 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 297054 kbps | trace_bw: 297054 kbps
+   t=91s | buffer: 32.8s | bitrate: 4950 kbps | tp: 338367 kbps | trace_bw: 338367 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 213135 kbps | trace_bw: 213135 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 251983 kbps | trace_bw: 251983 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,052 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,780 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        484 ms
+      Ratio:             0.4011%
+      Frequency:         0.499 per minute
+      Avg duration:      484 ms
+      Max duration:      484 ms
+
+  [THROUGHPUT]
+      Average:           258,611 kbps
+      Median:            254,256 kbps
+      Min / Max:         49,046 / 404,908 kbps
+      Std deviation:     67,828.7 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           258,611 kbps
+      Min / Max:         49,046 / 404,908 kbps
+      Utilisation:       98.3%
+
+  [BUFFER]
+      Average level:     29.5 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         1.9%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_001_tc_20260518_015537.json
+
+──────────────────────────────────────────────────────────────────────
+  [3/40] starlink_road_002_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_002_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 999ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 25.9s | bitrate: 4950 kbps | tp: 198341 kbps | trace_bw: 198341 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 174362 kbps | trace_bw: 174362 kbps
+   t=30s | buffer: 29.7s | bitrate: 4950 kbps | tp: 265601 kbps | trace_bw: 265601 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 306339 kbps | trace_bw: 306339 kbps
+   t=51s | buffer: 29.4s | bitrate: 4950 kbps | tp: 269270 kbps | trace_bw: 269270 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 226880 kbps | trace_bw: 226880 kbps
+   t=71s | buffer: 29.1s | bitrate: 4950 kbps | tp: 281890 kbps | trace_bw: 281890 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 424419 kbps | trace_bw: 424419 kbps
+   t=91s | buffer: 28.8s | bitrate: 4950 kbps | tp: 214341 kbps | trace_bw: 214341 kbps
+   t=101s | buffer: 30.7s | bitrate: 4950 kbps | tp: 196233 kbps | trace_bw: 196233 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 205083 kbps | trace_bw: 205083 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     999 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        477 ms
+      Ratio:             0.3953%
+      Frequency:         0.499 per minute
+      Avg duration:      477 ms
+      Max duration:      477 ms
+
+  [THROUGHPUT]
+      Average:           236,711 kbps
+      Median:            236,157 kbps
+      Min / Max:         0 / 424,419 kbps
+      Std deviation:     70,545.4 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           236,711 kbps
+      Min / Max:         0 / 424,419 kbps
+      Utilisation:       99.8%
+
+  [BUFFER]
+      Average level:     29.0 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         2.0%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_002_tc_20260518_015741.json
+
+──────────────────────────────────────────────────────────────────────
+  [4/40] starlink_road_003_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_003_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1005ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 336052 kbps | trace_bw: 336052 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 274722 kbps | trace_bw: 274722 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 350577 kbps | trace_bw: 350577 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 395258 kbps | trace_bw: 395258 kbps
+   t=51s | buffer: 31.9s | bitrate: 4950 kbps | tp: 409704 kbps | trace_bw: 409704 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 345976 kbps | trace_bw: 345976 kbps
+   t=71s | buffer: 33.1s | bitrate: 4950 kbps | tp: 333008 kbps | trace_bw: 333008 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 357030 kbps | trace_bw: 357030 kbps
+   t=91s | buffer: 32.8s | bitrate: 4950 kbps | tp: 384959 kbps | trace_bw: 384959 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 427725 kbps | trace_bw: 427725 kbps
+   t=112s | buffer: 28.5s | bitrate: 4950 kbps | tp: 405937 kbps | trace_bw: 405937 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,005 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        475 ms
+      Ratio:             0.3936%
+      Frequency:         0.499 per minute
+      Avg duration:      475 ms
+      Max duration:      475 ms
+
+  [THROUGHPUT]
+      Average:           361,178 kbps
+      Median:            358,647 kbps
+      Min / Max:         234,805 / 427,736 kbps
+      Std deviation:     50,440.5 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           361,178 kbps
+      Min / Max:         234,805 / 427,736 kbps
+      Utilisation:       99.3%
+
+  [BUFFER]
+      Average level:     30.1 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         1.3%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_003_tc_20260518_015946.json
+
+──────────────────────────────────────────────────────────────────────
+  [5/40] starlink_road_004_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_004_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 104 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1110ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 21.9s | bitrate: 4950 kbps | tp: 239545 kbps | trace_bw: 239545 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 265265 kbps | trace_bw: 265265 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 222654 kbps | trace_bw: 222654 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 323422 kbps | trace_bw: 323422 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 286032 kbps | trace_bw: 286032 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 408033 kbps | trace_bw: 408033 kbps
+   t=71s | buffer: 29.1s | bitrate: 4950 kbps | tp: 353710 kbps | trace_bw: 353710 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 339147 kbps | trace_bw: 339147 kbps
+   t=91s | buffer: 32.8s | bitrate: 4950 kbps | tp: 51583 kbps | trace_bw: 51583 kbps
+   t=101s | buffer: 30.7s | bitrate: 4950 kbps | tp: 285805 kbps | trace_bw: 285805 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 251799 kbps | trace_bw: 251799 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,110 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,779 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        513 ms
+      Ratio:             0.4250%
+      Frequency:         0.499 per minute
+      Avg duration:      513 ms
+      Max duration:      513 ms
+
+  [THROUGHPUT]
+      Average:           286,621 kbps
+      Median:            286,208 kbps
+      Min / Max:         0 / 425,662 kbps
+      Std deviation:     71,950.2 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           286,621 kbps
+      Min / Max:         0 / 425,662 kbps
+      Utilisation:       99.9%
+
+  [BUFFER]
+      Average level:     29.0 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         1.7%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_004_tc_20260518_020151.json
+
+──────────────────────────────────────────────────────────────────────
+  [6/40] starlink_road_005_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_005_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1157ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 360784 kbps | trace_bw: 360784 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 427022 kbps | trace_bw: 427022 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 333249 kbps | trace_bw: 333249 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 425147 kbps | trace_bw: 425147 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 294488 kbps | trace_bw: 294488 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 386870 kbps | trace_bw: 386870 kbps
+   t=71s | buffer: 29.1s | bitrate: 4950 kbps | tp: 343570 kbps | trace_bw: 343570 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 337764 kbps | trace_bw: 337764 kbps
+   t=91s | buffer: 32.8s | bitrate: 4950 kbps | tp: 426245 kbps | trace_bw: 426245 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 418420 kbps | trace_bw: 418420 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 187347 kbps | trace_bw: 187347 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,157 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,745 kbps
+      Average (effective): 4,724 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       852.4 kbps
+      Variance:            726,591.6
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       2
+      Up / Down:         2 / 0
+      Avg magnitude:     2,255 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        519 ms
+      Ratio:             0.4298%
+      Frequency:         0.499 per minute
+      Avg duration:      519 ms
+      Max duration:      519 ms
+
+  [THROUGHPUT]
+      Average:           342,362 kbps
+      Median:            345,364 kbps
+      Min / Max:         85,160 / 427,022 kbps
+      Std deviation:     67,441.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           342,362 kbps
+      Min / Max:         85,160 / 427,022 kbps
+      Utilisation:       100.9%
+
+  [BUFFER]
+      Average level:     29.4 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         1.4%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_005_tc_20260518_020356.json
+
+──────────────────────────────────────────────────────────────────────
+  [7/40] starlink_road_006_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_006_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1004ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 294772 kbps | trace_bw: 294772 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 266233 kbps | trace_bw: 266233 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 351432 kbps | trace_bw: 351432 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 421835 kbps | trace_bw: 421835 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 137073 kbps | trace_bw: 137073 kbps
+   t=61s | buffer: 31.1s | bitrate: 4950 kbps | tp: 406237 kbps | trace_bw: 406237 kbps
+   t=71s | buffer: 29.0s | bitrate: 4950 kbps | tp: 356404 kbps | trace_bw: 356404 kbps
+   t=81s | buffer: 30.8s | bitrate: 4950 kbps | tp: 243324 kbps | trace_bw: 243324 kbps
+   t=91s | buffer: 32.7s | bitrate: 4950 kbps | tp: 319286 kbps | trace_bw: 319286 kbps
+   t=102s | buffer: 30.5s | bitrate: 4950 kbps | tp: 310707 kbps | trace_bw: 310707 kbps
+   t=112s | buffer: 32.4s | bitrate: 4950 kbps | tp: 275549 kbps | trace_bw: 275549 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,004 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        476 ms
+      Ratio:             0.3941%
+      Frequency:         0.499 per minute
+      Avg duration:      476 ms
+      Max duration:      476 ms
+
+  [THROUGHPUT]
+      Average:           313,353 kbps
+      Median:            310,707 kbps
+      Min / Max:         0 / 473,148 kbps
+      Std deviation:     76,843.2 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           313,353 kbps
+      Min / Max:         0 / 473,148 kbps
+      Utilisation:       99.2%
+
+  [BUFFER]
+      Average level:     29.9 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         1.5%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_006_tc_20260518_020600.json
+
+──────────────────────────────────────────────────────────────────────
+  [8/40] starlink_road_007_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_007_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1038ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 230893 kbps | trace_bw: 230893 kbps
+   t=20s | buffer: 31.7s | bitrate: 4950 kbps | tp: 384452 kbps | trace_bw: 384452 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 269542 kbps | trace_bw: 269542 kbps
+   t=41s | buffer: 31.4s | bitrate: 4950 kbps | tp: 309434 kbps | trace_bw: 309434 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 348530 kbps | trace_bw: 348530 kbps
+   t=61s | buffer: 31.1s | bitrate: 4950 kbps | tp: 275692 kbps | trace_bw: 275692 kbps
+   t=71s | buffer: 33.0s | bitrate: 4950 kbps | tp: 407240 kbps | trace_bw: 407240 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 407408 kbps | trace_bw: 407408 kbps
+   t=91s | buffer: 32.7s | bitrate: 4950 kbps | tp: 355026 kbps | trace_bw: 355026 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 304420 kbps | trace_bw: 304420 kbps
+   t=112s | buffer: 28.4s | bitrate: 4950 kbps | tp: 240790 kbps | trace_bw: 240790 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,038 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        475 ms
+      Ratio:             0.3933%
+      Frequency:         0.499 per minute
+      Avg duration:      475 ms
+      Max duration:      475 ms
+
+  [THROUGHPUT]
+      Average:           304,039 kbps
+      Median:            300,147 kbps
+      Min / Max:         185,574 / 458,440 kbps
+      Std deviation:     60,405.8 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           304,039 kbps
+      Min / Max:         185,574 / 458,440 kbps
+      Utilisation:       98.7%
+
+  [BUFFER]
+      Average level:     29.8 s
+      Min / Max:         0.0 / 33.2 s
+
+  [UTILIZATION]
+      Bandwidth:         1.6%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_007_tc_20260518_020805.json
+
+──────────────────────────────────────────────────────────────────────
+  [9/40] starlink_road_008_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_008_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1156ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 383175 kbps | trace_bw: 383175 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 225711 kbps | trace_bw: 225711 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 204838 kbps | trace_bw: 204838 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 374152 kbps | trace_bw: 374152 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 425475 kbps | trace_bw: 425475 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 389161 kbps | trace_bw: 389161 kbps
+   t=71s | buffer: 29.0s | bitrate: 4950 kbps | tp: 407537 kbps | trace_bw: 407537 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 343083 kbps | trace_bw: 343083 kbps
+   t=91s | buffer: 32.7s | bitrate: 4950 kbps | tp: 381646 kbps | trace_bw: 381646 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 407571 kbps | trace_bw: 407571 kbps
+   t=112s | buffer: 32.4s | bitrate: 4950 kbps | tp: 371867 kbps | trace_bw: 371867 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,156 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  4,745 kbps
+      Average (effective): 4,724 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       852.4 kbps
+      Variance:            726,591.6
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       2
+      Up / Down:         2 / 0
+      Avg magnitude:     2,255 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        519 ms
+      Ratio:             0.4297%
+      Frequency:         0.499 per minute
+      Avg duration:      519 ms
+      Max duration:      519 ms
+
+  [THROUGHPUT]
+      Average:           361,130 kbps
+      Median:            372,889 kbps
+      Min / Max:         96,415 / 427,006 kbps
+      Std deviation:     56,696.3 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           361,130 kbps
+      Min / Max:         96,415 / 427,006 kbps
+      Utilisation:       103.3%
+
+  [BUFFER]
+      Average level:     29.7 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         1.3%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_008_tc_20260518_021010.json
+
+──────────────────────────────────────────────────────────────────────
+  [10/40] starlink_road_009_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_009_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1116ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 17.9s | bitrate: 4950 kbps | tp: 346640 kbps | trace_bw: 346640 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 282936 kbps | trace_bw: 282936 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 149329 kbps | trace_bw: 149329 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 223316 kbps | trace_bw: 223316 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 225886 kbps | trace_bw: 225886 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 147474 kbps | trace_bw: 147474 kbps
+   t=71s | buffer: 33.1s | bitrate: 4950 kbps | tp: 197135 kbps | trace_bw: 197135 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 263930 kbps | trace_bw: 263930 kbps
+   t=91s | buffer: 32.8s | bitrate: 4950 kbps | tp: 215913 kbps | trace_bw: 215913 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 241659 kbps | trace_bw: 241659 kbps
+   t=112s | buffer: 28.5s | bitrate: 4950 kbps | tp: 0 kbps | trace_bw: 0 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,116 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,779 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        510 ms
+      Ratio:             0.4225%
+      Frequency:         0.499 per minute
+      Avg duration:      510 ms
+      Max duration:      510 ms
+
+  [THROUGHPUT]
+      Average:           217,246 kbps
+      Median:            239,191 kbps
+      Min / Max:         0 / 385,283 kbps
+      Std deviation:     102,566.5 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           217,246 kbps
+      Min / Max:         0 / 385,283 kbps
+      Utilisation:       110.1%
+
+  [BUFFER]
+      Average level:     28.9 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         2.0%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_009_tc_20260518_021215.json
+
+──────────────────────────────────────────────────────────────────────
+  [11/40] starlink_road_010_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_010_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1232ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 21.9s | bitrate: 4950 kbps | tp: 362305 kbps | trace_bw: 362305 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 315749 kbps | trace_bw: 315749 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 187625 kbps | trace_bw: 187625 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 322013 kbps | trace_bw: 322013 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 361944 kbps | trace_bw: 361944 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 346095 kbps | trace_bw: 346095 kbps
+   t=71s | buffer: 33.1s | bitrate: 4950 kbps | tp: 282100 kbps | trace_bw: 282100 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 348666 kbps | trace_bw: 348666 kbps
+   t=91s | buffer: 32.8s | bitrate: 4950 kbps | tp: 169451 kbps | trace_bw: 169451 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 371441 kbps | trace_bw: 371441 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 380746 kbps | trace_bw: 380746 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,232 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,745 kbps
+      Average (effective): 4,723 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       852.4 kbps
+      Variance:            726,591.6
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       2
+      Up / Down:         2 / 0
+      Avg magnitude:     2,255 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        556 ms
+      Ratio:             0.4603%
+      Frequency:         0.499 per minute
+      Avg duration:      556 ms
+      Max duration:      556 ms
+
+  [THROUGHPUT]
+      Average:           303,589 kbps
+      Median:            314,793 kbps
+      Min / Max:         150,765 / 416,604 kbps
+      Std deviation:     64,269.7 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           303,589 kbps
+      Min / Max:         150,765 / 416,604 kbps
+      Utilisation:       103.7%
+
+  [BUFFER]
+      Average level:     29.2 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         1.5%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_010_tc_20260518_021420.json
+
+──────────────────────────────────────────────────────────────────────
+  [12/40] starlink_road_011_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_011_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1536ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 3300 kbps | tp: 424459 kbps | trace_bw: 424459 kbps
+   t=20s | buffer: 27.8s | bitrate: 4950 kbps | tp: 413319 kbps | trace_bw: 413319 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 350102 kbps | trace_bw: 350102 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 275589 kbps | trace_bw: 275589 kbps
+   t=51s | buffer: 29.4s | bitrate: 4950 kbps | tp: 327479 kbps | trace_bw: 327479 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 420590 kbps | trace_bw: 420590 kbps
+   t=71s | buffer: 29.1s | bitrate: 4950 kbps | tp: 334492 kbps | trace_bw: 334492 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 407405 kbps | trace_bw: 407405 kbps
+   t=91s | buffer: 32.8s | bitrate: 4950 kbps | tp: 350087 kbps | trace_bw: 350087 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 424244 kbps | trace_bw: 424244 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 264858 kbps | trace_bw: 264858 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,536 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,580 kbps
+      Average (effective): 4,545 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       1,041.8 kbps
+      Variance:            1,085,356.6
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       3
+      Up / Down:         3 / 0
+      Avg magnitude:     1,503 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        922 ms
+      Ratio:             0.7612%
+      Frequency:         0.499 per minute
+      Avg duration:      922 ms
+      Max duration:      922 ms
+
+  [THROUGHPUT]
+      Average:           345,936 kbps
+      Median:            348,352 kbps
+      Min / Max:         0 / 437,832 kbps
+      Std deviation:     79,597.2 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           345,936 kbps
+      Min / Max:         0 / 437,832 kbps
+      Utilisation:       100.7%
+
+  [BUFFER]
+      Average level:     29.5 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         1.3%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_011_tc_20260518_021625.json
+
+──────────────────────────────────────────────────────────────────────
+  [13/40] starlink_road_012_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_012_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1038ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 394865 kbps | trace_bw: 394865 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 242061 kbps | trace_bw: 242061 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 53735 kbps | trace_bw: 53735 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 57206 kbps | trace_bw: 57206 kbps
+   t=51s | buffer: 29.4s | bitrate: 4950 kbps | tp: 60539 kbps | trace_bw: 60539 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 299410 kbps | trace_bw: 299410 kbps
+   t=71s | buffer: 33.1s | bitrate: 4950 kbps | tp: 252089 kbps | trace_bw: 252089 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 307715 kbps | trace_bw: 307715 kbps
+   t=91s | buffer: 32.8s | bitrate: 4950 kbps | tp: 382682 kbps | trace_bw: 382682 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 392780 kbps | trace_bw: 392780 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 274643 kbps | trace_bw: 274643 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,038 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        481 ms
+      Ratio:             0.3985%
+      Frequency:         0.499 per minute
+      Avg duration:      481 ms
+      Max duration:      481 ms
+
+  [THROUGHPUT]
+      Average:           247,607 kbps
+      Median:            281,403 kbps
+      Min / Max:         50,542 / 423,024 kbps
+      Std deviation:     121,772.1 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           247,607 kbps
+      Min / Max:         50,542 / 423,024 kbps
+      Utilisation:       113.6%
+
+  [BUFFER]
+      Average level:     29.8 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         1.7%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_012_tc_20260518_021830.json
+
+──────────────────────────────────────────────────────────────────────
+  [14/40] starlink_road_013_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_013_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 985ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 243403 kbps | trace_bw: 243403 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 299772 kbps | trace_bw: 299772 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 216724 kbps | trace_bw: 216724 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 268581 kbps | trace_bw: 268581 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 353189 kbps | trace_bw: 353189 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 219365 kbps | trace_bw: 219365 kbps
+   t=71s | buffer: 33.0s | bitrate: 4950 kbps | tp: 378377 kbps | trace_bw: 378377 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 201584 kbps | trace_bw: 201584 kbps
+   t=91s | buffer: 28.7s | bitrate: 4950 kbps | tp: 149281 kbps | trace_bw: 149281 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 177872 kbps | trace_bw: 177872 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 68820 kbps | trace_bw: 68820 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     985 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        472 ms
+      Ratio:             0.3910%
+      Frequency:         0.499 per minute
+      Avg duration:      472 ms
+      Max duration:      472 ms
+
+  [THROUGHPUT]
+      Average:           252,618 kbps
+      Median:            268,581 kbps
+      Min / Max:         0 / 421,411 kbps
+      Std deviation:     114,246.3 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           252,618 kbps
+      Min / Max:         0 / 421,411 kbps
+      Utilisation:       106.3%
+
+  [BUFFER]
+      Average level:     30.0 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         1.8%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_013_tc_20260518_022035.json
+
+──────────────────────────────────────────────────────────────────────
+  [15/40] starlink_road_014_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_014_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1029ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 299891 kbps | trace_bw: 299891 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 418297 kbps | trace_bw: 418297 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 439805 kbps | trace_bw: 439805 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 443831 kbps | trace_bw: 443831 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 420213 kbps | trace_bw: 420213 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 404742 kbps | trace_bw: 404742 kbps
+   t=71s | buffer: 29.0s | bitrate: 4950 kbps | tp: 343154 kbps | trace_bw: 343154 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 209459 kbps | trace_bw: 209459 kbps
+   t=91s | buffer: 32.8s | bitrate: 4950 kbps | tp: 261844 kbps | trace_bw: 261844 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 293307 kbps | trace_bw: 293307 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 252002 kbps | trace_bw: 252002 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,029 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        466 ms
+      Ratio:             0.3861%
+      Frequency:         0.499 per minute
+      Avg duration:      466 ms
+      Max duration:      466 ms
+
+  [THROUGHPUT]
+      Average:           342,412 kbps
+      Median:            343,154 kbps
+      Min / Max:         80,323 / 495,080 kbps
+      Std deviation:     72,352.1 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           342,412 kbps
+      Min / Max:         80,323 / 495,080 kbps
+      Utilisation:       100.2%
+
+  [BUFFER]
+      Average level:     29.5 s
+      Min / Max:         0.0 / 33.4 s
+
+  [UTILIZATION]
+      Bandwidth:         1.4%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_014_tc_20260518_022240.json
+
+──────────────────────────────────────────────────────────────────────
+  [16/40] starlink_road_015_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_015_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 996ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 325141 kbps | trace_bw: 325141 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 167726 kbps | trace_bw: 167726 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 169018 kbps | trace_bw: 169018 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 131618 kbps | trace_bw: 131618 kbps
+   t=51s | buffer: 29.4s | bitrate: 4950 kbps | tp: 50783 kbps | trace_bw: 50783 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 160493 kbps | trace_bw: 160493 kbps
+   t=71s | buffer: 33.1s | bitrate: 4950 kbps | tp: 231391 kbps | trace_bw: 231391 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 29574 kbps | trace_bw: 29574 kbps
+   t=91s | buffer: 32.8s | bitrate: 4950 kbps | tp: 280807 kbps | trace_bw: 280807 kbps
+   t=101s | buffer: 30.7s | bitrate: 4950 kbps | tp: 156327 kbps | trace_bw: 156327 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 265305 kbps | trace_bw: 265305 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     996 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        475 ms
+      Ratio:             0.3937%
+      Frequency:         0.499 per minute
+      Avg duration:      475 ms
+      Max duration:      475 ms
+
+  [THROUGHPUT]
+      Average:           182,499 kbps
+      Median:            214,776 kbps
+      Min / Max:         16,322 / 388,294 kbps
+      Std deviation:     104,875.8 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           182,499 kbps
+      Min / Max:         16,322 / 388,294 kbps
+      Utilisation:       117.7%
+
+  [BUFFER]
+      Average level:     30.1 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         2.2%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_015_tc_20260518_022444.json
+
+──────────────────────────────────────────────────────────────────────
+  [17/40] starlink_road_016_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_016_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1001ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 338554 kbps | trace_bw: 338554 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 168849 kbps | trace_bw: 168849 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 388685 kbps | trace_bw: 388685 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 281410 kbps | trace_bw: 281410 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 377938 kbps | trace_bw: 377938 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 352368 kbps | trace_bw: 352368 kbps
+   t=71s | buffer: 29.1s | bitrate: 4950 kbps | tp: 353276 kbps | trace_bw: 353276 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 292282 kbps | trace_bw: 292282 kbps
+   t=91s | buffer: 28.8s | bitrate: 4950 kbps | tp: 143402 kbps | trace_bw: 143402 kbps
+   t=101s | buffer: 30.7s | bitrate: 4950 kbps | tp: 243549 kbps | trace_bw: 243549 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 347668 kbps | trace_bw: 347668 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,001 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        475 ms
+      Ratio:             0.3936%
+      Frequency:         0.499 per minute
+      Avg duration:      475 ms
+      Max duration:      475 ms
+
+  [THROUGHPUT]
+      Average:           284,601 kbps
+      Median:            323,878 kbps
+      Min / Max:         18,685 / 420,094 kbps
+      Std deviation:     94,328.8 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           284,601 kbps
+      Min / Max:         18,685 / 420,094 kbps
+      Utilisation:       113.8%
+
+  [BUFFER]
+      Average level:     29.8 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         1.5%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_016_tc_20260518_022649.json
+
+──────────────────────────────────────────────────────────────────────
+  [18/40] starlink_road_017_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_017_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1032ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 347509 kbps | trace_bw: 347509 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 342267 kbps | trace_bw: 342267 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 297313 kbps | trace_bw: 297313 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 234228 kbps | trace_bw: 234228 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 423685 kbps | trace_bw: 423685 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 382230 kbps | trace_bw: 382230 kbps
+   t=71s | buffer: 29.1s | bitrate: 4950 kbps | tp: 419272 kbps | trace_bw: 419272 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 375057 kbps | trace_bw: 375057 kbps
+   t=91s | buffer: 28.8s | bitrate: 4950 kbps | tp: 257184 kbps | trace_bw: 257184 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 247829 kbps | trace_bw: 247829 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 353822 kbps | trace_bw: 353822 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,032 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        473 ms
+      Ratio:             0.3919%
+      Frequency:         0.499 per minute
+      Avg duration:      473 ms
+      Max duration:      473 ms
+
+  [THROUGHPUT]
+      Average:           307,060 kbps
+      Median:            328,417 kbps
+      Min / Max:         9,058 / 423,685 kbps
+      Std deviation:     82,000.8 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           307,060 kbps
+      Min / Max:         9,058 / 423,685 kbps
+      Utilisation:       107.0%
+
+  [BUFFER]
+      Average level:     29.7 s
+      Min / Max:         0.0 / 33.4 s
+
+  [UTILIZATION]
+      Bandwidth:         1.5%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_017_tc_20260518_022854.json
+
+──────────────────────────────────────────────────────────────────────
+  [19/40] starlink_road_018_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_018_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1037ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 240882 kbps | trace_bw: 240882 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 353396 kbps | trace_bw: 353396 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 310709 kbps | trace_bw: 310709 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 357852 kbps | trace_bw: 357852 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 22059 kbps | trace_bw: 22059 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 276974 kbps | trace_bw: 276974 kbps
+   t=71s | buffer: 29.0s | bitrate: 4950 kbps | tp: 336862 kbps | trace_bw: 336862 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 356813 kbps | trace_bw: 356813 kbps
+   t=91s | buffer: 28.7s | bitrate: 4950 kbps | tp: 339943 kbps | trace_bw: 339943 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 344058 kbps | trace_bw: 344058 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 348726 kbps | trace_bw: 348726 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,037 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        467 ms
+      Ratio:             0.3868%
+      Frequency:         0.499 per minute
+      Avg duration:      467 ms
+      Max duration:      467 ms
+
+  [THROUGHPUT]
+      Average:           295,911 kbps
+      Median:            322,729 kbps
+      Min / Max:         22,059 / 401,614 kbps
+      Std deviation:     91,772.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           295,911 kbps
+      Min / Max:         22,059 / 401,614 kbps
+      Utilisation:       109.1%
+
+  [BUFFER]
+      Average level:     29.9 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         1.5%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_018_tc_20260518_023058.json
+
+──────────────────────────────────────────────────────────────────────
+  [20/40] starlink_road_019_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_019_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1032ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 259500 kbps | trace_bw: 259500 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 405415 kbps | trace_bw: 405415 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 268016 kbps | trace_bw: 268016 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 173514 kbps | trace_bw: 173514 kbps
+   t=51s | buffer: 29.4s | bitrate: 4950 kbps | tp: 260906 kbps | trace_bw: 260906 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 341463 kbps | trace_bw: 341463 kbps
+   t=71s | buffer: 29.1s | bitrate: 4950 kbps | tp: 203288 kbps | trace_bw: 203288 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 297643 kbps | trace_bw: 297643 kbps
+   t=91s | buffer: 32.8s | bitrate: 4950 kbps | tp: 344952 kbps | trace_bw: 344952 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 248907 kbps | trace_bw: 248907 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 230244 kbps | trace_bw: 230244 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,032 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        474 ms
+      Ratio:             0.3928%
+      Frequency:         0.499 per minute
+      Avg duration:      474 ms
+      Max duration:      474 ms
+
+  [THROUGHPUT]
+      Average:           274,706 kbps
+      Median:            281,548 kbps
+      Min / Max:         38,771 / 426,844 kbps
+      Std deviation:     83,325.1 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           274,706 kbps
+      Min / Max:         38,771 / 426,844 kbps
+      Utilisation:       102.5%
+
+  [BUFFER]
+      Average level:     29.6 s
+      Min / Max:         0.0 / 33.2 s
+
+  [UTILIZATION]
+      Bandwidth:         1.7%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_019_tc_20260518_023303.json
+
+──────────────────────────────────────────────────────────────────────
+  [21/40] starlink_road_020_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_020_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 993ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 168513 kbps | trace_bw: 168513 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 422665 kbps | trace_bw: 422665 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 289464 kbps | trace_bw: 289464 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 282092 kbps | trace_bw: 282092 kbps
+   t=51s | buffer: 33.3s | bitrate: 4950 kbps | tp: 214580 kbps | trace_bw: 214580 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 155132 kbps | trace_bw: 155132 kbps
+   t=71s | buffer: 30.7s | bitrate: 4950 kbps | tp: 270354 kbps | trace_bw: 270354 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 273695 kbps | trace_bw: 273695 kbps
+   t=91s | buffer: 32.7s | bitrate: 4950 kbps | tp: 247812 kbps | trace_bw: 247812 kbps
+   t=102s | buffer: 30.6s | bitrate: 4950 kbps | tp: 374348 kbps | trace_bw: 374348 kbps
+   t=112s | buffer: 32.4s | bitrate: 4950 kbps | tp: 422264 kbps | trace_bw: 422264 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     993 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        474 ms
+      Ratio:             0.3925%
+      Frequency:         0.499 per minute
+      Avg duration:      474 ms
+      Max duration:      474 ms
+
+  [THROUGHPUT]
+      Average:           277,513 kbps
+      Median:            271,560 kbps
+      Min / Max:         100,960 / 425,072 kbps
+      Std deviation:     82,507.3 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           277,513 kbps
+      Min / Max:         100,960 / 425,072 kbps
+      Utilisation:       97.9%
+
+  [BUFFER]
+      Average level:     30.2 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         1.8%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_020_tc_20260518_023508.json
+
+──────────────────────────────────────────────────────────────────────
+  [22/40] starlink_road_021_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_021_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1041ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 319209 kbps | trace_bw: 319209 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 282244 kbps | trace_bw: 282244 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 380521 kbps | trace_bw: 380521 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 263061 kbps | trace_bw: 263061 kbps
+   t=51s | buffer: 29.4s | bitrate: 4950 kbps | tp: 375680 kbps | trace_bw: 375680 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 37008 kbps | trace_bw: 37008 kbps
+   t=71s | buffer: 29.1s | bitrate: 4950 kbps | tp: 82820 kbps | trace_bw: 82820 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 235885 kbps | trace_bw: 235885 kbps
+   t=91s | buffer: 32.8s | bitrate: 4950 kbps | tp: 253388 kbps | trace_bw: 253388 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 178060 kbps | trace_bw: 178060 kbps
+   t=112s | buffer: 28.5s | bitrate: 4950 kbps | tp: 304508 kbps | trace_bw: 304508 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,041 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        474 ms
+      Ratio:             0.3928%
+      Frequency:         0.499 per minute
+      Avg duration:      474 ms
+      Max duration:      474 ms
+
+  [THROUGHPUT]
+      Average:           266,500 kbps
+      Median:            279,155 kbps
+      Min / Max:         28,763 / 426,173 kbps
+      Std deviation:     98,319.6 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           266,500 kbps
+      Min / Max:         28,763 / 426,173 kbps
+      Utilisation:       104.7%
+
+  [BUFFER]
+      Average level:     30.1 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         1.7%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_021_tc_20260518_023713.json
+
+──────────────────────────────────────────────────────────────────────
+  [23/40] starlink_road_022_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_022_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1027ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 135890 kbps | trace_bw: 135890 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 137801 kbps | trace_bw: 137801 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 212682 kbps | trace_bw: 212682 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 230230 kbps | trace_bw: 230230 kbps
+   t=51s | buffer: 29.4s | bitrate: 4950 kbps | tp: 424480 kbps | trace_bw: 424480 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 226916 kbps | trace_bw: 226916 kbps
+   t=71s | buffer: 33.1s | bitrate: 4950 kbps | tp: 163516 kbps | trace_bw: 163516 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 393240 kbps | trace_bw: 393240 kbps
+   t=91s | buffer: 28.8s | bitrate: 4950 kbps | tp: 341980 kbps | trace_bw: 341980 kbps
+   t=101s | buffer: 30.7s | bitrate: 4950 kbps | tp: 342956 kbps | trace_bw: 342956 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 382193 kbps | trace_bw: 382193 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,027 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        475 ms
+      Ratio:             0.3936%
+      Frequency:         0.499 per minute
+      Avg duration:      475 ms
+      Max duration:      475 ms
+
+  [THROUGHPUT]
+      Average:           282,103 kbps
+      Median:            274,337 kbps
+      Min / Max:         80,555 / 458,328 kbps
+      Std deviation:     99,756.1 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           282,103 kbps
+      Min / Max:         80,555 / 458,328 kbps
+      Utilisation:       97.2%
+
+  [BUFFER]
+      Average level:     29.6 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         1.7%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_022_tc_20260518_023917.json
+
+──────────────────────────────────────────────────────────────────────
+  [24/40] starlink_road_023_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_023_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1046ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 0 kbps | trace_bw: 0 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 355409 kbps | trace_bw: 355409 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 352490 kbps | trace_bw: 352490 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 290778 kbps | trace_bw: 290778 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 157501 kbps | trace_bw: 157501 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 373476 kbps | trace_bw: 373476 kbps
+   t=71s | buffer: 29.1s | bitrate: 4950 kbps | tp: 242626 kbps | trace_bw: 242626 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 223665 kbps | trace_bw: 223665 kbps
+   t=91s | buffer: 32.8s | bitrate: 4950 kbps | tp: 356853 kbps | trace_bw: 356853 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 351013 kbps | trace_bw: 351013 kbps
+   t=112s | buffer: 28.5s | bitrate: 4950 kbps | tp: 323358 kbps | trace_bw: 323358 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,046 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,780 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        482 ms
+      Ratio:             0.3994%
+      Frequency:         0.499 per minute
+      Avg duration:      482 ms
+      Max duration:      482 ms
+
+  [THROUGHPUT]
+      Average:           247,345 kbps
+      Median:            283,114 kbps
+      Min / Max:         0 / 406,982 kbps
+      Std deviation:     117,346.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           247,345 kbps
+      Min / Max:         0 / 406,982 kbps
+      Utilisation:       114.5%
+
+  [BUFFER]
+      Average level:     29.6 s
+      Min / Max:         0.0 / 33.2 s
+
+  [UTILIZATION]
+      Bandwidth:         1.7%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_023_tc_20260518_024122.json
+
+──────────────────────────────────────────────────────────────────────
+  [25/40] starlink_road_024_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_024_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1041ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 423166 kbps | trace_bw: 423166 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 336611 kbps | trace_bw: 336611 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 286485 kbps | trace_bw: 286485 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 331713 kbps | trace_bw: 331713 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 291478 kbps | trace_bw: 291478 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 322160 kbps | trace_bw: 322160 kbps
+   t=71s | buffer: 29.1s | bitrate: 4950 kbps | tp: 337559 kbps | trace_bw: 337559 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 321446 kbps | trace_bw: 321446 kbps
+   t=91s | buffer: 32.8s | bitrate: 4950 kbps | tp: 325175 kbps | trace_bw: 325175 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 350095 kbps | trace_bw: 350095 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 335491 kbps | trace_bw: 335491 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,041 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        475 ms
+      Ratio:             0.3936%
+      Frequency:         0.499 per minute
+      Avg duration:      475 ms
+      Max duration:      475 ms
+
+  [THROUGHPUT]
+      Average:           330,314 kbps
+      Median:            324,934 kbps
+      Min / Max:         72,388 / 463,596 kbps
+      Std deviation:     57,253.2 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           330,314 kbps
+      Min / Max:         72,388 / 463,596 kbps
+      Utilisation:       98.4%
+
+  [BUFFER]
+      Average level:     29.5 s
+      Min / Max:         0.0 / 33.2 s
+
+  [UTILIZATION]
+      Bandwidth:         1.5%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_024_tc_20260518_024327.json
+
+──────────────────────────────────────────────────────────────────────
+  [26/40] starlink_road_025_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_025_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 980ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 339459 kbps | trace_bw: 339459 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 387750 kbps | trace_bw: 387750 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 303375 kbps | trace_bw: 303375 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 327068 kbps | trace_bw: 327068 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 247125 kbps | trace_bw: 247125 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 142923 kbps | trace_bw: 142923 kbps
+   t=71s | buffer: 33.1s | bitrate: 4950 kbps | tp: 301057 kbps | trace_bw: 301057 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 66265 kbps | trace_bw: 66265 kbps
+   t=91s | buffer: 32.8s | bitrate: 4950 kbps | tp: 315999 kbps | trace_bw: 315999 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 268030 kbps | trace_bw: 268030 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 353796 kbps | trace_bw: 353796 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     980 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        469 ms
+      Ratio:             0.3886%
+      Frequency:         0.499 per minute
+      Avg duration:      469 ms
+      Max duration:      469 ms
+
+  [THROUGHPUT]
+      Average:           306,352 kbps
+      Median:            314,415 kbps
+      Min / Max:         66,265 / 419,601 kbps
+      Std deviation:     65,892.1 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           306,352 kbps
+      Min / Max:         66,265 / 419,601 kbps
+      Utilisation:       102.6%
+
+  [BUFFER]
+      Average level:     30.3 s
+      Min / Max:         0.0 / 33.4 s
+
+  [UTILIZATION]
+      Bandwidth:         1.5%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_025_tc_20260518_024532.json
+
+──────────────────────────────────────────────────────────────────────
+  [27/40] starlink_road_026_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_026_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1003ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 350509 kbps | trace_bw: 350509 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 134512 kbps | trace_bw: 134512 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 283390 kbps | trace_bw: 283390 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 236499 kbps | trace_bw: 236499 kbps
+   t=51s | buffer: 33.3s | bitrate: 4950 kbps | tp: 326145 kbps | trace_bw: 326145 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 317448 kbps | trace_bw: 317448 kbps
+   t=71s | buffer: 33.1s | bitrate: 4950 kbps | tp: 239994 kbps | trace_bw: 239994 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 350121 kbps | trace_bw: 350121 kbps
+   t=91s | buffer: 32.8s | bitrate: 4950 kbps | tp: 304142 kbps | trace_bw: 304142 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 275992 kbps | trace_bw: 275992 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 121839 kbps | trace_bw: 121839 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,003 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        472 ms
+      Ratio:             0.3911%
+      Frequency:         0.499 per minute
+      Avg duration:      472 ms
+      Max duration:      472 ms
+
+  [THROUGHPUT]
+      Average:           252,994 kbps
+      Median:            275,992 kbps
+      Min / Max:         0 / 360,403 kbps
+      Std deviation:     87,205.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           252,994 kbps
+      Min / Max:         0 / 360,403 kbps
+      Utilisation:       109.1%
+
+  [BUFFER]
+      Average level:     29.8 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         1.7%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_026_tc_20260518_024736.json
+
+──────────────────────────────────────────────────────────────────────
+  [28/40] starlink_road_027_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_027_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1002ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 270127 kbps | trace_bw: 270127 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 336745 kbps | trace_bw: 336745 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 248290 kbps | trace_bw: 248290 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 253456 kbps | trace_bw: 253456 kbps
+   t=51s | buffer: 29.4s | bitrate: 4950 kbps | tp: 371280 kbps | trace_bw: 371280 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 181546 kbps | trace_bw: 181546 kbps
+   t=71s | buffer: 29.1s | bitrate: 4950 kbps | tp: 105390 kbps | trace_bw: 105390 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 135129 kbps | trace_bw: 135129 kbps
+   t=91s | buffer: 32.8s | bitrate: 4950 kbps | tp: 400783 kbps | trace_bw: 400783 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 124992 kbps | trace_bw: 124992 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 203011 kbps | trace_bw: 203011 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,002 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        477 ms
+      Ratio:             0.3953%
+      Frequency:         0.499 per minute
+      Avg duration:      477 ms
+      Max duration:      477 ms
+
+  [THROUGHPUT]
+      Average:           231,115 kbps
+      Median:            244,898 kbps
+      Min / Max:         41,031 / 422,157 kbps
+      Std deviation:     98,170.2 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           231,115 kbps
+      Min / Max:         41,031 / 422,157 kbps
+      Utilisation:       106.0%
+
+  [BUFFER]
+      Average level:     30.0 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         2.0%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_027_tc_20260518_024941.json
+
+──────────────────────────────────────────────────────────────────────
+  [29/40] starlink_road_028_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_028_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1036ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 17.9s | bitrate: 4950 kbps | tp: 167080 kbps | trace_bw: 167080 kbps
+   t=20s | buffer: 27.8s | bitrate: 4950 kbps | tp: 175220 kbps | trace_bw: 175220 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 96430 kbps | trace_bw: 96430 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 176274 kbps | trace_bw: 176274 kbps
+   t=51s | buffer: 33.3s | bitrate: 4950 kbps | tp: 356440 kbps | trace_bw: 356440 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 270166 kbps | trace_bw: 270166 kbps
+   t=71s | buffer: 33.0s | bitrate: 4950 kbps | tp: 273691 kbps | trace_bw: 273691 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 167586 kbps | trace_bw: 167586 kbps
+   t=91s | buffer: 32.7s | bitrate: 4950 kbps | tp: 233649 kbps | trace_bw: 233649 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 0 kbps | trace_bw: 0 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 0 kbps | trace_bw: 0 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,036 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        475 ms
+      Ratio:             0.3935%
+      Frequency:         0.499 per minute
+      Avg duration:      475 ms
+      Max duration:      475 ms
+
+  [THROUGHPUT]
+      Average:           169,284 kbps
+      Median:            193,947 kbps
+      Min / Max:         0 / 366,660 kbps
+      Std deviation:     107,832.1 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           169,284 kbps
+      Min / Max:         0 / 366,660 kbps
+      Utilisation:       114.6%
+
+  [BUFFER]
+      Average level:     28.6 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         2.5%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_028_tc_20260518_025146.json
+
+──────────────────────────────────────────────────────────────────────
+  [30/40] starlink_road_029_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_029_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1032ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 184884 kbps | trace_bw: 184884 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 290950 kbps | trace_bw: 290950 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 393586 kbps | trace_bw: 393586 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 330611 kbps | trace_bw: 330611 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 280981 kbps | trace_bw: 280981 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 381247 kbps | trace_bw: 381247 kbps
+   t=71s | buffer: 33.0s | bitrate: 4950 kbps | tp: 63534 kbps | trace_bw: 63534 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 338884 kbps | trace_bw: 338884 kbps
+   t=91s | buffer: 32.7s | bitrate: 4950 kbps | tp: 281603 kbps | trace_bw: 281603 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 245583 kbps | trace_bw: 245583 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 363076 kbps | trace_bw: 363076 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,032 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        471 ms
+      Ratio:             0.3901%
+      Frequency:         0.499 per minute
+      Avg duration:      471 ms
+      Max duration:      471 ms
+
+  [THROUGHPUT]
+      Average:           267,961 kbps
+      Median:            290,950 kbps
+      Min / Max:         0 / 404,920 kbps
+      Std deviation:     95,980.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           267,961 kbps
+      Min / Max:         0 / 404,920 kbps
+      Utilisation:       108.6%
+
+  [BUFFER]
+      Average level:     30.2 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         1.6%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_029_tc_20260518_025351.json
+
+──────────────────────────────────────────────────────────────────────
+  [31/40] starlink_road_030_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_030_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 996ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 362242 kbps | trace_bw: 362242 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 110326 kbps | trace_bw: 110326 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 336238 kbps | trace_bw: 336238 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 320318 kbps | trace_bw: 320318 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 323783 kbps | trace_bw: 323783 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 377000 kbps | trace_bw: 377000 kbps
+   t=71s | buffer: 33.0s | bitrate: 4950 kbps | tp: 230263 kbps | trace_bw: 230263 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 362489 kbps | trace_bw: 362489 kbps
+   t=91s | buffer: 32.8s | bitrate: 4950 kbps | tp: 264894 kbps | trace_bw: 264894 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 276198 kbps | trace_bw: 276198 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 236907 kbps | trace_bw: 236907 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     996 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        468 ms
+      Ratio:             0.3878%
+      Frequency:         0.499 per minute
+      Avg duration:      468 ms
+      Max duration:      468 ms
+
+  [THROUGHPUT]
+      Average:           292,208 kbps
+      Median:            310,474 kbps
+      Min / Max:         39,813 / 426,964 kbps
+      Std deviation:     91,603.5 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           292,208 kbps
+      Min / Max:         39,813 / 426,964 kbps
+      Utilisation:       106.3%
+
+  [BUFFER]
+      Average level:     30.1 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         1.5%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_030_tc_20260518_025555.json
+
+──────────────────────────────────────────────────────────────────────
+  [32/40] starlink_road_031_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_031_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1012ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 25.9s | bitrate: 4950 kbps | tp: 207828 kbps | trace_bw: 207828 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 262058 kbps | trace_bw: 262058 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 322350 kbps | trace_bw: 322350 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 282273 kbps | trace_bw: 282273 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 203984 kbps | trace_bw: 203984 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 270683 kbps | trace_bw: 270683 kbps
+   t=71s | buffer: 29.1s | bitrate: 4950 kbps | tp: 258961 kbps | trace_bw: 258961 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 304145 kbps | trace_bw: 304145 kbps
+   t=91s | buffer: 32.8s | bitrate: 4950 kbps | tp: 311617 kbps | trace_bw: 311617 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 185578 kbps | trace_bw: 185578 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 284746 kbps | trace_bw: 284746 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,012 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        478 ms
+      Ratio:             0.3960%
+      Frequency:         0.499 per minute
+      Avg duration:      478 ms
+      Max duration:      478 ms
+
+  [THROUGHPUT]
+      Average:           275,533 kbps
+      Median:            275,515 kbps
+      Min / Max:         62,245 / 424,224 kbps
+      Std deviation:     64,614.5 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           275,533 kbps
+      Min / Max:         62,245 / 424,224 kbps
+      Utilisation:       100.0%
+
+  [BUFFER]
+      Average level:     29.4 s
+      Min / Max:         0.0 / 33.2 s
+
+  [UTILIZATION]
+      Bandwidth:         1.7%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_031_tc_20260518_025800.json
+
+──────────────────────────────────────────────────────────────────────
+  [33/40] starlink_road_032_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_032_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1008ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 21.9s | bitrate: 4950 kbps | tp: 341506 kbps | trace_bw: 341506 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 332024 kbps | trace_bw: 332024 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 181856 kbps | trace_bw: 181856 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 139008 kbps | trace_bw: 139008 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 262750 kbps | trace_bw: 262750 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 188493 kbps | trace_bw: 188493 kbps
+   t=71s | buffer: 33.0s | bitrate: 4950 kbps | tp: 298553 kbps | trace_bw: 298553 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 271656 kbps | trace_bw: 271656 kbps
+   t=91s | buffer: 32.8s | bitrate: 4950 kbps | tp: 158130 kbps | trace_bw: 158130 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 164539 kbps | trace_bw: 164539 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 128689 kbps | trace_bw: 128689 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,008 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        479 ms
+      Ratio:             0.3968%
+      Frequency:         0.499 per minute
+      Avg duration:      479 ms
+      Max duration:      479 ms
+
+  [THROUGHPUT]
+      Average:           228,285 kbps
+      Median:            262,750 kbps
+      Min / Max:         14,039 / 383,624 kbps
+      Std deviation:     100,232.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           228,285 kbps
+      Min / Max:         14,039 / 383,624 kbps
+      Utilisation:       115.1%
+
+  [BUFFER]
+      Average level:     29.3 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         1.8%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_032_tc_20260518_030005.json
+
+──────────────────────────────────────────────────────────────────────
+  [34/40] starlink_road_033_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_033_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 992ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 258137 kbps | trace_bw: 258137 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 314568 kbps | trace_bw: 314568 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 373711 kbps | trace_bw: 373711 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 350568 kbps | trace_bw: 350568 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 383441 kbps | trace_bw: 383441 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 409992 kbps | trace_bw: 409992 kbps
+   t=71s | buffer: 33.0s | bitrate: 4950 kbps | tp: 183548 kbps | trace_bw: 183548 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 307553 kbps | trace_bw: 307553 kbps
+   t=91s | buffer: 32.7s | bitrate: 4950 kbps | tp: 384021 kbps | trace_bw: 384021 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 408252 kbps | trace_bw: 408252 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 349187 kbps | trace_bw: 349187 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     992 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        473 ms
+      Ratio:             0.3918%
+      Frequency:         0.499 per minute
+      Avg duration:      473 ms
+      Max duration:      473 ms
+
+  [THROUGHPUT]
+      Average:           321,648 kbps
+      Median:            330,312 kbps
+      Min / Max:         96,645 / 425,070 kbps
+      Std deviation:     73,116.4 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           321,648 kbps
+      Min / Max:         96,645 / 425,070 kbps
+      Utilisation:       102.7%
+
+  [BUFFER]
+      Average level:     29.9 s
+      Min / Max:         0.0 / 33.4 s
+
+  [UTILIZATION]
+      Bandwidth:         1.5%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_033_tc_20260518_030209.json
+
+──────────────────────────────────────────────────────────────────────
+  [35/40] starlink_road_034_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_034_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1041ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 276637 kbps | trace_bw: 276637 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 70447 kbps | trace_bw: 70447 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 365635 kbps | trace_bw: 365635 kbps
+   t=41s | buffer: 31.4s | bitrate: 4950 kbps | tp: 321537 kbps | trace_bw: 321537 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 308083 kbps | trace_bw: 308083 kbps
+   t=61s | buffer: 31.1s | bitrate: 4950 kbps | tp: 103054 kbps | trace_bw: 103054 kbps
+   t=71s | buffer: 29.0s | bitrate: 4950 kbps | tp: 106561 kbps | trace_bw: 106561 kbps
+   t=81s | buffer: 30.8s | bitrate: 4950 kbps | tp: 269696 kbps | trace_bw: 269696 kbps
+   t=91s | buffer: 32.7s | bitrate: 4950 kbps | tp: 177651 kbps | trace_bw: 177651 kbps
+   t=102s | buffer: 30.5s | bitrate: 4950 kbps | tp: 145970 kbps | trace_bw: 145970 kbps
+   t=112s | buffer: 32.4s | bitrate: 4950 kbps | tp: 320604 kbps | trace_bw: 320604 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,041 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        476 ms
+      Ratio:             0.3940%
+      Frequency:         0.499 per minute
+      Avg duration:      476 ms
+      Max duration:      476 ms
+
+  [THROUGHPUT]
+      Average:           228,937 kbps
+      Median:            250,812 kbps
+      Min / Max:         28,358 / 378,299 kbps
+      Std deviation:     90,076.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           228,937 kbps
+      Min / Max:         28,358 / 378,299 kbps
+      Utilisation:       109.6%
+
+  [BUFFER]
+      Average level:     29.7 s
+      Min / Max:         0.0 / 33.2 s
+
+  [UTILIZATION]
+      Bandwidth:         1.9%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_034_tc_20260518_030414.json
+
+──────────────────────────────────────────────────────────────────────
+  [36/40] starlink_road_035_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_035_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1044ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 179701 kbps | trace_bw: 179701 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 292506 kbps | trace_bw: 292506 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 146740 kbps | trace_bw: 146740 kbps
+   t=41s | buffer: 31.4s | bitrate: 4950 kbps | tp: 176461 kbps | trace_bw: 176461 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 323929 kbps | trace_bw: 323929 kbps
+   t=61s | buffer: 31.1s | bitrate: 4950 kbps | tp: 269450 kbps | trace_bw: 269450 kbps
+   t=71s | buffer: 29.5s | bitrate: 4950 kbps | tp: 286732 kbps | trace_bw: 286732 kbps
+   t=81s | buffer: 30.8s | bitrate: 4950 kbps | tp: 242273 kbps | trace_bw: 242273 kbps
+   t=91s | buffer: 32.7s | bitrate: 4950 kbps | tp: 297130 kbps | trace_bw: 297130 kbps
+   t=102s | buffer: 30.5s | bitrate: 4950 kbps | tp: 338404 kbps | trace_bw: 338404 kbps
+   t=112s | buffer: 32.4s | bitrate: 4950 kbps | tp: 343675 kbps | trace_bw: 343675 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,044 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        477 ms
+      Ratio:             0.3949%
+      Frequency:         0.499 per minute
+      Avg duration:      477 ms
+      Max duration:      477 ms
+
+  [THROUGHPUT]
+      Average:           255,780 kbps
+      Median:            268,875 kbps
+      Min / Max:         39,745 / 412,038 kbps
+      Std deviation:     83,349.8 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           255,780 kbps
+      Min / Max:         39,745 / 412,038 kbps
+      Utilisation:       105.1%
+
+  [BUFFER]
+      Average level:     29.1 s
+      Min / Max:         0.0 / 33.1 s
+
+  [UTILIZATION]
+      Bandwidth:         1.8%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_035_tc_20260518_030619.json
+
+──────────────────────────────────────────────────────────────────────
+  [37/40] starlink_road_036_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_036_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1196ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 21.9s | bitrate: 4950 kbps | tp: 283031 kbps | trace_bw: 283031 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 249358 kbps | trace_bw: 249358 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 304199 kbps | trace_bw: 304199 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 258753 kbps | trace_bw: 258753 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 276568 kbps | trace_bw: 276568 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 83411 kbps | trace_bw: 83411 kbps
+   t=71s | buffer: 29.1s | bitrate: 4950 kbps | tp: 339526 kbps | trace_bw: 339526 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 341391 kbps | trace_bw: 341391 kbps
+   t=91s | buffer: 32.8s | bitrate: 4950 kbps | tp: 338230 kbps | trace_bw: 338230 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 346291 kbps | trace_bw: 346291 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 424055 kbps | trace_bw: 424055 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,196 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,779 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        512 ms
+      Ratio:             0.4241%
+      Frequency:         0.499 per minute
+      Avg duration:      512 ms
+      Max duration:      512 ms
+
+  [THROUGHPUT]
+      Average:           295,241 kbps
+      Median:            306,521 kbps
+      Min / Max:         41,110 / 434,817 kbps
+      Std deviation:     75,966.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           295,241 kbps
+      Min / Max:         41,110 / 434,817 kbps
+      Utilisation:       103.8%
+
+  [BUFFER]
+      Average level:     29.3 s
+      Min / Max:         0.0 / 33.2 s
+
+  [UTILIZATION]
+      Bandwidth:         1.6%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_036_tc_20260518_030824.json
+
+──────────────────────────────────────────────────────────────────────
+  [38/40] starlink_road_037_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_037_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1050ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 201527 kbps | trace_bw: 201527 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 190380 kbps | trace_bw: 190380 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 158447 kbps | trace_bw: 158447 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 209940 kbps | trace_bw: 209940 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 296622 kbps | trace_bw: 296622 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 421365 kbps | trace_bw: 421365 kbps
+   t=71s | buffer: 33.1s | bitrate: 4950 kbps | tp: 422352 kbps | trace_bw: 422352 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 252347 kbps | trace_bw: 252347 kbps
+   t=91s | buffer: 32.8s | bitrate: 4950 kbps | tp: 319719 kbps | trace_bw: 319719 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 299068 kbps | trace_bw: 299068 kbps
+   t=112s | buffer: 28.5s | bitrate: 4950 kbps | tp: 257281 kbps | trace_bw: 257281 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,050 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,780 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        485 ms
+      Ratio:             0.4019%
+      Frequency:         0.499 per minute
+      Avg duration:      485 ms
+      Max duration:      485 ms
+
+  [THROUGHPUT]
+      Average:           264,833 kbps
+      Median:            252,347 kbps
+      Min / Max:         122,001 / 422,910 kbps
+      Std deviation:     78,342.7 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           264,833 kbps
+      Min / Max:         122,001 / 422,910 kbps
+      Utilisation:       95.3%
+
+  [BUFFER]
+      Average level:     29.7 s
+      Min / Max:         0.0 / 33.3 s
+
+  [UTILIZATION]
+      Bandwidth:         1.9%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_037_tc_20260518_031029.json
+
+──────────────────────────────────────────────────────────────────────
+  [39/40] starlink_road_038_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_038_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 114 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1078ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 106145 kbps | trace_bw: 106145 kbps
+   t=20s | buffer: 31.8s | bitrate: 4950 kbps | tp: 263524 kbps | trace_bw: 263524 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 341039 kbps | trace_bw: 341039 kbps
+   t=41s | buffer: 31.5s | bitrate: 4950 kbps | tp: 335438 kbps | trace_bw: 335438 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 98540 kbps | trace_bw: 98540 kbps
+   t=61s | buffer: 31.2s | bitrate: 4950 kbps | tp: 287285 kbps | trace_bw: 287285 kbps
+   t=71s | buffer: 29.0s | bitrate: 4950 kbps | tp: 317672 kbps | trace_bw: 317672 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 68700 kbps | trace_bw: 68700 kbps
+   t=91s | buffer: 32.8s | bitrate: 4950 kbps | tp: 316506 kbps | trace_bw: 316506 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 278445 kbps | trace_bw: 278445 kbps
+   t=112s | buffer: 32.5s | bitrate: 4950 kbps | tp: 286611 kbps | trace_bw: 286611 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,078 ms
+      Playback time:     120.2 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,781 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        478 ms
+      Ratio:             0.3960%
+      Frequency:         0.499 per minute
+      Avg duration:      478 ms
+      Max duration:      478 ms
+
+  [THROUGHPUT]
+      Average:           264,250 kbps
+      Median:            301,853 kbps
+      Min / Max:         51,602 / 394,974 kbps
+      Std deviation:     94,312.4 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           264,250 kbps
+      Min / Max:         51,602 / 394,974 kbps
+      Utilisation:       114.2%
+
+  [BUFFER]
+      Average level:     29.8 s
+      Min / Max:         0.0 / 33.2 s
+
+  [UTILIZATION]
+      Bandwidth:         1.6%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_038_tc_20260518_031234.json
+
+──────────────────────────────────────────────────────────────────────
+  [40/40] starlink_road_039_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_039_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1050ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 29.9s | bitrate: 4950 kbps | tp: 238749 kbps | trace_bw: 238749 kbps
+   t=20s | buffer: 31.7s | bitrate: 4950 kbps | tp: 217653 kbps | trace_bw: 217653 kbps
+   t=30s | buffer: 29.6s | bitrate: 4950 kbps | tp: 220509 kbps | trace_bw: 220509 kbps
+   t=41s | buffer: 31.4s | bitrate: 4950 kbps | tp: 298271 kbps | trace_bw: 298271 kbps
+   t=51s | buffer: 29.3s | bitrate: 4950 kbps | tp: 321722 kbps | trace_bw: 321722 kbps
+   t=61s | buffer: 31.1s | bitrate: 4950 kbps | tp: 245254 kbps | trace_bw: 245254 kbps
+   t=71s | buffer: 29.0s | bitrate: 4950 kbps | tp: 154507 kbps | trace_bw: 154507 kbps
+   t=81s | buffer: 30.9s | bitrate: 4950 kbps | tp: 215312 kbps | trace_bw: 215312 kbps
+   t=91s | buffer: 32.7s | bitrate: 4950 kbps | tp: 229421 kbps | trace_bw: 229421 kbps
+   t=101s | buffer: 30.6s | bitrate: 4950 kbps | tp: 302989 kbps | trace_bw: 302989 kbps
+   t=112s | buffer: 32.4s | bitrate: 4950 kbps | tp: 138800 kbps | trace_bw: 138800 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,050 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  4,800 kbps
+      Average (effective): 4,780 kbps
+      Min / Max:           440 / 4,950 kbps
+      Median:              4,950 kbps
+      Std deviation:       809.6 kbps
+      Variance:            655,403.2
+      25th/75th %ile:      4,950 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         1 / 0
+      Avg magnitude:     4,510 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        486 ms
+      Ratio:             0.4025%
+      Frequency:         0.499 per minute
+      Avg duration:      486 ms
+      Max duration:      486 ms
+
+  [THROUGHPUT]
+      Average:           206,628 kbps
+      Median:            211,209 kbps
+      Min / Max:         21,896 / 372,495 kbps
+      Std deviation:     67,778.3 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           206,628 kbps
+      Min / Max:         21,896 / 372,495 kbps
+      Utilisation:       102.2%
+
+  [BUFFER]
+      Average level:     30.2 s
+      Min / Max:         0.0 / 33.2 s
+
+  [UTILIZATION]
+      Bandwidth:         2.3%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_starlink-2024/benchmark_hls_starlink_road_039_tc_20260518_031438.json
+
+======================================================================
+  BATCH COMPLETE: 40/40 succeeded
+  Results saved to: results/results/run_all_20260517_165956/hls_starlink-2024/
+======================================================================
+

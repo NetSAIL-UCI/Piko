@@ -1,0 +1,3291 @@
+
+======================================================================
+  BATCH RUN: 40 trace(s) from traces/starlink-2024
+======================================================================
+
+
+──────────────────────────────────────────────────────────────────────
+  [1/40] starlink_road_000_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_000_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 174ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 205685 kbps | trace_bw: 205685 kbps
+   t=20s | buffer: 5.6s | bitrate: 4500 kbps | tp: 30583 kbps | trace_bw: 30583 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 76507 kbps | trace_bw: 76507 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 79883 kbps | trace_bw: 79883 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 202129 kbps | trace_bw: 202129 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 136608 kbps | trace_bw: 136608 kbps
+   t=71s | buffer: 6.6s | bitrate: 4500 kbps | tp: 145147 kbps | trace_bw: 145147 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 122084 kbps | trace_bw: 122084 kbps
+   t=92s | buffer: 6.1s | bitrate: 4500 kbps | tp: 59596 kbps | trace_bw: 59596 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 102020 kbps | trace_bw: 102020 kbps
+   t=112s | buffer: 7.7s | bitrate: 4500 kbps | tp: 242320 kbps | trace_bw: 242320 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     174 ms
+      Playback time:     120.5 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        8 ms
+      Ratio:             0.0066%
+      Frequency:         0.498 per minute
+      Avg duration:      8 ms
+      Max duration:      8 ms
+
+  [THROUGHPUT]
+      Average:           147,742 kbps
+      Median:            136,608 kbps
+      Min / Max:         16,878 / 347,519 kbps
+      Std deviation:     78,217.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           147,742 kbps
+      Min / Max:         16,878 / 347,519 kbps
+      Utilisation:       92.5%
+
+  [BUFFER]
+      Average level:     6.6 s
+      Min / Max:         1.5 / 7.7 s
+
+  [UTILIZATION]
+      Bandwidth:         3.3%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_000_tc_20260526_060749.json
+
+──────────────────────────────────────────────────────────────────────
+  [2/40] starlink_road_001_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_001_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 151ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 226300 kbps | trace_bw: 226300 kbps
+   t=20s | buffer: 7.5s | bitrate: 4500 kbps | tp: 307646 kbps | trace_bw: 307646 kbps
+   t=31s | buffer: 7.4s | bitrate: 4500 kbps | tp: 224577 kbps | trace_bw: 224577 kbps
+   t=41s | buffer: 7.1s | bitrate: 4500 kbps | tp: 159758 kbps | trace_bw: 159758 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 236095 kbps | trace_bw: 236095 kbps
+   t=61s | buffer: 6.7s | bitrate: 4500 kbps | tp: 200805 kbps | trace_bw: 200805 kbps
+   t=72s | buffer: 6.6s | bitrate: 4500 kbps | tp: 268279 kbps | trace_bw: 268279 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 297054 kbps | trace_bw: 297054 kbps
+   t=92s | buffer: 6.1s | bitrate: 4500 kbps | tp: 338367 kbps | trace_bw: 338367 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 190000 kbps | trace_bw: 190000 kbps
+   t=112s | buffer: 5.7s | bitrate: 4500 kbps | tp: 283129 kbps | trace_bw: 283129 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     151 ms
+      Playback time:     120.1 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        7 ms
+      Ratio:             0.0058%
+      Frequency:         0.500 per minute
+      Avg duration:      7 ms
+      Max duration:      7 ms
+
+  [THROUGHPUT]
+      Average:           257,845 kbps
+      Median:            253,686 kbps
+      Min / Max:         49,046 / 404,908 kbps
+      Std deviation:     68,471.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           257,845 kbps
+      Min / Max:         49,046 / 404,908 kbps
+      Utilisation:       98.4%
+
+  [BUFFER]
+      Average level:     6.6 s
+      Min / Max:         1.5 / 7.9 s
+
+  [UTILIZATION]
+      Bandwidth:         1.8%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_001_tc_20260526_060953.json
+
+──────────────────────────────────────────────────────────────────────
+  [3/40] starlink_road_002_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_002_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 154ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 198341 kbps | trace_bw: 198341 kbps
+   t=20s | buffer: 7.6s | bitrate: 4500 kbps | tp: 174362 kbps | trace_bw: 174362 kbps
+   t=31s | buffer: 5.5s | bitrate: 4500 kbps | tp: 265601 kbps | trace_bw: 265601 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 306339 kbps | trace_bw: 306339 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 235468 kbps | trace_bw: 235468 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 245835 kbps | trace_bw: 245835 kbps
+   t=71s | buffer: 6.8s | bitrate: 4500 kbps | tp: 277189 kbps | trace_bw: 277189 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 424419 kbps | trace_bw: 424419 kbps
+   t=92s | buffer: 6.4s | bitrate: 4500 kbps | tp: 214341 kbps | trace_bw: 214341 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 273028 kbps | trace_bw: 273028 kbps
+   t=112s | buffer: 5.9s | bitrate: 4500 kbps | tp: 217601 kbps | trace_bw: 217601 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     154 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        6 ms
+      Ratio:             0.0050%
+      Frequency:         0.498 per minute
+      Avg duration:      6 ms
+      Max duration:      6 ms
+
+  [THROUGHPUT]
+      Average:           237,243 kbps
+      Median:            240,457 kbps
+      Min / Max:         0 / 424,419 kbps
+      Std deviation:     70,559.4 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           237,243 kbps
+      Min / Max:         0 / 424,419 kbps
+      Utilisation:       101.4%
+
+  [BUFFER]
+      Average level:     6.6 s
+      Min / Max:         1.5 / 7.8 s
+
+  [UTILIZATION]
+      Bandwidth:         1.9%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_002_tc_20260526_061157.json
+
+──────────────────────────────────────────────────────────────────────
+  [4/40] starlink_road_003_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_003_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 155ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 336052 kbps | trace_bw: 336052 kbps
+   t=20s | buffer: 7.5s | bitrate: 4500 kbps | tp: 274722 kbps | trace_bw: 274722 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 350577 kbps | trace_bw: 350577 kbps
+   t=41s | buffer: 7.1s | bitrate: 4500 kbps | tp: 395258 kbps | trace_bw: 395258 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 358259 kbps | trace_bw: 358259 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 358097 kbps | trace_bw: 358097 kbps
+   t=72s | buffer: 6.6s | bitrate: 4500 kbps | tp: 385956 kbps | trace_bw: 385956 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 357030 kbps | trace_bw: 357030 kbps
+   t=92s | buffer: 6.1s | bitrate: 4500 kbps | tp: 384959 kbps | trace_bw: 384959 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 425921 kbps | trace_bw: 425921 kbps
+   t=112s | buffer: 5.7s | bitrate: 4500 kbps | tp: 409780 kbps | trace_bw: 409780 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     155 ms
+      Playback time:     120.1 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        6 ms
+      Ratio:             0.0050%
+      Frequency:         0.500 per minute
+      Avg duration:      6 ms
+      Max duration:      6 ms
+
+  [THROUGHPUT]
+      Average:           361,414 kbps
+      Median:            358,954 kbps
+      Min / Max:         234,805 / 427,736 kbps
+      Std deviation:     50,524.1 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           361,414 kbps
+      Min / Max:         234,805 / 427,736 kbps
+      Utilisation:       99.3%
+
+  [BUFFER]
+      Average level:     6.6 s
+      Min / Max:         1.5 / 7.7 s
+
+  [UTILIZATION]
+      Bandwidth:         1.3%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_003_tc_20260526_061401.json
+
+──────────────────────────────────────────────────────────────────────
+  [5/40] starlink_road_004_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_004_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 104 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 154ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 239545 kbps | trace_bw: 239545 kbps
+   t=20s | buffer: 7.7s | bitrate: 4500 kbps | tp: 265265 kbps | trace_bw: 265265 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 222654 kbps | trace_bw: 222654 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 323422 kbps | trace_bw: 323422 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 310380 kbps | trace_bw: 310380 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 381120 kbps | trace_bw: 381120 kbps
+   t=71s | buffer: 6.8s | bitrate: 4500 kbps | tp: 364895 kbps | trace_bw: 364895 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 339147 kbps | trace_bw: 339147 kbps
+   t=92s | buffer: 4.4s | bitrate: 4500 kbps | tp: 51583 kbps | trace_bw: 51583 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 235025 kbps | trace_bw: 235025 kbps
+   t=112s | buffer: 7.8s | bitrate: 4500 kbps | tp: 251799 kbps | trace_bw: 251799 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     154 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        7 ms
+      Ratio:             0.0058%
+      Frequency:         0.498 per minute
+      Avg duration:      7 ms
+      Max duration:      7 ms
+
+  [THROUGHPUT]
+      Average:           286,845 kbps
+      Median:            286,208 kbps
+      Min / Max:         0 / 425,662 kbps
+      Std deviation:     72,515.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           286,845 kbps
+      Min / Max:         0 / 425,662 kbps
+      Utilisation:       99.8%
+
+  [BUFFER]
+      Average level:     6.7 s
+      Min / Max:         1.5 / 7.9 s
+
+  [UTILIZATION]
+      Bandwidth:         1.6%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_004_tc_20260526_061605.json
+
+──────────────────────────────────────────────────────────────────────
+  [6/40] starlink_road_005_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_005_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 161ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 360784 kbps | trace_bw: 360784 kbps
+   t=20s | buffer: 7.6s | bitrate: 4500 kbps | tp: 427022 kbps | trace_bw: 427022 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 333249 kbps | trace_bw: 333249 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 425147 kbps | trace_bw: 425147 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 350610 kbps | trace_bw: 350610 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 421043 kbps | trace_bw: 421043 kbps
+   t=71s | buffer: 6.8s | bitrate: 4500 kbps | tp: 343570 kbps | trace_bw: 343570 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 337764 kbps | trace_bw: 337764 kbps
+   t=92s | buffer: 6.4s | bitrate: 4500 kbps | tp: 426245 kbps | trace_bw: 426245 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 420676 kbps | trace_bw: 420676 kbps
+   t=112s | buffer: 5.9s | bitrate: 4500 kbps | tp: 215426 kbps | trace_bw: 215426 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     161 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        7 ms
+      Ratio:             0.0058%
+      Frequency:         0.498 per minute
+      Avg duration:      7 ms
+      Max duration:      7 ms
+
+  [THROUGHPUT]
+      Average:           341,733 kbps
+      Median:            345,364 kbps
+      Min / Max:         85,160 / 427,022 kbps
+      Std deviation:     67,377.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           341,733 kbps
+      Min / Max:         85,160 / 427,022 kbps
+      Utilisation:       101.1%
+
+  [BUFFER]
+      Average level:     6.7 s
+      Min / Max:         1.5 / 7.9 s
+
+  [UTILIZATION]
+      Bandwidth:         1.3%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_005_tc_20260526_061809.json
+
+──────────────────────────────────────────────────────────────────────
+  [7/40] starlink_road_006_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_006_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 164ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 294772 kbps | trace_bw: 294772 kbps
+   t=20s | buffer: 7.8s | bitrate: 4500 kbps | tp: 266233 kbps | trace_bw: 266233 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 351432 kbps | trace_bw: 351432 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 421835 kbps | trace_bw: 421835 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 82895 kbps | trace_bw: 82895 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 407348 kbps | trace_bw: 407348 kbps
+   t=71s | buffer: 6.8s | bitrate: 4500 kbps | tp: 356404 kbps | trace_bw: 356404 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 243324 kbps | trace_bw: 243324 kbps
+   t=92s | buffer: 6.4s | bitrate: 4500 kbps | tp: 319286 kbps | trace_bw: 319286 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 302708 kbps | trace_bw: 302708 kbps
+   t=112s | buffer: 7.8s | bitrate: 4500 kbps | tp: 318529 kbps | trace_bw: 318529 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     164 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        6 ms
+      Ratio:             0.0050%
+      Frequency:         0.498 per minute
+      Avg duration:      6 ms
+      Max duration:      6 ms
+
+  [THROUGHPUT]
+      Average:           314,751 kbps
+      Median:            312,406 kbps
+      Min / Max:         0 / 473,148 kbps
+      Std deviation:     76,072.5 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           314,751 kbps
+      Min / Max:         0 / 473,148 kbps
+      Utilisation:       99.3%
+
+  [BUFFER]
+      Average level:     6.8 s
+      Min / Max:         1.5 / 7.9 s
+
+  [UTILIZATION]
+      Bandwidth:         1.4%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_006_tc_20260526_062013.json
+
+──────────────────────────────────────────────────────────────────────
+  [8/40] starlink_road_007_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_007_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 164ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 230893 kbps | trace_bw: 230893 kbps
+   t=20s | buffer: 7.6s | bitrate: 4500 kbps | tp: 384452 kbps | trace_bw: 384452 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 269542 kbps | trace_bw: 269542 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 309434 kbps | trace_bw: 309434 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 368238 kbps | trace_bw: 368238 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 290000 kbps | trace_bw: 290000 kbps
+   t=72s | buffer: 6.6s | bitrate: 4500 kbps | tp: 407240 kbps | trace_bw: 407240 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 407408 kbps | trace_bw: 407408 kbps
+   t=92s | buffer: 6.1s | bitrate: 4500 kbps | tp: 355026 kbps | trace_bw: 355026 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 323899 kbps | trace_bw: 323899 kbps
+   t=112s | buffer: 7.7s | bitrate: 4500 kbps | tp: 223662 kbps | trace_bw: 223662 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     164 ms
+      Playback time:     120.1 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        9 ms
+      Ratio:             0.0075%
+      Frequency:         0.500 per minute
+      Avg duration:      9 ms
+      Max duration:      9 ms
+
+  [THROUGHPUT]
+      Average:           303,659 kbps
+      Median:            300,147 kbps
+      Min / Max:         185,574 / 458,440 kbps
+      Std deviation:     59,754.2 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           303,659 kbps
+      Min / Max:         185,574 / 458,440 kbps
+      Utilisation:       98.8%
+
+  [BUFFER]
+      Average level:     6.7 s
+      Min / Max:         1.5 / 7.7 s
+
+  [UTILIZATION]
+      Bandwidth:         1.5%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_007_tc_20260526_062217.json
+
+──────────────────────────────────────────────────────────────────────
+  [9/40] starlink_road_008_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_008_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 177ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 383175 kbps | trace_bw: 383175 kbps
+   t=20s | buffer: 5.8s | bitrate: 4500 kbps | tp: 225711 kbps | trace_bw: 225711 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 204838 kbps | trace_bw: 204838 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 374152 kbps | trace_bw: 374152 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 411019 kbps | trace_bw: 411019 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 394355 kbps | trace_bw: 394355 kbps
+   t=71s | buffer: 6.6s | bitrate: 4500 kbps | tp: 407537 kbps | trace_bw: 407537 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 343083 kbps | trace_bw: 343083 kbps
+   t=92s | buffer: 6.4s | bitrate: 4500 kbps | tp: 381646 kbps | trace_bw: 381646 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 410421 kbps | trace_bw: 410421 kbps
+   t=112s | buffer: 5.9s | bitrate: 4500 kbps | tp: 318388 kbps | trace_bw: 318388 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     177 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        7 ms
+      Ratio:             0.0058%
+      Frequency:         0.498 per minute
+      Avg duration:      7 ms
+      Max duration:      7 ms
+
+  [THROUGHPUT]
+      Average:           361,323 kbps
+      Median:            374,152 kbps
+      Min / Max:         96,415 / 427,006 kbps
+      Std deviation:     56,682.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           361,323 kbps
+      Min / Max:         96,415 / 427,006 kbps
+      Utilisation:       103.6%
+
+  [BUFFER]
+      Average level:     6.6 s
+      Min / Max:         1.5 / 7.7 s
+
+  [UTILIZATION]
+      Bandwidth:         1.2%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_008_tc_20260526_062421.json
+
+──────────────────────────────────────────────────────────────────────
+  [10/40] starlink_road_009_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_009_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 169ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 346640 kbps | trace_bw: 346640 kbps
+   t=20s | buffer: 7.6s | bitrate: 4500 kbps | tp: 282936 kbps | trace_bw: 282936 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 149329 kbps | trace_bw: 149329 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 223316 kbps | trace_bw: 223316 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 225886 kbps | trace_bw: 225886 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 154462 kbps | trace_bw: 154462 kbps
+   t=71s | buffer: 6.8s | bitrate: 4500 kbps | tp: 197135 kbps | trace_bw: 197135 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 263930 kbps | trace_bw: 263930 kbps
+   t=92s | buffer: 6.4s | bitrate: 4500 kbps | tp: 215913 kbps | trace_bw: 215913 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 241659 kbps | trace_bw: 241659 kbps
+   t=112s | buffer: 3.9s | bitrate: 4500 kbps | tp: 0 kbps | trace_bw: 0 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     169 ms
+      Playback time:     120.3 s
+
+  [BITRATE]
+      Average (selected):  2,300 kbps
+      Average (effective): 2,298 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       2,200.0 kbps
+      Variance:            4,840,000.0
+      25th/75th %ile:      100 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         0 / 1
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        87 ms
+      Ratio:             0.0723%
+      Frequency:         0.998 per minute
+      Avg duration:      44 ms
+      Max duration:      80 ms
+
+  [THROUGHPUT]
+      Average:           215,605 kbps
+      Median:            237,488 kbps
+      Min / Max:         0 / 385,283 kbps
+      Std deviation:     103,457.1 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           215,605 kbps
+      Min / Max:         0 / 385,283 kbps
+      Utilisation:       110.1%
+
+  [BUFFER]
+      Average level:     6.3 s
+      Min / Max:         0.3 / 7.8 s
+
+  [UTILIZATION]
+      Bandwidth:         1.0%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_009_tc_20260526_062625.json
+
+──────────────────────────────────────────────────────────────────────
+  [11/40] starlink_road_010_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_010_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 175ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 362305 kbps | trace_bw: 362305 kbps
+   t=20s | buffer: 5.6s | bitrate: 4500 kbps | tp: 315749 kbps | trace_bw: 315749 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 187625 kbps | trace_bw: 187625 kbps
+   t=41s | buffer: 7.1s | bitrate: 4500 kbps | tp: 322013 kbps | trace_bw: 322013 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 370220 kbps | trace_bw: 370220 kbps
+   t=61s | buffer: 6.7s | bitrate: 4500 kbps | tp: 349825 kbps | trace_bw: 349825 kbps
+   t=72s | buffer: 6.6s | bitrate: 4500 kbps | tp: 282100 kbps | trace_bw: 282100 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 348666 kbps | trace_bw: 348666 kbps
+   t=92s | buffer: 6.1s | bitrate: 4500 kbps | tp: 169451 kbps | trace_bw: 169451 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 352244 kbps | trace_bw: 352244 kbps
+   t=112s | buffer: 7.7s | bitrate: 4500 kbps | tp: 358270 kbps | trace_bw: 358270 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     175 ms
+      Playback time:     120.1 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        7 ms
+      Ratio:             0.0058%
+      Frequency:         0.500 per minute
+      Avg duration:      7 ms
+      Max duration:      7 ms
+
+  [THROUGHPUT]
+      Average:           303,542 kbps
+      Median:            314,793 kbps
+      Min / Max:         150,765 / 416,604 kbps
+      Std deviation:     64,232.4 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           303,542 kbps
+      Min / Max:         150,765 / 416,604 kbps
+      Utilisation:       103.7%
+
+  [BUFFER]
+      Average level:     6.7 s
+      Min / Max:         1.5 / 7.7 s
+
+  [UTILIZATION]
+      Bandwidth:         1.4%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_010_tc_20260526_062829.json
+
+──────────────────────────────────────────────────────────────────────
+  [12/40] starlink_road_011_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_011_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 162ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 424459 kbps | trace_bw: 424459 kbps
+   t=20s | buffer: 5.6s | bitrate: 4500 kbps | tp: 413319 kbps | trace_bw: 413319 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 350102 kbps | trace_bw: 350102 kbps
+   t=41s | buffer: 7.1s | bitrate: 4500 kbps | tp: 275589 kbps | trace_bw: 275589 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 278017 kbps | trace_bw: 278017 kbps
+   t=61s | buffer: 6.7s | bitrate: 4500 kbps | tp: 424827 kbps | trace_bw: 424827 kbps
+   t=72s | buffer: 6.6s | bitrate: 4500 kbps | tp: 347797 kbps | trace_bw: 347797 kbps
+   t=82s | buffer: 6.2s | bitrate: 4500 kbps | tp: 407405 kbps | trace_bw: 407405 kbps
+   t=92s | buffer: 6.1s | bitrate: 4500 kbps | tp: 350812 kbps | trace_bw: 350812 kbps
+   t=102s | buffer: 5.8s | bitrate: 4500 kbps | tp: 425328 kbps | trace_bw: 425328 kbps
+   t=112s | buffer: 7.5s | bitrate: 4500 kbps | tp: 288133 kbps | trace_bw: 288133 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     162 ms
+      Playback time:     120.1 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        6 ms
+      Ratio:             0.0050%
+      Frequency:         0.499 per minute
+      Avg duration:      6 ms
+      Max duration:      6 ms
+
+  [THROUGHPUT]
+      Average:           345,581 kbps
+      Median:            348,352 kbps
+      Min / Max:         0 / 437,832 kbps
+      Std deviation:     79,823.8 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           345,581 kbps
+      Min / Max:         0 / 437,832 kbps
+      Utilisation:       100.8%
+
+  [BUFFER]
+      Average level:     6.6 s
+      Min / Max:         1.5 / 7.8 s
+
+  [UTILIZATION]
+      Bandwidth:         1.3%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_011_tc_20260526_063032.json
+
+──────────────────────────────────────────────────────────────────────
+  [13/40] starlink_road_012_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_012_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 167ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 394865 kbps | trace_bw: 394865 kbps
+   t=20s | buffer: 5.8s | bitrate: 4500 kbps | tp: 242061 kbps | trace_bw: 242061 kbps
+   t=31s | buffer: 7.4s | bitrate: 4500 kbps | tp: 53735 kbps | trace_bw: 53735 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 57206 kbps | trace_bw: 57206 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 56345 kbps | trace_bw: 56345 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 274619 kbps | trace_bw: 274619 kbps
+   t=71s | buffer: 6.6s | bitrate: 4500 kbps | tp: 252089 kbps | trace_bw: 252089 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 307715 kbps | trace_bw: 307715 kbps
+   t=92s | buffer: 6.4s | bitrate: 4500 kbps | tp: 382682 kbps | trace_bw: 382682 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 413479 kbps | trace_bw: 413479 kbps
+   t=112s | buffer: 5.9s | bitrate: 4500 kbps | tp: 277387 kbps | trace_bw: 277387 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     167 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        7 ms
+      Ratio:             0.0058%
+      Frequency:         0.498 per minute
+      Avg duration:      7 ms
+      Max duration:      7 ms
+
+  [THROUGHPUT]
+      Average:           247,484 kbps
+      Median:            281,403 kbps
+      Min / Max:         50,542 / 423,024 kbps
+      Std deviation:     121,640.8 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           247,484 kbps
+      Min / Max:         50,542 / 423,024 kbps
+      Utilisation:       113.7%
+
+  [BUFFER]
+      Average level:     6.6 s
+      Min / Max:         1.5 / 7.8 s
+
+  [UTILIZATION]
+      Bandwidth:         1.6%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_012_tc_20260526_063236.json
+
+──────────────────────────────────────────────────────────────────────
+  [14/40] starlink_road_013_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_013_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 161ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 243403 kbps | trace_bw: 243403 kbps
+   t=20s | buffer: 5.8s | bitrate: 4500 kbps | tp: 299772 kbps | trace_bw: 299772 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 216724 kbps | trace_bw: 216724 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 268581 kbps | trace_bw: 268581 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 353189 kbps | trace_bw: 353189 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 243970 kbps | trace_bw: 243970 kbps
+   t=71s | buffer: 6.8s | bitrate: 4500 kbps | tp: 378377 kbps | trace_bw: 378377 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 201584 kbps | trace_bw: 201584 kbps
+   t=92s | buffer: 6.4s | bitrate: 4500 kbps | tp: 149281 kbps | trace_bw: 149281 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 177872 kbps | trace_bw: 177872 kbps
+   t=112s | buffer: 5.9s | bitrate: 4500 kbps | tp: 77797 kbps | trace_bw: 77797 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     161 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        8 ms
+      Ratio:             0.0066%
+      Frequency:         0.498 per minute
+      Avg duration:      8 ms
+      Max duration:      8 ms
+
+  [THROUGHPUT]
+      Average:           251,206 kbps
+      Median:            268,581 kbps
+      Min / Max:         0 / 421,411 kbps
+      Std deviation:     115,562.3 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           251,206 kbps
+      Min / Max:         0 / 421,411 kbps
+      Utilisation:       106.9%
+
+  [BUFFER]
+      Average level:     6.4 s
+      Min / Max:         1.5 / 7.7 s
+
+  [UTILIZATION]
+      Bandwidth:         1.7%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_013_tc_20260526_063440.json
+
+──────────────────────────────────────────────────────────────────────
+  [15/40] starlink_road_014_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_014_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 162ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 299891 kbps | trace_bw: 299891 kbps
+   t=20s | buffer: 5.6s | bitrate: 4500 kbps | tp: 418297 kbps | trace_bw: 418297 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 439805 kbps | trace_bw: 439805 kbps
+   t=41s | buffer: 7.1s | bitrate: 4500 kbps | tp: 443831 kbps | trace_bw: 443831 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 425144 kbps | trace_bw: 425144 kbps
+   t=61s | buffer: 6.7s | bitrate: 4500 kbps | tp: 374628 kbps | trace_bw: 374628 kbps
+   t=72s | buffer: 6.6s | bitrate: 4500 kbps | tp: 343154 kbps | trace_bw: 343154 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 209459 kbps | trace_bw: 209459 kbps
+   t=92s | buffer: 6.1s | bitrate: 4500 kbps | tp: 261844 kbps | trace_bw: 261844 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 313694 kbps | trace_bw: 313694 kbps
+   t=112s | buffer: 5.7s | bitrate: 4500 kbps | tp: 364408 kbps | trace_bw: 364408 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     162 ms
+      Playback time:     120.1 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        7 ms
+      Ratio:             0.0058%
+      Frequency:         0.500 per minute
+      Avg duration:      7 ms
+      Max duration:      7 ms
+
+  [THROUGHPUT]
+      Average:           342,563 kbps
+      Median:            342,482 kbps
+      Min / Max:         80,323 / 495,080 kbps
+      Std deviation:     72,476.8 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           342,563 kbps
+      Min / Max:         80,323 / 495,080 kbps
+      Utilisation:       100.0%
+
+  [BUFFER]
+      Average level:     6.6 s
+      Min / Max:         1.5 / 7.8 s
+
+  [UTILIZATION]
+      Bandwidth:         1.3%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_014_tc_20260526_063644.json
+
+──────────────────────────────────────────────────────────────────────
+  [16/40] starlink_road_015_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_015_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 161ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 325141 kbps | trace_bw: 325141 kbps
+   t=20s | buffer: 5.6s | bitrate: 4500 kbps | tp: 167726 kbps | trace_bw: 167726 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 169018 kbps | trace_bw: 169018 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 131618 kbps | trace_bw: 131618 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 43334 kbps | trace_bw: 43334 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 145984 kbps | trace_bw: 145984 kbps
+   t=72s | buffer: 6.6s | bitrate: 4500 kbps | tp: 213690 kbps | trace_bw: 213690 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 29574 kbps | trace_bw: 29574 kbps
+   t=92s | buffer: 6.1s | bitrate: 4500 kbps | tp: 280807 kbps | trace_bw: 280807 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 240048 kbps | trace_bw: 240048 kbps
+   t=112s | buffer: 7.7s | bitrate: 4500 kbps | tp: 278131 kbps | trace_bw: 278131 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     161 ms
+      Playback time:     120.1 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        7 ms
+      Ratio:             0.0058%
+      Frequency:         0.500 per minute
+      Avg duration:      7 ms
+      Max duration:      7 ms
+
+  [THROUGHPUT]
+      Average:           183,907 kbps
+      Median:            214,776 kbps
+      Min / Max:         16,322 / 388,294 kbps
+      Std deviation:     104,627.7 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           183,907 kbps
+      Min / Max:         16,322 / 388,294 kbps
+      Utilisation:       116.8%
+
+  [BUFFER]
+      Average level:     6.6 s
+      Min / Max:         1.5 / 7.7 s
+
+  [UTILIZATION]
+      Bandwidth:         2.1%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_015_tc_20260526_063848.json
+
+──────────────────────────────────────────────────────────────────────
+  [17/40] starlink_road_016_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_016_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 150ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 338554 kbps | trace_bw: 338554 kbps
+   t=20s | buffer: 5.6s | bitrate: 4500 kbps | tp: 168849 kbps | trace_bw: 168849 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 388685 kbps | trace_bw: 388685 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 281410 kbps | trace_bw: 281410 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 373262 kbps | trace_bw: 373262 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 382585 kbps | trace_bw: 382585 kbps
+   t=71s | buffer: 6.6s | bitrate: 4500 kbps | tp: 353276 kbps | trace_bw: 353276 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 292282 kbps | trace_bw: 292282 kbps
+   t=92s | buffer: 6.4s | bitrate: 4500 kbps | tp: 143402 kbps | trace_bw: 143402 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 236527 kbps | trace_bw: 236527 kbps
+   t=112s | buffer: 5.9s | bitrate: 4500 kbps | tp: 352120 kbps | trace_bw: 352120 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     150 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        7 ms
+      Ratio:             0.0058%
+      Frequency:         0.498 per minute
+      Avg duration:      7 ms
+      Max duration:      7 ms
+
+  [THROUGHPUT]
+      Average:           285,657 kbps
+      Median:            325,896 kbps
+      Min / Max:         18,685 / 420,094 kbps
+      Std deviation:     93,889.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           285,657 kbps
+      Min / Max:         18,685 / 420,094 kbps
+      Utilisation:       114.1%
+
+  [BUFFER]
+      Average level:     6.7 s
+      Min / Max:         1.5 / 7.9 s
+
+  [UTILIZATION]
+      Bandwidth:         1.4%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_016_tc_20260526_064051.json
+
+──────────────────────────────────────────────────────────────────────
+  [18/40] starlink_road_017_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_017_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 164ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 347509 kbps | trace_bw: 347509 kbps
+   t=20s | buffer: 5.6s | bitrate: 4500 kbps | tp: 342267 kbps | trace_bw: 342267 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 297313 kbps | trace_bw: 297313 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 234228 kbps | trace_bw: 234228 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 416706 kbps | trace_bw: 416706 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 338891 kbps | trace_bw: 338891 kbps
+   t=71s | buffer: 6.6s | bitrate: 4500 kbps | tp: 419272 kbps | trace_bw: 419272 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 375057 kbps | trace_bw: 375057 kbps
+   t=92s | buffer: 6.4s | bitrate: 4500 kbps | tp: 257184 kbps | trace_bw: 257184 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 251328 kbps | trace_bw: 251328 kbps
+   t=112s | buffer: 5.9s | bitrate: 4500 kbps | tp: 349815 kbps | trace_bw: 349815 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     164 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        7 ms
+      Ratio:             0.0058%
+      Frequency:         0.498 per minute
+      Avg duration:      7 ms
+      Max duration:      7 ms
+
+  [THROUGHPUT]
+      Average:           306,194 kbps
+      Median:            326,919 kbps
+      Min / Max:         9,058 / 423,685 kbps
+      Std deviation:     82,030.1 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           306,194 kbps
+      Min / Max:         9,058 / 423,685 kbps
+      Utilisation:       106.8%
+
+  [BUFFER]
+      Average level:     6.5 s
+      Min / Max:         1.5 / 7.7 s
+
+  [UTILIZATION]
+      Bandwidth:         1.4%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_017_tc_20260526_064255.json
+
+──────────────────────────────────────────────────────────────────────
+  [19/40] starlink_road_018_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_018_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 166ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 240882 kbps | trace_bw: 240882 kbps
+   t=20s | buffer: 5.8s | bitrate: 4500 kbps | tp: 353396 kbps | trace_bw: 353396 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 310709 kbps | trace_bw: 310709 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 357852 kbps | trace_bw: 357852 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 31578 kbps | trace_bw: 31578 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 289653 kbps | trace_bw: 289653 kbps
+   t=71s | buffer: 6.6s | bitrate: 4500 kbps | tp: 336862 kbps | trace_bw: 336862 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 356813 kbps | trace_bw: 356813 kbps
+   t=92s | buffer: 6.4s | bitrate: 4500 kbps | tp: 339943 kbps | trace_bw: 339943 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 343753 kbps | trace_bw: 343753 kbps
+   t=112s | buffer: 5.9s | bitrate: 4500 kbps | tp: 349407 kbps | trace_bw: 349407 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     166 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        7 ms
+      Ratio:             0.0058%
+      Frequency:         0.498 per minute
+      Avg duration:      7 ms
+      Max duration:      7 ms
+
+  [THROUGHPUT]
+      Average:           296,124 kbps
+      Median:            323,026 kbps
+      Min / Max:         22,059 / 401,614 kbps
+      Std deviation:     92,054.2 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           296,124 kbps
+      Min / Max:         22,059 / 401,614 kbps
+      Utilisation:       109.1%
+
+  [BUFFER]
+      Average level:     6.6 s
+      Min / Max:         1.5 / 7.7 s
+
+  [UTILIZATION]
+      Bandwidth:         1.4%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_018_tc_20260526_064459.json
+
+──────────────────────────────────────────────────────────────────────
+  [20/40] starlink_road_019_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_019_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 163ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 259500 kbps | trace_bw: 259500 kbps
+   t=20s | buffer: 5.8s | bitrate: 4500 kbps | tp: 405415 kbps | trace_bw: 405415 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 268016 kbps | trace_bw: 268016 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 173514 kbps | trace_bw: 173514 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 324444 kbps | trace_bw: 324444 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 312073 kbps | trace_bw: 312073 kbps
+   t=71s | buffer: 6.6s | bitrate: 4500 kbps | tp: 215809 kbps | trace_bw: 215809 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 297643 kbps | trace_bw: 297643 kbps
+   t=92s | buffer: 6.4s | bitrate: 4500 kbps | tp: 344952 kbps | trace_bw: 344952 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 245300 kbps | trace_bw: 245300 kbps
+   t=112s | buffer: 5.9s | bitrate: 4500 kbps | tp: 237750 kbps | trace_bw: 237750 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     163 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        7 ms
+      Ratio:             0.0058%
+      Frequency:         0.498 per minute
+      Avg duration:      7 ms
+      Max duration:      7 ms
+
+  [THROUGHPUT]
+      Average:           275,841 kbps
+      Median:            285,940 kbps
+      Min / Max:         38,771 / 426,844 kbps
+      Std deviation:     82,966.8 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           275,841 kbps
+      Min / Max:         38,771 / 426,844 kbps
+      Utilisation:       103.7%
+
+  [BUFFER]
+      Average level:     6.7 s
+      Min / Max:         1.5 / 7.9 s
+
+  [UTILIZATION]
+      Bandwidth:         1.6%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_019_tc_20260526_064703.json
+
+──────────────────────────────────────────────────────────────────────
+  [21/40] starlink_road_020_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_020_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 158ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 168513 kbps | trace_bw: 168513 kbps
+   t=20s | buffer: 7.7s | bitrate: 4500 kbps | tp: 422665 kbps | trace_bw: 422665 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 289464 kbps | trace_bw: 289464 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 282092 kbps | trace_bw: 282092 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 216923 kbps | trace_bw: 216923 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 163047 kbps | trace_bw: 163047 kbps
+   t=71s | buffer: 6.6s | bitrate: 4500 kbps | tp: 270354 kbps | trace_bw: 270354 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 273695 kbps | trace_bw: 273695 kbps
+   t=92s | buffer: 6.4s | bitrate: 4500 kbps | tp: 247812 kbps | trace_bw: 247812 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 240055 kbps | trace_bw: 240055 kbps
+   t=112s | buffer: 5.9s | bitrate: 4500 kbps | tp: 422002 kbps | trace_bw: 422002 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     158 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        7 ms
+      Ratio:             0.0058%
+      Frequency:         0.498 per minute
+      Avg duration:      7 ms
+      Max duration:      7 ms
+
+  [THROUGHPUT]
+      Average:           277,575 kbps
+      Median:            271,680 kbps
+      Min / Max:         100,960 / 425,072 kbps
+      Std deviation:     81,869.7 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           277,575 kbps
+      Min / Max:         100,960 / 425,072 kbps
+      Utilisation:       97.9%
+
+  [BUFFER]
+      Average level:     6.7 s
+      Min / Max:         1.5 / 7.9 s
+
+  [UTILIZATION]
+      Bandwidth:         1.7%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_020_tc_20260526_064907.json
+
+──────────────────────────────────────────────────────────────────────
+  [22/40] starlink_road_021_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_021_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 148ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 319209 kbps | trace_bw: 319209 kbps
+   t=20s | buffer: 5.6s | bitrate: 4500 kbps | tp: 282244 kbps | trace_bw: 282244 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 380521 kbps | trace_bw: 380521 kbps
+   t=41s | buffer: 7.1s | bitrate: 4500 kbps | tp: 263061 kbps | trace_bw: 263061 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 334291 kbps | trace_bw: 334291 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 28763 kbps | trace_bw: 28763 kbps
+   t=72s | buffer: 6.6s | bitrate: 4500 kbps | tp: 91866 kbps | trace_bw: 91866 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 235885 kbps | trace_bw: 235885 kbps
+   t=92s | buffer: 6.1s | bitrate: 4500 kbps | tp: 253388 kbps | trace_bw: 253388 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 299744 kbps | trace_bw: 299744 kbps
+   t=112s | buffer: 5.7s | bitrate: 4500 kbps | tp: 342460 kbps | trace_bw: 342460 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     148 ms
+      Playback time:     120.1 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        7 ms
+      Ratio:             0.0058%
+      Frequency:         0.500 per minute
+      Avg duration:      7 ms
+      Max duration:      7 ms
+
+  [THROUGHPUT]
+      Average:           267,596 kbps
+      Median:            280,149 kbps
+      Min / Max:         28,763 / 426,173 kbps
+      Std deviation:     99,082.6 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           267,596 kbps
+      Min / Max:         28,763 / 426,173 kbps
+      Utilisation:       104.7%
+
+  [BUFFER]
+      Average level:     6.6 s
+      Min / Max:         1.5 / 7.8 s
+
+  [UTILIZATION]
+      Bandwidth:         1.6%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_021_tc_20260526_065111.json
+
+──────────────────────────────────────────────────────────────────────
+  [23/40] starlink_road_022_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_022_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 155ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 7.9s | bitrate: 4500 kbps | tp: 135890 kbps | trace_bw: 135890 kbps
+   t=20s | buffer: 5.6s | bitrate: 4500 kbps | tp: 137801 kbps | trace_bw: 137801 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 212682 kbps | trace_bw: 212682 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 230230 kbps | trace_bw: 230230 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 423158 kbps | trace_bw: 423158 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 220594 kbps | trace_bw: 220594 kbps
+   t=71s | buffer: 6.6s | bitrate: 4500 kbps | tp: 161976 kbps | trace_bw: 161976 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 393240 kbps | trace_bw: 393240 kbps
+   t=92s | buffer: 6.4s | bitrate: 4500 kbps | tp: 341980 kbps | trace_bw: 341980 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 337465 kbps | trace_bw: 337465 kbps
+   t=112s | buffer: 5.9s | bitrate: 4500 kbps | tp: 325639 kbps | trace_bw: 325639 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     155 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        7 ms
+      Ratio:             0.0058%
+      Frequency:         0.498 per minute
+      Avg duration:      7 ms
+      Max duration:      7 ms
+
+  [THROUGHPUT]
+      Average:           280,549 kbps
+      Median:            265,690 kbps
+      Min / Max:         80,555 / 458,328 kbps
+      Std deviation:     99,907.8 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           280,549 kbps
+      Min / Max:         80,555 / 458,328 kbps
+      Utilisation:       94.7%
+
+  [BUFFER]
+      Average level:     6.7 s
+      Min / Max:         1.5 / 7.9 s
+
+  [UTILIZATION]
+      Bandwidth:         1.7%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_022_tc_20260526_065315.json
+
+──────────────────────────────────────────────────────────────────────
+  [24/40] starlink_road_023_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_023_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 1659ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 2.1s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 0 kbps
+   t=20s | buffer: 1.8s | bitrate: 100 kbps | tp: 355409 kbps | trace_bw: 355409 kbps
+   t=31s | buffer: 1.7s | bitrate: 100 kbps | tp: 352490 kbps | trace_bw: 352490 kbps
+   t=41s | buffer: 3.3s | bitrate: 400 kbps | tp: 290778 kbps | trace_bw: 290778 kbps
+   t=51s | buffer: 3.2s | bitrate: 600 kbps | tp: 189122 kbps | trace_bw: 189122 kbps
+   t=61s | buffer: 3.1s | bitrate: 600 kbps | tp: 372245 kbps | trace_bw: 372245 kbps
+   t=71s | buffer: 2.8s | bitrate: 3000 kbps | tp: 269653 kbps | trace_bw: 269653 kbps
+   t=82s | buffer: 6.7s | bitrate: 4500 kbps | tp: 223665 kbps | trace_bw: 223665 kbps
+   t=92s | buffer: 6.3s | bitrate: 4500 kbps | tp: 356853 kbps | trace_bw: 356853 kbps
+   t=102s | buffer: 6.2s | bitrate: 4500 kbps | tp: 357495 kbps | trace_bw: 357495 kbps
+   t=112s | buffer: 5.9s | bitrate: 4500 kbps | tp: 329242 kbps | trace_bw: 329242 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     1,659 ms
+      Playback time:     119.8 s
+
+  [BITRATE]
+      Average (selected):  1,300 kbps
+      Average (effective): 1,282 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              600 kbps
+      Std deviation:       1,397.9 kbps
+      Variance:            1,954,000.0
+      25th/75th %ile:      200 / 2,000 kbps
+
+  [SWITCHES]
+      Total count:       9
+      Up / Down:         8 / 1
+      Avg magnitude:     600 kbps
+
+  [REBUFFERING]
+      Events:            6
+      Total time:        1,722 ms
+      Ratio:             1.4168%
+      Frequency:         3.004 per minute
+      Avg duration:      287 ms
+      Max duration:      1,510 ms
+
+  [THROUGHPUT]
+      Average:           248,304 kbps
+      Median:            286,646 kbps
+      Min / Max:         0 / 406,982 kbps
+      Std deviation:     116,588.8 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           248,304 kbps
+      Min / Max:         0 / 406,982 kbps
+      Utilisation:       115.4%
+
+  [BUFFER]
+      Average level:     4.2 s
+      Min / Max:         0.4 / 7.7 s
+
+  [UTILIZATION]
+      Bandwidth:         0.5%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_023_tc_20260526_065519.json
+
+──────────────────────────────────────────────────────────────────────
+  [25/40] starlink_road_024_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_024_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 152ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 423166 kbps | trace_bw: 423166 kbps
+   t=20s | buffer: 5.6s | bitrate: 4500 kbps | tp: 336611 kbps | trace_bw: 336611 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 286485 kbps | trace_bw: 286485 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 331713 kbps | trace_bw: 331713 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 288171 kbps | trace_bw: 288171 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 330595 kbps | trace_bw: 330595 kbps
+   t=71s | buffer: 6.6s | bitrate: 4500 kbps | tp: 337559 kbps | trace_bw: 337559 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 321446 kbps | trace_bw: 321446 kbps
+   t=92s | buffer: 6.4s | bitrate: 4500 kbps | tp: 325175 kbps | trace_bw: 325175 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 346326 kbps | trace_bw: 346326 kbps
+   t=112s | buffer: 5.9s | bitrate: 4500 kbps | tp: 338810 kbps | trace_bw: 338810 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     152 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        10 ms
+      Ratio:             0.0083%
+      Frequency:         0.498 per minute
+      Avg duration:      10 ms
+      Max duration:      10 ms
+
+  [THROUGHPUT]
+      Average:           330,892 kbps
+      Median:            324,934 kbps
+      Min / Max:         72,388 / 463,596 kbps
+      Std deviation:     56,055.6 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           330,892 kbps
+      Min / Max:         72,388 / 463,596 kbps
+      Utilisation:       98.2%
+
+  [BUFFER]
+      Average level:     6.6 s
+      Min / Max:         1.5 / 7.7 s
+
+  [UTILIZATION]
+      Bandwidth:         1.4%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_024_tc_20260526_065724.json
+
+──────────────────────────────────────────────────────────────────────
+  [26/40] starlink_road_025_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_025_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 146ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 339459 kbps | trace_bw: 339459 kbps
+   t=20s | buffer: 5.8s | bitrate: 4500 kbps | tp: 387750 kbps | trace_bw: 387750 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 303375 kbps | trace_bw: 303375 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 327068 kbps | trace_bw: 327068 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 295401 kbps | trace_bw: 295401 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 130483 kbps | trace_bw: 130483 kbps
+   t=72s | buffer: 6.6s | bitrate: 4500 kbps | tp: 301057 kbps | trace_bw: 301057 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 66265 kbps | trace_bw: 66265 kbps
+   t=92s | buffer: 6.1s | bitrate: 4500 kbps | tp: 315999 kbps | trace_bw: 315999 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 318301 kbps | trace_bw: 318301 kbps
+   t=112s | buffer: 7.7s | bitrate: 4500 kbps | tp: 346908 kbps | trace_bw: 346908 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     146 ms
+      Playback time:     120.1 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        6 ms
+      Ratio:             0.0050%
+      Frequency:         0.500 per minute
+      Avg duration:      6 ms
+      Max duration:      6 ms
+
+  [THROUGHPUT]
+      Average:           306,046 kbps
+      Median:            313,151 kbps
+      Min / Max:         66,265 / 419,601 kbps
+      Std deviation:     66,032.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           306,046 kbps
+      Min / Max:         66,265 / 419,601 kbps
+      Utilisation:       102.3%
+
+  [BUFFER]
+      Average level:     6.7 s
+      Min / Max:         1.5 / 7.8 s
+
+  [UTILIZATION]
+      Bandwidth:         1.4%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_025_tc_20260526_065928.json
+
+──────────────────────────────────────────────────────────────────────
+  [27/40] starlink_road_026_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_026_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 153ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 350509 kbps | trace_bw: 350509 kbps
+   t=20s | buffer: 7.6s | bitrate: 4500 kbps | tp: 134512 kbps | trace_bw: 134512 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 283390 kbps | trace_bw: 283390 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 236499 kbps | trace_bw: 236499 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 330789 kbps | trace_bw: 330789 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 337976 kbps | trace_bw: 337976 kbps
+   t=71s | buffer: 6.6s | bitrate: 4500 kbps | tp: 221524 kbps | trace_bw: 221524 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 350121 kbps | trace_bw: 350121 kbps
+   t=92s | buffer: 6.4s | bitrate: 4500 kbps | tp: 304142 kbps | trace_bw: 304142 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 272681 kbps | trace_bw: 272681 kbps
+   t=112s | buffer: 7.8s | bitrate: 4500 kbps | tp: 138498 kbps | trace_bw: 138498 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     153 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        7 ms
+      Ratio:             0.0058%
+      Frequency:         0.498 per minute
+      Avg duration:      7 ms
+      Max duration:      7 ms
+
+  [THROUGHPUT]
+      Average:           251,846 kbps
+      Median:            275,502 kbps
+      Min / Max:         0 / 360,403 kbps
+      Std deviation:     86,606.7 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           251,846 kbps
+      Min / Max:         0 / 360,403 kbps
+      Utilisation:       109.4%
+
+  [BUFFER]
+      Average level:     6.6 s
+      Min / Max:         1.5 / 7.8 s
+
+  [UTILIZATION]
+      Bandwidth:         1.6%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_026_tc_20260526_070132.json
+
+──────────────────────────────────────────────────────────────────────
+  [28/40] starlink_road_027_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_027_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 157ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 270127 kbps | trace_bw: 270127 kbps
+   t=20s | buffer: 5.6s | bitrate: 4500 kbps | tp: 336745 kbps | trace_bw: 336745 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 248290 kbps | trace_bw: 248290 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 253456 kbps | trace_bw: 253456 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 356071 kbps | trace_bw: 356071 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 153082 kbps | trace_bw: 153082 kbps
+   t=71s | buffer: 6.6s | bitrate: 4500 kbps | tp: 76697 kbps | trace_bw: 76697 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 135129 kbps | trace_bw: 135129 kbps
+   t=92s | buffer: 6.4s | bitrate: 4500 kbps | tp: 400783 kbps | trace_bw: 400783 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 167447 kbps | trace_bw: 167447 kbps
+   t=112s | buffer: 5.9s | bitrate: 4500 kbps | tp: 181868 kbps | trace_bw: 181868 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     157 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        8 ms
+      Ratio:             0.0066%
+      Frequency:         0.498 per minute
+      Avg duration:      8 ms
+      Max duration:      8 ms
+
+  [THROUGHPUT]
+      Average:           230,141 kbps
+      Median:            244,898 kbps
+      Min / Max:         41,031 / 422,157 kbps
+      Std deviation:     97,620.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           230,141 kbps
+      Min / Max:         41,031 / 422,157 kbps
+      Utilisation:       106.4%
+
+  [BUFFER]
+      Average level:     6.7 s
+      Min / Max:         1.5 / 7.8 s
+
+  [UTILIZATION]
+      Bandwidth:         1.8%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_027_tc_20260526_070336.json
+
+──────────────────────────────────────────────────────────────────────
+  [29/40] starlink_road_028_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_028_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 148ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 167080 kbps | trace_bw: 167080 kbps
+   t=20s | buffer: 5.8s | bitrate: 4500 kbps | tp: 175220 kbps | trace_bw: 175220 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 96430 kbps | trace_bw: 96430 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 176274 kbps | trace_bw: 176274 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 363283 kbps | trace_bw: 363283 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 290840 kbps | trace_bw: 290840 kbps
+   t=71s | buffer: 6.8s | bitrate: 4500 kbps | tp: 273691 kbps | trace_bw: 273691 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 167586 kbps | trace_bw: 167586 kbps
+   t=92s | buffer: 6.4s | bitrate: 4500 kbps | tp: 233649 kbps | trace_bw: 233649 kbps
+   t=102s | buffer: 2.0s | bitrate: 4500 kbps | tp: 0 kbps | trace_bw: 0 kbps
+   t=112s | buffer: 0.8s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 0 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     148 ms
+      Playback time:     119.5 s
+
+  [BITRATE]
+      Average (selected):  2,300 kbps
+      Average (effective): 2,283 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       2,200.0 kbps
+      Variance:            4,840,000.0
+      25th/75th %ile:      100 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       1
+      Up / Down:         0 / 1
+      Avg magnitude:     4,400 kbps
+
+  [REBUFFERING]
+      Events:            4
+      Total time:        880 ms
+      Ratio:             0.7311%
+      Frequency:         2.009 per minute
+      Avg duration:      220 ms
+      Max duration:      864 ms
+
+  [THROUGHPUT]
+      Average:           168,204 kbps
+      Median:            196,987 kbps
+      Min / Max:         0 / 366,660 kbps
+      Std deviation:     107,134.8 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           168,204 kbps
+      Min / Max:         0 / 366,660 kbps
+      Utilisation:       117.1%
+
+  [BUFFER]
+      Average level:     5.8 s
+      Min / Max:         0.1 / 7.9 s
+
+  [UTILIZATION]
+      Bandwidth:         1.2%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_028_tc_20260526_070540.json
+
+──────────────────────────────────────────────────────────────────────
+  [30/40] starlink_road_029_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_029_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 169ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 184884 kbps | trace_bw: 184884 kbps
+   t=20s | buffer: 7.6s | bitrate: 4500 kbps | tp: 290950 kbps | trace_bw: 290950 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 393586 kbps | trace_bw: 393586 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 330611 kbps | trace_bw: 330611 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 351841 kbps | trace_bw: 351841 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 339998 kbps | trace_bw: 339998 kbps
+   t=71s | buffer: 6.8s | bitrate: 4500 kbps | tp: 63534 kbps | trace_bw: 63534 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 338884 kbps | trace_bw: 338884 kbps
+   t=92s | buffer: 6.4s | bitrate: 4500 kbps | tp: 281603 kbps | trace_bw: 281603 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 245583 kbps | trace_bw: 245583 kbps
+   t=112s | buffer: 5.9s | bitrate: 4500 kbps | tp: 379735 kbps | trace_bw: 379735 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     169 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        7 ms
+      Ratio:             0.0058%
+      Frequency:         0.498 per minute
+      Avg duration:      7 ms
+      Max duration:      7 ms
+
+  [THROUGHPUT]
+      Average:           269,096 kbps
+      Median:            292,760 kbps
+      Min / Max:         0 / 404,920 kbps
+      Std deviation:     95,349.7 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           269,096 kbps
+      Min / Max:         0 / 404,920 kbps
+      Utilisation:       108.8%
+
+  [BUFFER]
+      Average level:     6.6 s
+      Min / Max:         1.5 / 7.9 s
+
+  [UTILIZATION]
+      Bandwidth:         1.5%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_029_tc_20260526_070744.json
+
+──────────────────────────────────────────────────────────────────────
+  [31/40] starlink_road_030_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_030_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 165ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 362242 kbps | trace_bw: 362242 kbps
+   t=20s | buffer: 5.8s | bitrate: 4500 kbps | tp: 110326 kbps | trace_bw: 110326 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 336238 kbps | trace_bw: 336238 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 320318 kbps | trace_bw: 320318 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 289438 kbps | trace_bw: 289438 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 312993 kbps | trace_bw: 312993 kbps
+   t=71s | buffer: 6.8s | bitrate: 4500 kbps | tp: 230263 kbps | trace_bw: 230263 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 362489 kbps | trace_bw: 362489 kbps
+   t=92s | buffer: 6.4s | bitrate: 4500 kbps | tp: 264894 kbps | trace_bw: 264894 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 259458 kbps | trace_bw: 259458 kbps
+   t=112s | buffer: 5.9s | bitrate: 4500 kbps | tp: 260173 kbps | trace_bw: 260173 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     165 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        7 ms
+      Ratio:             0.0058%
+      Frequency:         0.498 per minute
+      Avg duration:      7 ms
+      Max duration:      7 ms
+
+  [THROUGHPUT]
+      Average:           292,582 kbps
+      Median:            310,474 kbps
+      Min / Max:         39,813 / 426,964 kbps
+      Std deviation:     90,627.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           292,582 kbps
+      Min / Max:         39,813 / 426,964 kbps
+      Utilisation:       106.1%
+
+  [BUFFER]
+      Average level:     6.7 s
+      Min / Max:         1.5 / 7.9 s
+
+  [UTILIZATION]
+      Bandwidth:         1.4%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_030_tc_20260526_070948.json
+
+──────────────────────────────────────────────────────────────────────
+  [32/40] starlink_road_031_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_031_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 171ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 207828 kbps | trace_bw: 207828 kbps
+   t=20s | buffer: 5.6s | bitrate: 4500 kbps | tp: 262058 kbps | trace_bw: 262058 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 322350 kbps | trace_bw: 322350 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 282273 kbps | trace_bw: 282273 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 192468 kbps | trace_bw: 192468 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 285534 kbps | trace_bw: 285534 kbps
+   t=71s | buffer: 6.6s | bitrate: 4500 kbps | tp: 275515 kbps | trace_bw: 275515 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 304145 kbps | trace_bw: 304145 kbps
+   t=92s | buffer: 6.4s | bitrate: 4500 kbps | tp: 311617 kbps | trace_bw: 311617 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 163785 kbps | trace_bw: 163785 kbps
+   t=112s | buffer: 5.9s | bitrate: 4500 kbps | tp: 246290 kbps | trace_bw: 246290 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     171 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        6 ms
+      Ratio:             0.0050%
+      Frequency:         0.498 per minute
+      Avg duration:      6 ms
+      Max duration:      6 ms
+
+  [THROUGHPUT]
+      Average:           276,199 kbps
+      Median:            276,101 kbps
+      Min / Max:         62,245 / 424,224 kbps
+      Std deviation:     64,294.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           276,199 kbps
+      Min / Max:         62,245 / 424,224 kbps
+      Utilisation:       100.0%
+
+  [BUFFER]
+      Average level:     6.7 s
+      Min / Max:         1.5 / 7.9 s
+
+  [UTILIZATION]
+      Bandwidth:         1.6%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_031_tc_20260526_071152.json
+
+──────────────────────────────────────────────────────────────────────
+  [33/40] starlink_road_032_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_032_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 162ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 341506 kbps | trace_bw: 341506 kbps
+   t=20s | buffer: 5.8s | bitrate: 4500 kbps | tp: 332024 kbps | trace_bw: 332024 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 181856 kbps | trace_bw: 181856 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 139008 kbps | trace_bw: 139008 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 336875 kbps | trace_bw: 336875 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 260767 kbps | trace_bw: 260767 kbps
+   t=71s | buffer: 6.8s | bitrate: 4500 kbps | tp: 298553 kbps | trace_bw: 298553 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 271656 kbps | trace_bw: 271656 kbps
+   t=92s | buffer: 6.4s | bitrate: 4500 kbps | tp: 158130 kbps | trace_bw: 158130 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 164539 kbps | trace_bw: 164539 kbps
+   t=112s | buffer: 5.9s | bitrate: 4500 kbps | tp: 190453 kbps | trace_bw: 190453 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     162 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        7 ms
+      Ratio:             0.0058%
+      Frequency:         0.498 per minute
+      Avg duration:      7 ms
+      Max duration:      7 ms
+
+  [THROUGHPUT]
+      Average:           227,422 kbps
+      Median:            260,767 kbps
+      Min / Max:         14,039 / 383,624 kbps
+      Std deviation:     100,620.5 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           227,422 kbps
+      Min / Max:         14,039 / 383,624 kbps
+      Utilisation:       114.7%
+
+  [BUFFER]
+      Average level:     6.6 s
+      Min / Max:         1.5 / 7.7 s
+
+  [UTILIZATION]
+      Bandwidth:         1.7%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_032_tc_20260526_071356.json
+
+──────────────────────────────────────────────────────────────────────
+  [34/40] starlink_road_033_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_033_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 182ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 258137 kbps | trace_bw: 258137 kbps
+   t=20s | buffer: 5.6s | bitrate: 4500 kbps | tp: 314568 kbps | trace_bw: 314568 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 373711 kbps | trace_bw: 373711 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 350568 kbps | trace_bw: 350568 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 393824 kbps | trace_bw: 393824 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 337437 kbps | trace_bw: 337437 kbps
+   t=71s | buffer: 6.6s | bitrate: 4500 kbps | tp: 183548 kbps | trace_bw: 183548 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 307553 kbps | trace_bw: 307553 kbps
+   t=92s | buffer: 6.1s | bitrate: 4500 kbps | tp: 384021 kbps | trace_bw: 384021 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 345516 kbps | trace_bw: 345516 kbps
+   t=112s | buffer: 7.8s | bitrate: 4500 kbps | tp: 347173 kbps | trace_bw: 347173 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     182 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        7 ms
+      Ratio:             0.0058%
+      Frequency:         0.498 per minute
+      Avg duration:      7 ms
+      Max duration:      7 ms
+
+  [THROUGHPUT]
+      Average:           321,784 kbps
+      Median:            330,312 kbps
+      Min / Max:         96,645 / 425,070 kbps
+      Std deviation:     73,198.9 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           321,784 kbps
+      Min / Max:         96,645 / 425,070 kbps
+      Utilisation:       102.7%
+
+  [BUFFER]
+      Average level:     6.7 s
+      Min / Max:         1.5 / 7.9 s
+
+  [UTILIZATION]
+      Bandwidth:         1.4%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_033_tc_20260526_071600.json
+
+──────────────────────────────────────────────────────────────────────
+  [35/40] starlink_road_034_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_034_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 157ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 276637 kbps | trace_bw: 276637 kbps
+   t=20s | buffer: 5.8s | bitrate: 4500 kbps | tp: 70447 kbps | trace_bw: 70447 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 365635 kbps | trace_bw: 365635 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 321537 kbps | trace_bw: 321537 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 308083 kbps | trace_bw: 308083 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 28358 kbps | trace_bw: 28358 kbps
+   t=71s | buffer: 6.8s | bitrate: 4500 kbps | tp: 106561 kbps | trace_bw: 106561 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 269696 kbps | trace_bw: 269696 kbps
+   t=92s | buffer: 6.4s | bitrate: 4500 kbps | tp: 177651 kbps | trace_bw: 177651 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 145970 kbps | trace_bw: 145970 kbps
+   t=112s | buffer: 5.9s | bitrate: 4500 kbps | tp: 354748 kbps | trace_bw: 354748 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     157 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        7 ms
+      Ratio:             0.0058%
+      Frequency:         0.499 per minute
+      Avg duration:      7 ms
+      Max duration:      7 ms
+
+  [THROUGHPUT]
+      Average:           229,423 kbps
+      Median:            250,812 kbps
+      Min / Max:         28,358 / 378,299 kbps
+      Std deviation:     90,941.6 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           229,423 kbps
+      Min / Max:         28,358 / 378,299 kbps
+      Utilisation:       109.3%
+
+  [BUFFER]
+      Average level:     6.7 s
+      Min / Max:         1.5 / 7.8 s
+
+  [UTILIZATION]
+      Bandwidth:         1.8%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_034_tc_20260526_071804.json
+
+──────────────────────────────────────────────────────────────────────
+  [36/40] starlink_road_035_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_035_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 168ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 179701 kbps | trace_bw: 179701 kbps
+   t=20s | buffer: 7.7s | bitrate: 4500 kbps | tp: 292506 kbps | trace_bw: 292506 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 146740 kbps | trace_bw: 146740 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 176461 kbps | trace_bw: 176461 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 290812 kbps | trace_bw: 290812 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 351150 kbps | trace_bw: 351150 kbps
+   t=71s | buffer: 6.6s | bitrate: 4500 kbps | tp: 286732 kbps | trace_bw: 286732 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 242273 kbps | trace_bw: 242273 kbps
+   t=92s | buffer: 6.1s | bitrate: 4500 kbps | tp: 297130 kbps | trace_bw: 297130 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 341774 kbps | trace_bw: 341774 kbps
+   t=112s | buffer: 7.7s | bitrate: 4500 kbps | tp: 338352 kbps | trace_bw: 338352 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     168 ms
+      Playback time:     120.5 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        8 ms
+      Ratio:             0.0066%
+      Frequency:         0.498 per minute
+      Avg duration:      8 ms
+      Max duration:      8 ms
+
+  [THROUGHPUT]
+      Average:           254,983 kbps
+      Median:            268,875 kbps
+      Min / Max:         39,745 / 412,038 kbps
+      Std deviation:     84,038.8 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           254,983 kbps
+      Min / Max:         39,745 / 412,038 kbps
+      Utilisation:       105.4%
+
+  [BUFFER]
+      Average level:     6.8 s
+      Min / Max:         1.5 / 7.9 s
+
+  [UTILIZATION]
+      Bandwidth:         1.7%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_035_tc_20260526_072008.json
+
+──────────────────────────────────────────────────────────────────────
+  [37/40] starlink_road_036_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_036_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 163ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 283031 kbps | trace_bw: 283031 kbps
+   t=20s | buffer: 5.8s | bitrate: 4500 kbps | tp: 249358 kbps | trace_bw: 249358 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 304199 kbps | trace_bw: 304199 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 258753 kbps | trace_bw: 258753 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 269838 kbps | trace_bw: 269838 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 41110 kbps | trace_bw: 41110 kbps
+   t=71s | buffer: 6.6s | bitrate: 4500 kbps | tp: 339526 kbps | trace_bw: 339526 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 341391 kbps | trace_bw: 341391 kbps
+   t=92s | buffer: 6.4s | bitrate: 4500 kbps | tp: 338230 kbps | trace_bw: 338230 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 274861 kbps | trace_bw: 274861 kbps
+   t=112s | buffer: 5.9s | bitrate: 4500 kbps | tp: 420286 kbps | trace_bw: 420286 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     163 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        10 ms
+      Ratio:             0.0083%
+      Frequency:         0.498 per minute
+      Avg duration:      10 ms
+      Max duration:      10 ms
+
+  [THROUGHPUT]
+      Average:           295,241 kbps
+      Median:            307,011 kbps
+      Min / Max:         41,110 / 434,817 kbps
+      Std deviation:     76,228.8 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           295,241 kbps
+      Min / Max:         41,110 / 434,817 kbps
+      Utilisation:       104.0%
+
+  [BUFFER]
+      Average level:     6.6 s
+      Min / Max:         1.5 / 7.7 s
+
+  [UTILIZATION]
+      Bandwidth:         1.5%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_036_tc_20260526_072212.json
+
+──────────────────────────────────────────────────────────────────────
+  [38/40] starlink_road_037_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_037_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 182ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 201527 kbps | trace_bw: 201527 kbps
+   t=20s | buffer: 7.6s | bitrate: 4500 kbps | tp: 190380 kbps | trace_bw: 190380 kbps
+   t=31s | buffer: 7.4s | bitrate: 4500 kbps | tp: 158447 kbps | trace_bw: 158447 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 209940 kbps | trace_bw: 209940 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 328830 kbps | trace_bw: 328830 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 420169 kbps | trace_bw: 420169 kbps
+   t=71s | buffer: 6.6s | bitrate: 4500 kbps | tp: 422352 kbps | trace_bw: 422352 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 252347 kbps | trace_bw: 252347 kbps
+   t=92s | buffer: 6.1s | bitrate: 4500 kbps | tp: 319719 kbps | trace_bw: 319719 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 303785 kbps | trace_bw: 303785 kbps
+   t=112s | buffer: 5.7s | bitrate: 4500 kbps | tp: 248063 kbps | trace_bw: 248063 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     182 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        6 ms
+      Ratio:             0.0050%
+      Frequency:         0.500 per minute
+      Avg duration:      6 ms
+      Max duration:      6 ms
+
+  [THROUGHPUT]
+      Average:           264,589 kbps
+      Median:            254,208 kbps
+      Min / Max:         122,001 / 422,910 kbps
+      Std deviation:     79,074.1 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           264,589 kbps
+      Min / Max:         122,001 / 422,910 kbps
+      Utilisation:       96.1%
+
+  [BUFFER]
+      Average level:     6.6 s
+      Min / Max:         1.5 / 7.7 s
+
+  [UTILIZATION]
+      Bandwidth:         1.8%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_037_tc_20260526_072416.json
+
+──────────────────────────────────────────────────────────────────────
+  [39/40] starlink_road_038_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_038_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 114 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 155ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 106145 kbps | trace_bw: 106145 kbps
+   t=20s | buffer: 5.6s | bitrate: 4500 kbps | tp: 263524 kbps | trace_bw: 263524 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 341039 kbps | trace_bw: 341039 kbps
+   t=41s | buffer: 7.1s | bitrate: 4500 kbps | tp: 335438 kbps | trace_bw: 335438 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 96396 kbps | trace_bw: 96396 kbps
+   t=61s | buffer: 6.7s | bitrate: 4500 kbps | tp: 254438 kbps | trace_bw: 254438 kbps
+   t=72s | buffer: 6.6s | bitrate: 4500 kbps | tp: 317672 kbps | trace_bw: 317672 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 68700 kbps | trace_bw: 68700 kbps
+   t=92s | buffer: 6.1s | bitrate: 4500 kbps | tp: 298513 kbps | trace_bw: 298513 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 269838 kbps | trace_bw: 269838 kbps
+   t=112s | buffer: 7.7s | bitrate: 4500 kbps | tp: 342226 kbps | trace_bw: 342226 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     155 ms
+      Playback time:     120.1 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        7 ms
+      Ratio:             0.0058%
+      Frequency:         0.500 per minute
+      Avg duration:      7 ms
+      Max duration:      7 ms
+
+  [THROUGHPUT]
+      Average:           265,190 kbps
+      Median:            301,972 kbps
+      Min / Max:         51,602 / 394,974 kbps
+      Std deviation:     94,145.3 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           265,190 kbps
+      Min / Max:         51,602 / 394,974 kbps
+      Utilisation:       113.9%
+
+  [BUFFER]
+      Average level:     6.6 s
+      Min / Max:         1.5 / 7.8 s
+
+  [UTILIZATION]
+      Bandwidth:         1.5%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_038_tc_20260526_072619.json
+
+──────────────────────────────────────────────────────────────────────
+  [40/40] starlink_road_039_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] starlink_road_039_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 120 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 159ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 5.9s | bitrate: 4500 kbps | tp: 238749 kbps | trace_bw: 238749 kbps
+   t=20s | buffer: 5.6s | bitrate: 4500 kbps | tp: 217653 kbps | trace_bw: 217653 kbps
+   t=31s | buffer: 7.5s | bitrate: 4500 kbps | tp: 220509 kbps | trace_bw: 220509 kbps
+   t=41s | buffer: 7.4s | bitrate: 4500 kbps | tp: 298271 kbps | trace_bw: 298271 kbps
+   t=51s | buffer: 7.0s | bitrate: 4500 kbps | tp: 293087 kbps | trace_bw: 293087 kbps
+   t=61s | buffer: 6.9s | bitrate: 4500 kbps | tp: 94022 kbps | trace_bw: 94022 kbps
+   t=71s | buffer: 6.6s | bitrate: 4500 kbps | tp: 154507 kbps | trace_bw: 154507 kbps
+   t=82s | buffer: 6.5s | bitrate: 4500 kbps | tp: 215312 kbps | trace_bw: 215312 kbps
+   t=92s | buffer: 6.4s | bitrate: 4500 kbps | tp: 229421 kbps | trace_bw: 229421 kbps
+   t=102s | buffer: 6.0s | bitrate: 4500 kbps | tp: 372495 kbps | trace_bw: 372495 kbps
+   t=112s | buffer: 5.9s | bitrate: 4500 kbps | tp: 243961 kbps | trace_bw: 243961 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     159 ms
+      Playback time:     120.4 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+      Min / Max:           4,500 / 4,500 kbps
+      Median:              4,500 kbps
+      Std deviation:       0.0 kbps
+      Variance:            0.0
+      25th/75th %ile:      4,500 / 4,500 kbps
+
+  [SWITCHES]
+      Total count:       0
+      Up / Down:         0 / 0
+      Avg magnitude:     0 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        7 ms
+      Ratio:             0.0058%
+      Frequency:         0.498 per minute
+      Avg duration:      7 ms
+      Max duration:      7 ms
+
+  [THROUGHPUT]
+      Average:           208,066 kbps
+      Median:            211,246 kbps
+      Min / Max:         21,896 / 372,495 kbps
+      Std deviation:     67,954.5 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           208,066 kbps
+      Min / Max:         21,896 / 372,495 kbps
+      Utilisation:       101.5%
+
+  [BUFFER]
+      Average level:     6.7 s
+      Min / Max:         1.5 / 7.9 s
+
+  [UTILIZATION]
+      Bandwidth:         2.1%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/benchmark_lldash-gpac_starlink_road_039_tc_20260526_072823.json
+
+======================================================================
+  BATCH COMPLETE: 40/40 succeeded
+  Results saved to: results/results/run_all_20260525_151403/lldash-gpac_starlink-2024/
+======================================================================
+

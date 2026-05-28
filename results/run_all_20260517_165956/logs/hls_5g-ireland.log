@@ -1,0 +1,300 @@
+
+======================================================================
+  BATCH RUN: 83 trace(s) from traces/5g-ireland
+======================================================================
+
+
+──────────────────────────────────────────────────────────────────────
+  [1/83] amazon_prime_driving_animated-adventuretime_B_2019_11_28_07_27_57_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] amazon_prime_driving_animated-adventuretime_B_2019_11_28_07_27_57_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 1898 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 3317ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 18.3s | bitrate: 880 kbps | tp: 2719 kbps | trace_bw: 2719 kbps
+   t=20s | buffer: 28.2s | bitrate: 4950 kbps | tp: 0 kbps | trace_bw: 0 kbps
+   t=30s | buffer: 30.0s | bitrate: 4950 kbps | tp: 948 kbps | trace_bw: 948 kbps
+   t=41s | buffer: 27.9s | bitrate: 4950 kbps | tp: 279 kbps | trace_bw: 279 kbps
+   t=51s | buffer: 25.7s | bitrate: 4950 kbps | tp: 1053 kbps | trace_bw: 1053 kbps
+   t=61s | buffer: 27.6s | bitrate: 3300 kbps | tp: 759 kbps | trace_bw: 759 kbps
+   t=71s | buffer: 17.5s | bitrate: 3300 kbps | tp: 0 kbps | trace_bw: 0 kbps
+   t=81s | buffer: 7.3s | bitrate: 2200 kbps | tp: 276 kbps | trace_bw: 276 kbps
+   t=91s | buffer: 25.2s | bitrate: 440 kbps | tp: 280 kbps | trace_bw: 280 kbps
+   t=101s | buffer: 31.0s | bitrate: 220 kbps | tp: 279 kbps | trace_bw: 279 kbps
+   t=112s | buffer: 28.9s | bitrate: 660 kbps | tp: 277 kbps | trace_bw: 277 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     3,317 ms
+      Playback time:     119.8 s
+
+  [BITRATE]
+      Average (selected):  2,746 kbps
+      Average (effective): 2,727 kbps
+      Min / Max:           220 / 4,950 kbps
+      Median:              3,300 kbps
+      Std deviation:       1,919.1 kbps
+      Variance:            3,682,823.2
+      25th/75th %ile:      660 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       10
+      Up / Down:         6 / 4
+      Avg magnitude:     1,034 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        871 ms
+      Ratio:             0.7216%
+      Frequency:         1.001 per minute
+      Avg duration:      436 ms
+      Max duration:      477 ms
+
+  [THROUGHPUT]
+      Average:           1,401 kbps
+      Median:            279 kbps
+      Min / Max:         0 / 39,982 kbps
+      Std deviation:     5,193.3 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,401 kbps
+      Min / Max:         0 / 39,982 kbps
+      Utilisation:       19.9%
+
+  [BUFFER]
+      Average level:     22.8 s
+      Min / Max:         0.0 / 33.2 s
+
+  [UTILIZATION]
+      Bandwidth:         984.3%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_5g-ireland/benchmark_hls_amazon_prime_driving_animated-adventuretime_B_2019_11_28_07_27_57_tc_20260518_031644.json
+
+──────────────────────────────────────────────────────────────────────
+  [2/83] amazon_prime_driving_animated-adventuretime_B_2019_11_28_10_14_25_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] amazon_prime_driving_animated-adventuretime_B_2019_11_28_10_14_25_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 1320 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 5508ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 2.3s | bitrate: 3300 kbps | tp: 12 kbps | trace_bw: 12 kbps
+   t=20s | buffer: 5.9s | bitrate: 110 kbps | tp: 0 kbps | trace_bw: 0 kbps
+   t=30s | buffer: 19.7s | bitrate: 3300 kbps | tp: 54316 kbps | trace_bw: 54316 kbps
+   t=41s | buffer: 25.6s | bitrate: 4950 kbps | tp: 0 kbps | trace_bw: 0 kbps
+   t=51s | buffer: 31.5s | bitrate: 4950 kbps | tp: 1420 kbps | trace_bw: 1420 kbps
+   t=61s | buffer: 29.3s | bitrate: 4950 kbps | tp: 281 kbps | trace_bw: 281 kbps
+   t=71s | buffer: 27.2s | bitrate: 2200 kbps | tp: 283 kbps | trace_bw: 283 kbps
+   t=81s | buffer: 25.0s | bitrate: 3300 kbps | tp: 274 kbps | trace_bw: 274 kbps
+   t=91s | buffer: 14.9s | bitrate: 3300 kbps | tp: 844 kbps | trace_bw: 844 kbps
+   t=101s | buffer: 4.7s | bitrate: 1650 kbps | tp: 281 kbps | trace_bw: 281 kbps
+   t=112s | buffer: 10.6s | bitrate: 1650 kbps | tp: 0 kbps | trace_bw: 0 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     5,508 ms
+      Playback time:     114.1 s
+
+  [BITRATE]
+      Average (selected):  3,066 kbps
+      Average (effective): 2,892 kbps
+      Min / Max:           110 / 4,950 kbps
+      Median:              3,300 kbps
+      Std deviation:       1,562.7 kbps
+      Variance:            2,441,994.3
+      25th/75th %ile:      1,650 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       16
+      Up / Down:         8 / 8
+      Avg magnitude:     1,588 kbps
+
+  [REBUFFERING]
+      Events:            4
+      Total time:        6,863 ms
+      Ratio:             5.6732%
+      Frequency:         2.103 per minute
+      Avg duration:      1,716 ms
+      Max duration:      5,839 ms
+
+  [THROUGHPUT]
+      Average:           1,692 kbps
+      Median:            273 kbps
+      Min / Max:         0 / 54,316 kbps
+      Std deviation:     7,604.2 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,692 kbps
+      Min / Max:         0 / 54,316 kbps
+      Utilisation:       16.1%
+
+  [BUFFER]
+      Average level:     17.6 s
+      Min / Max:         0.0 / 33.0 s
+
+  [UTILIZATION]
+      Bandwidth:         1123.2%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_5g-ireland/benchmark_hls_amazon_prime_driving_animated-adventuretime_B_2019_11_28_10_14_25_tc_20260518_031852.json
+
+──────────────────────────────────────────────────────────────────────
+  [3/83] amazon_prime_driving_animated-adventuretime_B_2019_11_28_12_05_29_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] amazon_prime_driving_animated-adventuretime_B_2019_11_28_12_05_29_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] tc-trace.py starting in container
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 963 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 2649ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.0s | bitrate: 440 kbps | tp: 37315 kbps | trace_bw: 37315 kbps
+   t=20s | buffer: 0.1s | bitrate: 220 kbps | tp: 0 kbps | trace_bw: 0 kbps
+   t=30s | buffer: 0.0s | bitrate: 220 kbps | tp: 875 kbps | trace_bw: 875 kbps
+   t=41s | buffer: 6.1s | bitrate: 3300 kbps | tp: 276 kbps | trace_bw: 276 kbps
+   t=51s | buffer: 4.0s | bitrate: 2200 kbps | tp: 1802 kbps | trace_bw: 1802 kbps
+   t=61s | buffer: 4.2s | bitrate: 1320 kbps | tp: 225 kbps | trace_bw: 225 kbps
+   t=71s | buffer: 14.5s | bitrate: 1320 kbps | tp: 277 kbps | trace_bw: 277 kbps
+   t=81s | buffer: 20.4s | bitrate: 4950 kbps | tp: 0 kbps | trace_bw: 0 kbps
+   t=91s | buffer: 10.2s | bitrate: 4950 kbps | tp: 907 kbps | trace_bw: 907 kbps
+   t=101s | buffer: 0.1s | bitrate: 4950 kbps | tp: 276 kbps | trace_bw: 276 kbps
+   t=112s | buffer: 0.0s | bitrate: 4950 kbps | tp: 0 kbps | trace_bw: 0 kbps
+
+======================================================================
+  BENCHMARK RESULTS (HLS / hls.js)
+======================================================================
+
+  [TIMING]
+      Startup delay:     2,649 ms
+      Playback time:     76.1 s
+
+  [BITRATE]
+      Average (selected):  2,808 kbps
+      Average (effective): 1,764 kbps
+      Min / Max:           110 / 4,950 kbps
+      Median:              3,300 kbps
+      Std deviation:       2,047.1 kbps
+      Variance:            4,190,625.8
+      25th/75th %ile:      440 / 4,950 kbps
+
+  [SWITCHES]
+      Total count:       9
+      Up / Down:         4 / 5
+      Avg magnitude:     2,066 kbps
+
+  [REBUFFERING]
+      Events:            9
+      Total time:        45,044 ms
+      Ratio:             37.1877%
+      Frequency:         7.098 per minute
+      Avg duration:      3,285 ms
+      Max duration:      12,173 ms
+
+  [THROUGHPUT]
+      Average:           1,847 kbps
+      Median:            276 kbps
+      Min / Max:         0 / 43,922 kbps
+      Std deviation:     6,553.1 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,847 kbps
+      Min / Max:         0 / 43,922 kbps
+      Utilisation:       14.9%
+
+  [BUFFER]
+      Average level:     5.4 s
+      Min / Max:         0.0 / 21.5 s
+
+  [UTILIZATION]
+      Bandwidth:         1017.3%
+
+======================================================================
+
+[SAVED] results/results/run_all_20260517_165956/hls_5g-ireland/benchmark_hls_amazon_prime_driving_animated-adventuretime_B_2019_11_28_12_05_29_tc_20260518_032102.json
+
+──────────────────────────────────────────────────────────────────────
+  [4/83] amazon_prime_driving_animated-adventuretime_B_2019_11_28_14_53_29_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] amazon_prime_driving_animated-adventuretime_B_2019_11_28_14_53_29_tc.csv
+[HLS-SHAPER] Triggering tc-trace via /startShaping API...
+[HLS-SHAPER] Warning: could not reach /startShaping: HTTPConnectionPool(host='localhost', port=8080): Read timed out. (read timeout=5)
+
+======================================================================
+  HLS Streaming QoE Benchmark (hls.js)
+======================================================================
+  Server: http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+======================================================================
+
+[TRACE] Loaded 4683 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+
+[ERROR] Benchmark failed: Page.goto: net::ERR_CONNECTION_RESET at http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+Call log:
+navigating to "http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8", waiting until "domcontentloaded"
+
+Traceback (most recent call last):
+  File "benchmark.py", line 2755, in <module>
+    main()
+  File "benchmark.py", line 2710, in main
+    ok = run_single_benchmark(args.protocol, url, args.duration, output_path,
+  File "benchmark.py", line 2572, in run_single_benchmark
+    benchmark.run()
+  File "benchmark.py", line 927, in run
+    page.goto(self.player_url, timeout=120000, wait_until='domcontentloaded')
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/sync_api/_generated.py", line 9002, in goto
+    self._sync(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_page.py", line 553, in goto
+    return await self._main_frame.goto(**locals_to_params(locals()))
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_frame.py", line 145, in goto
+    await self._channel.send("goto", locals_to_params(locals()))
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_connection.py", line 59, in send
+    return await self._connection.wrap_api_call(
+  File "/home/ajhunjh1/.local/lib/python3.8/site-packages/playwright/_impl/_connection.py", line 520, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.Error: Page.goto: net::ERR_CONNECTION_RESET at http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8
+Call log:
+navigating to "http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8", waiting until "domcontentloaded"
+
