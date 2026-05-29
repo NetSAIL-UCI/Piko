@@ -1166,12 +1166,18 @@ class WebRTCBenchmark:
         self.last_stats_time = 0
         self.frames_received = 0
         self.frames_decoded = 0
-        self.freeze_count = 0
         self.jitter_samples: List[float] = []
         self.packet_loss_samples: List[float] = []
         self.rtt_samples: List[float] = []
         self.trace_bandwidth_samples: List[float] = []  # Available BW from trace
         self.trace_data: List[tuple] = []  # (timestamp, rtt, bw_kbps)
+
+        # Freeze/pause tracking (W3C RTCInboundRtpStreamStats equivalents)
+        # A "freeze" is a gap between received frames > 150 ms while the stream
+        # is active; maps to totalFreezesDuration in the W3C spec.
+        self.total_freeze_duration_ms: float = 0.0
+        self.freeze_count: int = 0
+        self.total_pause_duration_ms: float = 0.0  # always 0 — we never pause
         
     def _load_trace(self) -> None:
         """Load the active shaper trace file to look up available bandwidth."""
@@ -1464,10 +1470,17 @@ class WebRTCBenchmark:
         
         # Calculate final statistics
         self.metrics.trace_bandwidth_samples = list(self.trace_bandwidth_samples)
+
+        # Map W3C freeze/pause durations → standard rebuffer metrics.
+        # totalFreezesDuration + totalPausesDuration = total stall/rebuffer time.
+        self.metrics.rebuffer_count    = self.freeze_count
+        self.metrics.rebuffer_time_ms  = self.total_freeze_duration_ms + self.total_pause_duration_ms
+        self.metrics.rebuffer_durations = []  # per-event durations not tracked
+
         self.metrics.calculate_statistics()
-        
+
         return self.metrics
-    
+
     @staticmethod
     def _build_server_sdp(ice_params, ice_candidates, dtls_params, rtp_params):
         """Synthesize an SDP offer from mediasoup server transport+consumer params.
@@ -1578,10 +1591,29 @@ class WebRTCBenchmark:
         return fps
 
     async def _consume_track(self, track):
-        """Consume video track and count frames."""
+        """Consume video track, counting frames and measuring freeze duration.
+
+        Mirrors the W3C totalFreezesDuration definition: any inter-frame gap
+        longer than 150 ms while the stream is active is counted as a freeze,
+        and the time beyond 150 ms accumulates into total_freeze_duration_ms.
+        """
+        FREEZE_THRESHOLD_S = 0.150  # 150 ms per W3C spec
+        last_frame_time: Optional[float] = None
+        in_freeze = False
         try:
             while True:
                 frame = await track.recv()
+                now = time.time()
+                if last_frame_time is not None:
+                    gap = now - last_frame_time
+                    if gap > FREEZE_THRESHOLD_S:
+                        self.total_freeze_duration_ms += (gap - FREEZE_THRESHOLD_S) * 1000
+                        if not in_freeze:
+                            self.freeze_count += 1
+                            in_freeze = True
+                    else:
+                        in_freeze = False
+                last_frame_time = now
                 self.frames_received += 1
         except Exception:
             pass  # Track ended
@@ -1806,6 +1838,15 @@ class WebRTCBenchmark:
         if m.bitrate_switches > 0:
             print(f"      Avg magnitude:     {m.avg_switch_magnitude:,.0f} kbps")
         
+        # Rebuffering (freeze + pause per W3C RTCInboundRtpStreamStats)
+        print("\n  [REBUFFERING / FREEZES]")
+        print(f"      Freeze events:     {self.freeze_count}")
+        print(f"      Freeze duration:   {self.total_freeze_duration_ms:,.0f} ms  (totalFreezesDuration)")
+        print(f"      Pause duration:    {self.total_pause_duration_ms:,.0f} ms  (totalPausesDuration)")
+        print(f"      Total stall time:  {m.rebuffer_time_ms:,.0f} ms")
+        print(f"      Stall ratio:       {m.rebuffer_ratio*100:.4f}%")
+        print(f"      Stall freq:        {m.rebuffer_frequency:.3f} per minute")
+
         # WebRTC-specific metrics
         if self.jitter_samples:
             avg_jitter = sum(self.jitter_samples) / len(self.jitter_samples)
@@ -1873,6 +1914,12 @@ class WebRTCBenchmark:
                 "trace_bandwidth": {
                     "samples": self.trace_bandwidth_samples,
                     "average_kbps": sum(self.trace_bandwidth_samples) / len(self.trace_bandwidth_samples) if self.trace_bandwidth_samples else 0,
+                },
+                "freeze_pause": {
+                    "freeze_events": self.freeze_count,
+                    "total_freeze_duration_ms": round(self.total_freeze_duration_ms, 2),
+                    "total_pause_duration_ms": round(self.total_pause_duration_ms, 2),
+                    "note": "Mirrors W3C RTCInboundRtpStreamStats totalFreezesDuration / totalPausesDuration; freeze = inter-frame gap > 150 ms",
                 },
             }
         }
