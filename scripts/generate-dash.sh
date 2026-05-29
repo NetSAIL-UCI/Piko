@@ -170,6 +170,53 @@ echo ""
     "$OUTPUT_DIR/manifest_ll.mpd"
 
 echo ""
+echo -e "${YELLOW}Generating LL-DASH 2s (CMAF chunks, 2s segments)...${NC}"
+echo ""
+
+# LL-DASH 2s output:
+#   - 2s segments with 500ms CMAF fragments
+#   - ll2s- prefix to distinguish from 1s variant
+"$FFMPEG_BIN" -y -i "$INPUT_VIDEO" \
+    -filter_complex "[0:v]split=10[v1][v2][v3][v4][v5][v6][v7][v8][v9][v10]; \
+        [v1]scale=256:144[v1out]; \
+        [v2]scale=320:180[v2out]; \
+        [v3]scale=426:240[v3out]; \
+        [v4]scale=480:270[v4out]; \
+        [v5]scale=640:360[v5out]; \
+        [v6]scale=640:360[v6out]; \
+        [v7]scale=854:480[v7out]; \
+        [v8]scale=854:480[v8out]; \
+        [v9]scale=1280:720[v9out]; \
+        [v10]scale=1280:720[v10out]" \
+    -map "[v1out]"  -c:v:0 libx264 -b:v:0 100k  $X264_COMMON \
+    -map "[v2out]"  -c:v:1 libx264 -b:v:1 200k  $X264_COMMON \
+    -map "[v3out]"  -c:v:2 libx264 -b:v:2 400k  $X264_COMMON \
+    -map "[v4out]"  -c:v:3 libx264 -b:v:3 600k  $X264_COMMON \
+    -map "[v5out]"  -c:v:4 libx264 -b:v:4 800k  $X264_COMMON \
+    -map "[v6out]"  -c:v:5 libx264 -b:v:5 1200k $X264_COMMON \
+    -map "[v7out]"  -c:v:6 libx264 -b:v:6 1500k $X264_COMMON \
+    -map "[v8out]"  -c:v:7 libx264 -b:v:7 2000k $X264_COMMON \
+    -map "[v9out]"  -c:v:8 libx264 -b:v:8 3000k $X264_COMMON \
+    -map "[v10out]" -c:v:9 libx264 -b:v:9 4500k $X264_COMMON \
+    -an \
+    -f dash \
+    -ldash 1 \
+    -streaming 1 \
+    -seg_duration 2 \
+    -frag_type duration \
+    -frag_duration 0.5 \
+    -use_timeline 0 \
+    -use_template 1 \
+    -window_size 10 \
+    -extra_window_size 10 \
+    -adaptation_sets "id=0,streams=0,1,2,3,4,5,6,7,8,9" \
+    -init_seg_name 'll2s-init-stream$RepresentationID$.m4s' \
+    -media_seg_name 'll2s-chunk-stream$RepresentationID$-$Number%05d$.m4s' \
+    "$OUTPUT_DIR/ll2s-manifest.mpd"
+
+cp "$OUTPUT_DIR/ll2s-manifest.mpd" "$OUTPUT_DIR/manifest_ll_2s.mpd"
+
+echo ""
 echo -e "${YELLOW}Generating HLS (video-only) with matching ladder...${NC}"
 echo ""
 

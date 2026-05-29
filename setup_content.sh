@@ -127,6 +127,7 @@ echo ""
 echo -e "${YELLOW}[3/4] DASH + LL-DASH + HLS segments${NC}"
 
 if [ -f "$CONTENT_DIR/manifest.mpd" ] && [ -f "$CONTENT_DIR/manifest_ll.mpd" ] \
+   && [ -f "$CONTENT_DIR/ll2s-manifest.mpd" ] \
    && [ -d "$CONTENT_DIR/hls" ] && [ "$FORCE" = false ]; then
     ok "DASH, LL-DASH, and HLS already present. Skipping."
 else
