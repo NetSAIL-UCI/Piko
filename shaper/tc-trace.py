@@ -19,7 +19,7 @@ Extended format with bandwidth (from Starlink traces):
 
 Environment variables:
     ETHERNET: Network interface (default: eth0)
-    INTERVAL: Update interval in seconds (default: 0.01)
+    INTERVAL: Update interval in seconds (default: 0.5)
     TRACE_FILE: Path to trace file (default: /trace/trace.csv)
 """
 
@@ -31,7 +31,7 @@ from datetime import datetime
 
 # Configuration from environment
 ETHERNET = os.getenv("ETHERNET", "eth0")
-INTERVAL = float(os.getenv("INTERVAL", "0.01"))
+INTERVAL = float(os.getenv("INTERVAL", "0.5"))
 TRACE_FILE = os.getenv("TRACE_FILE", "/trace/trace.csv")
 DEFAULT_RATE = os.getenv("DEFAULT_RATE", "100mbit")
 DEFAULT_CEIL = os.getenv("DEFAULT_CEIL", "50mbit")

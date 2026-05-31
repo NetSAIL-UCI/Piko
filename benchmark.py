@@ -1451,7 +1451,12 @@ class WebRTCBenchmark:
             # Measure startup delay
             self.metrics.startup_delay_ms = (time.time() - startup_start) * 1000
             print(f"\n   Startup delay: {self.metrics.startup_delay_ms:.0f}ms\n")
-            
+
+            # Step 4b: Wait for DTLS to finish on the UNSHAPED link, then start
+            # shaping. Shaping during the handshake reorders/drops DTLS packets
+            # so it never completes (→ no SRTP → no media → 0 kbps).
+            await self._wait_for_dtls_then_shape(timeout=15.0)
+
             # Step 5: Collect stats for duration
             print(f"[STREAMING] Collecting metrics for {self.max_duration:.0f}s...\n")
             
@@ -1618,6 +1623,42 @@ class WebRTCBenchmark:
         except Exception:
             pass  # Track ended
     
+    async def _wait_for_dtls_then_shape(self, timeout: float = 15.0):
+        """Poll transport stats until DTLS is connected, then start trace shaping.
+
+        The ICE/DTLS handshake shares the RTP UDP port, so if the trace shaper
+        is already running, netem delay/loss reorders/drops handshake packets
+        and DTLS never completes. We therefore keep the link unshaped until
+        dtlsState == "connected", then POST /startShaping so only the media
+        measurement window is shaped.
+        """
+        deadline = time.time() + timeout
+        connected = False
+        while time.time() < deadline:
+            try:
+                stats = self._api_get(f'/stats/{self.client_id}')
+                transport = stats.get('transport') or []
+                if transport and isinstance(transport[0], dict):
+                    dtls_state = transport[0].get('dtlsState')
+                    if dtls_state == 'connected':
+                        connected = True
+                        break
+            except Exception:
+                pass
+            await asyncio.sleep(0.5)
+
+        if connected:
+            print("   DTLS connected — starting trace shaping")
+        else:
+            print(f"   [WARN] DTLS not connected within {timeout:.0f}s — "
+                  "starting shaping anyway")
+
+        try:
+            self._api_post('/startShaping')
+            print("[WEBRTC-SHAPER] tc-trace.py starting in container")
+        except Exception as e:
+            print(f"[WEBRTC-SHAPER] Warning: could not reach /startShaping: {e}")
+
     async def _collect_stats_for_duration(self):
         """Collect WebRTC stats over the benchmark duration."""
         start_time = time.time()
@@ -2275,19 +2316,12 @@ def setup_trace(trace_path: Path, protocol: str = "dash", skip_restart: bool = F
         )
 
     if protocol == "webrtc":
-        # Trigger tc-trace.py via the /startShaping REST endpoint instead of
-        # 'sudo docker exec' (which requires a TTY and fails in headless scripts).
-        # The /startShaping endpoint was added to server.js for this purpose.
-        webrtc_url = "http://localhost:3000"
-        print("[WEBRTC-SHAPER] Triggering tc-trace via /startShaping API...")
-        try:
-            resp = requests.post(f"{webrtc_url}/startShaping", timeout=5)
-            if resp.ok:
-                print(f"[WEBRTC-SHAPER] tc-trace.py starting in container")
-            else:
-                print(f"[WEBRTC-SHAPER] /startShaping returned {resp.status_code}")
-        except Exception as e:
-            print(f"[WEBRTC-SHAPER] Warning: could not reach /startShaping: {e}")
+        # Do NOT start shaping here. Shaping the link during the ICE/DTLS
+        # handshake reorders/drops handshake packets so DTLS never completes
+        # (no DTLS → no SRTP → no media → 0 kbps). The trace file is already
+        # copied above; WebRTCBenchmark.run_async() POSTs /startShaping only
+        # after the transport's dtlsState == "connected".
+        print("[WEBRTC-SHAPER] Deferring /startShaping until DTLS connects")
 
     time.sleep(3)
 

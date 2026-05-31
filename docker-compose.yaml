@@ -126,18 +126,21 @@ services:
       HOST: "0.0.0.0"
       CONTENT_DIR: "/app/content"
       ANNOUNCED_IP: "127.0.0.1"
+      # Coarser tc/netem update interval (0.5s) to avoid qdisc thrash that
+      # reorders/drops packets. The 10ms default is far too aggressive.
+      INTERVAL: "0.5"
     ports:
       - "3000:3000"
       - "10000-10100:10000-10100/udp"
       - "10000-10100:10000-10100/tcp"
     cap_add:
       - NET_ADMIN
-    # Auto-start tc-trace.py alongside the node server so RTP/UDP traffic is
-    # shaped by the same trace as the nginx shaper, without needing 'sudo docker exec'.
-    # benchmark.py can also call POST /startShaping to restart it mid-run.
+    # Do NOT auto-start tc-trace.py at boot. Shaping the link during the
+    # ICE/DTLS handshake reorders/drops handshake packets so DTLS never
+    # completes (no DTLS → no SRTP → no media → 0 kbps). benchmark.py POSTs
+    # /startShaping only AFTER DTLS connects, so the handshake runs unshaped.
     command: >
-      sh -c "python3 /app/tc-trace.py &
-             node server.js"
+      sh -c "node server.js"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
       interval: 30s
