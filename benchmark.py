@@ -2361,25 +2361,42 @@ def ensure_content(protocol: str, auto: bool = True, force: bool = False) -> boo
 
 
 def _resolve_compose_cmd():
-    """Pick a working `docker compose` invocation (plain or via passwordless sudo)."""
+    """Pick a `docker compose` invocation, preferring sudo.
+
+    Probes daemon access (docker ps), not just `docker compose version` — the
+    latter passes without socket permissions and would wrongly pick plain
+    docker. Order:
+      1. plain `docker compose` if the user can reach the daemon directly
+         (i.e. they're in the docker group)
+      2. otherwise `sudo docker compose` — works whether sudo is passwordless
+         or prompts for a password in an interactive terminal.
+    """
     global _COMPOSE_BASE
     if _COMPOSE_BASE is not None:
         return _COMPOSE_BASE
-    candidates = [
-        ["docker", "compose"],
-        ["sudo", "-n", "docker", "compose"],
-        ["docker-compose"],
-        ["sudo", "-n", "docker-compose"],
-    ]
-    for base in candidates:
+
+    def _daemon_ok(prefix):
         try:
-            r = subprocess.run(base + ["version"], capture_output=True, timeout=15)
-            if r.returncode == 0:
-                _COMPOSE_BASE = base
-                return base
+            return subprocess.run(prefix + ["docker", "ps"],
+                                  capture_output=True, timeout=15).returncode == 0
         except Exception:
-            continue
-    _COMPOSE_BASE = []
+            return False
+
+    def _has_plugin(prefix):
+        try:
+            return subprocess.run(prefix + ["docker", "compose", "version"],
+                                  capture_output=True, timeout=15).returncode == 0
+        except Exception:
+            return False
+
+    # 1) Plain docker (no sudo) only if we can actually reach the daemon.
+    if _daemon_ok([]) and _has_plugin([]):
+        _COMPOSE_BASE = ["docker", "compose"]
+        return _COMPOSE_BASE
+
+    # 2) Default to sudo. (Probing `sudo -n` is unreliable under requiretty, so
+    #    we just use interactive sudo; it prompts for a password if needed.)
+    _COMPOSE_BASE = ["sudo", "docker", "compose"]
     return _COMPOSE_BASE
 
 
@@ -2414,25 +2431,24 @@ def ensure_server(protocol: str, auto: bool = True, rebuild: bool = False,
         return False
 
     base = _resolve_compose_cmd()
-    if not base:
-        print("[SERVER] docker compose not available (and no passwordless sudo).")
-        print(f"          Start manually: docker compose up -d {service}")
-        return False
-
     cmd = list(base) + ["up", "-d"]
     if rebuild:
         cmd.append("--build")
     cmd.append(service)
     print(f"[SERVER] {protocol}: starting {service} → {' '.join(cmd)}")
+    if base and base[0] == "sudo":
+        print("[SERVER] (using sudo — enter your password if prompted)")
+    # Stream output (do not capture) so a sudo password prompt is visible and
+    # the user can respond, and so docker build/pull progress is shown live.
     try:
-        r = subprocess.run(cmd, cwd=str(REPO_DIR), capture_output=True,
-                           text=True, timeout=900)
+        r = subprocess.run(cmd, cwd=str(REPO_DIR), timeout=1800)
     except Exception as e:
         print(f"[SERVER] Failed to launch docker compose: {e}")
+        print(f"          Start manually: {' '.join(cmd)}")
         return False
     if r.returncode != 0:
-        print(f"[SERVER] docker compose up failed (exit {r.returncode}):")
-        print((r.stderr or r.stdout or "").strip()[:800])
+        print(f"[SERVER] docker compose up failed (exit {r.returncode}).")
+        print(f"          Try manually: {' '.join(cmd)}")
         return False
 
     print(f"[SERVER] waiting for {service} to become healthy (<={wait:.0f}s)...")
@@ -2488,9 +2504,11 @@ def setup_trace(trace_path: Path, protocol: str = "dash", skip_restart: bool = F
         print("[SHAPER] Skipping restart (--no-shaper-restart)")
     else:
         print("[SHAPER] Restarting nginx shaper...")
+        base = _resolve_compose_cmd()
+        if base and base[0] == "sudo":
+            print("[SHAPER] (using sudo — enter your password if prompted)")
         subprocess.run(
-            ["sudo", "docker", "compose", "restart", "shaper"],
-            capture_output=True,
+            list(base) + ["restart", "shaper"],
             cwd=Path(__file__).parent,
         )
 
