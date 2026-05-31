@@ -124,6 +124,12 @@ X264_COMMON="-profile:v high -level 3.1 -preset fast -g 96 -keyint_min 96 -sc_th
     "$OUTPUT_DIR/manifest.mpd"
 
 echo ""
+# LL-DASH needs ffmpeg's -ldash muxer option (added in ffmpeg 4.3). Stock
+# distros (e.g. Ubuntu 20.04 ships ffmpeg 4.2.x) don't have it. Skip the
+# LL-DASH variants there so plain DASH + HLS still generate — only the
+# lldash-gpac protocol needs the LL artifacts.
+if "$FFMPEG_BIN" -hide_banner -h muxer=dash 2>/dev/null | grep -q -- "-ldash"; then
+
 echo -e "${YELLOW}Generating LL-DASH (CMAF chunks)...${NC}"
 echo ""
 
@@ -215,6 +221,12 @@ echo ""
     "$OUTPUT_DIR/ll2s-manifest.mpd"
 
 cp "$OUTPUT_DIR/ll2s-manifest.mpd" "$OUTPUT_DIR/manifest_ll_2s.mpd"
+
+else
+    echo -e "${YELLOW}! Skipping LL-DASH: this ffmpeg lacks -ldash (needs ffmpeg >= 4.3).${NC}"
+    echo -e "${YELLOW}  Plain DASH + HLS are unaffected; only lldash-gpac needs LL-DASH.${NC}"
+    echo -e "${YELLOW}  Install a newer ffmpeg to enable LL-DASH generation.${NC}"
+fi
 
 echo ""
 echo -e "${YELLOW}Generating HLS (video-only) with matching ladder...${NC}"
