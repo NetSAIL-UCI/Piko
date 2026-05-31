@@ -58,6 +58,35 @@ def print_progress(current: int, total: int, prefix: str = "", suffix: str = "",
         print()
 
 
+def browser_launch_kwargs(extra_args: Optional[List[str]] = None) -> dict:
+    """Build kwargs for Playwright's chromium.launch().
+
+    Defaults to Playwright's bundled Chromium (installed via
+    `playwright install chromium`, per requirements.txt) — the portable choice
+    that works on fresh clones. Previously the code hardcoded channel="chrome"
+    (the system-installed Google Chrome), which broke fresh clones and, on
+    mismatched versions, made route.fetch() hang (the DASH/HLS ERR_FAILED bug).
+
+    Set BENCHMARK_BROWSER_CHANNEL (e.g. "chrome" or "chromium") to force a
+    specific browser channel. This is needed on hosts whose bundled Chromium
+    lacks the proprietary H.264 video codec used by the DASH/HLS content — there
+    the player otherwise fails with dash.js "No streams to play".
+    """
+    args = [
+        '--autoplay-policy=no-user-gesture-required',
+        '--mute-audio',
+        '--no-sandbox',
+        '--disable-crash-reporter',
+    ]
+    if extra_args:
+        args.extend(extra_args)
+    kwargs: dict = {'headless': True, 'args': args}
+    channel = os.environ.get('BENCHMARK_BROWSER_CHANNEL')
+    if channel:
+        kwargs['channel'] = channel
+    return kwargs
+
+
 @dataclass
 class SegmentMetrics:
     """Metrics for a single segment download."""
@@ -455,17 +484,7 @@ class DASHJSBenchmark:
                 print(f"[INFO] Auto-detected video duration {detected:.0f}s → max_duration={self.max_duration:.0f}s")
 
         with sync_playwright() as p:
-            browser = p.chromium.launch(
-                channel="chrome",
-                headless=True,
-                args=[
-                    '--autoplay-policy=no-user-gesture-required',
-                    '--mute-audio',
-                    '--no-sandbox',
-                    '--crash-dumps-dir=/tmp/ajhunjh1_tmp/crashpad',
-                    '--disable-crash-reporter',
-                ]
-            )
+            browser = p.chromium.launch(**browser_launch_kwargs())
             page = browser.new_page()
 
             # Capture browser console errors to aid debugging
@@ -480,22 +499,28 @@ class DASHJSBenchmark:
             import re as _re
 
             def _patch_dash_html(route, request):
+                # Only intercept the top-level HTML player document. JS, the
+                # MPD, and media segments are passed straight through with
+                # route.continue_() so the browser fetches them itself. This
+                # avoids Playwright's route.fetch(), which hangs/times out on
+                # the system Chrome channel (the ERR_FAILED bug) and also
+                # buffers chunked responses (which broke LL-DASH delivery).
+                if request.resource_type != 'document':
+                    route.continue_()
+                    return
                 try:
-                    resp = route.fetch()
+                    _r = requests.get(request.url, timeout=30)
                 except Exception as _fe:
                     print(f"\n[ERROR] DASH server unreachable at {self.base_url}")
                     print(f"        Make sure hls-dash-server is running on the correct port.")
-                    print(f"        (route.fetch failed: {_fe})")
+                    print(f"        (fetch failed: {_fe})")
                     route.abort()
                     return
-                body_bytes = resp.body()
-                html = body_bytes.decode('utf-8', errors='replace')
+                html = _r.text
 
                 # Only patch actual HTML player pages (not JS/video/manifest)
                 if '<html' not in html[:200]:
-                    route.fulfill(status=resp.status,
-                                  headers=dict(resp.headers),
-                                  body=body_bytes)
+                    route.fulfill(status=_r.status_code, body=_r.content)
                     return
 
                 # 1) Lower initial bitrate to the lowest quality rung
@@ -556,10 +581,11 @@ class DASHJSBenchmark:
                 )
 
                 body = html.encode('utf-8')
-                # Strip Content-Length so browser uses the new body size
-                headers = {k: v for k, v in resp.headers.items()
-                           if k.lower() != 'content-length'}
-                route.fulfill(status=resp.status, headers=headers, body=body)
+                route.fulfill(
+                    status=_r.status_code,
+                    content_type=_r.headers.get('content-type', 'text/html; charset=utf-8'),
+                    body=body,
+                )
 
             # lldash-gpac: skip route interception entirely — the player HTML is
             # self-contained and Playwright's route.fetch() buffers chunked responses,
@@ -916,17 +942,7 @@ class HLSBenchmark:
         self._load_trace()
 
         with sync_playwright() as p:
-            browser = p.chromium.launch(
-                channel="chrome",
-                headless=True,
-                args=[
-                    '--autoplay-policy=no-user-gesture-required',
-                    '--mute-audio',
-                    '--no-sandbox',
-                    '--crash-dumps-dir=/tmp/ajhunjh1_tmp/crashpad',
-                    '--disable-crash-reporter',
-                ]
-            )
+            browser = p.chromium.launch(**browser_launch_kwargs())
             page = browser.new_page()
 
             print("[BROWSER] Launching headless Chromium...")
@@ -2113,19 +2129,10 @@ class MOQ2Benchmark:
 
         try:
             with sync_playwright() as p:
-                browser = p.chromium.launch(
-                    channel='chrome',
-                    headless=True,
-                    args=[
-                        '--autoplay-policy=no-user-gesture-required',
-                        '--mute-audio',
-                        '--no-sandbox',
-                        '--ignore-certificate-errors',
-                        '--allow-insecure-localhost',
-                        '--crash-dumps-dir=/tmp/ajhunjh1_tmp/crashpad',
-                        '--disable-crash-reporter',
-                    ]
-                )
+                browser = p.chromium.launch(**browser_launch_kwargs([
+                    '--ignore-certificate-errors',
+                    '--allow-insecure-localhost',
+                ]))
                 page = browser.new_page()
 
                 print("[BROWSER] Launching headless Chromium (MOQ2)...")
@@ -2421,10 +2428,24 @@ Examples:
                        help="Path to a folder of trace files; runs benchmark on every *_tc.csv in the folder")
     parser.add_argument("--results-dir", type=str, default=None,
                        help="Custom results subdirectory (e.g., 2025-15-05-results)")
+    parser.add_argument("--results-root", type=str, default=None,
+                       help="Root directory for results output (default: ./results "
+                            "or $BENCHMARK_RESULTS_DIR). Use a writable path when the "
+                            "in-repo results/ dir is owned by another user.")
+    parser.add_argument("--browser-channel", type=str, default=None,
+                       help="Playwright browser channel for DASH/HLS/MOQ players "
+                            "(e.g. 'chrome'). Default: bundled Chromium. Use 'chrome' "
+                            "on hosts whose bundled Chromium can't decode the H.264 "
+                            "content (dash.js 'No streams to play'). Also settable via "
+                            "$BENCHMARK_BROWSER_CHANNEL.")
     parser.add_argument("--no-shaper-restart", action="store_true",
                        help="Skip docker shaper restart (reuse running shaper)")
 
     args = parser.parse_args()
+
+    # --browser-channel overrides the env var consumed by browser_launch_kwargs()
+    if args.browser_channel:
+        os.environ["BENCHMARK_BROWSER_CHANNEL"] = args.browser_channel
 
     # --trace and --trace-dir are mutually exclusive
     if args.trace and args.trace_dir:
@@ -2452,11 +2473,25 @@ Examples:
     parsed = urlparse(args.url)
     dash_url = f"{parsed.scheme}://{parsed.hostname}:8080"
 
+    # Results root is configurable so runs by users other than the repo owner
+    # don't hit PermissionError when the in-repo results/ dir is owned by
+    # someone else. Override with BENCHMARK_RESULTS_DIR (env) or --results-root.
+    results_root = Path(
+        args.results_root
+        or os.environ.get("BENCHMARK_RESULTS_DIR")
+        or (Path(__file__).parent / "results")
+    ).expanduser()
     if args.results_dir:
-        results_dir = Path(__file__).parent / "results" / args.results_dir
+        results_dir = results_root / args.results_dir
     else:
-        results_dir = Path(__file__).parent / "results"
-    results_dir.mkdir(parents=True, exist_ok=True)
+        results_dir = results_root
+    try:
+        results_dir.mkdir(parents=True, exist_ok=True)
+    except PermissionError:
+        print(f"[ERROR] Cannot create results dir {results_dir} (permission denied).")
+        print("        Set BENCHMARK_RESULTS_DIR=<writable path> or pass "
+              "--results-root <writable path>, or run as the dir's owner.")
+        sys.exit(1)
 
     # ── Folder of traces ──────────────────────────────────────────────
     if args.trace_dir:
