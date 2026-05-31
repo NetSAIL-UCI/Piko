@@ -2275,6 +2275,178 @@ class MOQ2Benchmark:
         print(f"\n[SAVED] {filename}")
 
 
+# ── Server & content bootstrap ───────────────────────────────────────────────
+REPO_DIR    = Path(__file__).parent
+CONTENT_DIR = REPO_DIR / "content"
+
+# protocol -> (docker compose service, health URL). Protocols not listed start
+# their server in-process from their benchmark class (lldash-gpac, moq2), so no
+# docker action is needed for them.
+_DOCKER_SERVICES = {
+    "dash":   ("hls-dash-server", "http://localhost:8080/health"),
+    "hls":    ("hls-dash-server", "http://localhost:8080/health"),
+    "webrtc": ("webrtc-server",   "http://localhost:3000/health"),
+}
+
+_COMPOSE_BASE = None  # cached working `docker compose` invocation
+
+
+def _content_target(protocol: str):
+    """Return (human description, exists?) for a protocol's required content."""
+    if protocol == "dash":
+        p = CONTENT_DIR / "manifest.mpd"
+        return str(p), p.exists()
+    if protocol == "hls":
+        p = CONTENT_DIR / "hls" / "master.m3u8"
+        return str(p), p.exists()
+    if protocol == "lldash-gpac":
+        p = CONTENT_DIR / "ll2s-manifest.mpd"
+        return str(p), p.exists()
+    if protocol == "webrtc":
+        vids = [f for ext in (".mp4", ".mkv", ".webm", ".avi")
+                for f in CONTENT_DIR.glob(f"*{ext}")]
+        return f"{CONTENT_DIR}/*.mp4", len(vids) > 0
+    # moq2 / unknown: nothing we can auto-generate from this repo
+    return "", True
+
+
+def ensure_content(protocol: str, auto: bool = True, force: bool = False) -> bool:
+    """Ensure the streaming content a protocol needs exists.
+
+    Runs the idempotent setup_content.sh when the expected artifact is missing.
+    Returns True if content is present (or successfully generated).
+    """
+    desc, present = _content_target(protocol)
+    if present and not force:
+        if desc:
+            print(f"[CONTENT] {protocol}: present ({desc})")
+        return True
+
+    if protocol == "moq2":
+        print("[CONTENT] moq2: skipping auto-generation (uses prebuilt moq-dev assets).")
+        return True
+
+    if not auto:
+        print(f"[CONTENT] {protocol}: missing ({desc}).")
+        print("          Generate it with: ./setup_content.sh  (or omit --no-autocontent)")
+        return False
+
+    script = REPO_DIR / "setup_content.sh"
+    if not script.exists():
+        print(f"[CONTENT] Cannot auto-generate: {script} not found.")
+        return False
+
+    cmd = ["bash", str(script), "--skip-gpac"]
+    if force:
+        cmd.append("--force")
+    print(f"[CONTENT] {protocol}: missing — generating via {' '.join(cmd)}")
+    print("[CONTENT] (first run downloads BigBuckBunny and encodes segments; "
+          "this can take several minutes)")
+    try:
+        result = subprocess.run(cmd, cwd=str(REPO_DIR))
+    except FileNotFoundError:
+        print("[CONTENT] 'bash' not found — cannot run setup_content.sh.")
+        return False
+    if result.returncode != 0:
+        print(f"[CONTENT] setup_content.sh failed (exit {result.returncode}). "
+              "Ensure ffmpeg/ffprobe/curl are installed.")
+        return False
+
+    _, present = _content_target(protocol)
+    if present:
+        print(f"[CONTENT] {protocol}: ready")
+    else:
+        print(f"[CONTENT] {protocol}: still missing after generation ({desc}).")
+    return present
+
+
+def _resolve_compose_cmd():
+    """Pick a working `docker compose` invocation (plain or via passwordless sudo)."""
+    global _COMPOSE_BASE
+    if _COMPOSE_BASE is not None:
+        return _COMPOSE_BASE
+    candidates = [
+        ["docker", "compose"],
+        ["sudo", "-n", "docker", "compose"],
+        ["docker-compose"],
+        ["sudo", "-n", "docker-compose"],
+    ]
+    for base in candidates:
+        try:
+            r = subprocess.run(base + ["version"], capture_output=True, timeout=15)
+            if r.returncode == 0:
+                _COMPOSE_BASE = base
+                return base
+        except Exception:
+            continue
+    _COMPOSE_BASE = []
+    return _COMPOSE_BASE
+
+
+def _server_healthy(health_url: str, timeout: float = 2.0) -> bool:
+    try:
+        return requests.get(health_url, timeout=timeout).ok
+    except Exception:
+        return False
+
+
+def ensure_server(protocol: str, auto: bool = True, rebuild: bool = False,
+                  wait: float = 90.0) -> bool:
+    """Ensure the server for a protocol is running.
+
+    dash/hls/webrtc run as docker compose services and are brought up if their
+    health check fails. lldash-gpac and moq2 start their own server in-process
+    from their benchmark class, so nothing is done here.
+    """
+    svc = _DOCKER_SERVICES.get(protocol)
+    if svc is None:
+        print(f"[SERVER] {protocol}: started in-process by the benchmark (no docker service).")
+        return True
+
+    service, health_url = svc
+    if _server_healthy(health_url):
+        print(f"[SERVER] {protocol}: {service} already up ({health_url})")
+        return True
+
+    if not auto:
+        print(f"[SERVER] {protocol}: {service} not reachable at {health_url}.")
+        print(f"          Start it with: docker compose up -d {service}  (or omit --no-autostart)")
+        return False
+
+    base = _resolve_compose_cmd()
+    if not base:
+        print("[SERVER] docker compose not available (and no passwordless sudo).")
+        print(f"          Start manually: docker compose up -d {service}")
+        return False
+
+    cmd = list(base) + ["up", "-d"]
+    if rebuild:
+        cmd.append("--build")
+    cmd.append(service)
+    print(f"[SERVER] {protocol}: starting {service} → {' '.join(cmd)}")
+    try:
+        r = subprocess.run(cmd, cwd=str(REPO_DIR), capture_output=True,
+                           text=True, timeout=900)
+    except Exception as e:
+        print(f"[SERVER] Failed to launch docker compose: {e}")
+        return False
+    if r.returncode != 0:
+        print(f"[SERVER] docker compose up failed (exit {r.returncode}):")
+        print((r.stderr or r.stdout or "").strip()[:800])
+        return False
+
+    print(f"[SERVER] waiting for {service} to become healthy (<={wait:.0f}s)...")
+    deadline = time.time() + wait
+    while time.time() < deadline:
+        if _server_healthy(health_url):
+            print(f"[SERVER] {protocol}: {service} is up ({health_url})")
+            return True
+        time.sleep(2)
+    print(f"[SERVER] {service} did not become healthy within {wait:.0f}s "
+          "(check: docker compose logs " + service + ").")
+    return False
+
+
 def setup_trace(trace_path: Path, protocol: str = "dash", skip_restart: bool = False) -> None:
     """Copy a trace file to the shaper directory and restart the shaper.
 
@@ -2440,6 +2612,14 @@ Examples:
                             "$BENCHMARK_BROWSER_CHANNEL.")
     parser.add_argument("--no-shaper-restart", action="store_true",
                        help="Skip docker shaper restart (reuse running shaper)")
+    parser.add_argument("--no-autostart", action="store_true",
+                       help="Don't auto-start the server (dash/hls/webrtc docker "
+                            "service) if it isn't already running.")
+    parser.add_argument("--no-autocontent", action="store_true",
+                       help="Don't auto-generate streaming content if it's missing.")
+    parser.add_argument("--rebuild", action="store_true",
+                       help="Pass --build when auto-starting docker servers (e.g. "
+                            "after pulling changes to a server image).")
 
     args = parser.parse_args()
 
@@ -2491,6 +2671,16 @@ Examples:
         print(f"[ERROR] Cannot create results dir {results_dir} (permission denied).")
         print("        Set BENCHMARK_RESULTS_DIR=<writable path> or pass "
               "--results-root <writable path>, or run as the dir's owner.")
+        sys.exit(1)
+
+    # ── Bootstrap: make sure content exists and the server is running ──
+    # Auto by default so `benchmark.py -p <proto> ...` works on a fresh setup.
+    if not ensure_content(args.protocol, auto=not args.no_autocontent):
+        print("[ERROR] Required content is not available. Aborting.")
+        sys.exit(1)
+    if not ensure_server(args.protocol, auto=not args.no_autostart,
+                         rebuild=args.rebuild):
+        print("[ERROR] Server is not available. Aborting.")
         sys.exit(1)
 
     # ── Folder of traces ──────────────────────────────────────────────
