@@ -1,0 +1,2332 @@
+[SERVER] moq2: started in-process by the benchmark (no docker service).
+
+======================================================================
+  BATCH RUN: 40 trace(s) from traces/starlink-2024
+======================================================================
+
+
+──────────────────────────────────────────────────────────────────────
+  [1/40] starlink_road_000_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_000_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 101856 kbps | trace_bw: 101856 kbps
+   t=16s | bitrate: 4500 kbps | tp: 218254 kbps | trace_bw: 218254 kbps
+   t=28s | bitrate: 4500 kbps | tp: 52626 kbps | trace_bw: 52626 kbps
+   t=40s | bitrate: 4500 kbps | tp: 114126 kbps | trace_bw: 114126 kbps
+   t=52s | bitrate: 4500 kbps | tp: 153308 kbps | trace_bw: 153308 kbps
+   t=64s | bitrate: 4500 kbps | tp: 131458 kbps | trace_bw: 131458 kbps
+   t=76s | bitrate: 4500 kbps | tp: 151117 kbps | trace_bw: 151117 kbps
+   t=88s | bitrate: 4500 kbps | tp: 154207 kbps | trace_bw: 154207 kbps
+   t=100s | bitrate: 4500 kbps | tp: 107142 kbps | trace_bw: 107142 kbps
+   t=112s | bitrate: 4500 kbps | tp: 170707 kbps | trace_bw: 170707 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     289 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           152,300 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           152,300 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_000_tc_20260609_130614.json
+
+──────────────────────────────────────────────────────────────────────
+  [2/40] starlink_road_001_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_001_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 343770 kbps | trace_bw: 343770 kbps
+   t=16s | bitrate: 4500 kbps | tp: 250803 kbps | trace_bw: 250803 kbps
+   t=28s | bitrate: 4500 kbps | tp: 317685 kbps | trace_bw: 317685 kbps
+   t=40s | bitrate: 4500 kbps | tp: 151028 kbps | trace_bw: 151028 kbps
+   t=52s | bitrate: 4500 kbps | tp: 256192 kbps | trace_bw: 256192 kbps
+   t=64s | bitrate: 4500 kbps | tp: 325905 kbps | trace_bw: 325905 kbps
+   t=76s | bitrate: 4500 kbps | tp: 340931 kbps | trace_bw: 340931 kbps
+   t=88s | bitrate: 4500 kbps | tp: 345853 kbps | trace_bw: 345853 kbps
+   t=100s | bitrate: 4500 kbps | tp: 274193 kbps | trace_bw: 274193 kbps
+   t=112s | bitrate: 4500 kbps | tp: 303265 kbps | trace_bw: 303265 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     86 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           253,967 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           253,967 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_001_tc_20260609_130621.json
+
+──────────────────────────────────────────────────────────────────────
+  [3/40] starlink_road_002_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_002_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 268677 kbps | trace_bw: 268677 kbps
+   t=16s | bitrate: 4500 kbps | tp: 266890 kbps | trace_bw: 266890 kbps
+   t=28s | bitrate: 4500 kbps | tp: 146419 kbps | trace_bw: 146419 kbps
+   t=40s | bitrate: 4500 kbps | tp: 302905 kbps | trace_bw: 302905 kbps
+   t=52s | bitrate: 4500 kbps | tp: 259760 kbps | trace_bw: 259760 kbps
+   t=64s | bitrate: 4500 kbps | tp: 226880 kbps | trace_bw: 226880 kbps
+   t=76s | bitrate: 4500 kbps | tp: 273760 kbps | trace_bw: 273760 kbps
+   t=88s | bitrate: 4500 kbps | tp: 189987 kbps | trace_bw: 189987 kbps
+   t=100s | bitrate: 4500 kbps | tp: 228495 kbps | trace_bw: 228495 kbps
+   t=112s | bitrate: 4500 kbps | tp: 217040 kbps | trace_bw: 217040 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     109 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           244,350 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           244,350 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_002_tc_20260609_130625.json
+
+──────────────────────────────────────────────────────────────────────
+  [4/40] starlink_road_003_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_003_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 269360 kbps | trace_bw: 269360 kbps
+   t=16s | bitrate: 4500 kbps | tp: 332959 kbps | trace_bw: 332959 kbps
+   t=28s | bitrate: 4500 kbps | tp: 424112 kbps | trace_bw: 424112 kbps
+   t=40s | bitrate: 4500 kbps | tp: 408481 kbps | trace_bw: 408481 kbps
+   t=52s | bitrate: 4500 kbps | tp: 347415 kbps | trace_bw: 347415 kbps
+   t=64s | bitrate: 4500 kbps | tp: 345976 kbps | trace_bw: 345976 kbps
+   t=76s | bitrate: 4500 kbps | tp: 261200 kbps | trace_bw: 261200 kbps
+   t=88s | bitrate: 4500 kbps | tp: 367931 kbps | trace_bw: 367931 kbps
+   t=100s | bitrate: 4500 kbps | tp: 423293 kbps | trace_bw: 423293 kbps
+   t=112s | bitrate: 4500 kbps | tp: 363681 kbps | trace_bw: 363681 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     109 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           355,737 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           355,737 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_003_tc_20260609_130630.json
+
+──────────────────────────────────────────────────────────────────────
+  [5/40] starlink_road_004_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_004_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 263379 kbps | trace_bw: 263379 kbps
+   t=16s | bitrate: 4500 kbps | tp: 262242 kbps | trace_bw: 262242 kbps
+   t=28s | bitrate: 4500 kbps | tp: 297425 kbps | trace_bw: 297425 kbps
+   t=40s | bitrate: 4500 kbps | tp: 382913 kbps | trace_bw: 382913 kbps
+   t=52s | bitrate: 4500 kbps | tp: 317273 kbps | trace_bw: 317273 kbps
+   t=64s | bitrate: 4500 kbps | tp: 408033 kbps | trace_bw: 408033 kbps
+   t=76s | bitrate: 4500 kbps | tp: 345214 kbps | trace_bw: 345214 kbps
+   t=88s | bitrate: 4500 kbps | tp: 316524 kbps | trace_bw: 316524 kbps
+   t=100s | bitrate: 4500 kbps | tp: 283285 kbps | trace_bw: 283285 kbps
+   t=112s | bitrate: 4500 kbps | tp: 295537 kbps | trace_bw: 295537 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     112 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,353 kbps
+      Average (effective): 4,353 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           289,931 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  2 (↑1 / ↓1)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           289,928 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_004_tc_20260609_130633.json
+
+──────────────────────────────────────────────────────────────────────
+  [6/40] starlink_road_005_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_005_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 183362 kbps | trace_bw: 183362 kbps
+   t=16s | bitrate: 4500 kbps | tp: 318675 kbps | trace_bw: 318675 kbps
+   t=28s | bitrate: 4500 kbps | tp: 321495 kbps | trace_bw: 321495 kbps
+   t=40s | bitrate: 4500 kbps | tp: 300752 kbps | trace_bw: 300752 kbps
+   t=52s | bitrate: 4500 kbps | tp: 310284 kbps | trace_bw: 310284 kbps
+   t=64s | bitrate: 4500 kbps | tp: 386870 kbps | trace_bw: 386870 kbps
+   t=76s | bitrate: 4500 kbps | tp: 342610 kbps | trace_bw: 342610 kbps
+   t=88s | bitrate: 4500 kbps | tp: 344050 kbps | trace_bw: 344050 kbps
+   t=100s | bitrate: 4500 kbps | tp: 413126 kbps | trace_bw: 413126 kbps
+   t=112s | bitrate: 4500 kbps | tp: 212883 kbps | trace_bw: 212883 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     160 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           345,393 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           345,393 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_005_tc_20260609_130641.json
+
+──────────────────────────────────────────────────────────────────────
+  [7/40] starlink_road_006_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_006_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 264831 kbps | trace_bw: 264831 kbps
+   t=16s | bitrate: 4500 kbps | tp: 348343 kbps | trace_bw: 348343 kbps
+   t=28s | bitrate: 4500 kbps | tp: 236997 kbps | trace_bw: 236997 kbps
+   t=40s | bitrate: 4500 kbps | tp: 406358 kbps | trace_bw: 406358 kbps
+   t=52s | bitrate: 4500 kbps | tp: 302919 kbps | trace_bw: 302919 kbps
+   t=64s | bitrate: 4500 kbps | tp: 406237 kbps | trace_bw: 406237 kbps
+   t=76s | bitrate: 4500 kbps | tp: 358003 kbps | trace_bw: 358003 kbps
+   t=88s | bitrate: 4500 kbps | tp: 272064 kbps | trace_bw: 272064 kbps
+   t=100s | bitrate: 4500 kbps | tp: 306155 kbps | trace_bw: 306155 kbps
+   t=112s | bitrate: 4500 kbps | tp: 251233 kbps | trace_bw: 251233 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     111 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           310,591 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           310,591 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_006_tc_20260609_130645.json
+
+──────────────────────────────────────────────────────────────────────
+  [8/40] starlink_road_007_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_007_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 193938 kbps | trace_bw: 193938 kbps
+   t=16s | bitrate: 4500 kbps | tp: 265006 kbps | trace_bw: 265006 kbps
+   t=28s | bitrate: 4500 kbps | tp: 287634 kbps | trace_bw: 287634 kbps
+   t=40s | bitrate: 4500 kbps | tp: 309941 kbps | trace_bw: 309941 kbps
+   t=52s | bitrate: 4500 kbps | tp: 365415 kbps | trace_bw: 365415 kbps
+   t=64s | bitrate: 4500 kbps | tp: 275692 kbps | trace_bw: 275692 kbps
+   t=76s | bitrate: 4500 kbps | tp: 397316 kbps | trace_bw: 397316 kbps
+   t=88s | bitrate: 4500 kbps | tp: 409436 kbps | trace_bw: 409436 kbps
+   t=100s | bitrate: 4500 kbps | tp: 246938 kbps | trace_bw: 246938 kbps
+   t=112s | bitrate: 4500 kbps | tp: 251378 kbps | trace_bw: 251378 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     152 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           308,014 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           308,014 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_007_tc_20260609_130649.json
+
+──────────────────────────────────────────────────────────────────────
+  [9/40] starlink_road_008_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_008_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 324254 kbps | trace_bw: 324254 kbps
+   t=16s | bitrate: 4500 kbps | tp: 409716 kbps | trace_bw: 409716 kbps
+   t=28s | bitrate: 4500 kbps | tp: 336513 kbps | trace_bw: 336513 kbps
+   t=40s | bitrate: 4500 kbps | tp: 396439 kbps | trace_bw: 396439 kbps
+   t=52s | bitrate: 4500 kbps | tp: 425645 kbps | trace_bw: 425645 kbps
+   t=64s | bitrate: 4500 kbps | tp: 389161 kbps | trace_bw: 389161 kbps
+   t=76s | bitrate: 4500 kbps | tp: 393450 kbps | trace_bw: 393450 kbps
+   t=88s | bitrate: 4500 kbps | tp: 340447 kbps | trace_bw: 340447 kbps
+   t=100s | bitrate: 4500 kbps | tp: 402083 kbps | trace_bw: 402083 kbps
+   t=112s | bitrate: 4500 kbps | tp: 420872 kbps | trace_bw: 420872 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     91 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           367,475 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           367,475 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_008_tc_20260609_130653.json
+
+──────────────────────────────────────────────────────────────────────
+  [10/40] starlink_road_009_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_009_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 326554 kbps | trace_bw: 326554 kbps
+   t=16s | bitrate: 4500 kbps | tp: 339443 kbps | trace_bw: 339443 kbps
+   t=28s | bitrate: 4500 kbps | tp: 312950 kbps | trace_bw: 312950 kbps
+   t=40s | bitrate: 4500 kbps | tp: 243009 kbps | trace_bw: 243009 kbps
+   t=52s | bitrate: 4500 kbps | tp: 198039 kbps | trace_bw: 198039 kbps
+   t=64s | bitrate: 4500 kbps | tp: 147474 kbps | trace_bw: 147474 kbps
+   t=76s | bitrate: 4500 kbps | tp: 252049 kbps | trace_bw: 252049 kbps
+   t=88s | bitrate: 4500 kbps | tp: 239191 kbps | trace_bw: 239191 kbps
+   t=100s | bitrate: 4500 kbps | tp: 226182 kbps | trace_bw: 226182 kbps
+   t=112s | bitrate: 100 kbps | tp: 102 kbps | trace_bw: 0 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     90 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,060 kbps
+      Average (effective): 4,060 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           228,389 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  1 (↑0 / ↓1)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           228,377 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_009_tc_20260609_130657.json
+
+──────────────────────────────────────────────────────────────────────
+  [11/40] starlink_road_010_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_010_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 295824 kbps | trace_bw: 295824 kbps
+   t=16s | bitrate: 4500 kbps | tp: 385990 kbps | trace_bw: 385990 kbps
+   t=28s | bitrate: 4500 kbps | tp: 286121 kbps | trace_bw: 286121 kbps
+   t=40s | bitrate: 4500 kbps | tp: 332283 kbps | trace_bw: 332283 kbps
+   t=52s | bitrate: 4500 kbps | tp: 337285 kbps | trace_bw: 337285 kbps
+   t=64s | bitrate: 4500 kbps | tp: 346095 kbps | trace_bw: 346095 kbps
+   t=76s | bitrate: 4500 kbps | tp: 275978 kbps | trace_bw: 275978 kbps
+   t=88s | bitrate: 4500 kbps | tp: 356016 kbps | trace_bw: 356016 kbps
+   t=100s | bitrate: 4500 kbps | tp: 186224 kbps | trace_bw: 186224 kbps
+   t=112s | bitrate: 4500 kbps | tp: 355751 kbps | trace_bw: 355751 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     99 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           305,939 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           305,939 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_010_tc_20260609_130713.json
+
+──────────────────────────────────────────────────────────────────────
+  [12/40] starlink_road_011_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_011_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 416290 kbps | trace_bw: 416290 kbps
+   t=16s | bitrate: 4500 kbps | tp: 381788 kbps | trace_bw: 381788 kbps
+   t=28s | bitrate: 4500 kbps | tp: 424962 kbps | trace_bw: 424962 kbps
+   t=40s | bitrate: 4500 kbps | tp: 272362 kbps | trace_bw: 272362 kbps
+   t=52s | bitrate: 4500 kbps | tp: 304473 kbps | trace_bw: 304473 kbps
+   t=64s | bitrate: 4500 kbps | tp: 420590 kbps | trace_bw: 420590 kbps
+   t=76s | bitrate: 4500 kbps | tp: 352770 kbps | trace_bw: 352770 kbps
+   t=88s | bitrate: 4500 kbps | tp: 407655 kbps | trace_bw: 407655 kbps
+   t=100s | bitrate: 4500 kbps | tp: 362090 kbps | trace_bw: 362090 kbps
+   t=112s | bitrate: 4500 kbps | tp: 139001 kbps | trace_bw: 139001 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     71 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           343,762 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           343,762 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_011_tc_20260609_130716.json
+
+──────────────────────────────────────────────────────────────────────
+  [13/40] starlink_road_012_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_012_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 392824 kbps | trace_bw: 392824 kbps
+   t=16s | bitrate: 4500 kbps | tp: 348990 kbps | trace_bw: 348990 kbps
+   t=28s | bitrate: 4500 kbps | tp: 180801 kbps | trace_bw: 180801 kbps
+   t=40s | bitrate: 4500 kbps | tp: 59014 kbps | trace_bw: 59014 kbps
+   t=52s | bitrate: 4500 kbps | tp: 70199 kbps | trace_bw: 70199 kbps
+   t=64s | bitrate: 4500 kbps | tp: 299410 kbps | trace_bw: 299410 kbps
+   t=76s | bitrate: 4500 kbps | tp: 263738 kbps | trace_bw: 263738 kbps
+   t=88s | bitrate: 4500 kbps | tp: 275734 kbps | trace_bw: 275734 kbps
+   t=100s | bitrate: 4500 kbps | tp: 416198 kbps | trace_bw: 416198 kbps
+   t=112s | bitrate: 4500 kbps | tp: 326929 kbps | trace_bw: 326929 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     75 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           253,934 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           253,934 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_012_tc_20260609_130720.json
+
+──────────────────────────────────────────────────────────────────────
+  [14/40] starlink_road_013_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_013_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 380877 kbps | trace_bw: 380877 kbps
+   t=16s | bitrate: 4500 kbps | tp: 320843 kbps | trace_bw: 320843 kbps
+   t=28s | bitrate: 4500 kbps | tp: 368177 kbps | trace_bw: 368177 kbps
+   t=40s | bitrate: 100 kbps | tp: 80 kbps | trace_bw: 0 kbps
+   t=52s | bitrate: 4500 kbps | tp: 291779 kbps | trace_bw: 291779 kbps
+   t=64s | bitrate: 4500 kbps | tp: 219365 kbps | trace_bw: 219365 kbps
+   t=76s | bitrate: 4500 kbps | tp: 305322 kbps | trace_bw: 305322 kbps
+   t=88s | bitrate: 4500 kbps | tp: 199927 kbps | trace_bw: 199927 kbps
+   t=100s | bitrate: 4500 kbps | tp: 128513 kbps | trace_bw: 128513 kbps
+   t=112s | bitrate: 4500 kbps | tp: 147661 kbps | trace_bw: 147661 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     77 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,207 kbps
+      Average (effective): 4,207 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           248,337 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  3 (↑1 / ↓2)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           248,329 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_013_tc_20260609_130725.json
+
+──────────────────────────────────────────────────────────────────────
+  [15/40] starlink_road_014_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_014_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 394197 kbps | trace_bw: 394197 kbps
+   t=16s | bitrate: 4500 kbps | tp: 241940 kbps | trace_bw: 241940 kbps
+   t=28s | bitrate: 4500 kbps | tp: 299683 kbps | trace_bw: 299683 kbps
+   t=40s | bitrate: 4500 kbps | tp: 424651 kbps | trace_bw: 424651 kbps
+   t=52s | bitrate: 4500 kbps | tp: 454358 kbps | trace_bw: 454358 kbps
+   t=64s | bitrate: 4500 kbps | tp: 404742 kbps | trace_bw: 404742 kbps
+   t=76s | bitrate: 4500 kbps | tp: 338970 kbps | trace_bw: 338970 kbps
+   t=88s | bitrate: 4500 kbps | tp: 269917 kbps | trace_bw: 269917 kbps
+   t=100s | bitrate: 4500 kbps | tp: 329899 kbps | trace_bw: 329899 kbps
+   t=112s | bitrate: 4500 kbps | tp: 271891 kbps | trace_bw: 271891 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     75 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           353,241 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           353,241 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_014_tc_20260609_130738.json
+
+──────────────────────────────────────────────────────────────────────
+  [16/40] starlink_road_015_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_015_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 388294 kbps | trace_bw: 388294 kbps
+   t=16s | bitrate: 4500 kbps | tp: 309993 kbps | trace_bw: 309993 kbps
+   t=28s | bitrate: 4500 kbps | tp: 238857 kbps | trace_bw: 238857 kbps
+   t=40s | bitrate: 4500 kbps | tp: 181359 kbps | trace_bw: 181359 kbps
+   t=52s | bitrate: 4500 kbps | tp: 23180 kbps | trace_bw: 23180 kbps
+   t=64s | bitrate: 4500 kbps | tp: 160493 kbps | trace_bw: 160493 kbps
+   t=76s | bitrate: 4500 kbps | tp: 259029 kbps | trace_bw: 259029 kbps
+   t=88s | bitrate: 4500 kbps | tp: 28057 kbps | trace_bw: 28057 kbps
+   t=100s | bitrate: 4500 kbps | tp: 249438 kbps | trace_bw: 249438 kbps
+   t=112s | bitrate: 4500 kbps | tp: 244445 kbps | trace_bw: 244445 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     76 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           186,880 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           186,880 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_015_tc_20260609_130741.json
+
+──────────────────────────────────────────────────────────────────────
+  [17/40] starlink_road_016_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_016_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 314195 kbps | trace_bw: 314195 kbps
+   t=16s | bitrate: 4500 kbps | tp: 331673 kbps | trace_bw: 331673 kbps
+   t=28s | bitrate: 4500 kbps | tp: 110625 kbps | trace_bw: 110625 kbps
+   t=40s | bitrate: 4500 kbps | tp: 326866 kbps | trace_bw: 326866 kbps
+   t=52s | bitrate: 4500 kbps | tp: 374859 kbps | trace_bw: 374859 kbps
+   t=64s | bitrate: 4500 kbps | tp: 352368 kbps | trace_bw: 352368 kbps
+   t=76s | bitrate: 4500 kbps | tp: 346976 kbps | trace_bw: 346976 kbps
+   t=88s | bitrate: 4500 kbps | tp: 340931 kbps | trace_bw: 340931 kbps
+   t=100s | bitrate: 4500 kbps | tp: 264868 kbps | trace_bw: 264868 kbps
+   t=112s | bitrate: 4500 kbps | tp: 348277 kbps | trace_bw: 348277 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     94 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           294,035 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           294,035 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_016_tc_20260609_130750.json
+
+──────────────────────────────────────────────────────────────────────
+  [18/40] starlink_road_017_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_017_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 108819 kbps | trace_bw: 108819 kbps
+   t=16s | bitrate: 4500 kbps | tp: 324353 kbps | trace_bw: 324353 kbps
+   t=28s | bitrate: 4500 kbps | tp: 352182 kbps | trace_bw: 352182 kbps
+   t=40s | bitrate: 4500 kbps | tp: 216876 kbps | trace_bw: 216876 kbps
+   t=52s | bitrate: 4500 kbps | tp: 421426 kbps | trace_bw: 421426 kbps
+   t=64s | bitrate: 4500 kbps | tp: 382230 kbps | trace_bw: 382230 kbps
+   t=76s | bitrate: 4500 kbps | tp: 369066 kbps | trace_bw: 369066 kbps
+   t=88s | bitrate: 4500 kbps | tp: 316381 kbps | trace_bw: 316381 kbps
+   t=100s | bitrate: 4500 kbps | tp: 259293 kbps | trace_bw: 259293 kbps
+   t=112s | bitrate: 4500 kbps | tp: 226120 kbps | trace_bw: 226120 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     270 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           291,616 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           291,616 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_017_tc_20260609_130754.json
+
+──────────────────────────────────────────────────────────────────────
+  [19/40] starlink_road_018_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_018_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 339736 kbps | trace_bw: 339736 kbps
+   t=16s | bitrate: 4500 kbps | tp: 241735 kbps | trace_bw: 241735 kbps
+   t=28s | bitrate: 4500 kbps | tp: 322272 kbps | trace_bw: 322272 kbps
+   t=40s | bitrate: 4500 kbps | tp: 401614 kbps | trace_bw: 401614 kbps
+   t=52s | bitrate: 4500 kbps | tp: 363390 kbps | trace_bw: 363390 kbps
+   t=64s | bitrate: 4500 kbps | tp: 276974 kbps | trace_bw: 276974 kbps
+   t=76s | bitrate: 4500 kbps | tp: 272160 kbps | trace_bw: 272160 kbps
+   t=88s | bitrate: 4500 kbps | tp: 335500 kbps | trace_bw: 335500 kbps
+   t=100s | bitrate: 4500 kbps | tp: 318165 kbps | trace_bw: 318165 kbps
+   t=112s | bitrate: 4500 kbps | tp: 347138 kbps | trace_bw: 347138 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     87 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           301,595 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           301,595 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_018_tc_20260609_130801.json
+
+──────────────────────────────────────────────────────────────────────
+  [20/40] starlink_road_019_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_019_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 293851 kbps | trace_bw: 293851 kbps
+   t=16s | bitrate: 4500 kbps | tp: 299449 kbps | trace_bw: 299449 kbps
+   t=28s | bitrate: 4500 kbps | tp: 203983 kbps | trace_bw: 203983 kbps
+   t=40s | bitrate: 4500 kbps | tp: 291191 kbps | trace_bw: 291191 kbps
+   t=52s | bitrate: 4500 kbps | tp: 313842 kbps | trace_bw: 313842 kbps
+   t=64s | bitrate: 4500 kbps | tp: 341463 kbps | trace_bw: 341463 kbps
+   t=76s | bitrate: 4500 kbps | tp: 196662 kbps | trace_bw: 196662 kbps
+   t=88s | bitrate: 4500 kbps | tp: 267167 kbps | trace_bw: 267167 kbps
+   t=100s | bitrate: 4500 kbps | tp: 426784 kbps | trace_bw: 426784 kbps
+   t=112s | bitrate: 4500 kbps | tp: 189363 kbps | trace_bw: 189363 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     100 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           271,272 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           271,272 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_019_tc_20260609_130806.json
+
+──────────────────────────────────────────────────────────────────────
+  [21/40] starlink_road_020_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_020_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 202163 kbps | trace_bw: 202163 kbps
+   t=16s | bitrate: 4500 kbps | tp: 202188 kbps | trace_bw: 202188 kbps
+   t=28s | bitrate: 4500 kbps | tp: 423103 kbps | trace_bw: 423103 kbps
+   t=40s | bitrate: 4500 kbps | tp: 271560 kbps | trace_bw: 271560 kbps
+   t=52s | bitrate: 4500 kbps | tp: 198589 kbps | trace_bw: 198589 kbps
+   t=64s | bitrate: 4500 kbps | tp: 155132 kbps | trace_bw: 155132 kbps
+   t=76s | bitrate: 4500 kbps | tp: 244723 kbps | trace_bw: 244723 kbps
+   t=88s | bitrate: 4500 kbps | tp: 322874 kbps | trace_bw: 322874 kbps
+   t=100s | bitrate: 4500 kbps | tp: 175196 kbps | trace_bw: 175196 kbps
+   t=112s | bitrate: 4500 kbps | tp: 350414 kbps | trace_bw: 350414 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     145 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           279,813 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           279,813 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_020_tc_20260609_130810.json
+
+──────────────────────────────────────────────────────────────────────
+  [22/40] starlink_road_021_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_021_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 425220 kbps | trace_bw: 425220 kbps
+   t=16s | bitrate: 4500 kbps | tp: 294188 kbps | trace_bw: 294188 kbps
+   t=28s | bitrate: 4500 kbps | tp: 305974 kbps | trace_bw: 305974 kbps
+   t=40s | bitrate: 4500 kbps | tp: 413258 kbps | trace_bw: 413258 kbps
+   t=52s | bitrate: 4500 kbps | tp: 192527 kbps | trace_bw: 192527 kbps
+   t=64s | bitrate: 4500 kbps | tp: 37008 kbps | trace_bw: 37008 kbps
+   t=76s | bitrate: 4500 kbps | tp: 140653 kbps | trace_bw: 140653 kbps
+   t=88s | bitrate: 4500 kbps | tp: 271892 kbps | trace_bw: 271892 kbps
+   t=100s | bitrate: 4500 kbps | tp: 204600 kbps | trace_bw: 204600 kbps
+   t=112s | bitrate: 4500 kbps | tp: 314172 kbps | trace_bw: 314172 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     69 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           266,016 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           266,016 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_021_tc_20260609_130814.json
+
+──────────────────────────────────────────────────────────────────────
+  [23/40] starlink_road_022_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_022_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 224775 kbps | trace_bw: 224775 kbps
+   t=16s | bitrate: 4500 kbps | tp: 137765 kbps | trace_bw: 137765 kbps
+   t=28s | bitrate: 4500 kbps | tp: 231855 kbps | trace_bw: 231855 kbps
+   t=40s | bitrate: 4500 kbps | tp: 189969 kbps | trace_bw: 189969 kbps
+   t=52s | bitrate: 4500 kbps | tp: 378193 kbps | trace_bw: 378193 kbps
+   t=64s | bitrate: 4500 kbps | tp: 226916 kbps | trace_bw: 226916 kbps
+   t=76s | bitrate: 4500 kbps | tp: 188623 kbps | trace_bw: 188623 kbps
+   t=88s | bitrate: 4500 kbps | tp: 397518 kbps | trace_bw: 397518 kbps
+   t=100s | bitrate: 4500 kbps | tp: 342921 kbps | trace_bw: 342921 kbps
+   t=112s | bitrate: 4500 kbps | tp: 384832 kbps | trace_bw: 384832 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     131 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           281,252 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           281,252 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_022_tc_20260609_130819.json
+
+──────────────────────────────────────────────────────────────────────
+  [24/40] starlink_road_023_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_023_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 100 kbps | tp: 102 kbps | trace_bw: 0 kbps
+   t=16s | bitrate: 100 kbps | tp: 134 kbps | trace_bw: 0 kbps
+   t=28s | bitrate: 4500 kbps | tp: 231528 kbps | trace_bw: 231528 kbps
+   t=40s | bitrate: 4500 kbps | tp: 334034 kbps | trace_bw: 334034 kbps
+   t=52s | bitrate: 100 kbps | tp: 115 kbps | trace_bw: 0 kbps
+   t=64s | bitrate: 4500 kbps | tp: 373476 kbps | trace_bw: 373476 kbps
+   t=76s | bitrate: 4500 kbps | tp: 264274 kbps | trace_bw: 264274 kbps
+   t=88s | bitrate: 4500 kbps | tp: 220733 kbps | trace_bw: 220733 kbps
+   t=100s | bitrate: 4500 kbps | tp: 345175 kbps | trace_bw: 345175 kbps
+   t=112s | bitrate: 4500 kbps | tp: 323212 kbps | trace_bw: 323212 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     4,000 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  3,767 kbps
+      Average (effective): 3,767 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           246,122 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  3 (↑2 / ↓1)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           246,103 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_023_tc_20260609_130823.json
+
+──────────────────────────────────────────────────────────────────────
+  [25/40] starlink_road_024_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_024_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 404419 kbps | trace_bw: 404419 kbps
+   t=16s | bitrate: 4500 kbps | tp: 451496 kbps | trace_bw: 451496 kbps
+   t=28s | bitrate: 4500 kbps | tp: 396998 kbps | trace_bw: 396998 kbps
+   t=40s | bitrate: 4500 kbps | tp: 314683 kbps | trace_bw: 314683 kbps
+   t=52s | bitrate: 4500 kbps | tp: 306725 kbps | trace_bw: 306725 kbps
+   t=64s | bitrate: 4500 kbps | tp: 322160 kbps | trace_bw: 322160 kbps
+   t=76s | bitrate: 4500 kbps | tp: 323739 kbps | trace_bw: 323739 kbps
+   t=88s | bitrate: 4500 kbps | tp: 305287 kbps | trace_bw: 305287 kbps
+   t=100s | bitrate: 4500 kbps | tp: 315581 kbps | trace_bw: 315581 kbps
+   t=112s | bitrate: 4500 kbps | tp: 334112 kbps | trace_bw: 334112 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     73 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           335,841 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           335,841 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_024_tc_20260609_130847.json
+
+──────────────────────────────────────────────────────────────────────
+  [26/40] starlink_road_025_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_025_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 410029 kbps | trace_bw: 410029 kbps
+   t=16s | bitrate: 4500 kbps | tp: 342419 kbps | trace_bw: 342419 kbps
+   t=28s | bitrate: 4500 kbps | tp: 374511 kbps | trace_bw: 374511 kbps
+   t=40s | bitrate: 4500 kbps | tp: 295096 kbps | trace_bw: 295096 kbps
+   t=52s | bitrate: 4500 kbps | tp: 271821 kbps | trace_bw: 271821 kbps
+   t=64s | bitrate: 4500 kbps | tp: 142923 kbps | trace_bw: 142923 kbps
+   t=76s | bitrate: 4500 kbps | tp: 272583 kbps | trace_bw: 272583 kbps
+   t=88s | bitrate: 4500 kbps | tp: 326903 kbps | trace_bw: 326903 kbps
+   t=100s | bitrate: 4500 kbps | tp: 322941 kbps | trace_bw: 322941 kbps
+   t=112s | bitrate: 4500 kbps | tp: 344462 kbps | trace_bw: 344462 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     72 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           308,338 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           308,338 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_025_tc_20260609_130851.json
+
+──────────────────────────────────────────────────────────────────────
+  [27/40] starlink_road_026_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_026_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 300092 kbps | trace_bw: 300092 kbps
+   t=16s | bitrate: 4500 kbps | tp: 305934 kbps | trace_bw: 305934 kbps
+   t=28s | bitrate: 4500 kbps | tp: 122899 kbps | trace_bw: 122899 kbps
+   t=40s | bitrate: 4500 kbps | tp: 288409 kbps | trace_bw: 288409 kbps
+   t=52s | bitrate: 4500 kbps | tp: 331599 kbps | trace_bw: 331599 kbps
+   t=64s | bitrate: 4500 kbps | tp: 317448 kbps | trace_bw: 317448 kbps
+   t=76s | bitrate: 4500 kbps | tp: 222719 kbps | trace_bw: 222719 kbps
+   t=88s | bitrate: 4500 kbps | tp: 213944 kbps | trace_bw: 213944 kbps
+   t=100s | bitrate: 4500 kbps | tp: 357460 kbps | trace_bw: 357460 kbps
+   t=112s | bitrate: 4500 kbps | tp: 170630 kbps | trace_bw: 170630 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     98 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           251,298 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           251,298 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_026_tc_20260609_130855.json
+
+──────────────────────────────────────────────────────────────────────
+  [28/40] starlink_road_027_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_027_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 103862 kbps | trace_bw: 103862 kbps
+   t=16s | bitrate: 4500 kbps | tp: 243507 kbps | trace_bw: 243507 kbps
+   t=28s | bitrate: 4500 kbps | tp: 339403 kbps | trace_bw: 339403 kbps
+   t=40s | bitrate: 4500 kbps | tp: 241643 kbps | trace_bw: 241643 kbps
+   t=52s | bitrate: 4500 kbps | tp: 319353 kbps | trace_bw: 319353 kbps
+   t=64s | bitrate: 4500 kbps | tp: 181546 kbps | trace_bw: 181546 kbps
+   t=76s | bitrate: 4500 kbps | tp: 76084 kbps | trace_bw: 76084 kbps
+   t=88s | bitrate: 4500 kbps | tp: 116848 kbps | trace_bw: 116848 kbps
+   t=100s | bitrate: 4500 kbps | tp: 322302 kbps | trace_bw: 322302 kbps
+   t=112s | bitrate: 4500 kbps | tp: 190881 kbps | trace_bw: 190881 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     283 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           229,137 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           229,137 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_027_tc_20260609_130859.json
+
+──────────────────────────────────────────────────────────────────────
+  [29/40] starlink_road_028_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_028_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 129836 kbps | trace_bw: 129836 kbps
+   t=16s | bitrate: 4500 kbps | tp: 186560 kbps | trace_bw: 186560 kbps
+   t=28s | bitrate: 4500 kbps | tp: 295854 kbps | trace_bw: 295854 kbps
+   t=40s | bitrate: 4500 kbps | tp: 210344 kbps | trace_bw: 210344 kbps
+   t=52s | bitrate: 4500 kbps | tp: 344406 kbps | trace_bw: 344406 kbps
+   t=64s | bitrate: 4500 kbps | tp: 270166 kbps | trace_bw: 270166 kbps
+   t=76s | bitrate: 4500 kbps | tp: 84633 kbps | trace_bw: 84633 kbps
+   t=88s | bitrate: 4500 kbps | tp: 198860 kbps | trace_bw: 198860 kbps
+   t=100s | bitrate: 100 kbps | tp: 86 kbps | trace_bw: 0 kbps
+   t=112s | bitrate: 100 kbps | tp: 102 kbps | trace_bw: 0 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     227 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  3,620 kbps
+      Average (effective): 3,620 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           163,810 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  1 (↑0 / ↓1)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           163,787 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_028_tc_20260609_130905.json
+
+──────────────────────────────────────────────────────────────────────
+  [30/40] starlink_road_029_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_029_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 181625 kbps | trace_bw: 181625 kbps
+   t=16s | bitrate: 4500 kbps | tp: 192861 kbps | trace_bw: 192861 kbps
+   t=28s | bitrate: 4500 kbps | tp: 68786 kbps | trace_bw: 68786 kbps
+   t=40s | bitrate: 4500 kbps | tp: 403970 kbps | trace_bw: 403970 kbps
+   t=52s | bitrate: 4500 kbps | tp: 323356 kbps | trace_bw: 323356 kbps
+   t=64s | bitrate: 4500 kbps | tp: 381247 kbps | trace_bw: 381247 kbps
+   t=76s | bitrate: 4500 kbps | tp: 20966 kbps | trace_bw: 20966 kbps
+   t=88s | bitrate: 4500 kbps | tp: 308839 kbps | trace_bw: 308839 kbps
+   t=100s | bitrate: 4500 kbps | tp: 242455 kbps | trace_bw: 242455 kbps
+   t=112s | bitrate: 4500 kbps | tp: 354772 kbps | trace_bw: 354772 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     162 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           274,187 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           274,187 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_029_tc_20260609_130934.json
+
+──────────────────────────────────────────────────────────────────────
+  [31/40] starlink_road_030_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_030_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 381587 kbps | trace_bw: 381587 kbps
+   t=16s | bitrate: 4500 kbps | tp: 407262 kbps | trace_bw: 407262 kbps
+   t=28s | bitrate: 4500 kbps | tp: 82501 kbps | trace_bw: 82501 kbps
+   t=40s | bitrate: 4500 kbps | tp: 398143 kbps | trace_bw: 398143 kbps
+   t=52s | bitrate: 4500 kbps | tp: 423464 kbps | trace_bw: 423464 kbps
+   t=64s | bitrate: 4500 kbps | tp: 377000 kbps | trace_bw: 377000 kbps
+   t=76s | bitrate: 4500 kbps | tp: 251458 kbps | trace_bw: 251458 kbps
+   t=88s | bitrate: 4500 kbps | tp: 386211 kbps | trace_bw: 386211 kbps
+   t=100s | bitrate: 4500 kbps | tp: 270106 kbps | trace_bw: 270106 kbps
+   t=112s | bitrate: 4500 kbps | tp: 208559 kbps | trace_bw: 208559 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     77 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           291,245 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           291,245 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_030_tc_20260609_130939.json
+
+──────────────────────────────────────────────────────────────────────
+  [32/40] starlink_road_031_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_031_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 356452 kbps | trace_bw: 356452 kbps
+   t=16s | bitrate: 4500 kbps | tp: 216386 kbps | trace_bw: 216386 kbps
+   t=28s | bitrate: 4500 kbps | tp: 265453 kbps | trace_bw: 265453 kbps
+   t=40s | bitrate: 4500 kbps | tp: 199929 kbps | trace_bw: 199929 kbps
+   t=52s | bitrate: 4500 kbps | tp: 211295 kbps | trace_bw: 211295 kbps
+   t=64s | bitrate: 4500 kbps | tp: 270683 kbps | trace_bw: 270683 kbps
+   t=76s | bitrate: 4500 kbps | tp: 274203 kbps | trace_bw: 274203 kbps
+   t=88s | bitrate: 4500 kbps | tp: 418642 kbps | trace_bw: 418642 kbps
+   t=100s | bitrate: 4500 kbps | tp: 323037 kbps | trace_bw: 323037 kbps
+   t=112s | bitrate: 4500 kbps | tp: 296997 kbps | trace_bw: 296997 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     83 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           273,848 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           273,848 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_031_tc_20260609_130943.json
+
+──────────────────────────────────────────────────────────────────────
+  [33/40] starlink_road_032_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_032_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 383624 kbps | trace_bw: 383624 kbps
+   t=16s | bitrate: 4500 kbps | tp: 338045 kbps | trace_bw: 338045 kbps
+   t=28s | bitrate: 4500 kbps | tp: 284589 kbps | trace_bw: 284589 kbps
+   t=40s | bitrate: 4500 kbps | tp: 134408 kbps | trace_bw: 134408 kbps
+   t=52s | bitrate: 4500 kbps | tp: 290448 kbps | trace_bw: 290448 kbps
+   t=64s | bitrate: 4500 kbps | tp: 188493 kbps | trace_bw: 188493 kbps
+   t=76s | bitrate: 4500 kbps | tp: 302040 kbps | trace_bw: 302040 kbps
+   t=88s | bitrate: 4500 kbps | tp: 233661 kbps | trace_bw: 233661 kbps
+   t=100s | bitrate: 4500 kbps | tp: 121169 kbps | trace_bw: 121169 kbps
+   t=112s | bitrate: 4500 kbps | tp: 113023 kbps | trace_bw: 113023 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     77 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           243,397 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           243,397 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_032_tc_20260609_130947.json
+
+──────────────────────────────────────────────────────────────────────
+  [34/40] starlink_road_033_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_033_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 331672 kbps | trace_bw: 331672 kbps
+   t=16s | bitrate: 4500 kbps | tp: 297801 kbps | trace_bw: 297801 kbps
+   t=28s | bitrate: 4500 kbps | tp: 242739 kbps | trace_bw: 242739 kbps
+   t=40s | bitrate: 4500 kbps | tp: 425070 kbps | trace_bw: 425070 kbps
+   t=52s | bitrate: 4500 kbps | tp: 328142 kbps | trace_bw: 328142 kbps
+   t=64s | bitrate: 4500 kbps | tp: 409992 kbps | trace_bw: 409992 kbps
+   t=76s | bitrate: 4500 kbps | tp: 174779 kbps | trace_bw: 174779 kbps
+   t=88s | bitrate: 4500 kbps | tp: 327515 kbps | trace_bw: 327515 kbps
+   t=100s | bitrate: 4500 kbps | tp: 418994 kbps | trace_bw: 418994 kbps
+   t=112s | bitrate: 4500 kbps | tp: 310167 kbps | trace_bw: 310167 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     89 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           326,208 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           326,208 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_033_tc_20260609_130953.json
+
+──────────────────────────────────────────────────────────────────────
+  [35/40] starlink_road_034_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_034_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 304996 kbps | trace_bw: 304996 kbps
+   t=16s | bitrate: 4500 kbps | tp: 74035 kbps | trace_bw: 74035 kbps
+   t=28s | bitrate: 4500 kbps | tp: 144637 kbps | trace_bw: 144637 kbps
+   t=40s | bitrate: 4500 kbps | tp: 333788 kbps | trace_bw: 333788 kbps
+   t=52s | bitrate: 4500 kbps | tp: 284173 kbps | trace_bw: 284173 kbps
+   t=64s | bitrate: 4500 kbps | tp: 103054 kbps | trace_bw: 103054 kbps
+   t=76s | bitrate: 4500 kbps | tp: 77798 kbps | trace_bw: 77798 kbps
+   t=88s | bitrate: 4500 kbps | tp: 228888 kbps | trace_bw: 228888 kbps
+   t=100s | bitrate: 4500 kbps | tp: 201294 kbps | trace_bw: 201294 kbps
+   t=112s | bitrate: 4500 kbps | tp: 265098 kbps | trace_bw: 265098 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     96 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           230,771 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           230,771 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_034_tc_20260609_130957.json
+
+──────────────────────────────────────────────────────────────────────
+  [36/40] starlink_road_035_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_035_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 232464 kbps | trace_bw: 232464 kbps
+   t=16s | bitrate: 4500 kbps | tp: 161226 kbps | trace_bw: 161226 kbps
+   t=28s | bitrate: 4500 kbps | tp: 220513 kbps | trace_bw: 220513 kbps
+   t=40s | bitrate: 4500 kbps | tp: 45979 kbps | trace_bw: 45979 kbps
+   t=52s | bitrate: 4500 kbps | tp: 369636 kbps | trace_bw: 369636 kbps
+   t=64s | bitrate: 4500 kbps | tp: 269450 kbps | trace_bw: 269450 kbps
+   t=76s | bitrate: 4500 kbps | tp: 321995 kbps | trace_bw: 321995 kbps
+   t=88s | bitrate: 4500 kbps | tp: 275511 kbps | trace_bw: 275511 kbps
+   t=100s | bitrate: 4500 kbps | tp: 287598 kbps | trace_bw: 287598 kbps
+   t=112s | bitrate: 4500 kbps | tp: 334273 kbps | trace_bw: 334273 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     127 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           256,697 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           256,697 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_035_tc_20260609_131002.json
+
+──────────────────────────────────────────────────────────────────────
+  [37/40] starlink_road_036_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_036_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 139798 kbps | trace_bw: 139798 kbps
+   t=16s | bitrate: 4500 kbps | tp: 269364 kbps | trace_bw: 269364 kbps
+   t=28s | bitrate: 4500 kbps | tp: 277580 kbps | trace_bw: 277580 kbps
+   t=40s | bitrate: 4500 kbps | tp: 301683 kbps | trace_bw: 301683 kbps
+   t=52s | bitrate: 4500 kbps | tp: 288823 kbps | trace_bw: 288823 kbps
+   t=64s | bitrate: 4500 kbps | tp: 83411 kbps | trace_bw: 83411 kbps
+   t=76s | bitrate: 4500 kbps | tp: 346074 kbps | trace_bw: 346074 kbps
+   t=88s | bitrate: 4500 kbps | tp: 295655 kbps | trace_bw: 295655 kbps
+   t=100s | bitrate: 4500 kbps | tp: 349815 kbps | trace_bw: 349815 kbps
+   t=112s | bitrate: 4500 kbps | tp: 434817 kbps | trace_bw: 434817 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     210 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           287,249 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           287,249 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_036_tc_20260609_131007.json
+
+──────────────────────────────────────────────────────────────────────
+  [38/40] starlink_road_037_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_037_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 278316 kbps | trace_bw: 278316 kbps
+   t=16s | bitrate: 4500 kbps | tp: 257815 kbps | trace_bw: 257815 kbps
+   t=28s | bitrate: 4500 kbps | tp: 227367 kbps | trace_bw: 227367 kbps
+   t=40s | bitrate: 4500 kbps | tp: 146569 kbps | trace_bw: 146569 kbps
+   t=52s | bitrate: 4500 kbps | tp: 297500 kbps | trace_bw: 297500 kbps
+   t=64s | bitrate: 4500 kbps | tp: 421365 kbps | trace_bw: 421365 kbps
+   t=76s | bitrate: 4500 kbps | tp: 422910 kbps | trace_bw: 422910 kbps
+   t=88s | bitrate: 4500 kbps | tp: 255601 kbps | trace_bw: 255601 kbps
+   t=100s | bitrate: 4500 kbps | tp: 211973 kbps | trace_bw: 211973 kbps
+   t=112s | bitrate: 4500 kbps | tp: 235279 kbps | trace_bw: 235279 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     106 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           270,681 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           270,681 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_037_tc_20260609_131011.json
+
+──────────────────────────────────────────────────────────────────────
+  [39/40] starlink_road_038_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_038_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 315254 kbps | trace_bw: 315254 kbps
+   t=16s | bitrate: 4500 kbps | tp: 247396 kbps | trace_bw: 247396 kbps
+   t=28s | bitrate: 4500 kbps | tp: 253003 kbps | trace_bw: 253003 kbps
+   t=40s | bitrate: 4500 kbps | tp: 370317 kbps | trace_bw: 370317 kbps
+   t=52s | bitrate: 4500 kbps | tp: 106909 kbps | trace_bw: 106909 kbps
+   t=64s | bitrate: 4500 kbps | tp: 287285 kbps | trace_bw: 287285 kbps
+   t=76s | bitrate: 4500 kbps | tp: 340154 kbps | trace_bw: 340154 kbps
+   t=88s | bitrate: 4500 kbps | tp: 332938 kbps | trace_bw: 332938 kbps
+   t=100s | bitrate: 4500 kbps | tp: 116035 kbps | trace_bw: 116035 kbps
+   t=112s | bitrate: 4500 kbps | tp: 319186 kbps | trace_bw: 319186 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     93 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           275,804 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           275,804 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_038_tc_20260609_131015.json
+
+──────────────────────────────────────────────────────────────────────
+  [40/40] starlink_road_039_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/starlink-2024/starlink_road_039_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 4500 kbps | tp: 139030 kbps | trace_bw: 139030 kbps
+   t=16s | bitrate: 4500 kbps | tp: 236220 kbps | trace_bw: 236220 kbps
+   t=28s | bitrate: 4500 kbps | tp: 185542 kbps | trace_bw: 185542 kbps
+   t=40s | bitrate: 4500 kbps | tp: 283662 kbps | trace_bw: 283662 kbps
+   t=52s | bitrate: 4500 kbps | tp: 307057 kbps | trace_bw: 307057 kbps
+   t=64s | bitrate: 4500 kbps | tp: 245254 kbps | trace_bw: 245254 kbps
+   t=76s | bitrate: 4500 kbps | tp: 194102 kbps | trace_bw: 194102 kbps
+   t=88s | bitrate: 4500 kbps | tp: 204817 kbps | trace_bw: 204817 kbps
+   t=100s | bitrate: 4500 kbps | tp: 200383 kbps | trace_bw: 200383 kbps
+   t=112s | bitrate: 4500 kbps | tp: 156418 kbps | trace_bw: 156418 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     212 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  4,500 kbps
+      Average (effective): 4,500 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           218,358 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           218,358 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_starlink-2024/benchmark_moq2_starlink_road_039_tc_20260609_131020.json
+
+======================================================================
+  BATCH COMPLETE: 40/40 succeeded
+  Results saved to: results/run_all_20260607_000000/moq2_starlink-2024/
+======================================================================
+

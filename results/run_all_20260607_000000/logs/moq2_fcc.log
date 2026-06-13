@@ -1,0 +1,1230 @@
+[SERVER] moq2: started in-process by the benchmark (no docker service).
+
+======================================================================
+  BATCH RUN: 21 trace(s) from traces/fcc
+======================================================================
+
+
+──────────────────────────────────────────────────────────────────────
+  [1/21] trace_12743_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/fcc/trace_12743_3g_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 600 kbps | tp: 995 kbps | trace_bw: 995 kbps
+   t=16s | bitrate: 600 kbps | tp: 1037 kbps | trace_bw: 1037 kbps
+   t=28s | bitrate: 600 kbps | tp: 1097 kbps | trace_bw: 1097 kbps
+   t=40s | bitrate: 600 kbps | tp: 1075 kbps | trace_bw: 1075 kbps
+   t=52s | bitrate: 600 kbps | tp: 1029 kbps | trace_bw: 1029 kbps
+   t=64s | bitrate: 600 kbps | tp: 780 kbps | trace_bw: 780 kbps
+   t=76s | bitrate: 600 kbps | tp: 925 kbps | trace_bw: 925 kbps
+   t=88s | bitrate: 600 kbps | tp: 1101 kbps | trace_bw: 1101 kbps
+   t=100s | bitrate: 600 kbps | tp: 1058 kbps | trace_bw: 1058 kbps
+   t=112s | bitrate: 600 kbps | tp: 958 kbps | trace_bw: 958 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     2,953 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  600 kbps
+      Average (effective): 595 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        1,018 ms
+      Ratio:             0.8410%
+
+  [THROUGHPUT]
+      Average:           1,025 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           1,025 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_fcc/benchmark_moq2_trace_12743_3g_tc_20260609_131025.json
+
+──────────────────────────────────────────────────────────────────────
+  [2/21] trace_27001_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/fcc/trace_27001_3g_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 2000 kbps | tp: 3110 kbps | trace_bw: 3110 kbps
+   t=16s | bitrate: 2000 kbps | tp: 3256 kbps | trace_bw: 3256 kbps
+   t=28s | bitrate: 2000 kbps | tp: 2636 kbps | trace_bw: 2636 kbps
+   t=40s | bitrate: 2000 kbps | tp: 3111 kbps | trace_bw: 3111 kbps
+   t=52s | bitrate: 3000 kbps | tp: 3352 kbps | trace_bw: 3352 kbps
+   t=64s | bitrate: 2000 kbps | tp: 2656 kbps | trace_bw: 2656 kbps
+   t=76s | bitrate: 2000 kbps | tp: 3044 kbps | trace_bw: 3044 kbps
+   t=88s | bitrate: 2000 kbps | tp: 3249 kbps | trace_bw: 3249 kbps
+   t=100s | bitrate: 2000 kbps | tp: 2909 kbps | trace_bw: 2909 kbps
+   t=112s | bitrate: 2000 kbps | tp: 3233 kbps | trace_bw: 3233 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     3,652 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  2,100 kbps
+      Average (effective): 2,050 kbps
+
+  [REBUFFERING]
+      Events:            4
+      Total time:        2,912 ms
+      Ratio:             2.3694%
+
+  [THROUGHPUT]
+      Average:           3,038 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  4 (↑2 / ↓2)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           3,038 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_fcc/benchmark_moq2_trace_27001_3g_tc_20260609_131136.json
+
+──────────────────────────────────────────────────────────────────────
+  [3/21] trace_27161_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/fcc/trace_27161_3g_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 3000 kbps | tp: 3879 kbps | trace_bw: 3879 kbps
+   t=16s | bitrate: 2000 kbps | tp: 3292 kbps | trace_bw: 3292 kbps
+   t=28s | bitrate: 2000 kbps | tp: 3083 kbps | trace_bw: 3083 kbps
+   t=40s | bitrate: 100 kbps | tp: 13 kbps | trace_bw: 13 kbps
+   t=52s | bitrate: 3000 kbps | tp: 4391 kbps | trace_bw: 4391 kbps
+   t=64s | bitrate: 3000 kbps | tp: 3618 kbps | trace_bw: 3618 kbps
+   t=76s | bitrate: 100 kbps | tp: 128 kbps | trace_bw: 0 kbps
+   t=88s | bitrate: 3000 kbps | tp: 3538 kbps | trace_bw: 3538 kbps
+   t=100s | bitrate: 2000 kbps | tp: 3222 kbps | trace_bw: 3222 kbps
+   t=112s | bitrate: 3000 kbps | tp: 3756 kbps | trace_bw: 3756 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     5,041 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  2,510 kbps
+      Average (effective): 2,090 kbps
+
+  [REBUFFERING]
+      Events:            5
+      Total time:        24,129 ms
+      Ratio:             16.7411%
+
+  [THROUGHPUT]
+      Average:           3,299 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  16 (↑8 / ↓8)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           3,294 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_fcc/benchmark_moq2_trace_27161_3g_tc_20260609_131258.json
+
+──────────────────────────────────────────────────────────────────────
+  [4/21] trace_27447_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/fcc/trace_27447_3g_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 2000 kbps | tp: 2420 kbps | trace_bw: 2420 kbps
+   t=16s | bitrate: 2000 kbps | tp: 3162 kbps | trace_bw: 3162 kbps
+   t=28s | bitrate: 3000 kbps | tp: 3789 kbps | trace_bw: 3789 kbps
+   t=40s | bitrate: 3000 kbps | tp: 3655 kbps | trace_bw: 3655 kbps
+   t=52s | bitrate: 3000 kbps | tp: 4116 kbps | trace_bw: 4116 kbps
+   t=64s | bitrate: 3000 kbps | tp: 3520 kbps | trace_bw: 3520 kbps
+   t=76s | bitrate: 3000 kbps | tp: 4294 kbps | trace_bw: 4294 kbps
+   t=88s | bitrate: 1200 kbps | tp: 1417 kbps | trace_bw: 1417 kbps
+   t=100s | bitrate: 3000 kbps | tp: 4225 kbps | trace_bw: 4225 kbps
+   t=112s | bitrate: 3000 kbps | tp: 4322 kbps | trace_bw: 4322 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     4,693 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  2,743 kbps
+      Average (effective): 2,663 kbps
+
+  [REBUFFERING]
+      Events:            5
+      Total time:        3,636 ms
+      Ratio:             2.9407%
+
+  [THROUGHPUT]
+      Average:           3,670 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  9 (↑5 / ↓4)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           3,670 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_fcc/benchmark_moq2_trace_27447_3g_tc_20260609_131427.json
+
+──────────────────────────────────────────────────────────────────────
+  [5/21] trace_5407_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/fcc/trace_5407_3g_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 600 kbps | tp: 1221 kbps | trace_bw: 1221 kbps
+   t=16s | bitrate: 600 kbps | tp: 1241 kbps | trace_bw: 1241 kbps
+   t=28s | bitrate: 1200 kbps | tp: 1343 kbps | trace_bw: 1343 kbps
+   t=40s | bitrate: 1200 kbps | tp: 1336 kbps | trace_bw: 1336 kbps
+   t=52s | bitrate: 600 kbps | tp: 1307 kbps | trace_bw: 1307 kbps
+   t=64s | bitrate: 600 kbps | tp: 1022 kbps | trace_bw: 1022 kbps
+   t=76s | bitrate: 600 kbps | tp: 1328 kbps | trace_bw: 1328 kbps
+   t=88s | bitrate: 600 kbps | tp: 1212 kbps | trace_bw: 1212 kbps
+   t=100s | bitrate: 600 kbps | tp: 1241 kbps | trace_bw: 1241 kbps
+   t=112s | bitrate: 600 kbps | tp: 1271 kbps | trace_bw: 1271 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     2,407 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  720 kbps
+      Average (effective): 698 kbps
+
+  [REBUFFERING]
+      Events:            3
+      Total time:        3,855 ms
+      Ratio:             3.1126%
+
+  [THROUGHPUT]
+      Average:           1,263 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  7 (↑4 / ↓3)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           1,263 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_fcc/benchmark_moq2_trace_5407_3g_tc_20260609_131554.json
+
+──────────────────────────────────────────────────────────────────────
+  [6/21] trace_797466_http---www.amazon_part1_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/fcc/trace_797466_http---www.amazon_part1_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 100 kbps | tp: 463 kbps | trace_bw: 463 kbps
+   t=16s | bitrate: 2000 kbps | tp: 2758 kbps | trace_bw: 2758 kbps
+   t=28s | bitrate: 100 kbps | tp: 386 kbps | trace_bw: 386 kbps
+   t=40s | bitrate: 2000 kbps | tp: 2712 kbps | trace_bw: 2712 kbps
+   t=52s | bitrate: 2000 kbps | tp: 2756 kbps | trace_bw: 2756 kbps
+   t=64s | bitrate: 1200 kbps | tp: 2101 kbps | trace_bw: 2101 kbps
+   t=76s | bitrate: 100 kbps | tp: 483 kbps | trace_bw: 483 kbps
+   t=88s | bitrate: 100 kbps | tp: 525 kbps | trace_bw: 525 kbps
+   t=100s | bitrate: 600 kbps | tp: 797 kbps | trace_bw: 797 kbps
+   t=112s | bitrate: 600 kbps | tp: 743 kbps | trace_bw: 743 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     878 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  893 kbps
+      Average (effective): 876 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        2,318 ms
+      Ratio:             1.8951%
+
+  [THROUGHPUT]
+      Average:           1,343 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  8 (↑4 / ↓4)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           1,343 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_fcc/benchmark_moq2_trace_797466_http---www.amazon_part1_tc_20260609_131701.json
+
+──────────────────────────────────────────────────────────────────────
+  [7/21] trace_797466_http---www.amazon_part2_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/fcc/trace_797466_http---www.amazon_part2_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 600 kbps | tp: 788 kbps | trace_bw: 788 kbps
+   t=16s | bitrate: 600 kbps | tp: 761 kbps | trace_bw: 761 kbps
+   t=28s | bitrate: 600 kbps | tp: 754 kbps | trace_bw: 754 kbps
+   t=40s | bitrate: 600 kbps | tp: 764 kbps | trace_bw: 764 kbps
+   t=52s | bitrate: 600 kbps | tp: 668 kbps | trace_bw: 668 kbps
+   t=64s | bitrate: 600 kbps | tp: 755 kbps | trace_bw: 755 kbps
+   t=76s | bitrate: 100 kbps | tp: 477 kbps | trace_bw: 477 kbps
+   t=88s | bitrate: 600 kbps | tp: 770 kbps | trace_bw: 770 kbps
+   t=100s | bitrate: 600 kbps | tp: 795 kbps | trace_bw: 795 kbps
+   t=112s | bitrate: 600 kbps | tp: 770 kbps | trace_bw: 770 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     3,729 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  467 kbps
+      Average (effective): 462 kbps
+
+  [REBUFFERING]
+      Events:            3
+      Total time:        1,309 ms
+      Ratio:             1.0787%
+
+  [THROUGHPUT]
+      Average:           656 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  10 (↑5 / ↓5)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           656 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_fcc/benchmark_moq2_trace_797466_http---www.amazon_part2_tc_20260609_131809.json
+
+──────────────────────────────────────────────────────────────────────
+  [8/21] trace_799296_http---www.amazon_part0_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/fcc/trace_799296_http---www.amazon_part0_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 1200 kbps | tp: 1873 kbps | trace_bw: 1873 kbps
+   t=16s | bitrate: 1200 kbps | tp: 1791 kbps | trace_bw: 1791 kbps
+   t=28s | bitrate: 1200 kbps | tp: 1884 kbps | trace_bw: 1884 kbps
+   t=40s | bitrate: 1200 kbps | tp: 1651 kbps | trace_bw: 1651 kbps
+   t=52s | bitrate: 1200 kbps | tp: 1813 kbps | trace_bw: 1813 kbps
+   t=64s | bitrate: 1200 kbps | tp: 1657 kbps | trace_bw: 1657 kbps
+   t=76s | bitrate: 1200 kbps | tp: 1877 kbps | trace_bw: 1877 kbps
+   t=88s | bitrate: 1200 kbps | tp: 1703 kbps | trace_bw: 1703 kbps
+   t=100s | bitrate: 1200 kbps | tp: 1810 kbps | trace_bw: 1810 kbps
+   t=112s | bitrate: 1200 kbps | tp: 1869 kbps | trace_bw: 1869 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     3,656 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  1,227 kbps
+      Average (effective): 1,200 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        2,691 ms
+      Ratio:             2.1935%
+
+  [THROUGHPUT]
+      Average:           1,796 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  1 (↑1 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           1,796 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_fcc/benchmark_moq2_trace_799296_http---www.amazon_part0_tc_20260609_131930.json
+
+──────────────────────────────────────────────────────────────────────
+  [9/21] trace_799448_http---www.facebook_part6_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/fcc/trace_799448_http---www.facebook_part6_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 600 kbps | tp: 1287 kbps | trace_bw: 1287 kbps
+   t=16s | bitrate: 600 kbps | tp: 1300 kbps | trace_bw: 1300 kbps
+   t=28s | bitrate: 600 kbps | tp: 719 kbps | trace_bw: 719 kbps
+   t=40s | bitrate: 600 kbps | tp: 1275 kbps | trace_bw: 1275 kbps
+   t=52s | bitrate: 600 kbps | tp: 1299 kbps | trace_bw: 1299 kbps
+   t=64s | bitrate: 600 kbps | tp: 1253 kbps | trace_bw: 1253 kbps
+   t=76s | bitrate: 600 kbps | tp: 1146 kbps | trace_bw: 1146 kbps
+   t=88s | bitrate: 600 kbps | tp: 1299 kbps | trace_bw: 1299 kbps
+   t=100s | bitrate: 600 kbps | tp: 940 kbps | trace_bw: 940 kbps
+   t=112s | bitrate: 600 kbps | tp: 1160 kbps | trace_bw: 1160 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     2,283 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  600 kbps
+      Average (effective): 598 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        361 ms
+      Ratio:             0.2996%
+
+  [THROUGHPUT]
+      Average:           1,171 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           1,171 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_fcc/benchmark_moq2_trace_799448_http---www.facebook_part6_tc_20260609_132050.json
+
+──────────────────────────────────────────────────────────────────────
+  [10/21] trace_800156_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/fcc/trace_800156_3g_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 600 kbps | tp: 715 kbps | trace_bw: 715 kbps
+   t=16s | bitrate: 100 kbps | tp: 532 kbps | trace_bw: 532 kbps
+   t=28s | bitrate: 600 kbps | tp: 680 kbps | trace_bw: 680 kbps
+   t=40s | bitrate: 1200 kbps | tp: 1626 kbps | trace_bw: 1626 kbps
+   t=52s | bitrate: 1200 kbps | tp: 1938 kbps | trace_bw: 1938 kbps
+   t=64s | bitrate: 2000 kbps | tp: 2884 kbps | trace_bw: 2884 kbps
+   t=76s | bitrate: 2000 kbps | tp: 2602 kbps | trace_bw: 2602 kbps
+   t=88s | bitrate: 2000 kbps | tp: 2560 kbps | trace_bw: 2560 kbps
+   t=100s | bitrate: 3000 kbps | tp: 3426 kbps | trace_bw: 3426 kbps
+   t=112s | bitrate: 600 kbps | tp: 880 kbps | trace_bw: 880 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     4,110 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  1,333 kbps
+      Average (effective): 1,315 kbps
+
+  [REBUFFERING]
+      Events:            3
+      Total time:        1,653 ms
+      Ratio:             1.3587%
+
+  [THROUGHPUT]
+      Average:           1,847 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  23 (↑11 / ↓12)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           1,844 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_fcc/benchmark_moq2_trace_800156_3g_tc_20260609_132155.json
+
+──────────────────────────────────────────────────────────────────────
+  [11/21] trace_806172_http---www.amazon_part0_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/fcc/trace_806172_http---www.amazon_part0_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 600 kbps | tp: 979 kbps | trace_bw: 979 kbps
+   t=16s | bitrate: 1200 kbps | tp: 1376 kbps | trace_bw: 1376 kbps
+   t=28s | bitrate: 600 kbps | tp: 1327 kbps | trace_bw: 1327 kbps
+   t=40s | bitrate: 600 kbps | tp: 1256 kbps | trace_bw: 1256 kbps
+   t=52s | bitrate: 600 kbps | tp: 1262 kbps | trace_bw: 1262 kbps
+   t=64s | bitrate: 600 kbps | tp: 885 kbps | trace_bw: 885 kbps
+   t=76s | bitrate: 600 kbps | tp: 1260 kbps | trace_bw: 1260 kbps
+   t=88s | bitrate: 600 kbps | tp: 1308 kbps | trace_bw: 1308 kbps
+   t=100s | bitrate: 600 kbps | tp: 1216 kbps | trace_bw: 1216 kbps
+   t=112s | bitrate: 100 kbps | tp: 384 kbps | trace_bw: 384 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     3,002 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  663 kbps
+      Average (effective): 663 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           1,158 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  10 (↑5 / ↓5)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           1,158 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_fcc/benchmark_moq2_trace_806172_http---www.amazon_part0_tc_20260609_132318.json
+
+──────────────────────────────────────────────────────────────────────
+  [12/21] trace_806330_http---www.amazon_part0_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/fcc/trace_806330_http---www.amazon_part0_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 100 kbps | tp: 482 kbps | trace_bw: 482 kbps
+   t=16s | bitrate: 100 kbps | tp: 623 kbps | trace_bw: 623 kbps
+   t=28s | bitrate: 600 kbps | tp: 889 kbps | trace_bw: 889 kbps
+   t=40s | bitrate: 1200 kbps | tp: 1435 kbps | trace_bw: 1435 kbps
+   t=52s | bitrate: 100 kbps | tp: 458 kbps | trace_bw: 458 kbps
+   t=64s | bitrate: 1200 kbps | tp: 1419 kbps | trace_bw: 1419 kbps
+   t=76s | bitrate: 600 kbps | tp: 1261 kbps | trace_bw: 1261 kbps
+   t=88s | bitrate: 600 kbps | tp: 1329 kbps | trace_bw: 1329 kbps
+   t=100s | bitrate: 1200 kbps | tp: 1368 kbps | trace_bw: 1368 kbps
+   t=112s | bitrate: 600 kbps | tp: 1232 kbps | trace_bw: 1232 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     844 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  757 kbps
+      Average (effective): 736 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        3,425 ms
+      Ratio:             2.7750%
+
+  [THROUGHPUT]
+      Average:           1,170 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  14 (↑7 / ↓7)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           1,170 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_fcc/benchmark_moq2_trace_806330_http---www.amazon_part0_tc_20260609_132427.json
+
+──────────────────────────────────────────────────────────────────────
+  [13/21] trace_8327_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/fcc/trace_8327_3g_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 600 kbps | tp: 745 kbps | trace_bw: 745 kbps
+   t=16s | bitrate: 600 kbps | tp: 745 kbps | trace_bw: 745 kbps
+   t=28s | bitrate: 600 kbps | tp: 745 kbps | trace_bw: 745 kbps
+   t=40s | bitrate: 600 kbps | tp: 745 kbps | trace_bw: 745 kbps
+   t=52s | bitrate: 600 kbps | tp: 1074 kbps | trace_bw: 1074 kbps
+   t=64s | bitrate: 600 kbps | tp: 919 kbps | trace_bw: 919 kbps
+   t=76s | bitrate: 600 kbps | tp: 931 kbps | trace_bw: 931 kbps
+   t=88s | bitrate: 600 kbps | tp: 1066 kbps | trace_bw: 1066 kbps
+   t=100s | bitrate: 600 kbps | tp: 1066 kbps | trace_bw: 1066 kbps
+   t=112s | bitrate: 100 kbps | tp: 470 kbps | trace_bw: 470 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     3,944 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  517 kbps
+      Average (effective): 516 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        208 ms
+      Ratio:             0.1734%
+
+  [THROUGHPUT]
+      Average:           838 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  3 (↑1 / ↓2)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           838 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_fcc/benchmark_moq2_trace_8327_3g_tc_20260609_132535.json
+
+──────────────────────────────────────────────────────────────────────
+  [14/21] trace_8465_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/fcc/trace_8465_3g_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 600 kbps | tp: 973 kbps | trace_bw: 973 kbps
+   t=16s | bitrate: 600 kbps | tp: 848 kbps | trace_bw: 848 kbps
+   t=28s | bitrate: 600 kbps | tp: 1071 kbps | trace_bw: 1071 kbps
+   t=40s | bitrate: 100 kbps | tp: 391 kbps | trace_bw: 391 kbps
+   t=52s | bitrate: 600 kbps | tp: 1002 kbps | trace_bw: 1002 kbps
+   t=64s | bitrate: 600 kbps | tp: 1041 kbps | trace_bw: 1041 kbps
+   t=76s | bitrate: 600 kbps | tp: 1019 kbps | trace_bw: 1019 kbps
+   t=88s | bitrate: 600 kbps | tp: 980 kbps | trace_bw: 980 kbps
+   t=100s | bitrate: 600 kbps | tp: 1065 kbps | trace_bw: 1065 kbps
+   t=112s | bitrate: 600 kbps | tp: 1066 kbps | trace_bw: 1066 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     3,020 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  583 kbps
+      Average (effective): 582 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        351 ms
+      Ratio:             0.2913%
+
+  [THROUGHPUT]
+      Average:           970 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  2 (↑1 / ↓1)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           970 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_fcc/benchmark_moq2_trace_8465_3g_tc_20260609_132646.json
+
+──────────────────────────────────────────────────────────────────────
+  [15/21] trace_849842_http---www.facebook_part1_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/fcc/trace_849842_http---www.facebook_part1_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 100 kbps | tp: 477 kbps | trace_bw: 477 kbps
+   t=16s | bitrate: 100 kbps | tp: 471 kbps | trace_bw: 471 kbps
+   t=28s | bitrate: 100 kbps | tp: 478 kbps | trace_bw: 478 kbps
+   t=40s | bitrate: 100 kbps | tp: 474 kbps | trace_bw: 474 kbps
+   t=52s | bitrate: 100 kbps | tp: 477 kbps | trace_bw: 477 kbps
+   t=64s | bitrate: 100 kbps | tp: 86 kbps | trace_bw: 0 kbps
+   t=76s | bitrate: 100 kbps | tp: 475 kbps | trace_bw: 475 kbps
+   t=88s | bitrate: 100 kbps | tp: 118 kbps | trace_bw: 118 kbps
+   t=100s | bitrate: 100 kbps | tp: 472 kbps | trace_bw: 472 kbps
+   t=112s | bitrate: 100 kbps | tp: 471 kbps | trace_bw: 471 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     853 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  100 kbps
+      Average (effective): 100 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           415 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           408 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_fcc/benchmark_moq2_trace_849842_http---www.facebook_part1_tc_20260609_132759.json
+
+──────────────────────────────────────────────────────────────────────
+  [16/21] trace_901648_http---www.amazon_part1_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/fcc/trace_901648_http---www.amazon_part1_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 2000 kbps | tp: 2948 kbps | trace_bw: 2948 kbps
+   t=16s | bitrate: 2000 kbps | tp: 3043 kbps | trace_bw: 3043 kbps
+   t=28s | bitrate: 2000 kbps | tp: 2789 kbps | trace_bw: 2789 kbps
+   t=40s | bitrate: 1200 kbps | tp: 2001 kbps | trace_bw: 2001 kbps
+   t=52s | bitrate: 2000 kbps | tp: 3015 kbps | trace_bw: 3015 kbps
+   t=64s | bitrate: 2000 kbps | tp: 3259 kbps | trace_bw: 3259 kbps
+   t=76s | bitrate: 2000 kbps | tp: 2752 kbps | trace_bw: 2752 kbps
+   t=88s | bitrate: 2000 kbps | tp: 3275 kbps | trace_bw: 3275 kbps
+   t=100s | bitrate: 2000 kbps | tp: 2285 kbps | trace_bw: 2285 kbps
+   t=112s | bitrate: 2000 kbps | tp: 2385 kbps | trace_bw: 2385 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     3,852 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  1,880 kbps
+      Average (effective): 1,847 kbps
+
+  [REBUFFERING]
+      Events:            2
+      Total time:        2,132 ms
+      Ratio:             1.7454%
+
+  [THROUGHPUT]
+      Average:           2,623 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  4 (↑2 / ↓2)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           2,623 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_fcc/benchmark_moq2_trace_901648_http---www.amazon_part1_tc_20260609_132838.json
+
+──────────────────────────────────────────────────────────────────────
+  [17/21] trace_9108_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/fcc/trace_9108_3g_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 600 kbps | tp: 1325 kbps | trace_bw: 1325 kbps
+   t=16s | bitrate: 600 kbps | tp: 1227 kbps | trace_bw: 1227 kbps
+   t=28s | bitrate: 600 kbps | tp: 1248 kbps | trace_bw: 1248 kbps
+   t=40s | bitrate: 600 kbps | tp: 1245 kbps | trace_bw: 1245 kbps
+   t=52s | bitrate: 600 kbps | tp: 1308 kbps | trace_bw: 1308 kbps
+   t=64s | bitrate: 600 kbps | tp: 1232 kbps | trace_bw: 1232 kbps
+   t=76s | bitrate: 600 kbps | tp: 1279 kbps | trace_bw: 1279 kbps
+   t=88s | bitrate: 600 kbps | tp: 1199 kbps | trace_bw: 1199 kbps
+   t=100s | bitrate: 600 kbps | tp: 1007 kbps | trace_bw: 1007 kbps
+   t=112s | bitrate: 600 kbps | tp: 1324 kbps | trace_bw: 1324 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     2,218 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  640 kbps
+      Average (effective): 640 kbps
+
+  [REBUFFERING]
+      Events:            0
+      Total time:        0 ms
+      Ratio:             0.0000%
+
+  [THROUGHPUT]
+      Average:           1,241 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  4 (↑2 / ↓2)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           1,241 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_fcc/benchmark_moq2_trace_9108_3g_tc_20260609_133003.json
+
+──────────────────────────────────────────────────────────────────────
+  [18/21] trace_925800_http---www.ebay_part0_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/fcc/trace_925800_http---www.ebay_part0_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 600 kbps | tp: 739 kbps | trace_bw: 739 kbps
+   t=16s | bitrate: 600 kbps | tp: 864 kbps | trace_bw: 864 kbps
+   t=28s | bitrate: 600 kbps | tp: 869 kbps | trace_bw: 869 kbps
+   t=40s | bitrate: 600 kbps | tp: 871 kbps | trace_bw: 871 kbps
+   t=52s | bitrate: 600 kbps | tp: 875 kbps | trace_bw: 875 kbps
+   t=64s | bitrate: 600 kbps | tp: 869 kbps | trace_bw: 869 kbps
+   t=76s | bitrate: 100 kbps | tp: 502 kbps | trace_bw: 502 kbps
+   t=88s | bitrate: 600 kbps | tp: 866 kbps | trace_bw: 866 kbps
+   t=100s | bitrate: 600 kbps | tp: 879 kbps | trace_bw: 879 kbps
+   t=112s | bitrate: 600 kbps | tp: 865 kbps | trace_bw: 865 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     3,976 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  567 kbps
+      Average (effective): 560 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        1,416 ms
+      Ratio:             1.1662%
+
+  [THROUGHPUT]
+      Average:           822 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  3 (↑1 / ↓2)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           817 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_fcc/benchmark_moq2_trace_925800_http---www.ebay_part0_tc_20260609_133106.json
+
+──────────────────────────────────────────────────────────────────────
+  [19/21] trace_939562_http---www.google_part1_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/fcc/trace_939562_http---www.google_part1_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 1200 kbps | tp: 1676 kbps | trace_bw: 1676 kbps
+   t=16s | bitrate: 2000 kbps | tp: 2397 kbps | trace_bw: 2397 kbps
+   t=28s | bitrate: 2000 kbps | tp: 3303 kbps | trace_bw: 3303 kbps
+   t=40s | bitrate: 2000 kbps | tp: 2516 kbps | trace_bw: 2516 kbps
+   t=52s | bitrate: 2000 kbps | tp: 2346 kbps | trace_bw: 2346 kbps
+   t=64s | bitrate: 1200 kbps | tp: 2176 kbps | trace_bw: 2176 kbps
+   t=76s | bitrate: 2000 kbps | tp: 3211 kbps | trace_bw: 3211 kbps
+   t=88s | bitrate: 2000 kbps | tp: 2558 kbps | trace_bw: 2558 kbps
+   t=100s | bitrate: 2000 kbps | tp: 2873 kbps | trace_bw: 2873 kbps
+   t=112s | bitrate: 3000 kbps | tp: 3398 kbps | trace_bw: 3398 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     4,086 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  1,970 kbps
+      Average (effective): 1,951 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        1,154 ms
+      Ratio:             0.9526%
+
+  [THROUGHPUT]
+      Average:           2,669 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  11 (↑5 / ↓6)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           2,669 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_fcc/benchmark_moq2_trace_939562_http---www.google_part1_tc_20260609_133228.json
+
+──────────────────────────────────────────────────────────────────────
+  [20/21] trace_939592_http---www.facebook_part0_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/fcc/trace_939592_http---www.facebook_part0_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 1200 kbps | tp: 1435 kbps | trace_bw: 1435 kbps
+   t=16s | bitrate: 600 kbps | tp: 1080 kbps | trace_bw: 1080 kbps
+   t=28s | bitrate: 1200 kbps | tp: 1454 kbps | trace_bw: 1454 kbps
+   t=40s | bitrate: 1200 kbps | tp: 1393 kbps | trace_bw: 1393 kbps
+   t=52s | bitrate: 1200 kbps | tp: 1446 kbps | trace_bw: 1446 kbps
+   t=64s | bitrate: 1200 kbps | tp: 1360 kbps | trace_bw: 1360 kbps
+   t=76s | bitrate: 600 kbps | tp: 1038 kbps | trace_bw: 1038 kbps
+   t=88s | bitrate: 1200 kbps | tp: 1432 kbps | trace_bw: 1432 kbps
+   t=100s | bitrate: 600 kbps | tp: 1028 kbps | trace_bw: 1028 kbps
+   t=112s | bitrate: 1200 kbps | tp: 1351 kbps | trace_bw: 1351 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     4,772 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  1,000 kbps
+      Average (effective): 962 kbps
+
+  [REBUFFERING]
+      Events:            4
+      Total time:        4,775 ms
+      Ratio:             3.8273%
+
+  [THROUGHPUT]
+      Average:           1,325 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  7 (↑3 / ↓4)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           1,325 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_fcc/benchmark_moq2_trace_939592_http---www.facebook_part0_tc_20260609_133352.json
+
+──────────────────────────────────────────────────────────────────────
+  [21/21] trace_9542_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+
+======================================================================
+  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)
+======================================================================
+  Relay:   http://127.0.0.1:4446
+  Trace:   traces/fcc/trace_9542_3g_tc.csv
+  Mode:    sender-side measurement (no browser player)
+======================================================================
+
+   Delivered ladder: 100k, 600k, 1200k, 2000k, 3000k, 4500k
+[PLAYBACK] Collecting metrics (sender-side)...
+   t=4s | bitrate: 600 kbps | tp: 904 kbps | trace_bw: 904 kbps
+   t=16s | bitrate: 600 kbps | tp: 988 kbps | trace_bw: 988 kbps
+   t=28s | bitrate: 600 kbps | tp: 1079 kbps | trace_bw: 1079 kbps
+   t=40s | bitrate: 600 kbps | tp: 1092 kbps | trace_bw: 1092 kbps
+   t=52s | bitrate: 600 kbps | tp: 1070 kbps | trace_bw: 1070 kbps
+   t=64s | bitrate: 600 kbps | tp: 956 kbps | trace_bw: 956 kbps
+   t=76s | bitrate: 600 kbps | tp: 1094 kbps | trace_bw: 1094 kbps
+   t=88s | bitrate: 600 kbps | tp: 1039 kbps | trace_bw: 1039 kbps
+   t=100s | bitrate: 600 kbps | tp: 1036 kbps | trace_bw: 1036 kbps
+   t=112s | bitrate: 600 kbps | tp: 1018 kbps | trace_bw: 1018 kbps
+
+======================================================================
+  BENCHMARK RESULTS (MOQ2 / moq-dev official stack)
+======================================================================
+
+  [TIMING]
+      Startup delay:     3,251 ms
+      Playback time:     120.0 s
+
+  [BITRATE]
+      Average (selected):  600 kbps
+      Average (effective): 598 kbps
+
+  [REBUFFERING]
+      Events:            1
+      Total time:        327 ms
+      Ratio:             0.2717%
+
+  [THROUGHPUT]
+      Average:           1,034 kbps
+
+  [ADAPTATION]
+      Target latency:    3,000 ms
+      Avg live latency:  0 ms
+      Quality switches:  0 (↑0 / ↓0)
+      Dropped fragments: 0
+
+  [AVAILABLE BW (trace)]
+      Average:           1,034 kbps
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/moq2_fcc/benchmark_moq2_trace_9542_3g_tc_20260609_133518.json
+
+======================================================================
+  BATCH COMPLETE: 21/21 succeeded
+  Results saved to: results/run_all_20260607_000000/moq2_fcc/
+======================================================================
+

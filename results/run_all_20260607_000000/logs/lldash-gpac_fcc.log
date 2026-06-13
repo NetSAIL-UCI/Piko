@@ -1,0 +1,1714 @@
+[CONTENT] lldash-gpac: present (content/ll2s-manifest.mpd)
+[SERVER] lldash-gpac: started in-process by the benchmark (no docker service).
+
+======================================================================
+  BATCH RUN: 21 trace(s) from traces/fcc
+======================================================================
+
+
+──────────────────────────────────────────────────────────────────────
+  [1/21] trace_12743_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_12743_3g_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 288 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 343ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 1.2s | bitrate: 600 kbps | tp: 0 kbps | trace_bw: 1035 kbps
+   t=21s | buffer: 1.7s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1081 kbps
+   t=31s | buffer: 1.6s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 965 kbps
+   t=41s | buffer: 1.4s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1078 kbps
+   t=51s | buffer: 1.0s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1036 kbps
+   t=61s | buffer: 2.9s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1075 kbps
+   t=72s | buffer: 0.6s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 925 kbps
+   t=82s | buffer: 2.5s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1148 kbps
+   t=92s | buffer: 2.1s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1015 kbps
+   t=102s | buffer: 2.0s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1097 kbps
+   t=113s | buffer: 1.7s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1060 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     343 ms
+      Playback time:     118.1 s
+
+  [BITRATE]
+      Average (selected):  418 kbps
+      Average (effective): 409 kbps
+      Min / Max:           100 / 800 kbps
+      Median:              400 kbps
+      Std deviation:       212.1 kbps
+      Variance:            44,982.7
+      25th/75th %ile:      200 / 600 kbps
+
+  [SWITCHES]
+      Total count:       16
+      Up / Down:         7 / 9
+      Avg magnitude:     250 kbps
+
+  [REBUFFERING]
+      Events:            7
+      Total time:        2,439 ms
+      Ratio:             2.0238%
+      Frequency:         3.557 per minute
+      Avg duration:      348 ms
+      Max duration:      1,156 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,031 kbps
+      Min / Max:         780 / 1,148 kbps
+
+  [BUFFER]
+      Average level:     1.9 s
+      Min / Max:         0.1 / 3.5 s
+
+  [UTILIZATION]
+      Bandwidth:         39.7%
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/lldash-gpac_fcc/benchmark_lldash-gpac_trace_12743_3g_tc_20260609_102435.json
+
+──────────────────────────────────────────────────────────────────────
+  [2/21] trace_27001_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_27001_3g_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 259 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 201ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 1.2s | bitrate: 1500 kbps | tp: 0 kbps | trace_bw: 2870 kbps
+   t=20s | buffer: 1.0s | bitrate: 1200 kbps | tp: 0 kbps | trace_bw: 3007 kbps
+   t=31s | buffer: 2.8s | bitrate: 800 kbps | tp: 0 kbps | trace_bw: 2786 kbps
+   t=41s | buffer: 2.4s | bitrate: 800 kbps | tp: 0 kbps | trace_bw: 2782 kbps
+   t=51s | buffer: 2.3s | bitrate: 800 kbps | tp: 0 kbps | trace_bw: 3286 kbps
+   t=61s | buffer: 1.9s | bitrate: 800 kbps | tp: 0 kbps | trace_bw: 3332 kbps
+   t=72s | buffer: 1.8s | bitrate: 800 kbps | tp: 0 kbps | trace_bw: 1 kbps
+   t=82s | buffer: 0.1s | bitrate: 800 kbps | tp: 0 kbps | trace_bw: 2893 kbps
+   t=92s | buffer: 0.1s | bitrate: 800 kbps | tp: 0 kbps | trace_bw: 3184 kbps
+   t=102s | buffer: 2.9s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 3001 kbps
+   t=113s | buffer: 2.6s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 2903 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     201 ms
+      Playback time:     99.1 s
+
+  [BITRATE]
+      Average (selected):  1,140 kbps
+      Average (effective): 939 kbps
+      Min / Max:           100 / 3,000 kbps
+      Median:              1,200 kbps
+      Std deviation:       826.1 kbps
+      Variance:            682,400.0
+      25th/75th %ile:      600 / 1,500 kbps
+
+  [SWITCHES]
+      Total count:       9
+      Up / Down:         3 / 6
+      Avg magnitude:     556 kbps
+
+  [REBUFFERING]
+      Events:            7
+      Total time:        21,181 ms
+      Ratio:             17.6032%
+      Frequency:         4.236 per minute
+      Avg duration:      3,026 ms
+      Max duration:      19,765 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           2,973 kbps
+      Min / Max:         1 / 3,500 kbps
+
+  [BUFFER]
+      Average level:     1.7 s
+      Min / Max:         0.1 / 3.7 s
+
+  [UTILIZATION]
+      Bandwidth:         38.0%
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/lldash-gpac_fcc/benchmark_lldash-gpac_trace_27001_3g_tc_20260609_102639.json
+
+──────────────────────────────────────────────────────────────────────
+  [3/21] trace_27161_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_27161_3g_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 282 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 197ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 1.1s | bitrate: 2000 kbps | tp: 0 kbps | trace_bw: 3020 kbps
+   t=20s | buffer: 3.0s | bitrate: 1200 kbps | tp: 0 kbps | trace_bw: 1530 kbps
+   t=31s | buffer: 1.0s | bitrate: 1200 kbps | tp: 0 kbps | trace_bw: 4453 kbps
+   t=41s | buffer: 0.1s | bitrate: 1200 kbps | tp: 0 kbps | trace_bw: 13 kbps
+   t=51s | buffer: 0.1s | bitrate: 1200 kbps | tp: 0 kbps | trace_bw: 4391 kbps
+   t=61s | buffer: 2.8s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 3571 kbps
+   t=72s | buffer: 0.7s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 0 kbps
+   t=82s | buffer: 2.6s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 5069 kbps
+   t=92s | buffer: 2.2s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 3342 kbps
+   t=102s | buffer: 2.1s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 3124 kbps
+   t=113s | buffer: 1.8s | bitrate: 800 kbps | tp: 0 kbps | trace_bw: 3386 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     197 ms
+      Playback time:     98.0 s
+
+  [BITRATE]
+      Average (selected):  1,338 kbps
+      Average (effective): 1,090 kbps
+      Min / Max:           100 / 4,500 kbps
+      Median:              1,200 kbps
+      Std deviation:       1,345.3 kbps
+      Variance:            1,809,843.8
+      25th/75th %ile:      400 / 2,000 kbps
+
+  [SWITCHES]
+      Total count:       7
+      Up / Down:         3 / 4
+      Avg magnitude:     729 kbps
+
+  [REBUFFERING]
+      Events:            7
+      Total time:        22,227 ms
+      Ratio:             18.4836%
+      Frequency:         4.285 per minute
+      Avg duration:      3,175 ms
+      Max duration:      20,695 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           3,190 kbps
+      Min / Max:         0 / 5,633 kbps
+
+  [BUFFER]
+      Average level:     1.8 s
+      Min / Max:         0.1 / 3.9 s
+
+  [UTILIZATION]
+      Bandwidth:         37.8%
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/lldash-gpac_fcc/benchmark_lldash-gpac_trace_27161_3g_tc_20260609_102843.json
+
+──────────────────────────────────────────────────────────────────────
+  [4/21] trace_27447_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_27447_3g_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 265 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 234ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 2.5s | bitrate: 800 kbps | tp: 0 kbps | trace_bw: 3684 kbps
+   t=20s | buffer: 2.4s | bitrate: 1200 kbps | tp: 0 kbps | trace_bw: 3434 kbps
+   t=31s | buffer: 0.8s | bitrate: 1500 kbps | tp: 0 kbps | trace_bw: 3485 kbps
+   t=41s | buffer: 2.4s | bitrate: 1200 kbps | tp: 0 kbps | trace_bw: 3515 kbps
+   t=51s | buffer: 2.3s | bitrate: 1200 kbps | tp: 0 kbps | trace_bw: 2677 kbps
+   t=61s | buffer: 2.1s | bitrate: 1200 kbps | tp: 0 kbps | trace_bw: 3798 kbps
+   t=72s | buffer: 2.0s | bitrate: 1200 kbps | tp: 0 kbps | trace_bw: 4294 kbps
+   t=82s | buffer: 1.6s | bitrate: 1500 kbps | tp: 0 kbps | trace_bw: 3522 kbps
+   t=92s | buffer: 1.6s | bitrate: 1200 kbps | tp: 0 kbps | trace_bw: 3589 kbps
+   t=102s | buffer: 1.3s | bitrate: 1200 kbps | tp: 0 kbps | trace_bw: 3773 kbps
+   t=113s | buffer: 1.1s | bitrate: 1200 kbps | tp: 0 kbps | trace_bw: 3728 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     234 ms
+      Playback time:     114.7 s
+
+  [BITRATE]
+      Average (selected):  1,254 kbps
+      Average (effective): 1,195 kbps
+      Min / Max:           100 / 2,000 kbps
+      Median:              1,500 kbps
+      Std deviation:       533.7 kbps
+      Variance:            284,792.9
+      25th/75th %ile:      1,200 / 1,500 kbps
+
+  [SWITCHES]
+      Total count:       25
+      Up / Down:         12 / 13
+      Avg magnitude:     720 kbps
+
+  [REBUFFERING]
+      Events:            7
+      Total time:        5,607 ms
+      Ratio:             4.6594%
+      Frequency:         3.661 per minute
+      Avg duration:      801 ms
+      Max duration:      2,023 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           3,632 kbps
+      Min / Max:         1,070 / 5,551 kbps
+
+  [BUFFER]
+      Average level:     1.8 s
+      Min / Max:         0.1 / 3.4 s
+
+  [UTILIZATION]
+      Bandwidth:         33.3%
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/lldash-gpac_fcc/benchmark_lldash-gpac_trace_27447_3g_tc_20260609_103047.json
+
+──────────────────────────────────────────────────────────────────────
+  [5/21] trace_5407_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_5407_3g_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 370 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 299ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 1.4s | bitrate: 600 kbps | tp: 0 kbps | trace_bw: 1219 kbps
+   t=20s | buffer: 1.4s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1260 kbps
+   t=31s | buffer: 2.0s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1273 kbps
+   t=41s | buffer: 1.9s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1295 kbps
+   t=51s | buffer: 1.5s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1268 kbps
+   t=61s | buffer: 3.3s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1232 kbps
+   t=72s | buffer: 1.1s | bitrate: 600 kbps | tp: 0 kbps | trace_bw: 1328 kbps
+   t=82s | buffer: 2.7s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1264 kbps
+   t=92s | buffer: 2.6s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1095 kbps
+   t=102s | buffer: 2.3s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 974 kbps
+   t=113s | buffer: 2.2s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1407 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     299 ms
+      Playback time:     117.7 s
+
+  [BITRATE]
+      Average (selected):  512 kbps
+      Average (effective): 500 kbps
+      Min / Max:           100 / 1,200 kbps
+      Median:              400 kbps
+      Std deviation:       256.4 kbps
+      Variance:            65,743.9
+      25th/75th %ile:      400 / 600 kbps
+
+  [SWITCHES]
+      Total count:       16
+      Up / Down:         7 / 9
+      Avg magnitude:     288 kbps
+
+  [REBUFFERING]
+      Events:            6
+      Total time:        2,780 ms
+      Ratio:             2.3080%
+      Frequency:         3.059 per minute
+      Avg duration:      463 ms
+      Max duration:      1,520 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,248 kbps
+      Min / Max:         974 / 1,426 kbps
+
+  [BUFFER]
+      Average level:     1.9 s
+      Min / Max:         0.1 / 3.7 s
+
+  [UTILIZATION]
+      Bandwidth:         40.5%
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/lldash-gpac_fcc/benchmark_lldash-gpac_trace_5407_3g_tc_20260609_103251.json
+
+──────────────────────────────────────────────────────────────────────
+  [6/21] trace_797466_http---www.amazon_part1_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_797466_http---www.amazon_part1_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 36 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 537ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 3.3s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 463 kbps
+   t=20s | buffer: 1.0s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 463 kbps
+   t=31s | buffer: 2.9s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 463 kbps
+   t=41s | buffer: 2.5s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 463 kbps
+   t=51s | buffer: 2.4s | bitrate: 600 kbps | tp: 0 kbps | trace_bw: 463 kbps
+   t=61s | buffer: 2.0s | bitrate: 600 kbps | tp: 0 kbps | trace_bw: 463 kbps
+   t=72s | buffer: 0.5s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 463 kbps
+   t=82s | buffer: 2.5s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 463 kbps
+   t=92s | buffer: 2.4s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 463 kbps
+   t=102s | buffer: 2.0s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 463 kbps
+   t=113s | buffer: 2.0s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 463 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     537 ms
+      Playback time:     113.9 s
+
+  [BITRATE]
+      Average (selected):  258 kbps
+      Average (effective): 244 kbps
+      Min / Max:           100 / 600 kbps
+      Median:              200 kbps
+      Std deviation:       149.8 kbps
+      Variance:            22,430.6
+      25th/75th %ile:      200 / 400 kbps
+
+  [SWITCHES]
+      Total count:       11
+      Up / Down:         5 / 6
+      Avg magnitude:     182 kbps
+
+  [REBUFFERING]
+      Events:            6
+      Total time:        6,744 ms
+      Ratio:             5.5895%
+      Frequency:         3.160 per minute
+      Avg duration:      1,124 ms
+      Max duration:      2,670 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           463 kbps
+      Min / Max:         463 / 463 kbps
+
+  [BUFFER]
+      Average level:     2.0 s
+      Min / Max:         0.1 / 3.7 s
+
+  [UTILIZATION]
+      Bandwidth:         55.8%
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/lldash-gpac_fcc/benchmark_lldash-gpac_trace_797466_http---www.amazon_part1_tc_20260609_103455.json
+
+──────────────────────────────────────────────────────────────────────
+  [7/21] trace_797466_http---www.amazon_part2_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_797466_http---www.amazon_part2_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 36 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 364ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.7s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 788 kbps
+   t=20s | buffer: 2.4s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 788 kbps
+   t=31s | buffer: 2.3s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 788 kbps
+   t=41s | buffer: 1.9s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 788 kbps
+   t=51s | buffer: 1.8s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 788 kbps
+   t=61s | buffer: 1.7s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 788 kbps
+   t=72s | buffer: 1.4s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 788 kbps
+   t=82s | buffer: 3.3s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 788 kbps
+   t=92s | buffer: 2.9s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 788 kbps
+   t=102s | buffer: 2.8s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 788 kbps
+   t=113s | buffer: 2.4s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 788 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     364 ms
+      Playback time:     113.3 s
+
+  [BITRATE]
+      Average (selected):  267 kbps
+      Average (effective): 251 kbps
+      Min / Max:           100 / 800 kbps
+      Median:              200 kbps
+      Std deviation:       181.4 kbps
+      Variance:            32,888.9
+      25th/75th %ile:      100 / 400 kbps
+
+  [SWITCHES]
+      Total count:       14
+      Up / Down:         6 / 8
+      Avg magnitude:     214 kbps
+
+  [REBUFFERING]
+      Events:            7
+      Total time:        7,219 ms
+      Ratio:             5.9879%
+      Frequency:         3.706 per minute
+      Avg duration:      1,031 ms
+      Max duration:      4,127 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           788 kbps
+      Min / Max:         788 / 788 kbps
+
+  [BUFFER]
+      Average level:     1.9 s
+      Min / Max:         0.1 / 3.5 s
+
+  [UTILIZATION]
+      Bandwidth:         33.8%
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/lldash-gpac_fcc/benchmark_lldash-gpac_trace_797466_http---www.amazon_part2_tc_20260609_103659.json
+
+──────────────────────────────────────────────────────────────────────
+  [8/21] trace_799296_http---www.amazon_part0_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_799296_http---www.amazon_part0_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 38 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 272ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 1.8s | bitrate: 1200 kbps | tp: 0 kbps | trace_bw: 1791 kbps
+   t=21s | buffer: 1.8s | bitrate: 600 kbps | tp: 0 kbps | trace_bw: 1884 kbps
+   t=31s | buffer: 1.7s | bitrate: 600 kbps | tp: 0 kbps | trace_bw: 1677 kbps
+   t=41s | buffer: 3.2s | bitrate: 600 kbps | tp: 0 kbps | trace_bw: 1766 kbps
+   t=51s | buffer: 1.2s | bitrate: 600 kbps | tp: 0 kbps | trace_bw: 1564 kbps
+   t=61s | buffer: 2.9s | bitrate: 600 kbps | tp: 0 kbps | trace_bw: 1657 kbps
+   t=72s | buffer: 2.5s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1877 kbps
+   t=82s | buffer: 2.4s | bitrate: 600 kbps | tp: 0 kbps | trace_bw: 1703 kbps
+   t=92s | buffer: 2.0s | bitrate: 800 kbps | tp: 0 kbps | trace_bw: 2061 kbps
+   t=102s | buffer: 1.9s | bitrate: 800 kbps | tp: 0 kbps | trace_bw: 1654 kbps
+   t=113s | buffer: 1.6s | bitrate: 600 kbps | tp: 0 kbps | trace_bw: 1676 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     272 ms
+      Playback time:     118.1 s
+
+  [BITRATE]
+      Average (selected):  527 kbps
+      Average (effective): 516 kbps
+      Min / Max:           100 / 2,000 kbps
+      Median:              400 kbps
+      Std deviation:       441.9 kbps
+      Variance:            195,288.9
+      25th/75th %ile:      200 / 600 kbps
+
+  [SWITCHES]
+      Total count:       14
+      Up / Down:         8 / 6
+      Avg magnitude:     400 kbps
+
+  [REBUFFERING]
+      Events:            5
+      Total time:        2,356 ms
+      Ratio:             1.9557%
+      Frequency:         2.540 per minute
+      Avg duration:      471 ms
+      Max duration:      1,927 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,808 kbps
+      Min / Max:         1,564 / 2,350 kbps
+
+  [BUFFER]
+      Average level:     1.8 s
+      Min / Max:         0.1 / 3.4 s
+
+  [UTILIZATION]
+      Bandwidth:         29.0%
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/lldash-gpac_fcc/benchmark_lldash-gpac_trace_799296_http---www.amazon_part0_tc_20260609_103903.json
+
+──────────────────────────────────────────────────────────────────────
+  [9/21] trace_799448_http---www.facebook_part6_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_799448_http---www.facebook_part6_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 35 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 297ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 2.0s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1287 kbps
+   t=20s | buffer: 2.0s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1287 kbps
+   t=31s | buffer: 1.9s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1287 kbps
+   t=41s | buffer: 1.5s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1287 kbps
+   t=51s | buffer: 3.2s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1287 kbps
+   t=61s | buffer: 3.1s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1287 kbps
+   t=72s | buffer: 1.1s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1287 kbps
+   t=82s | buffer: 2.7s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1287 kbps
+   t=92s | buffer: 2.6s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1287 kbps
+   t=102s | buffer: 0.3s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1287 kbps
+   t=113s | buffer: 2.0s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1287 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     297 ms
+      Playback time:     117.7 s
+
+  [BITRATE]
+      Average (selected):  467 kbps
+      Average (effective): 456 kbps
+      Min / Max:           100 / 1,500 kbps
+      Median:              400 kbps
+      Std deviation:       318.2 kbps
+      Variance:            101,269.8
+      25th/75th %ile:      200 / 600 kbps
+
+  [SWITCHES]
+      Total count:       20
+      Up / Down:         10 / 10
+      Avg magnitude:     425 kbps
+
+  [REBUFFERING]
+      Events:            9
+      Total time:        2,794 ms
+      Ratio:             2.3186%
+      Frequency:         4.588 per minute
+      Avg duration:      310 ms
+      Max duration:      1,553 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,287 kbps
+      Min / Max:         1,287 / 1,287 kbps
+
+  [BUFFER]
+      Average level:     1.9 s
+      Min / Max:         0.1 / 3.6 s
+
+  [UTILIZATION]
+      Bandwidth:         36.3%
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/lldash-gpac_fcc/benchmark_lldash-gpac_trace_799448_http---www.facebook_part6_tc_20260609_104107.json
+
+──────────────────────────────────────────────────────────────────────
+  [10/21] trace_800156_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_800156_3g_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 366 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 403ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 1.9s | bitrate: 600 kbps | tp: 0 kbps | trace_bw: 393 kbps
+   t=20s | buffer: 1.1s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 649 kbps
+   t=31s | buffer: 2.7s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1609 kbps
+   t=41s | buffer: 2.3s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1844 kbps
+   t=51s | buffer: 2.2s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 503 kbps
+   t=61s | buffer: 2.1s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1648 kbps
+   t=72s | buffer: 1.7s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1715 kbps
+   t=82s | buffer: 3.6s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 3227 kbps
+   t=92s | buffer: 1.3s | bitrate: 600 kbps | tp: 0 kbps | trace_bw: 2776 kbps
+   t=102s | buffer: 3.2s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 2516 kbps
+   t=113s | buffer: 2.8s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 2635 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     403 ms
+      Playback time:     116.3 s
+
+  [BITRATE]
+      Average (selected):  420 kbps
+      Average (effective): 405 kbps
+      Min / Max:           100 / 800 kbps
+      Median:              400 kbps
+      Std deviation:       213.5 kbps
+      Variance:            45,600.0
+      25th/75th %ile:      200 / 600 kbps
+
+  [SWITCHES]
+      Total count:       14
+      Up / Down:         7 / 7
+      Avg magnitude:     300 kbps
+
+  [REBUFFERING]
+      Events:            7
+      Total time:        4,186 ms
+      Ratio:             3.4738%
+      Frequency:         3.611 per minute
+      Avg duration:      598 ms
+      Max duration:      1,790 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,857 kbps
+      Min / Max:         0 / 3,748 kbps
+
+  [BUFFER]
+      Average level:     2.1 s
+      Min / Max:         0.1 / 3.6 s
+
+  [UTILIZATION]
+      Bandwidth:         23.0%
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/lldash-gpac_fcc/benchmark_lldash-gpac_trace_800156_3g_tc_20260609_104311.json
+
+──────────────────────────────────────────────────────────────────────
+  [11/21] trace_806172_http---www.amazon_part0_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_806172_http---www.amazon_part0_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 38 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 355ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 1.2s | bitrate: 600 kbps | tp: 0 kbps | trace_bw: 1376 kbps
+   t=20s | buffer: 2.8s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1327 kbps
+   t=31s | buffer: 2.1s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1337 kbps
+   t=41s | buffer: 2.1s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1195 kbps
+   t=51s | buffer: 1.7s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1341 kbps
+   t=61s | buffer: 1.6s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 885 kbps
+   t=72s | buffer: 3.1s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1260 kbps
+   t=82s | buffer: 2.9s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1308 kbps
+   t=92s | buffer: 0.8s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 959 kbps
+   t=102s | buffer: 2.4s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1268 kbps
+   t=113s | buffer: 2.9s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1276 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     355 ms
+      Playback time:     116.3 s
+
+  [BITRATE]
+      Average (selected):  450 kbps
+      Average (effective): 434 kbps
+      Min / Max:           100 / 800 kbps
+      Median:              400 kbps
+      Std deviation:       206.2 kbps
+      Variance:            42,500.0
+      25th/75th %ile:      200 / 600 kbps
+
+  [SWITCHES]
+      Total count:       17
+      Up / Down:         6 / 11
+      Avg magnitude:     259 kbps
+
+  [REBUFFERING]
+      Events:            7
+      Total time:        4,194 ms
+      Ratio:             3.4801%
+      Frequency:         3.611 per minute
+      Avg duration:      599 ms
+      Max duration:      1,492 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,159 kbps
+      Min / Max:         384 / 1,376 kbps
+
+  [BUFFER]
+      Average level:     1.9 s
+      Min / Max:         0.1 / 3.4 s
+
+  [UTILIZATION]
+      Bandwidth:         36.0%
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/lldash-gpac_fcc/benchmark_lldash-gpac_trace_806172_http---www.amazon_part0_tc_20260609_104515.json
+
+──────────────────────────────────────────────────────────────────────
+  [12/21] trace_806330_http---www.amazon_part0_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_806330_http---www.amazon_part0_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 38 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 511ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 1.2s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 623 kbps
+   t=20s | buffer: 2.9s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 889 kbps
+   t=31s | buffer: 2.8s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1327 kbps
+   t=41s | buffer: 2.4s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1294 kbps
+   t=51s | buffer: 1.2s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1377 kbps
+   t=61s | buffer: 3.1s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1419 kbps
+   t=72s | buffer: 2.7s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1261 kbps
+   t=82s | buffer: 2.7s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1329 kbps
+   t=92s | buffer: 2.3s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1401 kbps
+   t=102s | buffer: 2.0s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1395 kbps
+   t=113s | buffer: 1.9s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1264 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     511 ms
+      Playback time:     117.9 s
+
+  [BITRATE]
+      Average (selected):  343 kbps
+      Average (effective): 335 kbps
+      Min / Max:           100 / 600 kbps
+      Median:              400 kbps
+      Std deviation:       172.0 kbps
+      Variance:            29,591.8
+      25th/75th %ile:      200 / 400 kbps
+
+  [SWITCHES]
+      Total count:       13
+      Up / Down:         6 / 7
+      Avg magnitude:     246 kbps
+
+  [REBUFFERING]
+      Events:            4
+      Total time:        2,739 ms
+      Ratio:             2.2695%
+      Frequency:         2.035 per minute
+      Avg duration:      685 ms
+      Max duration:      1,334 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,178 kbps
+      Min / Max:         399 / 1,435 kbps
+
+  [BUFFER]
+      Average level:     2.0 s
+      Min / Max:         0.1 / 3.6 s
+
+  [UTILIZATION]
+      Bandwidth:         25.8%
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/lldash-gpac_fcc/benchmark_lldash-gpac_trace_806330_http---www.amazon_part0_tc_20260609_104720.json
+
+──────────────────────────────────────────────────────────────────────
+  [13/21] trace_8327_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_8327_3g_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 256 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 397ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 2.1s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 745 kbps
+   t=20s | buffer: 2.1s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 745 kbps
+   t=31s | buffer: 1.9s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 745 kbps
+   t=41s | buffer: 1.6s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1101 kbps
+   t=51s | buffer: 1.5s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1074 kbps
+   t=61s | buffer: 1.1s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1046 kbps
+   t=72s | buffer: 3.0s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 931 kbps
+   t=82s | buffer: 2.8s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1066 kbps
+   t=92s | buffer: 2.6s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1066 kbps
+   t=102s | buffer: 2.4s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1080 kbps
+   t=113s | buffer: 2.1s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 470 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     397 ms
+      Playback time:     115.8 s
+
+  [BITRATE]
+      Average (selected):  344 kbps
+      Average (effective): 330 kbps
+      Min / Max:           100 / 800 kbps
+      Median:              400 kbps
+      Std deviation:       196.8 kbps
+      Variance:            38,710.9
+      25th/75th %ile:      200 / 400 kbps
+
+  [SWITCHES]
+      Total count:       15
+      Up / Down:         8 / 7
+      Avg magnitude:     240 kbps
+
+  [REBUFFERING]
+      Events:            8
+      Total time:        4,738 ms
+      Ratio:             3.9303%
+      Frequency:         4.145 per minute
+      Avg duration:      592 ms
+      Max duration:      1,996 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           841 kbps
+      Min / Max:         470 / 1,106 kbps
+
+  [BUFFER]
+      Average level:     1.9 s
+      Min / Max:         0.1 / 3.6 s
+
+  [UTILIZATION]
+      Bandwidth:         46.1%
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/lldash-gpac_fcc/benchmark_lldash-gpac_trace_8327_3g_tc_20260609_104924.json
+
+──────────────────────────────────────────────────────────────────────
+  [14/21] trace_8465_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_8465_3g_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 313 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 337ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 1.3s | bitrate: 600 kbps | tp: 0 kbps | trace_bw: 975 kbps
+   t=20s | buffer: 3.1s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1040 kbps
+   t=31s | buffer: 2.9s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 898 kbps
+   t=41s | buffer: 2.7s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 951 kbps
+   t=51s | buffer: 2.6s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1033 kbps
+   t=61s | buffer: 2.2s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1051 kbps
+   t=72s | buffer: 1.9s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 982 kbps
+   t=82s | buffer: 1.8s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 970 kbps
+   t=92s | buffer: 2.5s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 994 kbps
+   t=102s | buffer: 2.4s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 938 kbps
+   t=113s | buffer: 2.1s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 640 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     337 ms
+      Playback time:     115.7 s
+
+  [BITRATE]
+      Average (selected):  312 kbps
+      Average (effective): 299 kbps
+      Min / Max:           100 / 800 kbps
+      Median:              200 kbps
+      Std deviation:       216.6 kbps
+      Variance:            46,920.4
+      25th/75th %ile:      100 / 400 kbps
+
+  [SWITCHES]
+      Total count:       16
+      Up / Down:         7 / 9
+      Avg magnitude:     225 kbps
+
+  [REBUFFERING]
+      Events:            7
+      Total time:        4,745 ms
+      Ratio:             3.9381%
+      Frequency:         3.629 per minute
+      Avg duration:      678 ms
+      Max duration:      2,902 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           950 kbps
+      Min / Max:         19 / 1,114 kbps
+
+  [BUFFER]
+      Average level:     2.0 s
+      Min / Max:         0.1 / 3.5 s
+
+  [UTILIZATION]
+      Bandwidth:         31.7%
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/lldash-gpac_fcc/benchmark_lldash-gpac_trace_8465_3g_tc_20260609_105128.json
+
+──────────────────────────────────────────────────────────────────────
+  [15/21] trace_849842_http---www.facebook_part1_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_849842_http---www.facebook_part1_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 37 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 541ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 1.9s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 477 kbps
+   t=20s | buffer: 1.8s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 477 kbps
+   t=31s | buffer: 0.1s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 477 kbps
+   t=41s | buffer: 2.1s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 477 kbps
+   t=51s | buffer: 1.8s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 477 kbps
+   t=61s | buffer: 1.7s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 477 kbps
+   t=72s | buffer: 3.6s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 477 kbps
+   t=82s | buffer: 0.1s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 477 kbps
+   t=92s | buffer: 2.5s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 477 kbps
+   t=102s | buffer: 2.1s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 477 kbps
+   t=113s | buffer: 2.0s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 477 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     541 ms
+      Playback time:     115.9 s
+
+  [BITRATE]
+      Average (selected):  175 kbps
+      Average (effective): 168 kbps
+      Min / Max:           100 / 400 kbps
+      Median:              200 kbps
+      Std deviation:       96.8 kbps
+      Variance:            9,375.0
+      25th/75th %ile:      100 / 200 kbps
+
+  [SWITCHES]
+      Total count:       7
+      Up / Down:         3 / 4
+      Avg magnitude:     129 kbps
+
+  [REBUFFERING]
+      Events:            7
+      Total time:        4,800 ms
+      Ratio:             3.9779%
+      Frequency:         3.625 per minute
+      Avg duration:      686 ms
+      Max duration:      1,362 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           477 kbps
+      Min / Max:         477 / 477 kbps
+
+  [BUFFER]
+      Average level:     2.0 s
+      Min / Max:         0.1 / 3.6 s
+
+  [UTILIZATION]
+      Bandwidth:         36.7%
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/lldash-gpac_fcc/benchmark_lldash-gpac_trace_849842_http---www.facebook_part1_tc_20260609_105332.json
+
+──────────────────────────────────────────────────────────────────────
+  [16/21] trace_901648_http---www.amazon_part1_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_901648_http---www.amazon_part1_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 36 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 217ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 1.3s | bitrate: 2000 kbps | tp: 0 kbps | trace_bw: 2948 kbps
+   t=20s | buffer: 2.9s | bitrate: 1200 kbps | tp: 0 kbps | trace_bw: 2948 kbps
+   t=31s | buffer: 0.8s | bitrate: 1200 kbps | tp: 0 kbps | trace_bw: 2948 kbps
+   t=41s | buffer: 2.4s | bitrate: 800 kbps | tp: 0 kbps | trace_bw: 2948 kbps
+   t=51s | buffer: 2.3s | bitrate: 800 kbps | tp: 0 kbps | trace_bw: 2948 kbps
+   t=61s | buffer: 2.0s | bitrate: 1200 kbps | tp: 0 kbps | trace_bw: 2948 kbps
+   t=72s | buffer: 1.9s | bitrate: 800 kbps | tp: 0 kbps | trace_bw: 2948 kbps
+   t=82s | buffer: 1.5s | bitrate: 800 kbps | tp: 0 kbps | trace_bw: 2948 kbps
+   t=92s | buffer: 1.4s | bitrate: 1200 kbps | tp: 0 kbps | trace_bw: 2948 kbps
+   t=102s | buffer: 3.0s | bitrate: 800 kbps | tp: 0 kbps | trace_bw: 2948 kbps
+   t=113s | buffer: 3.0s | bitrate: 800 kbps | tp: 0 kbps | trace_bw: 2948 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     217 ms
+      Playback time:     114.1 s
+
+  [BITRATE]
+      Average (selected):  1,268 kbps
+      Average (effective): 1,202 kbps
+      Min / Max:           100 / 3,000 kbps
+      Median:              1,200 kbps
+      Std deviation:       630.0 kbps
+      Variance:            396,897.5
+      25th/75th %ile:      800 / 1,500 kbps
+
+  [SWITCHES]
+      Total count:       18
+      Up / Down:         7 / 11
+      Avg magnitude:     661 kbps
+
+  [REBUFFERING]
+      Events:            9
+      Total time:        6,323 ms
+      Ratio:             5.2528%
+      Frequency:         4.735 per minute
+      Avg duration:      703 ms
+      Max duration:      2,888 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           2,948 kbps
+      Min / Max:         2,948 / 2,948 kbps
+
+  [BUFFER]
+      Average level:     1.8 s
+      Min / Max:         0.1 / 3.3 s
+
+  [UTILIZATION]
+      Bandwidth:         43.0%
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/lldash-gpac_fcc/benchmark_lldash-gpac_trace_901648_http---www.amazon_part1_tc_20260609_105536.json
+
+──────────────────────────────────────────────────────────────────────
+  [17/21] trace_9108_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_9108_3g_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 341 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 294ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 0.4s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1178 kbps
+   t=21s | buffer: 2.6s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1257 kbps
+   t=31s | buffer: 2.5s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1319 kbps
+   t=41s | buffer: 2.1s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1224 kbps
+   t=51s | buffer: 1.8s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1209 kbps
+   t=61s | buffer: 1.8s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1232 kbps
+   t=72s | buffer: 1.4s | bitrate: 800 kbps | tp: 0 kbps | trace_bw: 1279 kbps
+   t=82s | buffer: 2.0s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 1240 kbps
+   t=92s | buffer: 1.9s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1246 kbps
+   t=102s | buffer: 1.5s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1272 kbps
+   t=113s | buffer: 1.4s | bitrate: 800 kbps | tp: 0 kbps | trace_bw: 1271 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     294 ms
+      Playback time:     116.4 s
+
+  [BITRATE]
+      Average (selected):  453 kbps
+      Average (effective): 438 kbps
+      Min / Max:           100 / 1,500 kbps
+      Median:              400 kbps
+      Std deviation:       342.4 kbps
+      Variance:            117,229.9
+      25th/75th %ile:      200 / 600 kbps
+
+  [SWITCHES]
+      Total count:       18
+      Up / Down:         7 / 11
+      Avg magnitude:     328 kbps
+
+  [REBUFFERING]
+      Events:            12
+      Total time:        3,966 ms
+      Ratio:             3.2940%
+      Frequency:         6.184 per minute
+      Avg duration:      330 ms
+      Max duration:      1,622 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,246 kbps
+      Min / Max:         925 / 1,374 kbps
+
+  [BUFFER]
+      Average level:     1.8 s
+      Min / Max:         0.1 / 3.4 s
+
+  [UTILIZATION]
+      Bandwidth:         36.1%
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/lldash-gpac_fcc/benchmark_lldash-gpac_trace_9108_3g_tc_20260609_105740.json
+
+──────────────────────────────────────────────────────────────────────
+  [18/21] trace_925800_http---www.ebay_part0_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_925800_http---www.ebay_part0_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 38 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 384ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 1.9s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 864 kbps
+   t=20s | buffer: 1.5s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 869 kbps
+   t=31s | buffer: 1.4s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 873 kbps
+   t=41s | buffer: 3.1s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 845 kbps
+   t=51s | buffer: 1.0s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 879 kbps
+   t=61s | buffer: 2.6s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 869 kbps
+   t=72s | buffer: 0.5s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 502 kbps
+   t=82s | buffer: 2.8s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 866 kbps
+   t=92s | buffer: 2.4s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 879 kbps
+   t=102s | buffer: 2.4s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 886 kbps
+   t=113s | buffer: 2.0s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 826 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     384 ms
+      Playback time:     117.7 s
+
+  [BITRATE]
+      Average (selected):  236 kbps
+      Average (effective): 231 kbps
+      Min / Max:           100 / 800 kbps
+      Median:              200 kbps
+      Std deviation:       196.7 kbps
+      Variance:            38,677.7
+      25th/75th %ile:      100 / 200 kbps
+
+  [SWITCHES]
+      Total count:       10
+      Up / Down:         5 / 5
+      Avg magnitude:     180 kbps
+
+  [REBUFFERING]
+      Events:            4
+      Total time:        2,800 ms
+      Ratio:             2.3238%
+      Frequency:         2.039 per minute
+      Avg duration:      700 ms
+      Max duration:      2,023 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           808 kbps
+      Min / Max:         0 / 886 kbps
+
+  [BUFFER]
+      Average level:     2.0 s
+      Min / Max:         0.1 / 3.6 s
+
+  [UTILIZATION]
+      Bandwidth:         27.2%
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/lldash-gpac_fcc/benchmark_lldash-gpac_trace_925800_http---www.ebay_part0_tc_20260609_105944.json
+
+──────────────────────────────────────────────────────────────────────
+  [19/21] trace_939562_http---www.google_part1_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_939562_http---www.google_part1_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 37 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 262ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 2.2s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1676 kbps
+   t=20s | buffer: 1.8s | bitrate: 800 kbps | tp: 0 kbps | trace_bw: 1676 kbps
+   t=31s | buffer: 1.7s | bitrate: 600 kbps | tp: 0 kbps | trace_bw: 1676 kbps
+   t=41s | buffer: 1.4s | bitrate: 600 kbps | tp: 0 kbps | trace_bw: 1676 kbps
+   t=51s | buffer: 3.3s | bitrate: 800 kbps | tp: 0 kbps | trace_bw: 1676 kbps
+   t=61s | buffer: 0.9s | bitrate: 1200 kbps | tp: 0 kbps | trace_bw: 1676 kbps
+   t=72s | buffer: 2.8s | bitrate: 1200 kbps | tp: 0 kbps | trace_bw: 1676 kbps
+   t=82s | buffer: 2.0s | bitrate: 1200 kbps | tp: 0 kbps | trace_bw: 1676 kbps
+   t=92s | buffer: 2.1s | bitrate: 800 kbps | tp: 0 kbps | trace_bw: 1676 kbps
+   t=102s | buffer: 2.0s | bitrate: 600 kbps | tp: 0 kbps | trace_bw: 1676 kbps
+   t=113s | buffer: 1.6s | bitrate: 600 kbps | tp: 0 kbps | trace_bw: 1676 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     262 ms
+      Playback time:     112.1 s
+
+  [BITRATE]
+      Average (selected):  747 kbps
+      Average (effective): 695 kbps
+      Min / Max:           400 / 2,000 kbps
+      Median:              600 kbps
+      Std deviation:       396.4 kbps
+      Variance:            157,155.6
+      25th/75th %ile:      400 / 800 kbps
+
+  [SWITCHES]
+      Total count:       14
+      Up / Down:         8 / 6
+      Avg magnitude:     400 kbps
+
+  [REBUFFERING]
+      Events:            5
+      Total time:        8,280 ms
+      Ratio:             6.8767%
+      Frequency:         2.676 per minute
+      Avg duration:      1,656 ms
+      Max duration:      5,517 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,676 kbps
+      Min / Max:         1,676 / 1,676 kbps
+
+  [BUFFER]
+      Average level:     1.9 s
+      Min / Max:         0.1 / 3.4 s
+
+  [UTILIZATION]
+      Bandwidth:         44.6%
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/lldash-gpac_fcc/benchmark_lldash-gpac_trace_939562_http---www.google_part1_tc_20260609_110148.json
+
+──────────────────────────────────────────────────────────────────────
+  [20/21] trace_939592_http---www.facebook_part0_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_939592_http---www.facebook_part0_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 38 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 291ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 1.9s | bitrate: 100 kbps | tp: 0 kbps | trace_bw: 1080 kbps
+   t=20s | buffer: 2.1s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1454 kbps
+   t=31s | buffer: 1.8s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1442 kbps
+   t=41s | buffer: 1.7s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1408 kbps
+   t=51s | buffer: 1.3s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1379 kbps
+   t=61s | buffer: 3.1s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1360 kbps
+   t=72s | buffer: 0.9s | bitrate: 600 kbps | tp: 0 kbps | trace_bw: 1038 kbps
+   t=82s | buffer: 2.9s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1432 kbps
+   t=92s | buffer: 0.5s | bitrate: 600 kbps | tp: 0 kbps | trace_bw: 1386 kbps
+   t=102s | buffer: 2.4s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1331 kbps
+   t=113s | buffer: 2.0s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1130 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     291 ms
+      Playback time:     117.7 s
+
+  [BITRATE]
+      Average (selected):  481 kbps
+      Average (effective): 470 kbps
+      Min / Max:           100 / 1,500 kbps
+      Median:              400 kbps
+      Std deviation:       332.1 kbps
+      Variance:            110,273.4
+      25th/75th %ile:      200 / 600 kbps
+
+  [SWITCHES]
+      Total count:       15
+      Up / Down:         7 / 8
+      Avg magnitude:     300 kbps
+
+  [REBUFFERING]
+      Events:            9
+      Total time:        2,695 ms
+      Ratio:             2.2393%
+      Frequency:         4.590 per minute
+      Avg duration:      299 ms
+      Max duration:      1,246 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,305 kbps
+      Min / Max:         1,028 / 1,454 kbps
+
+  [BUFFER]
+      Average level:     1.9 s
+      Min / Max:         0.1 / 3.6 s
+
+  [UTILIZATION]
+      Bandwidth:         34.9%
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/lldash-gpac_fcc/benchmark_lldash-gpac_trace_939592_http---www.facebook_part0_tc_20260609_110352.json
+
+──────────────────────────────────────────────────────────────────────
+  [21/21] trace_9542_3g_tc.csv
+──────────────────────────────────────────────────────────────────────
+[TRACE] trace_9542_3g_tc.csv
+[LLDASH-GPAC] Trace file ready; gpac_server uses in-process bandwidth pacing.
+
+======================================================================
+  LLDASH-GPAC Streaming QoE Benchmark (dash.js / BOLA)
+======================================================================
+  Server: http://localhost:8082/player.html?mpd=http://localhost:8082/manifest.mpd
+======================================================================
+
+[TRACE] Loaded 333 entries with bandwidth
+[BROWSER] Launching headless Chromium...
+[BROWSER] Waiting for playback to start...
+   Startup delay: 358ms
+
+[PLAYBACK] Collecting metrics...
+   t=10s | buffer: 1.2s | bitrate: 600 kbps | tp: 0 kbps | trace_bw: 927 kbps
+   t=20s | buffer: 3.1s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1105 kbps
+   t=31s | buffer: 2.8s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1177 kbps
+   t=41s | buffer: 2.6s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1006 kbps
+   t=51s | buffer: 2.4s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 954 kbps
+   t=61s | buffer: 2.4s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1093 kbps
+   t=72s | buffer: 2.0s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1094 kbps
+   t=82s | buffer: 1.9s | bitrate: 200 kbps | tp: 0 kbps | trace_bw: 1050 kbps
+   t=92s | buffer: 1.6s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1054 kbps
+   t=102s | buffer: 1.5s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 984 kbps
+   t=113s | buffer: 3.0s | bitrate: 400 kbps | tp: 0 kbps | trace_bw: 1176 kbps
+
+======================================================================
+  BENCHMARK RESULTS (LLDASH-GPAC / dash.js / BOLA)
+======================================================================
+
+  [TIMING]
+      Startup delay:     358 ms
+      Playback time:     118.7 s
+
+  [BITRATE]
+      Average (selected):  356 kbps
+      Average (effective): 350 kbps
+      Min / Max:           100 / 800 kbps
+      Median:              400 kbps
+      Std deviation:       192.1 kbps
+      Variance:            36,913.6
+      25th/75th %ile:      200 / 400 kbps
+
+  [SWITCHES]
+      Total count:       17
+      Up / Down:         8 / 9
+      Avg magnitude:     224 kbps
+
+  [REBUFFERING]
+      Events:            5
+      Total time:        1,821 ms
+      Ratio:             1.5112%
+      Frequency:         2.528 per minute
+      Avg duration:      364 ms
+      Max duration:      1,268 ms
+
+  [THROUGHPUT]
+      Average:           0 kbps
+      Median:            0 kbps
+      Min / Max:         0 / 0 kbps
+      Std deviation:     0.0 kbps
+
+  [AVAILABLE BW (trace)]
+      Average:           1,050 kbps
+      Min / Max:         813 / 1,177 kbps
+
+  [BUFFER]
+      Average level:     1.9 s
+      Min / Max:         0.1 / 3.5 s
+
+  [UTILIZATION]
+      Bandwidth:         33.7%
+
+======================================================================
+
+[SAVED] results/run_all_20260607_000000/lldash-gpac_fcc/benchmark_lldash-gpac_trace_9542_3g_tc_20260609_110556.json
+
+======================================================================
+  BATCH COMPLETE: 21/21 succeeded
+  Results saved to: results/run_all_20260607_000000/lldash-gpac_fcc/
+======================================================================
+

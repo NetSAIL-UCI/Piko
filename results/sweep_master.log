@@ -1,0 +1,42 @@
+START 2026-06-07 00:00:00  RUN=run_all_20260607_000000  DUR=120s
+########## PHASE 1: ALL protocols on NEW traces ##########
+==== 00:00:00 :: dash / puffer  (-> results/run_all_20260607_000000/dash_puffer) ====
+==== DONE dash / puffer (exit 0) ====
+==== 05:47:39 :: dash / fcc_2023  (-> results/run_all_20260607_000000/dash_fcc_2023) ====
+==== DONE dash / fcc_2023 (exit 0) ====
+==== 10:59:46 :: hls / puffer  (-> results/run_all_20260607_000000/hls_puffer) ====
+==== DONE hls / puffer (exit 0) ====
+==== 16:40:34 :: hls / fcc_2023  (-> results/run_all_20260607_000000/hls_fcc_2023) ====
+==== DONE hls / fcc_2023 (exit 0) ====
+==== 21:52:14 :: lldash-gpac / puffer  (-> results/run_all_20260607_000000/lldash-gpac_puffer) ====
+==== DONE lldash-gpac / puffer (exit 0) ====
+==== 03:03:37 :: lldash-gpac / fcc_2023  (-> results/run_all_20260607_000000/lldash-gpac_fcc_2023) ====
+==== DONE lldash-gpac / fcc_2023 (exit 0) ====
+==== 08:13:13 :: moq2 / puffer  (-> results/run_all_20260607_000000/moq2_puffer) ====
+==== DONE moq2 / puffer (exit 0) ====
+==== 11:28:57 :: moq2 / fcc_2023  (-> results/run_all_20260607_000000/moq2_fcc_2023) ====
+==== DONE moq2 / fcc_2023 (exit 0) ====
+==== 12:06:07 :: webrtc / puffer  (-> results/run_all_20260607_000000/webrtc_puffer) ====
+==== DONE webrtc / puffer (exit 0) ====
+==== 00:21:21 :: webrtc / fcc_2023  (-> results/run_all_20260607_000000/webrtc_fcc_2023) ====
+==== DONE webrtc / fcc_2023 (exit 0) ====
+########## PHASE 2: webrtc/lldash/moq rerun on EVERYTHING existing ##########
+==== 05:58:18 :: lldash-gpac / 5g-ireland  (-> results/run_all_20260607_000000/lldash-gpac_5g-ireland) ====
+==== DONE lldash-gpac / 5g-ireland (exit 0) ====
+==== 09:01:58 :: lldash-gpac / starlink-2024  (-> results/run_all_20260607_000000/lldash-gpac_starlink-2024) ====
+==== DONE lldash-gpac / starlink-2024 (exit 0) ====
+==== 10:24:34 :: lldash-gpac / fcc  (-> results/run_all_20260607_000000/lldash-gpac_fcc) ====
+==== DONE lldash-gpac / fcc (exit 0) ====
+==== 11:07:59 :: moq2 / 5g-ireland  (-> results/run_all_20260607_000000/moq2_5g-ireland) ====
+==== DONE moq2 / 5g-ireland (exit 0) ====
+==== 13:06:14 :: moq2 / starlink-2024  (-> results/run_all_20260607_000000/moq2_starlink-2024) ====
+==== DONE moq2 / starlink-2024 (exit 0) ====
+==== 13:10:24 :: moq2 / fcc  (-> results/run_all_20260607_000000/moq2_fcc) ====
+==== DONE moq2 / fcc (exit 0) ====
+==== 13:36:29 :: webrtc / 5g-ireland  (-> results/run_all_20260607_000000/webrtc_5g-ireland) ====
+==== DONE webrtc / 5g-ireland (exit 0) ====
+==== 19:12:44 :: webrtc / starlink-2024  (-> results/run_all_20260607_000000/webrtc_starlink-2024) ====
+==== DONE webrtc / starlink-2024 (exit 0) ====
+==== 20:42:47 :: webrtc / fcc  (-> results/run_all_20260607_000000/webrtc_fcc) ====
+==== DONE webrtc / fcc (exit 0) ====
+ALL_DONE 2026-06-09 22:42:41

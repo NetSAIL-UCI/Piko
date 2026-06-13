@@ -1,0 +1,167 @@
+{
+  "timestamp": "2026-06-09T13:06:13.996439",
+  "protocol": "moq2",
+  "trace": "traces/5g-ireland/netflix_static_season3-strangerthings_B_2019_12_16_13_03_47_tc.csv",
+  "metrics": {
+    "timing": {
+      "startup_delay_ms": 4000.0,
+      "total_playback_time_ms": 120000.0
+    },
+    "bitrate": {
+      "average_kbps": 556.67,
+      "effective_average_kbps": 58.72,
+      "min_kbps": 100.0,
+      "max_kbps": 4500.0,
+      "median_kbps": 100.0,
+      "std_dev": 1317.49,
+      "variance": 1735788.89,
+      "percentile_25": 100.0,
+      "percentile_75": 100.0
+    },
+    "switching": {
+      "total_count": 0,
+      "up_count": 0,
+      "down_count": 0,
+      "total_magnitude": 0,
+      "avg_magnitude": 0
+    },
+    "rebuffering": {
+      "count": 6,
+      "total_time_ms": 1017509.41,
+      "ratio": 0.894506,
+      "frequency_per_min": 3.0,
+      "avg_duration_ms": 169584.9,
+      "max_duration_ms": 252168.0
+    },
+    "throughput": {
+      "average_kbps": 4616.35,
+      "median_kbps": 97.11,
+      "min_kbps": 2.0,
+      "max_kbps": 77790.0,
+      "std_dev": 15411.97,
+      "variance": 237528684.89
+    },
+    "buffer": {
+      "average_ms": 500.0,
+      "min_ms": 500.0,
+      "max_ms": 500.0
+    },
+    "utilization": {
+      "bandwidth_utilization": 0
+    },
+    "segments": {
+      "total": 0,
+      "failed": 0
+    },
+    "samples": {
+      "bitrate": [
+        100.0,
+        100.0,
+        4500.0,
+        4500.0,
+        4500.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        600.0,
+        100.0,
+        100.0,
+        100.0
+      ],
+      "throughput": [
+        101.674,
+        107.33,
+        33490.0,
+        77790.0,
+        24318.0,
+        101.692,
+        140.58,
+        114.588,
+        2.0000000000000004,
+        79.638,
+        81.666,
+        97.108,
+        2.0,
+        2.0,
+        50.992,
+        86.43,
+        130.21,
+        96.868,
+        17.0,
+        166.044,
+        78.284,
+        55.524,
+        70.328,
+        2.0,
+        86.06,
+        104.094,
+        856.0,
+        102.31,
+        2.0,
+        158.144
+      ]
+    }
+  },
+  "adaptation": {
+    "quality_switches": 4,
+    "switches_up": 2,
+    "switches_down": 2,
+    "dropped_fragments": 0,
+    "target_latency_ms": 3000,
+    "avg_live_latency_ms": 0,
+    "rendition_timeline": []
+  },
+  "trace_bandwidth": {
+    "samples": [
+      0.0,
+      0.0,
+      33490.0,
+      77790.0,
+      24318.0,
+      0.0,
+      0.0,
+      0.0,
+      2.0,
+      0.0,
+      0.0,
+      0.0,
+      2.0,
+      2.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      17.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      2.0,
+      0.0,
+      0.0,
+      856.0,
+      0.0,
+      2.0,
+      0.0
+    ],
+    "average_kbps": 4549.366666666667
+  }
+}

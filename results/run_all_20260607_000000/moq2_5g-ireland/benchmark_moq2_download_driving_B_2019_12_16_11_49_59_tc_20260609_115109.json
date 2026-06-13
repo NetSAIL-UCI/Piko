@@ -1,0 +1,167 @@
+{
+  "timestamp": "2026-06-09T11:52:14.585310",
+  "protocol": "moq2",
+  "trace": "traces/5g-ireland/download_driving_B_2019_12_16_11_49_59_tc.csv",
+  "metrics": {
+    "timing": {
+      "startup_delay_ms": 5571.18,
+      "total_playback_time_ms": 120000.0
+    },
+    "bitrate": {
+      "average_kbps": 2946.67,
+      "effective_average_kbps": 665.24,
+      "min_kbps": 100.0,
+      "max_kbps": 4500.0,
+      "median_kbps": 4500.0,
+      "std_dev": 1873.27,
+      "variance": 3509155.56,
+      "percentile_25": 1200.0,
+      "percentile_75": 4500.0
+    },
+    "switching": {
+      "total_count": 0,
+      "up_count": 0,
+      "down_count": 0,
+      "total_magnitude": 0,
+      "avg_magnitude": 0
+    },
+    "rebuffering": {
+      "count": 6,
+      "total_time_ms": 411535.01,
+      "ratio": 0.774239,
+      "frequency_per_min": 3.0,
+      "avg_duration_ms": 68589.17,
+      "max_duration_ms": 328088.0
+    },
+    "throughput": {
+      "average_kbps": 8667.53,
+      "median_kbps": 8115.0,
+      "min_kbps": 2.0,
+      "max_kbps": 19333.0,
+      "std_dev": 7199.4,
+      "variance": 51831325.25
+    },
+    "buffer": {
+      "average_ms": 500.0,
+      "min_ms": 500.0,
+      "max_ms": 500.0
+    },
+    "utilization": {
+      "bandwidth_utilization": 0.3631
+    },
+    "segments": {
+      "total": 0,
+      "failed": 0
+    },
+    "samples": {
+      "bitrate": [
+        100.0,
+        100.0,
+        2000.0,
+        2000.0,
+        2000.0,
+        1200.0,
+        2000.0,
+        100.0,
+        2000.0,
+        100.0,
+        100.0,
+        4500.0,
+        100.0,
+        4500.0,
+        4500.0,
+        4500.0,
+        4500.0,
+        4500.0,
+        4500.0,
+        100.0,
+        4500.0,
+        4500.0,
+        4500.0,
+        4500.0,
+        4500.0,
+        4500.0,
+        4500.0,
+        4500.0,
+        4500.0,
+        4500.0
+      ],
+      "throughput": [
+        73.0,
+        10.0,
+        2914.0,
+        2724.0,
+        2570.0,
+        1675.9999999999998,
+        2243.0,
+        22.0,
+        2964.0,
+        11.0,
+        255.0,
+        7018.0,
+        138.0,
+        12551.0,
+        12139.0,
+        13217.0,
+        14663.0,
+        17722.0,
+        17310.0,
+        1.9999999999999998,
+        8114.999999999999,
+        17046.0,
+        18632.0,
+        14716.0,
+        19333.0,
+        18078.0,
+        7252.0,
+        17085.0,
+        17037.0,
+        12510.0
+      ]
+    }
+  },
+  "adaptation": {
+    "quality_switches": 11,
+    "switches_up": 6,
+    "switches_down": 5,
+    "dropped_fragments": 0,
+    "target_latency_ms": 3000,
+    "avg_live_latency_ms": 0,
+    "rendition_timeline": []
+  },
+  "trace_bandwidth": {
+    "samples": [
+      73.0,
+      10.0,
+      2914.0,
+      2724.0,
+      2570.0,
+      1676.0,
+      2243.0,
+      22.0,
+      2964.0,
+      11.0,
+      255.0,
+      7018.0,
+      138.0,
+      12551.0,
+      12139.0,
+      13217.0,
+      14663.0,
+      17722.0,
+      17310.0,
+      2.0,
+      8115.0,
+      17046.0,
+      18632.0,
+      14716.0,
+      19333.0,
+      18078.0,
+      7252.0,
+      17085.0,
+      17037.0,
+      12510.0
+    ],
+    "average_kbps": 8667.533333333333
+  }
+}

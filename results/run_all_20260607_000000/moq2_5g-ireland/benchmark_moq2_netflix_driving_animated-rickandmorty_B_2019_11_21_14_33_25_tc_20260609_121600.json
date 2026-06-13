@@ -1,0 +1,167 @@
+{
+  "timestamp": "2026-06-09T12:17:47.236501",
+  "protocol": "moq2",
+  "trace": "traces/5g-ireland/netflix_driving_animated-rickandmorty_B_2019_11_21_14_33_25_tc.csv",
+  "metrics": {
+    "timing": {
+      "startup_delay_ms": 11297.11,
+      "total_playback_time_ms": 120000.0
+    },
+    "bitrate": {
+      "average_kbps": 833.33,
+      "effective_average_kbps": 49.01,
+      "min_kbps": 100.0,
+      "max_kbps": 4500.0,
+      "median_kbps": 100.0,
+      "std_dev": 1639.78,
+      "variance": 2688888.89,
+      "percentile_25": 100.0,
+      "percentile_75": 100.0
+    },
+    "switching": {
+      "total_count": 0,
+      "up_count": 0,
+      "down_count": 0,
+      "total_magnitude": 0,
+      "avg_magnitude": 0
+    },
+    "rebuffering": {
+      "count": 10,
+      "total_time_ms": 1920563.02,
+      "ratio": 0.941193,
+      "frequency_per_min": 5.0,
+      "avg_duration_ms": 192056.3,
+      "max_duration_ms": 660176.0
+    },
+    "throughput": {
+      "average_kbps": 3015.65,
+      "median_kbps": 96.87,
+      "min_kbps": 1.0,
+      "max_kbps": 29755.0,
+      "std_dev": 7297.71,
+      "variance": 53256609.24
+    },
+    "buffer": {
+      "average_ms": 500.0,
+      "min_ms": 500.0,
+      "max_ms": 500.0
+    },
+    "utilization": {
+      "bandwidth_utilization": 833.3333
+    },
+    "segments": {
+      "total": 0,
+      "failed": 0
+    },
+    "samples": {
+      "bitrate": [
+        100.0,
+        100.0,
+        4500.0,
+        4500.0,
+        4500.0,
+        4500.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        4500.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0
+      ],
+      "throughput": [
+        36.0,
+        168.0,
+        29755.0,
+        18568.0,
+        21406.0,
+        9912.0,
+        140.58,
+        114.588,
+        2.0000000000000004,
+        79.638,
+        2.0,
+        1.0,
+        2.0,
+        112.612,
+        50.992,
+        86.43,
+        15.999999999999998,
+        96.868,
+        17.0,
+        0.9999999999999999,
+        9151.0,
+        55.524,
+        2.0,
+        2.0,
+        86.06,
+        104.094,
+        112.704,
+        102.31,
+        128.084,
+        158.144
+      ]
+    }
+  },
+  "adaptation": {
+    "quality_switches": 4,
+    "switches_up": 2,
+    "switches_down": 2,
+    "dropped_fragments": 0,
+    "target_latency_ms": 3000,
+    "avg_live_latency_ms": 0,
+    "rendition_timeline": []
+  },
+  "trace_bandwidth": {
+    "samples": [
+      36.0,
+      168.0,
+      29755.0,
+      18568.0,
+      21406.0,
+      9912.0,
+      0.0,
+      0.0,
+      2.0,
+      0.0,
+      2.0,
+      1.0,
+      2.0,
+      0.0,
+      0.0,
+      0.0,
+      16.0,
+      0.0,
+      17.0,
+      1.0,
+      9151.0,
+      0.0,
+      2.0,
+      2.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "average_kbps": 2968.0333333333333
+  }
+}
