@@ -2,265 +2,431 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Benchmark Lab</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NetSail · Benchmark Console</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --bg:       #0d1117;
-  --surface:  #161d2a;
-  --card:     #1c2638;
-  --border:   #263347;
-  --text:     #d4dce8;
-  --muted:    #5a7080;
-  --accent:   #4f7cf7;
-  --green:    #2dd4a0;
-  --red:      #f55f5f;
-  --yellow:   #f0c04a;
-  --orange:   #e07840;
-  --c-dash:        #4f7cf7;
-  --c-lldash-gpac: #2dd4a0;
-  --c-hls:         #e07840;
-  --c-webrtc:      #a87cf7;
-  --c-moq2:        #f76490;
-  --r: 10px;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#1b1c1e;
+  --bg-2:#202124;
+  --surface:#26282b;
+  --card:#2a2c2f;
+  --card-2:#303236;
+  --border:#3c4043;
+  --border-soft:#34363a;
+  --text:#e8eaed;
+  --text-2:#bdc1c6;
+  --muted:#9aa0a6;
+  --faint:#6b7177;
+  --accent:#8ab4f8;
+  --accent-2:#aecbfa;
+  --accent-strong:#4285f4;
+  --green:#81c995;
+  --green-strong:#34a853;
+  --red:#f28b82;
+  --red-strong:#ea4335;
+  --yellow:#fdd663;
+  --orange:#fcad70;
+  --purple:#c58af9;
+  --pink:#ff8bcb;
+  --c-dash:#8ab4f8;
+  --c-lldash-gpac:#81c995;
+  --c-hls:#fcad70;
+  --c-webrtc:#c58af9;
+  --c-moq2:#ff8bcb;
+  --r:12px;
+  --r-sm:8px;
+  --rail:76px;
+  --side:264px;
+  --shadow:0 1px 2px rgba(0,0,0,.28);
+  --shadow-lg:0 12px 32px rgba(0,0,0,.5);
+  --ease:cubic-bezier(.4,0,.2,1);
 }
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);
+  font-family:'Inter',system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;overflow:hidden}
 
-html, body { height: 100%; background: var(--bg); color: var(--text);
-  font-family: 'Inter', system-ui, sans-serif; font-size: 14px; line-height: 1.55; }
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#3c4043;border-radius:6px;border:2px solid transparent;background-clip:padding-box}
+::-webkit-scrollbar-thumb:hover{background:#4a4e53;background-clip:padding-box}
 
-::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+/* ── shell ── */
+#app{display:grid;grid-template-rows:60px 1fr;grid-template-columns:var(--side) 1fr;
+  grid-template-areas:"brand topbar" "sidebar main";height:100vh;
+  transition:grid-template-columns .26s var(--ease)}
+#app.rail{grid-template-columns:var(--rail) 1fr}
 
-/* ── layout ── */
-#app { display: grid; grid-template-columns: 264px 1fr; height: 100vh; overflow: hidden; }
-#sidebar { background: var(--surface); border-right: 1px solid var(--border);
-  display: flex; flex-direction: column; overflow-y: auto; }
-#main { display: flex; flex-direction: column; overflow: hidden; }
+/* ── brand / topbar ── */
+#brand{grid-area:brand;display:flex;align-items:center;gap:12px;padding:0 18px;
+  background:var(--bg-2);border-bottom:1px solid var(--border-soft);border-right:1px solid var(--border-soft);
+  overflow:hidden;white-space:nowrap}
+.brand-logo{width:34px;height:34px;border-radius:8px;flex-shrink:0;
+  background:var(--surface);border:1px solid var(--border);color:var(--accent);
+  display:flex;align-items:center;justify-content:center}
+.brand-logo svg{width:22px;height:22px;display:block}
+.brand-text{display:flex;flex-direction:column;line-height:1.15;opacity:1;transition:opacity .2s var(--ease)}
+.brand-text b{font-size:.98rem;font-weight:700;letter-spacing:-.01em}
+.brand-text span{font-size:.7rem;color:var(--muted);font-weight:500}
+#app.rail .brand-text{opacity:0;pointer-events:none}
+
+#topbar{grid-area:topbar;display:flex;align-items:center;gap:14px;padding:0 26px;
+  background:var(--bg-2);border-bottom:1px solid var(--border-soft)}
+.menu-btn{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:transparent;color:var(--text-2);cursor:pointer;flex-shrink:0;transition:background .15s}
+.menu-btn:hover{background:rgba(255,255,255,.07)}
+.menu-btn svg{width:22px;height:22px}
+.topbar-title{font-size:1.02rem;font-weight:600}
+.topbar-sub{font-size:.78rem;color:var(--muted);font-weight:500}
+.topbar-spacer{flex:1}
+.env-chip{display:flex;align-items:center;gap:8px;padding:7px 14px;border-radius:24px;
+  background:var(--surface);border:1px solid var(--border);font-size:.78rem;font-weight:600;color:var(--text-2)}
+.env-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(129,201,149,.18)}
+.icon-btn{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:transparent;color:var(--text-2);cursor:pointer;transition:background .15s,transform .3s}
+.icon-btn:hover{background:rgba(255,255,255,.07)}
+.icon-btn svg{width:21px;height:21px}
+.icon-btn.spin svg{animation:spin .7s var(--ease)}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 
 /* ── sidebar ── */
-.logo { padding: 28px 24px 18px; font-size: .82rem; font-weight: 700; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--accent); }
-.nav-group { padding: 4px 0 14px; }
-.nav-label { padding: 6px 24px 5px; font-size: .68rem; font-weight: 600; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--muted); }
-.nav-item { display: flex; align-items: center; gap: 13px; padding: 11px 24px; cursor: pointer;
-  color: var(--muted); font-size: .9rem; font-weight: 500;
-  transition: color .12s, background .12s; border-left: 3px solid transparent; margin: 1px 0; }
-.nav-item:hover { color: var(--text); background: rgba(255,255,255,.04); }
-.nav-item.active { color: #fff; background: rgba(79,124,247,.14); border-left-color: var(--accent); }
-.nav-item .icon { font-size: 1rem; width: 20px; text-align: center; flex-shrink: 0; }
+#sidebar{grid-area:sidebar;background:var(--bg-2);border-right:1px solid var(--border-soft);
+  display:flex;flex-direction:column;overflow-x:hidden;overflow-y:auto;padding:14px 0 10px}
+.nav-label{padding:14px 26px 7px;font-size:.66rem;font-weight:700;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--faint);white-space:nowrap;transition:opacity .2s}
+#app.rail .nav-label{opacity:0;height:18px;padding-top:18px}
+.nav-item{position:relative;display:flex;align-items:center;gap:16px;margin:2px 12px;padding:11px 14px;
+  border-radius:24px;cursor:pointer;color:var(--text-2);font-size:.92rem;font-weight:500;white-space:nowrap;
+  transition:background .15s,color .15s}
+.nav-item:hover{background:rgba(255,255,255,.06);color:var(--text)}
+.nav-item.active{background:rgba(138,180,248,.16);color:var(--accent-2);font-weight:600}
+.nav-item .ic{width:24px;height:24px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.nav-item .ic svg{width:22px;height:22px}
+.nav-item .lbl{transition:opacity .18s var(--ease)}
+#app.rail .nav-item .lbl{opacity:0;width:0;overflow:hidden}
+#app.rail .nav-item{justify-content:center;gap:0;margin:2px auto;padding:11px 0;width:48px}
+.nav-badge{margin-left:auto;background:var(--accent-strong);color:#fff;font-size:.66rem;font-weight:700;
+  min-width:19px;height:19px;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:0 5px}
+#app.rail .nav-badge{display:none}
+/* rail tooltips */
+#app.rail .nav-item::after{content:attr(data-tip);position:absolute;left:calc(100% + 12px);top:50%;
+  transform:translateY(-50%);background:#111214;color:var(--text);font-size:.78rem;font-weight:600;
+  padding:6px 11px;border-radius:7px;white-space:nowrap;opacity:0;pointer-events:none;
+  box-shadow:var(--shadow);transition:opacity .12s;z-index:50}
+#app.rail .nav-item:hover::after{opacity:1}
 
-/* ── sidebar upload zone ── */
-.sidebar-upload { margin: auto 18px 24px; }
-.sidebar-upload .upload-label { font-size: .68rem; font-weight: 600; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--muted); padding: 0 6px; margin-bottom: 10px; display: block; }
-#upload-zone { border: 1.5px dashed var(--border); border-radius: var(--r); padding: 20px 16px;
-  text-align: center; cursor: pointer; transition: all .15s; color: var(--muted); user-select: none; }
-#upload-zone:hover, #upload-zone.drag-over { border-color: var(--accent); color: var(--accent);
-  background: rgba(79,124,247,.07); }
-#upload-zone .up-icon { font-size: 1.6rem; margin-bottom: 7px; }
-#upload-zone .up-text { font-size: .84rem; font-weight: 600; }
-#upload-zone .up-sub  { font-size: .72rem; color: var(--muted); margin-top: 3px; }
-#upload-msg { font-size: .74rem; margin-top: 9px; text-align: center; min-height: 1.2em; line-height: 1.4; }
+.side-foot{margin-top:auto;padding:14px}
+#upload-zone{border:1.5px dashed var(--border);border-radius:var(--r-sm);padding:16px 12px;text-align:center;
+  cursor:pointer;transition:all .15s;color:var(--muted);user-select:none}
+#upload-zone:hover,#upload-zone.drag-over{border-color:var(--accent);color:var(--accent);background:rgba(138,180,248,.08)}
+#upload-zone .up-ic{width:24px;height:24px;margin:0 auto 6px;display:block}
+#upload-zone .up-text{font-size:.8rem;font-weight:600}
+#upload-zone .up-sub{font-size:.7rem;color:var(--muted);margin-top:2px}
+#upload-msg{font-size:.72rem;margin-top:8px;text-align:center;min-height:1.1em;line-height:1.4}
+#app.rail .side-foot{display:none}
 
-/* ── page ── */
-.page { display: none; flex: 1; overflow-y: auto; padding: 38px 44px; }
-.page.active { display: block; }
-.page-header { margin-bottom: 32px; }
-.page-header h1 { font-size: 1.75rem; font-weight: 700; color: #fff; letter-spacing: -.02em; }
-.page-header p  { font-size: .92rem; color: var(--muted); margin-top: 6px; }
+/* ── main / pages ── */
+#main{grid-area:main;overflow-y:auto;position:relative}
+.page{display:none;padding:34px 44px 60px;max-width:1500px;margin:0 auto}
+.page.active{display:block;animation:pageIn .34s var(--ease)}
+@keyframes pageIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.page-header{margin-bottom:28px}
+.page-header h1{font-size:1.85rem;font-weight:700;letter-spacing:-.025em}
+.page-header p{font-size:.95rem;color:var(--muted);margin-top:5px}
 
-/* ── stat row ── */
-.stat-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
-  gap: 16px; margin-bottom: 32px; }
-.stat-box { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 24px 26px; }
-.stat-label { font-size: .72rem; color: var(--muted); font-weight: 600; text-transform: uppercase;
-  letter-spacing: .08em; margin-bottom: 12px; }
-.stat-value { font-size: 2.6rem; font-weight: 700; color: #fff; letter-spacing: -.03em; line-height: 1; }
-.stat-sub   { font-size: .76rem; color: var(--muted); margin-top: 8px; }
+/* ── stat cards ── */
+.stat-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;margin-bottom:28px}
+.stat-box{background:var(--card);border:1px solid var(--border-soft);border-radius:var(--r);padding:20px 22px;
+  transition:border-color .18s,background .18s}
+.stat-box:hover{border-color:var(--border);background:var(--card-2)}
+.stat-label{font-size:.7rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;
+  display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.stat-label svg{width:15px;height:15px;opacity:.7}
+.stat-value{font-size:2.2rem;font-weight:600;letter-spacing:-.02em;line-height:1}
+.stat-sub{font-size:.76rem;color:var(--muted);margin-top:9px}
 
 /* ── card ── */
-.card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r);
-  padding: 26px 30px; margin-bottom: 20px; }
-.card-title { font-size: .72rem; font-weight: 600; text-transform: uppercase;
-  letter-spacing: .08em; color: var(--muted); margin-bottom: 20px; }
+.card{background:var(--card);border:1px solid var(--border-soft);border-radius:var(--r);
+  padding:22px 26px;margin-bottom:18px}
+.card-title{font-size:.78rem;font-weight:600;letter-spacing:.01em;color:var(--text-2);
+  margin-bottom:18px;padding-bottom:13px;border-bottom:1px solid var(--border-soft);
+  display:flex;align-items:center;gap:9px;text-transform:none}
+.card-title svg{width:16px;height:16px;opacity:.6;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:1040px){.grid2{grid-template-columns:1fr}}
 
 /* ── table ── */
-.tbl { width: 100%; border-collapse: collapse; font-size: .9rem; }
-.tbl th { text-align: left; padding: 11px 18px; color: var(--muted); font-weight: 600;
-  font-size: .72rem; text-transform: uppercase; letter-spacing: .07em;
-  border-bottom: 1px solid var(--border); white-space: nowrap; }
-.tbl td { padding: 14px 18px; border-bottom: 1px solid rgba(38,51,71,.6); vertical-align: middle; }
-.tbl tr:last-child td { border-bottom: none; }
-.tbl tr:hover td { background: rgba(79,124,247,.05); }
-.tbl .r { text-align: right; font-variant-numeric: tabular-nums; }
-.good { color: var(--green); }
-.bad  { color: var(--red); }
-.warn { color: var(--yellow); }
+.tbl{width:100%;border-collapse:collapse;font-size:.9rem}
+.tbl th{text-align:left;padding:11px 16px;color:var(--muted);font-weight:600;font-size:.72rem;
+  text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);white-space:nowrap}
+.tbl td{padding:13px 16px;border-bottom:1px solid var(--border-soft);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tbody tr{transition:background .12s}
+.tbl tbody tr:hover td{background:rgba(138,180,248,.06)}
+.tbl .r{text-align:right;font-variant-numeric:tabular-nums}
+.good{color:var(--green)}.bad{color:var(--red)}.warn{color:var(--yellow)}.dim{color:var(--muted)}
 
-/* ── proto badge ── */
-.badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px;
-  border-radius: 5px; font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
-.badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
-.b-dash        { background: rgba(79,124,247,.15);  color: var(--c-dash); }
-.b-lldash-gpac { background: rgba(45,212,160,.15);  color: var(--c-lldash-gpac); }
-.b-hls         { background: rgba(224,120,64,.15);   color: var(--c-hls); }
-.b-webrtc      { background: rgba(168,124,247,.15);  color: var(--c-webrtc); }
-.b-moq2        { background: rgba(247,100,144,.15);  color: var(--c-moq2); }
+/* ── badges / pills ── */
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:7px;font-size:.74rem;
+  font-weight:600;letter-spacing:.02em;text-transform:uppercase}
+.badge::before{content:'';width:7px;height:7px;border-radius:50%;background:currentColor}
+.b-dash{background:rgba(138,180,248,.16);color:var(--c-dash)}
+.b-lldash-gpac{background:rgba(129,201,149,.16);color:var(--c-lldash-gpac)}
+.b-hls{background:rgba(252,173,112,.16);color:var(--c-hls)}
+.b-webrtc{background:rgba(197,138,249,.16);color:var(--c-webrtc)}
+.b-moq2{background:rgba(255,139,203,.16);color:var(--c-moq2)}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:20px;font-size:.74rem;font-weight:600}
+.pill::before{content:'';width:7px;height:7px;border-radius:50%;background:currentColor}
+.pill-running{background:rgba(138,180,248,.18);color:var(--accent)}
+.pill-done{background:rgba(129,201,149,.18);color:var(--green)}
+.pill-error{background:rgba(242,139,130,.18);color:var(--red)}
+.pill-stopped{background:rgba(154,160,166,.18);color:var(--muted)}
 
-/* ── pill ── */
-.pill { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: .72rem; font-weight: 600; }
-.pill-running { background: rgba(79,124,247,.2);  color: var(--accent); }
-.pill-done    { background: rgba(45,212,160,.2);   color: var(--green); }
-.pill-error   { background: rgba(245,95,95,.2);    color: var(--red); }
-.pill-stopped { background: rgba(80,96,112,.2);    color: var(--muted); }
+/* ── tabs (chips) ── */
+.chip-tabs{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:22px}
+.chip-tab{padding:8px 18px;border-radius:22px;font-size:.84rem;font-weight:600;border:1px solid var(--border);
+  background:var(--surface);color:var(--muted);cursor:pointer;transition:all .15s var(--ease)}
+.chip-tab:hover{color:var(--text);border-color:var(--accent)}
+.chip-tab.active{border-color:var(--accent);color:#0b0c0e;background:var(--accent)}
 
-/* ── chart ── */
-.chart-wrap { position: relative; }
-.chart-wrap canvas { display: block; }
+/* ── form ── */
+select,input[type=number],input[type=text]{background:var(--surface);color:var(--text);
+  border:1px solid var(--border);border-radius:var(--r-sm);padding:11px 14px;font:inherit;font-size:.92rem;
+  transition:border-color .15s,box-shadow .15s}
+select:focus,input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(138,180,248,.18)}
+label.fld{display:block}
+.fld-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600;margin-bottom:7px}
+button{cursor:pointer;font:inherit;border:none;border-radius:22px;padding:11px 22px;font-size:.9rem;
+  font-weight:600;transition:filter .15s,transform .1s,box-shadow .15s}
+button:active{transform:translateY(1px)}
+button:hover{filter:brightness(1.08)}
+button:disabled{opacity:.4;cursor:default;filter:none}
+.btn-primary{background:var(--accent-strong);color:#fff;box-shadow:0 2px 10px rgba(66,133,244,.35)}
+.btn-ghost{background:var(--surface);color:var(--text-2);border:1px solid var(--border);font-weight:600}
+.btn-ghost:hover{border-color:var(--accent);color:var(--text)}
+.btn-danger{background:var(--red-strong);color:#fff}
+.flex{display:flex;align-items:center}.gap8{gap:8px}.gap12{gap:12px}.gap16{gap:16px}.grow{flex:1}
+.mt8{margin-top:8px}.mt16{margin-top:16px}.mt20{margin-top:20px}.mb8{margin-bottom:8px}.mb12{margin-bottom:12px}
+.empty{text-align:center;padding:60px;color:var(--muted);font-size:.95rem}
+.chart-wrap{position:relative}
+/* ── trace grid ── */
+.trace-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:10px;margin-top:14px}
+.trace-item{display:flex;align-items:center;gap:11px;background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r-sm);padding:11px 14px;cursor:pointer;transition:border-color .12s,background .12s}
+.trace-item:hover{border-color:var(--accent)}
+.trace-item span{font-size:.85rem;user-select:none;flex:1;min-width:0;
+  white-space:normal;word-break:break-word;line-height:1.35}
+input[type=checkbox]{accent-color:var(--accent-strong);width:16px;height:16px;flex-shrink:0}
 
-/* ── compare toggles ── */
-.proto-toggles { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
-.ptoggle { display: flex; align-items: center; gap: 7px; padding: 7px 16px;
-  border-radius: 20px; border: 1px solid transparent; cursor: pointer;
-  font-size: .82rem; font-weight: 500; transition: opacity .15s; user-select: none; }
-.ptoggle.on  { border-color: currentColor; background: rgba(255,255,255,.05); }
-.ptoggle.off { opacity: .3; }
-
-/* ── trace list ── */
-.trace-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(210px,1fr)); gap: 9px; margin-top: 14px; }
-.trace-item { display: flex; align-items: center; gap: 10px; background: var(--surface);
-  border: 1px solid var(--border); border-radius: 8px; padding: 11px 15px; cursor: pointer; transition: border-color .12s; }
-.trace-item:hover { border-color: var(--accent); }
-.trace-item label { cursor: pointer; font-size: .86rem; color: var(--text); user-select: none; }
-input[type=checkbox] { accent-color: var(--accent); width: 15px; height: 15px; flex-shrink: 0; }
+/* ── preflight ── */
+.pf-banner{display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:var(--r);margin-bottom:18px;
+  border:1px solid var(--border)}
+.pf-banner.ok{background:rgba(129,201,149,.1);border-color:rgba(129,201,149,.4)}
+.pf-banner.bad{background:rgba(242,139,130,.1);border-color:rgba(242,139,130,.4)}
+.pf-banner .pf-ic{width:30px;height:30px;flex-shrink:0}
+.pf-banner b{font-size:1rem}
+.pf-banner p{font-size:.82rem;color:var(--muted)}
+.pf-list{display:grid;gap:9px}
+.pf-check{display:flex;align-items:flex-start;gap:13px;padding:13px 16px;background:var(--surface);
+  border:1px solid var(--border-soft);border-radius:var(--r-sm)}
+.pf-status{width:20px;height:20px;border-radius:50%;flex-shrink:0;margin-top:1px;display:flex;
+  align-items:center;justify-content:center}
+.pf-status.ok{background:rgba(129,201,149,.2);color:var(--green)}
+.pf-status.warn{background:rgba(253,214,99,.2);color:var(--yellow)}
+.pf-status.error{background:rgba(242,139,130,.2);color:var(--red)}
+.pf-status svg{width:13px;height:13px}
+.pf-check .pf-body b{display:block;font-size:.86rem;font-weight:600}
+.pf-check .pf-body span{font-size:.79rem;color:var(--muted)}
 
 /* ── log ── */
-.log-box { background: #05080e; border: 1px solid var(--border); border-radius: 8px;
-  padding: 16px 18px; font-family: 'SF Mono','Fira Mono',monospace; font-size: .78rem;
-  color: #7a8fa8; height: 380px; overflow-y: auto; white-space: pre-wrap; word-break: break-all; }
-.log-box .le { color: var(--red); }
-.log-box .lw { color: var(--yellow); }
-.log-box .lg { color: var(--green); }
-.log-box .lh { color: var(--accent); font-weight: 600; }
+.log-box{background:#161719;border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 18px;
+  font-family:'JetBrains Mono',monospace;font-size:.78rem;color:#9aa6b6;height:380px;overflow-y:auto;
+  white-space:pre-wrap;word-break:break-word}
+.log-box .le{color:var(--red)}.log-box .lw{color:var(--yellow)}.log-box .lg{color:var(--green)}
+.log-box .lh{color:var(--accent);font-weight:600}
+.run-split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:1060px){.run-split{grid-template-columns:1fr}}
+.run-metrics{display:flex;flex-direction:column;gap:12px}
+.run-mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.run-mini-stat{background:var(--bg);border:1px solid var(--border-soft);border-radius:var(--r-sm);padding:14px;text-align:center}
+.run-mini-stat .val{font-size:1.3rem;font-weight:700;line-height:1.2}
+.run-mini-stat .lbl{font-size:.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:5px}
+.run-chart-box{background:var(--bg);border:1px solid var(--border-soft);border-radius:var(--r-sm);padding:14px 16px}
+.run-chart-box .rct{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.run-metrics-empty{display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);
+  font-size:.85rem;background:var(--bg);border:1px solid var(--border-soft);border-radius:var(--r-sm);padding:28px;text-align:center}
 
-/* ── run split layout ── */
-.run-split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-@media (max-width: 1060px) { .run-split { grid-template-columns: 1fr; } }
-.run-metrics { display: flex; flex-direction: column; gap: 12px; }
-.run-mini-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
-.run-mini-stat { background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
-  padding: 14px 16px; text-align: center; }
-.run-mini-stat .val { font-size: 1.25rem; font-weight: 700; color: var(--text); line-height: 1.2; }
-.run-mini-stat .lbl { font-size: .68rem; color: var(--muted); text-transform: uppercase;
-  letter-spacing: .06em; margin-top: 5px; }
-.run-chart-box { background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
-  padding: 14px 16px; flex: 1; min-height: 0; }
-.run-chart-box .rct { font-size: .7rem; color: var(--muted); text-transform: uppercase;
-  letter-spacing: .06em; margin-bottom: 8px; }
-.run-metrics-empty { display: flex; align-items: center; justify-content: center;
-  height: 100%; color: var(--muted); font-size: .84rem; background: var(--bg);
-  border: 1px solid var(--border); border-radius: 8px; padding: 28px; text-align: center; }
+/* ── COMPARE: drag & drop ── */
+.cmp-grid{display:grid;grid-template-columns:300px 1fr;gap:22px;align-items:start}
+@media(max-width:1100px){.cmp-grid{grid-template-columns:1fr}}
+.cmp-tray{position:sticky;top:18px}
+.proto-source{display:flex;align-items:center;gap:11px;padding:13px 15px;margin-bottom:10px;border-radius:var(--r-sm);
+  background:var(--surface);border:1px solid var(--border);cursor:grab;user-select:none;
+  transition:transform .12s var(--ease),border-color .12s,opacity .12s,box-shadow .15s}
+.proto-source:hover{border-color:var(--proto);transform:translateX(3px);box-shadow:var(--shadow)}
+.proto-source:active{cursor:grabbing}
+.proto-source.in-arena{opacity:.4}
+.proto-source.dragging{opacity:.5;transform:scale(.97)}
+.proto-dot{width:13px;height:13px;border-radius:50%;flex-shrink:0;background:var(--proto);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--proto) 22%,transparent)}
+.proto-source .ps-name{font-weight:600;font-size:.9rem}
+.proto-source .ps-meta{margin-left:auto;font-size:.72rem;color:var(--muted)}
+.proto-source .drag-grip{color:var(--faint);display:flex}
+.proto-source .drag-grip svg{width:16px;height:16px}
+
+.cmp-arena{min-height:120px;border:2px dashed var(--border);border-radius:var(--r);padding:16px;
+  display:flex;flex-wrap:wrap;gap:12px;align-content:flex-start;transition:border-color .18s,background .18s}
+.cmp-arena.drop-hot{border-color:var(--accent);background:rgba(138,180,248,.07)}
+.cmp-arena-empty{margin:auto;text-align:center;color:var(--muted);font-size:.9rem;padding:24px}
+.cmp-arena-empty svg{width:34px;height:34px;display:block;margin:0 auto 10px;opacity:.6}
+.arena-chip{display:flex;align-items:center;gap:10px;padding:9px 13px 9px 14px;border-radius:24px;
+  background:color-mix(in srgb,var(--proto) 16%,var(--card));border:1px solid var(--proto);
+  color:var(--proto);font-weight:600;font-size:.86rem;cursor:grab;animation:chipIn .25s var(--ease)}
+@keyframes chipIn{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:none}}
+.arena-chip .chip-x{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.25);color:inherit;cursor:pointer;transition:background .12s}
+.arena-chip .chip-x:hover{background:rgba(0,0,0,.5)}
+.arena-chip .chip-x svg{width:12px;height:12px}
+.arena-chip.dragging{opacity:.5}
+
+/* ── bitrate ladder ── */
+.ladder-cols{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.ladder-card{background:var(--card-2);border:1px solid color-mix(in srgb,var(--proto) 26%,var(--border-soft));
+  border-radius:var(--r);padding:16px 18px}
+.ladder-head{display:flex;align-items:center;gap:10px;padding-bottom:12px;margin-bottom:12px;
+  border-bottom:1px solid var(--border-soft)}
+.ladder-head .proto-dot{box-shadow:0 0 0 4px color-mix(in srgb,var(--proto) 16%,transparent)}
+.ladder-head .lh-name{font-weight:600;font-size:.92rem;color:var(--proto);letter-spacing:.01em}
+.ladder-sub{font-size:.74rem;color:var(--muted);margin-bottom:16px}
+.rung{display:grid;grid-template-columns:58px 1fr 52px;align-items:center;gap:10px;margin-bottom:8px}
+.rung-kbps{font-size:.78rem;font-variant-numeric:tabular-nums;color:var(--text-2);text-align:right;font-weight:600}
+.rung-track{height:22px;border-radius:6px;background:var(--surface);overflow:hidden;position:relative}
+.rung-fill{height:100%;border-radius:6px;background:var(--proto);
+  transition:width .5s var(--ease);min-width:2px}
+.rung-pct{font-size:.74rem;color:var(--muted);font-variant-numeric:tabular-nums;text-align:right}
+.ladder-foot{margin-top:14px;padding-top:13px;border-top:1px solid var(--border-soft);
+  display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.lf-stat .v{font-size:1.05rem;font-weight:700}
+.lf-stat .k{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+
+.trace-cmp-meta{font-size:.8rem;color:var(--muted)}
+.tc-table th.proto-col{text-align:center;min-width:92px}
+.tc-table td.proto-col{text-align:center;font-variant-numeric:tabular-nums}
+.tc-table td.metric-name{color:var(--muted);font-size:.84rem;white-space:nowrap}
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:3px;gap:3px}
+.seg button{background:transparent;color:var(--muted);padding:7px 16px;border-radius:18px;font-size:.82rem;box-shadow:none}
+.seg button.on{background:var(--accent-strong);color:#fff}
+.seg button:hover{filter:none;color:var(--text)}
+.seg button.on:hover{color:#fff}
 
 /* ── modal ── */
-#overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.72);
-  z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(3px); }
-#overlay.open { display: flex; }
-#modal { background: var(--card); border: 1px solid var(--border); border-radius: 14px;
-  width: min(880px, 95vw); max-height: 88vh; overflow-y: auto; padding: 32px 36px; position: relative; }
-#modal-close { position: absolute; top: 20px; right: 20px; background: var(--surface);
-  color: var(--muted); border: 1px solid var(--border); border-radius: 8px;
-  padding: 6px 14px; cursor: pointer; font-size: .84rem; }
-
-/* ── form elements ── */
-select, input[type=number], input[type=text] {
-  background: var(--surface); color: var(--text); border: 1px solid var(--border);
-  border-radius: 8px; padding: 10px 14px; font: inherit; font-size: .9rem; }
-select:focus, input:focus { outline: none; border-color: var(--accent); }
-button { cursor: pointer; font: inherit; border: none; border-radius: 8px;
-  padding: 10px 22px; font-size: .9rem; font-weight: 600; transition: opacity .12s; }
-button:hover { opacity: .85; }
-button:disabled { opacity: .35; cursor: default; }
-.btn-primary { background: var(--accent); color: #fff; }
-.btn-ghost   { background: var(--surface); color: var(--text); border: 1px solid var(--border); font-weight: 500; }
-.btn-danger  { background: var(--red); color: #fff; }
-
-/* ── misc ── */
-.flex { display: flex; align-items: center; }
-.gap8  { gap: 8px; }
-.gap12 { gap: 12px; }
-.gap16 { gap: 16px; }
-.grow  { flex: 1; }
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.mt16  { margin-top: 16px; }
-.mt20  { margin-top: 20px; }
-.mb8   { margin-bottom: 8px; }
-.mb12  { margin-bottom: 12px; }
-.empty { text-align: center; padding: 64px; color: var(--muted); font-size: .92rem; }
-.dim   { color: var(--muted); }
-
-/* ── network tabs ── */
-.net-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
-.net-tab { padding: 7px 18px; border-radius: 20px; font-size: .82rem; font-weight: 500;
-  border: 1px solid var(--border); background: var(--surface); color: var(--muted);
-  cursor: pointer; transition: all .12s; }
-.net-tab.active { border-color: var(--accent); color: var(--accent); background: rgba(79,124,247,.1); }
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;align-items:center;
+  justify-content:center;backdrop-filter:blur(4px)}
+#overlay.open{display:flex;animation:fadeIn .2s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+#modal{background:var(--card);border:1px solid var(--border);border-radius:18px;width:min(900px,95vw);
+  max-height:88vh;overflow-y:auto;padding:30px 34px;position:relative;box-shadow:var(--shadow-lg);
+  animation:modalIn .26s var(--ease)}
+@keyframes modalIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+#modal-close{position:absolute;top:18px;right:18px;width:36px;height:36px;border-radius:50%;background:var(--surface);
+  color:var(--muted);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+#modal-close svg{width:16px;height:16px}
 
 /* ── trace generator ── */
-.model-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
-.model-tab { padding: 7px 16px; border-radius: 20px; font-size: .82rem; font-weight: 500;
-  border: 1px solid var(--border); background: var(--surface); color: var(--muted);
-  cursor: pointer; transition: all .12s; }
-.model-tab.active { border-color: var(--accent); color: var(--accent); background: rgba(79,124,247,.1); }
-.model-ref { font-size: .74rem; color: var(--muted); font-style: italic; margin-bottom: 18px;
-  padding: 10px 14px; border-left: 2px solid var(--border); line-height: 1.55; }
-.param-grid { display: grid; grid-template-columns: 130px 1fr 76px; gap: 9px 14px; align-items: center; }
-.param-grid label { font-size: .86rem; color: var(--muted); }
-.param-grid .unit  { font-size: .78rem; color: var(--muted); }
-.param-grid input, .param-grid select { width: 100%; }
-.synth-item { display: flex; align-items: center; gap: 14px; padding: 14px 18px;
-  border: 1px solid var(--border); border-radius: 9px; background: var(--surface);
-  font-size: .86rem; margin-bottom: 9px; }
-.synth-item .si-name { flex: 1; font-family: monospace; font-size: .82rem; color: var(--text); }
-.synth-stat { color: var(--muted); font-size: .78rem; white-space: nowrap; }
+.model-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.model-tab{padding:8px 15px;border-radius:20px;font-size:.82rem;font-weight:600;border:1px solid var(--border);
+  background:var(--surface);color:var(--muted);cursor:pointer;transition:all .14s}
+.model-tab:hover{color:var(--text);border-color:var(--accent)}
+.model-tab.active{border-color:var(--accent);color:#0b0c0e;background:var(--accent)}
+.model-ref{font-size:.76rem;color:var(--muted);font-style:italic;margin-bottom:18px;padding:11px 15px;
+  border-left:3px solid var(--accent);background:var(--surface);border-radius:0 8px 8px 0;line-height:1.55}
+.param-grid{display:grid;grid-template-columns:130px 1fr 84px;gap:11px 14px;align-items:center}
+.param-grid label{font-size:.86rem;color:var(--text-2)}
+.param-grid .unit{font-size:.78rem;color:var(--muted)}
+.param-grid input,.param-grid select{width:100%}
+.synth-item{display:flex;align-items:center;gap:14px;padding:13px 17px;border:1px solid var(--border-soft);
+  border-radius:var(--r-sm);background:var(--surface);font-size:.86rem;margin-bottom:9px}
+.synth-item .si-name{flex:1;font-family:'JetBrains Mono',monospace;font-size:.82rem}
+.cond-card-grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
 </style>
 </head>
 <body>
 <div id="app">
 
+<!-- brand -->
+<div id="brand">
+  <div class="brand-logo">
+    <svg viewBox="0 0 28 28" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 4.5 L14 21" stroke="currentColor" stroke-width="1.6" opacity=".55"/>
+      <path d="M14 5 C19.5 8 21.5 14 20 20 L14 20 Z" fill="currentColor" opacity=".9"/>
+      <path d="M14 8 C10.5 10.5 9 15 9.5 20 L14 20 Z" fill="currentColor" opacity=".4"/>
+      <path d="M5.5 22.5 L22.5 22.5" stroke="currentColor" stroke-width="1.6"/>
+    </svg>
+  </div>
+  <div class="brand-text"><b>NetSail</b><span>Benchmark Console</span></div>
+</div>
+
+<!-- topbar -->
+<header id="topbar">
+  <div class="menu-btn" id="menu-btn" title="Toggle navigation">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </div>
+  <div>
+    <div class="topbar-title" id="tb-title">Overview</div>
+    <div class="topbar-sub" id="tb-sub">Aggregate performance across all benchmarked runs</div>
+  </div>
+  <div class="topbar-spacer"></div>
+  <div class="env-chip"><span class="env-dot" id="env-dot"></span><span id="env-text">Servers ready</span></div>
+  <div class="icon-btn" id="refresh-btn" title="Refresh data">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36M21 3v6h-6"/></svg>
+  </div>
+</header>
+
 <!-- sidebar -->
 <nav id="sidebar">
-  <div class="logo">Benchmark Lab</div>
-  <div class="nav-group">
-    <div class="nav-label">Dashboard</div>
-    <div class="nav-item active" data-page="overview"><span class="icon">◈</span> Overview</div>
-  </div>
-  <div class="nav-group">
-    <div class="nav-label">Benchmark</div>
-    <div class="nav-item" data-page="run"><span class="icon">▷</span> Run</div>
-    <div class="nav-item" data-page="progress"><span class="icon">≡</span> Progress</div>
-    <div class="nav-item" data-page="traces"><span class="icon">⌇</span> Traces</div>
-  </div>
-  <div class="nav-group">
-    <div class="nav-label">Analysis</div>
-    <div class="nav-item" data-page="compare"><span class="icon">⊞</span> Compare</div>
-    <div class="nav-item" data-page="results"><span class="icon">◫</span> Results</div>
-    <div class="nav-item" data-page="conditions"><span class="icon">⌁</span> Conditions</div>
+  <div class="nav-label">Dashboard</div>
+  <div class="nav-item active" data-page="overview" data-tip="Overview">
+    <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg></span>
+    <span class="lbl">Overview</span>
   </div>
 
-  <!-- upload zone -->
-  <div class="sidebar-upload">
-    <span class="upload-label">Upload Trace</span>
-    <div id="upload-zone"
-         onclick="document.getElementById('upload-input').click()"
-         ondragover="uploadDragOver(event)"
-         ondragleave="uploadDragLeave(event)"
-         ondrop="uploadDrop(event)">
-      <div class="up-icon">↑</div>
+  <div class="nav-label">Benchmark</div>
+  <div class="nav-item" data-page="run" data-tip="Run">
+    <span class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+    <span class="lbl">Run</span>
+  </div>
+  <div class="nav-item" data-page="progress" data-tip="Progress">
+    <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
+    <span class="lbl">Progress</span><span class="nav-badge" id="nav-active" style="display:none">0</span>
+  </div>
+  <div class="nav-item" data-page="traces" data-tip="Trace Lab">
+    <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg></span>
+    <span class="lbl">Trace Lab</span>
+  </div>
+
+  <div class="nav-label">Analysis</div>
+  <div class="nav-item" data-page="compare" data-tip="Compare">
+    <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v18M15 3v18M3 9h18M3 15h18" opacity=".0"/><rect x="3" y="3" width="8" height="18" rx="1"/><rect x="13" y="7" width="8" height="14" rx="1"/></svg></span>
+    <span class="lbl">Compare</span>
+  </div>
+  <div class="nav-item" data-page="results" data-tip="Results">
+    <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v18H3z"/><path d="M3 9h18M9 9v12"/></svg></span>
+    <span class="lbl">Results</span>
+  </div>
+  <div class="nav-item" data-page="conditions" data-tip="Network">
+    <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12z" opacity="0"/><path d="M5 12.5l3-3 4 4 7-7"/><path d="M16 6.5h3v3"/></svg></span>
+    <span class="lbl">Network</span>
+  </div>
+
+  <div class="side-foot">
+    <div class="fld-label">Upload Trace</div>
+    <div id="upload-zone" onclick="document.getElementById('upload-input').click()"
+         ondragover="uploadDragOver(event)" ondragleave="uploadDragLeave(event)" ondrop="uploadDrop(event)">
+      <svg class="up-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M6 10l6-6 6 6M4 20h16"/></svg>
       <div class="up-text">Drop CSV here</div>
       <div class="up-sub">or click to browse</div>
     </div>
@@ -271,80 +437,55 @@ button:disabled { opacity: .35; cursor: default; }
 
 <!-- main -->
 <div id="main">
-
 <!-- ── Overview ── -->
 <div class="page active" id="page-overview">
-  <div class="page-header">
-    <h1>Overview</h1>
-    <p>Aggregate performance across all benchmarked runs</p>
+  <div class="page-header"><h1>Overview</h1><p>Aggregate performance across all benchmarked runs</p></div>
+  <div class="chip-tabs" id="ov-net-tabs"></div>
+  <div class="stat-row">
+    <div class="stat-box"><div class="stat-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>Total Runs</div><div class="stat-value" id="ov-total">—</div><div class="stat-sub" id="ov-total-sub"></div></div>
+    <div class="stat-box"><div class="stat-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>Protocols</div><div class="stat-value" id="ov-protos">—</div><div class="stat-sub">comparison targets</div></div>
+    <div class="stat-box"><div class="stat-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg>Traces</div><div class="stat-value" id="ov-traces">—</div><div class="stat-sub">network conditions</div></div>
+    <div class="stat-box"><div class="stat-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Active Runs</div><div class="stat-value" id="ov-active">0</div><div class="stat-sub">in progress</div></div>
   </div>
-  <div class="net-tabs" id="ov-net-tabs"></div>
-  <div class="stat-row" id="ov-stats">
-    <div class="stat-box"><div class="stat-label">Total Runs</div><div class="stat-value" id="ov-total">—</div></div>
-    <div class="stat-box"><div class="stat-label">Protocols</div><div class="stat-value" id="ov-protos">—</div></div>
-    <div class="stat-box"><div class="stat-label">Traces</div><div class="stat-value" id="ov-traces">—</div></div>
-    <div class="stat-box"><div class="stat-label">Active Runs</div><div class="stat-value" id="ov-active">0</div></div>
-  </div>
-
   <div class="card">
-    <div class="card-title">Protocol Summary — avg across all runs</div>
+    <div class="card-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><rect x="7" y="10" width="3" height="8"/><rect x="13" y="6" width="3" height="12"/></svg>Protocol Summary — average across all runs</div>
     <table class="tbl" id="ov-table">
-      <thead><tr>
-        <th>Protocol</th><th class="r">Runs</th>
-        <th class="r">Avg Bitrate</th><th class="r">Rebuffers</th>
-        <th class="r">Stall Time</th><th class="r">Startup</th>
-        <th class="r">Buffer</th><th class="r">Throughput</th>
-      </tr></thead>
+      <thead><tr><th>Protocol</th><th class="r">Runs</th><th class="r">Avg Bitrate</th><th class="r">Rebuffers</th>
+        <th class="r">Stall Time</th><th class="r">Startup</th><th class="r">Buffer</th><th class="r">Throughput</th></tr></thead>
       <tbody id="ov-body"></tbody>
     </table>
   </div>
-
   <div class="grid2">
-    <div class="card">
-      <div class="card-title">Avg Bitrate by Protocol</div>
-      <div class="chart-wrap" style="height:200px"><canvas id="ov-chart-bitrate"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Startup Time by Protocol</div>
-      <div class="chart-wrap" style="height:200px"><canvas id="ov-chart-startup"></canvas></div>
-    </div>
+    <div class="card"><div class="card-title">Avg Bitrate by Protocol</div><div class="chart-wrap" style="height:220px"><canvas id="ov-chart-bitrate"></canvas></div></div>
+    <div class="card"><div class="card-title">Startup Time by Protocol</div><div class="chart-wrap" style="height:220px"><canvas id="ov-chart-startup"></canvas></div></div>
   </div>
 </div>
 
 <!-- ── Run ── -->
 <div class="page" id="page-run">
-  <div class="page-header"><h1>New Run</h1><p>Configure and launch a benchmark</p></div>
+  <div class="page-header"><h1>New Run</h1><p>Configure, validate, and launch a benchmark</p></div>
   <div class="card">
     <div class="card-title">Configuration</div>
-    <div class="flex gap16" style="flex-wrap:wrap">
-      <div>
-        <div class="dim mb8" style="font-size:.72rem;text-transform:uppercase;letter-spacing:.07em">Protocol</div>
-        <select id="run-proto">
+    <div class="flex gap16" style="flex-wrap:wrap;align-items:flex-end">
+      <label class="fld"><div class="fld-label">Protocol</div>
+        <select id="run-proto" onchange="refreshPreflight()">
           <option value="lldash-gpac">LL-DASH (GPAC)</option>
           <option value="dash">DASH</option>
           <option value="hls">HLS</option>
           <option value="webrtc">WebRTC</option>
           <option value="moq2">MOQ2</option>
-        </select>
-      </div>
-      <div>
-        <div class="dim mb8" style="font-size:.72rem;text-transform:uppercase;letter-spacing:.07em">Duration (s)</div>
-        <input type="number" id="run-dur" value="120" min="10" max="600" style="width:110px">
-      </div>
-      <div>
-        <div class="dim mb8" style="font-size:.72rem;text-transform:uppercase;letter-spacing:.07em">Results Folder</div>
-        <input type="text" id="run-dir" placeholder="auto-generated" style="width:220px">
-      </div>
+        </select></label>
+      <label class="fld"><div class="fld-label">Duration (s)</div>
+        <input type="number" id="run-dur" value="120" min="10" max="600" style="width:120px"></label>
+      <label class="fld"><div class="fld-label">Results Folder</div>
+        <input type="text" id="run-dir" placeholder="auto-generated" style="width:240px"></label>
     </div>
   </div>
-
   <div class="card">
-    <div class="card-title">Traces &nbsp;<span class="dim" style="font-weight:400;text-transform:none;letter-spacing:0">— leave all unchecked to run entire set</span></div>
+    <div class="card-title">Traces <span class="dim" style="font-weight:500;text-transform:none;letter-spacing:0;margin-left:6px">— leave all unchecked to run the entire set</span></div>
     <div class="flex gap16 mb12" style="flex-wrap:wrap;align-items:flex-end">
-      <div>
-        <div class="dim mb8" style="font-size:.72rem;text-transform:uppercase;letter-spacing:.07em">Trace Set</div>
-        <select id="run-trace-set" onchange="renderTraceList()"></select>
-      </div>
+      <label class="fld"><div class="fld-label">Trace Set</div>
+        <select id="run-trace-set" onchange="renderTraceList();refreshPreflight()" style="min-width:240px"></select></label>
       <div class="flex gap8">
         <button class="btn-ghost" onclick="selTraces(true)">Select All</button>
         <button class="btn-ghost" onclick="selTraces(false)">Clear</button>
@@ -352,1155 +493,1015 @@ button:disabled { opacity: .35; cursor: default; }
     </div>
     <div class="trace-grid" id="trace-list"></div>
   </div>
-
-  <div class="flex gap12 mt20">
-    <button class="btn-primary" id="run-btn" onclick="startRun()" style="padding:12px 32px;font-size:1rem">▷ Start Run</button>
-    <span class="dim" id="run-msg" style="font-size:.86rem"></span>
+  <div class="card">
+    <div class="card-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>Pre-flight Check</div>
+    <div id="pf-banner" class="pf-banner"><div class="pf-ic"></div><div><b id="pf-title">Checking…</b><p id="pf-desc"></p></div></div>
+    <div class="pf-list" id="pf-list"></div>
+  </div>
+  <div class="flex gap16 mt20">
+    <button class="btn-primary" id="run-btn" onclick="startRun()" style="padding:13px 34px;font-size:1rem">
+      <span style="display:inline-flex;align-items:center;gap:9px"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Start Run</span></button>
+    <span class="dim" id="run-msg" style="font-size:.88rem"></span>
   </div>
 </div>
 
 <!-- ── Progress ── -->
 <div class="page" id="page-progress">
-  <div class="page-header"><h1>Progress</h1><p>Terminal output and live metrics side-by-side</p></div>
-  <div class="empty" id="no-runs">No runs yet.</div>
+  <div class="page-header"><h1>Progress</h1><p>Live terminal output and metrics, side by side</p></div>
+  <div class="empty" id="no-runs">Nothing's running.</div>
   <div id="runs-list"></div>
 </div>
 
-<!-- ── Trace Generator ── -->
+<!-- ── Trace Lab ── -->
 <div class="page" id="page-traces">
-  <div class="page-header"><h1>Trace Generator</h1><p>Synthesize bandwidth traces from validated models — then run them like any real trace</p></div>
-
+  <div class="page-header"><h1>Trace Lab</h1><p>Synthesize bandwidth traces from validated models — then run them like any real trace</p></div>
   <div class="grid2">
-    <!-- config card -->
     <div class="card">
       <div class="card-title">Model</div>
       <div class="model-tabs" id="model-tabs"></div>
       <div class="model-ref" id="model-ref"></div>
       <div class="param-grid" id="model-params"></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
-        <div>
-          <div class="dim mb8" style="font-size:.72rem;text-transform:uppercase;letter-spacing:.07em">Duration (s)</div>
-          <input type="number" id="tgen-dur" value="120" min="10" max="600" oninput="refreshPreview()" style="width:100%">
-        </div>
-        <div>
-          <div class="dim mb8" style="font-size:.72rem;text-transform:uppercase;letter-spacing:.07em">Trace Name</div>
-          <input type="text" id="tgen-name" placeholder="auto-generated" style="width:100%">
-        </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px">
+        <label class="fld"><div class="fld-label">Duration (s)</div><input type="number" id="tgen-dur" value="120" min="10" max="600" oninput="refreshPreview()" style="width:100%"></label>
+        <label class="fld"><div class="fld-label">Trace Name</div><input type="text" id="tgen-name" placeholder="auto-generated" style="width:100%"></label>
       </div>
-      <div class="flex gap8 mt16">
-        <button class="btn-primary grow" onclick="generateTrace()">⊕ Generate &amp; Save</button>
-      </div>
-      <div id="tgen-msg" style="margin-top:8px;font-size:.78rem"></div>
+      <button class="btn-primary grow mt16" style="width:100%" onclick="generateTrace()">Generate &amp; Save</button>
+      <div id="tgen-msg" style="margin-top:10px;font-size:.8rem"></div>
     </div>
-
-    <!-- preview card -->
     <div class="card" style="display:flex;flex-direction:column">
-      <div class="flex" style="margin-bottom:10px">
-        <div class="card-title grow">Preview</div>
-        <span id="preview-stats" class="dim" style="font-size:.72rem"></span>
-      </div>
-      <div style="position:relative;flex:1;min-height:180px"><canvas id="preview-chart"></canvas></div>
+      <div class="flex" style="margin-bottom:12px"><div class="card-title grow" style="margin-bottom:0">Preview</div><span id="preview-stats" class="dim" style="font-size:.74rem"></span></div>
+      <div style="position:relative;flex:1;min-height:220px"><canvas id="preview-chart"></canvas></div>
     </div>
   </div>
-
-  <!-- saved synthetic traces -->
-  <div class="card mt16">
-    <div class="card-title">Saved Synthetic Traces</div>
-    <div id="synth-list"><div class="dim" style="font-size:.8rem;padding:12px 0">No synthetic traces yet.</div></div>
+  <div class="card mt16"><div class="card-title">Saved Synthetic Traces</div>
+    <div id="synth-list"><div class="dim" style="font-size:.82rem;padding:12px 0">No synthetic traces yet.</div></div>
   </div>
 </div>
-
 <!-- ── Compare ── -->
 <div class="page" id="page-compare">
-  <div class="page-header"><h1>Compare</h1><p>Protocol performance across all traces</p></div>
-  <div class="net-tabs" id="cmp-net-tabs"></div>
-  <div class="proto-toggles" id="proto-toggles"></div>
+  <div class="page-header"><h1>Compare</h1><p>Drag protocols into the arena to build an interactive, side-by-side comparison</p></div>
 
-  <div class="grid2">
-    <div class="card">
-      <div class="card-title">Avg Bitrate (kbps)</div>
-      <div class="chart-wrap" style="height:220px"><canvas id="c-bitrate"></canvas></div>
+  <div class="flex gap16 mb12" style="flex-wrap:wrap">
+    <div class="seg" id="cmp-mode-seg">
+      <button class="on" data-mode="trace" onclick="setCmpMode('trace')">By Trace</button>
+      <button data-mode="aggregate" onclick="setCmpMode('aggregate')">Aggregate</button>
     </div>
-    <div class="card">
-      <div class="card-title">Total Rebuffer Time (ms)</div>
-      <div class="chart-wrap" style="height:220px"><canvas id="c-rebuf-ms"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Startup Time (ms)</div>
-      <div class="chart-wrap" style="height:220px"><canvas id="c-startup"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Avg Buffer Level (s)</div>
-      <div class="chart-wrap" style="height:220px"><canvas id="c-buffer"></canvas></div>
-    </div>
+    <div class="grow"></div>
+    <div class="chip-tabs" id="cmp-net-tabs" style="margin-bottom:0"></div>
   </div>
 
-  <div class="card mt16">
-    <div class="card-title">Per-Trace — Rebuffer Time (ms)</div>
-    <div class="chart-wrap" style="height:260px"><canvas id="c-per-trace"></canvas></div>
+  <div class="cmp-grid">
+    <!-- tray -->
+    <div class="cmp-tray">
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20"/></svg>Protocols</div>
+        <p class="dim" style="font-size:.78rem;margin:-8px 0 14px">Drag onto the arena, or click to toggle</p>
+        <div id="proto-source-list"></div>
+      </div>
+      <div class="card" id="cmp-trace-card">
+        <div class="card-title">Network Trace</div>
+        <select id="tc-trace-select" style="width:100%" onchange="onTraceCompareSelect()"></select>
+        <div class="flex gap8 mt16">
+          <button class="btn-ghost grow" onclick="stepTraceCompare(-1)">← Prev</button>
+          <button class="btn-ghost grow" onclick="stepTraceCompare(1)">Next →</button>
+        </div>
+        <div class="trace-cmp-meta mt16" id="tc-trace-meta"></div>
+      </div>
+    </div>
+
+    <!-- arena + viz -->
+    <div>
+      <div class="card">
+        <div class="card-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Comparison Arena</div>
+        <div class="cmp-arena" id="cmp-arena"></div>
+      </div>
+
+      <div id="cmp-content">
+        <div class="card" id="ladder-card">
+          <div class="card-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3v18M18 3v18M6 7h12M6 12h12M6 17h12"/></svg>Bitrate Ladders — time spent at each rung</div>
+          <div class="ladder-cols" id="ladder-cols"></div>
+          <div class="empty" id="ladder-empty" style="display:none">Add protocols (with sample data) to see their encoding ladders.</div>
+        </div>
+
+        <div class="card" id="series-card">
+          <div class="card-title">Bitrate Over Time <span class="dim" style="font-weight:500;text-transform:none;letter-spacing:0;margin-left:6px">— selected rendition vs. trace bandwidth</span></div>
+          <div class="chart-wrap" style="height:300px"><canvas id="c-series"></canvas></div>
+        </div>
+
+        <div class="grid2">
+          <div class="card"><div class="card-title">Avg Bitrate (kbps)</div><div class="chart-wrap" style="height:230px"><canvas id="c-bitrate"></canvas></div></div>
+          <div class="card"><div class="card-title">Total Rebuffer Time (ms)</div><div class="chart-wrap" style="height:230px"><canvas id="c-rebuf-ms"></canvas></div></div>
+          <div class="card"><div class="card-title">Startup Time (ms)</div><div class="chart-wrap" style="height:230px"><canvas id="c-startup"></canvas></div></div>
+          <div class="card"><div class="card-title">Avg Buffer Level (s)</div><div class="chart-wrap" style="height:230px"><canvas id="c-buffer"></canvas></div></div>
+        </div>
+
+        <div class="card" id="radar-card">
+          <div class="card-title">QoE Profile <span class="dim" style="font-weight:500;text-transform:none;letter-spacing:0;margin-left:6px">— normalized, higher is better</span></div>
+          <div class="chart-wrap" style="height:340px"><canvas id="c-radar"></canvas></div>
+        </div>
+
+        <div class="card" id="tc-table-card">
+          <div class="card-title">Metric Breakdown</div>
+          <table class="tbl tc-table" id="tc-table"><thead><tr id="tc-table-head"></tr></thead><tbody id="tc-table-body"></tbody></table>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- ── Results ── -->
 <div class="page" id="page-results">
-  <div class="page-header">
-    <div class="flex gap12">
-      <div class="grow"><h1>Results</h1><p>All saved benchmark runs</p></div>
-      <select id="rf-net" onchange="renderResults()">
-        <option value="">All Networks</option>
-        <option value="5g-ireland">5G/4G Ireland</option>
-        <option value="starlink-2024">Starlink 2024</option>
-        <option value="fcc">FCC</option>
-      </select>
-      <select id="rf-proto" onchange="renderResults()">
-        <option value="">All Protocols</option>
-        <option value="dash">DASH</option>
-        <option value="lldash-gpac">LL-DASH-GPAC</option>
-        <option value="hls">HLS</option>
-        <option value="webrtc">WebRTC</option>
-        <option value="moq2">MOQ2</option>
-      </select>
-      <input type="text" id="rf-unit" placeholder="Filter unit…" oninput="renderResults()" style="width:120px">
-    </div>
-  </div>
+  <div class="page-header"><div class="flex gap12" style="flex-wrap:wrap">
+    <div class="grow"><h1>Results</h1><p>All saved benchmark runs — click a row for full detail</p></div>
+    <select id="rf-net" onchange="renderResults()">
+      <option value="">All Networks</option><option value="5g-ireland">5G/4G Ireland</option>
+      <option value="starlink-2024">Starlink 2024</option><option value="fcc">FCC</option></select>
+    <select id="rf-proto" onchange="renderResults()">
+      <option value="">All Protocols</option><option value="dash">DASH</option><option value="lldash-gpac">LL-DASH-GPAC</option>
+      <option value="hls">HLS</option><option value="webrtc">WebRTC</option><option value="moq2">MOQ2</option></select>
+    <input type="text" id="rf-trace" placeholder="Filter trace…" oninput="renderResults()" style="width:170px">
+  </div></div>
   <div class="card">
-    <table class="tbl">
-      <thead><tr>
-        <th>Protocol</th><th>Network</th><th>Unit</th><th>Timestamp</th>
-        <th class="r">Bitrate</th><th class="r">Buffer</th>
-        <th class="r">Rebuf #</th><th class="r">Rebuf ms</th>
-        <th class="r">Startup</th><th class="r">Throughput</th>
-        <th style="width:80px"></th>
-      </tr></thead>
-      <tbody id="res-body"></tbody>
-    </table>
+    <table class="tbl"><thead><tr>
+      <th>Protocol</th><th>Network</th><th>Trace</th><th>Bitrate Trend</th><th>Timestamp</th>
+      <th class="r">Bitrate</th><th class="r">Buffer</th><th class="r">Rebuf #</th><th class="r">Rebuf ms</th>
+      <th class="r">Startup</th><th class="r">Throughput</th><th style="width:120px"></th>
+    </tr></thead><tbody id="res-body"></tbody></table>
   </div>
 </div>
 
 <!-- ── Conditions ── -->
 <div class="page" id="page-conditions">
-  <div class="page-header">
-    <h1>Network Conditions</h1>
-    <p>Trace group characterization — bandwidth distribution, variability, and RTT</p>
-  </div>
-
-  <div id="cond-summary-row" class="stat-row"></div>
-
+  <div class="page-header"><h1>Network Conditions</h1><p>Trace group characterization — bandwidth distribution, variability, and RTT</p></div>
+  <div id="cond-summary-row" class="cond-card-grid" style="margin-bottom:20px"></div>
   <div id="cond-hist-grid" class="grid2" style="margin-bottom:20px"></div>
-
   <div class="card">
-    <div class="flex gap12" style="margin-bottom:16px;align-items:center">
-      <div class="card-title grow" style="margin-bottom:0">Per-Trace Breakdown</div>
+    <div class="flex gap12" style="margin-bottom:16px"><div class="card-title grow" style="margin-bottom:0">Per-Trace Breakdown</div>
       <select id="cond-filter-net" onchange="renderCondTraceTable()">
-        <option value="">All Networks</option>
-        <option value="5g-ireland">5G/4G Ireland</option>
-        <option value="starlink-2024">Starlink 2024</option>
-        <option value="fcc">FCC</option>
-      </select>
-    </div>
-    <table class="tbl" id="cond-trace-tbl">
-      <thead><tr>
-        <th>Trace</th><th>Network</th>
-        <th class="r">Avg BW</th><th class="r">Median BW</th>
-        <th class="r">Min BW</th><th class="r">Max BW</th>
-        <th class="r">Std Dev</th><th class="r">CV</th><th class="r">Avg RTT</th>
-      </tr></thead>
-      <tbody id="cond-trace-body"></tbody>
-    </table>
+        <option value="">All Networks</option><option value="5g-ireland">5G/4G Ireland</option>
+        <option value="starlink-2024">Starlink 2024</option><option value="fcc">FCC</option></select></div>
+    <table class="tbl" id="cond-trace-tbl"><thead><tr>
+      <th>Trace</th><th>Network</th><th class="r">Avg BW</th><th class="r">Median BW</th>
+      <th class="r">Min BW</th><th class="r">Max BW</th><th class="r">Std Dev</th><th class="r">CV</th><th class="r">Avg RTT</th>
+    </tr></thead><tbody id="cond-trace-body"></tbody></table>
   </div>
 </div>
 
 </div><!-- /main -->
 </div><!-- /app -->
 
-<!-- detail modal -->
-<div id="overlay">
-  <div id="modal">
-    <button id="modal-close" onclick="closeModal()">✕</button>
-    <div id="modal-content"></div>
-  </div>
-</div>
+<div id="overlay"><div id="modal">
+  <button id="modal-close" onclick="closeModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+  <div id="modal-content"></div>
+</div></div>
 
 <script>
-// ── constants ────────────────────────────────────────────────────────────────
+// ── constants ──
 const PROTOS = ['dash','lldash-gpac','hls','webrtc','moq2'];
-const PC = { dash:'#4f7cf7', 'lldash-gpac':'#2dd4a0', hls:'#e07840', webrtc:'#a87cf7', moq2:'#f76490' };
-
-// ── state ────────────────────────────────────────────────────────────────────
-let allResults   = {};
-let allTraceSets = {};   // set_id → {label, traces:[]}
-let activeProtos = new Set(PROTOS);
-let activeNetwork = 'all';
-let charts = {};
-
-const NET_LABELS = {
-  'all':          'All Networks',
-  '5g-ireland':   '5G/4G Ireland',
-  'starlink-2024':'Starlink 2024',
-  'fcc':          'FCC',
+const PLABEL = {dash:'DASH','lldash-gpac':'LL-DASH',hls:'HLS',webrtc:'WebRTC',moq2:'MOQ2'};
+const PC = {dash:'#8ab4f8','lldash-gpac':'#81c995',hls:'#fcad70',webrtc:'#c58af9',moq2:'#ff8bcb'};
+const NET_LABELS = {'all':'All Networks','5g-ireland':'5G/4G Ireland','starlink-2024':'Starlink 2024','fcc':'FCC'};
+const PAGE_META = {
+  overview:['Overview','Aggregate performance across all benchmarked runs'],
+  run:['New Run','Configure, validate, and launch a benchmark'],
+  progress:['Progress','Live terminal output and metrics, side by side'],
+  traces:['Trace Lab','Synthesize bandwidth traces from validated models'],
+  compare:['Compare','Interactive side-by-side protocol comparison'],
+  results:['Results','All saved benchmark runs'],
+  conditions:['Network Conditions','Trace group characterization'],
 };
 
-// ── nav ──────────────────────────────────────────────────────────────────────
-document.querySelectorAll('.nav-item').forEach(el => {
-  el.addEventListener('click', () => {
-    document.querySelectorAll('.nav-item').forEach(e => e.classList.remove('active'));
-    document.querySelectorAll('.page').forEach(e => e.classList.remove('active'));
-    el.classList.add('active');
-    document.getElementById('page-' + el.dataset.page).classList.add('active');
-    const p = el.dataset.page;
-    if (p === 'overview')    renderOverview();
-    if (p === 'compare')    renderCompare();
-    if (p === 'results')    renderResults();
-    if (p === 'progress')   renderProgress();
-    if (p === 'traces')     renderTracesPage();
-    if (p === 'conditions') renderConditionsPage();
+// ── state ──
+let allResults={}, allTraceSets={}, _netStats=null;
+let activeNetwork='all';
+let cmpMode='trace';
+let cmpProtos=[];          // ordered arena selection
+let activeTraceId=null;
+let traceCompareIndex=[];
+let charts={};
+
+// Chart.js dark defaults
+if(window.Chart){Chart.defaults.color='#9aa0a6';Chart.defaults.font.family="'Inter',sans-serif";
+  Chart.defaults.font.size=11;Chart.defaults.borderColor='#3c404322';}
+
+const ICON={
+  ok:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg>',
+  warn:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 8v5M12 17h.01"/></svg>',
+  error:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>',
+  grip:'<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>',
+  x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>',
+};
+
+// ── shell: sidebar toggle ──
+const appEl=document.getElementById('app');
+if(localStorage.getItem('nav-rail')==='1') appEl.classList.add('rail');
+document.getElementById('menu-btn').addEventListener('click',()=>{
+  appEl.classList.toggle('rail');
+  localStorage.setItem('nav-rail',appEl.classList.contains('rail')?'1':'0');
+  setTimeout(()=>{for(const k in charts){try{charts[k].resize()}catch(e){}}},300);
+});
+
+// ── nav ──
+document.querySelectorAll('.nav-item').forEach(el=>{
+  el.addEventListener('click',()=>navTo(el.dataset.page));
+});
+function navTo(page){
+  document.querySelectorAll('.nav-item').forEach(e=>e.classList.toggle('active',e.dataset.page===page));
+  document.querySelectorAll('.page').forEach(e=>e.classList.remove('active'));
+  const pg=document.getElementById('page-'+page); if(pg)pg.classList.add('active');
+  const m=PAGE_META[page]||['',''];
+  document.getElementById('tb-title').textContent=m[0];
+  document.getElementById('tb-sub').textContent=m[1];
+  if(page==='overview')renderOverview();
+  if(page==='compare')renderCompare();
+  if(page==='results')renderResults();
+  if(page==='progress')renderProgress();
+  if(page==='traces')renderTracesPage();
+  if(page==='conditions')renderConditionsPage();
+  if(page==='run')refreshPreflight();
+}
+
+// ── refresh button ──
+document.getElementById('refresh-btn').addEventListener('click',function(){
+  this.classList.add('spin'); setTimeout(()=>this.classList.remove('spin'),700);
+  _netStats=null; loadAll().then(()=>{
+    const active=document.querySelector('.nav-item.active'); if(active)navTo(active.dataset.page);
   });
 });
 
-// ── data ─────────────────────────────────────────────────────────────────────
-async function loadAll() {
-  const [res, tr] = await Promise.all([
-    fetch('/api/results').then(r => r.json()),
-    fetch('/api/traces').then(r => r.json()),
+// ── data ──
+async function loadAll(){
+  const [res,tr]=await Promise.all([
+    fetch('/api/results').then(r=>r.json()),
+    fetch('/api/traces').then(r=>r.json()),
   ]);
-  allResults   = res;
-  allTraceSets = tr;
-  // populate trace-set selector once
-  const sel = document.getElementById('run-trace-set');
-  if (sel && sel.options.length === 0) {
-    for (const [id, meta] of Object.entries(tr)) {
-      const opt = document.createElement('option');
-      opt.value = id;
-      opt.textContent = `${meta.label} (${meta.traces.length})`;
-      sel.appendChild(opt);
+  allResults=res; allTraceSets=tr;
+  const sel=document.getElementById('run-trace-set');
+  if(sel&&sel.options.length===0){
+    for(const [id,meta] of Object.entries(tr)){
+      const o=document.createElement('option');o.value=id;o.textContent=`${meta.label} (${meta.traces.length})`;sel.appendChild(o);
     }
   }
   renderTraceList();
-  if (document.querySelector('#page-overview.active')) renderOverview();
-  if (document.querySelector('#page-compare.active'))  renderCompare();
-  if (document.querySelector('#page-results.active'))  renderResults();
+  // active runs badge
+  fetch('/api/runs').then(r=>r.json()).then(runs=>{
+    const n=runs.filter(r=>r.status==='running').length;
+    const b=document.getElementById('nav-active');
+    if(b){b.textContent=n;b.style.display=n?'flex':'none';}
+    const ov=document.getElementById('ov-active'); if(ov)ov.textContent=n;
+  }).catch(()=>{});
+  const active=document.querySelector('.nav-item.active');
+  if(active){const p=active.dataset.page;
+    if(p==='overview')renderOverview(); if(p==='compare')renderCompare(); if(p==='results')renderResults();}
   return res;
 }
 
-// ── network condition helpers ─────────────────────────────────────────────────
-function getAvailableNetworks() {
-  const nets = new Set();
-  for (const entries of Object.values(allResults))
-    for (const e of entries)
-      if (e.trace_set) nets.add(e.trace_set);
-  return ['all', ...Array.from(nets).sort()];
+// ── network helpers ──
+function getAvailableNetworks(){
+  const nets=new Set();
+  for(const entries of Object.values(allResults)) for(const e of entries) if(e.trace_set)nets.add(e.trace_set);
+  return ['all',...Array.from(nets).sort()];
 }
-
-function filteredResults() {
-  if (activeNetwork === 'all') return allResults;
-  const out = {};
-  for (const [proto, entries] of Object.entries(allResults))
-    out[proto] = entries.filter(e => e.trace_set === activeNetwork);
+function filteredResults(){
+  if(activeNetwork==='all')return allResults;
+  const out={};
+  for(const [p,entries] of Object.entries(allResults)) out[p]=entries.filter(e=>e.trace_set===activeNetwork);
   return out;
 }
-
-function buildNetworkTabs(containerId) {
-  const nets = getAvailableNetworks();
-  document.getElementById(containerId).innerHTML = nets.map(n => `
-    <button class="net-tab${activeNetwork===n?' active':''}" onclick="setNetwork('${n}')">${NET_LABELS[n]||n}</button>
-  `).join('');
+function buildNetworkTabs(containerId){
+  const nets=getAvailableNetworks();
+  document.getElementById(containerId).innerHTML=nets.map(n=>
+    `<button class="chip-tab${activeNetwork===n?' active':''}" onclick="setNetwork('${n}')">${NET_LABELS[n]||n}</button>`).join('');
+}
+function setNetwork(net){
+  activeNetwork=net;
+  buildNetworkTabs('ov-net-tabs'); buildNetworkTabs('cmp-net-tabs');
+  const active=document.querySelector('.nav-item.active');
+  if(active){const p=active.dataset.page;
+    if(p==='overview')renderOverview(); if(p==='compare')renderCompare(); if(p==='results')renderResults();}
 }
 
-function setNetwork(net) {
-  activeNetwork = net;
-  // refresh tabs in both containers
-  ['ov-net-tabs','cmp-net-tabs'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.querySelectorAll('.net-tab').forEach(b =>
-      b.classList.toggle('active', b.textContent.trim() === (NET_LABELS[net]||net))
-    );
-  });
-  if (document.querySelector('#page-overview.active')) renderOverview();
-  if (document.querySelector('#page-compare.active'))  renderCompare();
+// ── trace list (run page) ──
+function shortName(name){
+  return name.replace(/^fcc\d+_\d+_/,'').replace(/^fcc2016_[a-z]+_/,'')
+    .replace(/^starlink-/,'').replace(/^hsdpa_/,'').replace(/_tc\.csv$/,'');
 }
-
-// ── trace list ────────────────────────────────────────────────────────────────
-function renderTraceList() {
-  const setId  = document.getElementById('run-trace-set')?.value || Object.keys(allTraceSets)[0];
-  const traces = allTraceSets[setId]?.traces || [];
-  document.getElementById('trace-list').innerHTML = traces.map(t => {
-    const label = t.name
-      .replace(/^fcc\d+_\d+_/, '')   // fcc2016_201609_
-      .replace(/^fcc2016_[a-z]+_/, '') // fcc2016_sept_
-      .replace(/^starlink-/, '')
-      .replace(/^hsdpa_/, '')
-      .replace(/_tc\.csv$/, '');
-    return `<label class="trace-item">
-      <input type="checkbox" class="tcb" value="${t.name}">
-      <span>${label}</span>
-    </label>`;
-  }).join('');
+function renderTraceList(){
+  const setId=document.getElementById('run-trace-set')?.value||Object.keys(allTraceSets)[0];
+  const traces=allTraceSets[setId]?.traces||[];
+  document.getElementById('trace-list').innerHTML=traces.map(t=>
+    `<label class="trace-item" title="${t.name}"><input type="checkbox" class="tcb" value="${t.name}" onchange="refreshPreflight()"><span>${shortName(t.name)}</span></label>`).join('');
 }
-function selTraces(v) { document.querySelectorAll('.tcb').forEach(cb => cb.checked = v); }
+function selTraces(v){document.querySelectorAll('.tcb').forEach(cb=>cb.checked=v);refreshPreflight();}
 
-// ── overview ──────────────────────────────────────────────────────────────────
-function renderOverview() {
+function shortTraceLabel(id){
+  if(!id)return '—';
+  return id.replace(/_tc$/,'').replace(/^amazon_prime_/,'amz ').replace(/^netflix_/,'nfx ').replace(/^download_/,'dl ')
+    .replace(/_B_\d{4}_\d{2}_\d{2}_\d{2}_\d{2}_\d{2}$/,'').replace(/_/g,' ');
+}
+function f(v,dec=0){if(v==null||isNaN(v))return '<span class="dim">—</span>';
+  return v.toLocaleString(undefined,{minimumFractionDigits:dec,maximumFractionDigits:dec});}
+function fmbps(kbps){if(kbps==null)return '<span class="dim">—</span>';
+  if(kbps>=1000)return (kbps/1000).toFixed(1)+' <span class="dim">Mbps</span>'; return Math.round(kbps)+' <span class="dim">kbps</span>';}
+// ── overview ──
+function renderOverview(){
   buildNetworkTabs('ov-net-tabs');
-  const res = filteredResults();
-  let total = 0;
-  const rows = [];
-  for (const [proto, entries] of Object.entries(res)) {
-    if (!entries.length) continue;
-    total += entries.length;
-    const avg = k => {
-      const vs = entries.map(e => e[k]).filter(v => v != null && v >= 0);
-      return vs.length ? vs.reduce((a,b)=>a+b,0)/vs.length : null;
-    };
-    rows.push({ proto, n: entries.length, avg_bitrate: avg('avg_bitrate'),
-      avg_buffer: avg('avg_buffer_s'), rebuf_count: avg('rebuf_count'),
-      rebuf_ms: avg('rebuf_ms'), startup_ms: avg('startup_ms'), avg_tp: avg('avg_throughput') });
+  const res=filteredResults();
+  let total=0; const rows=[];
+  for(const [proto,entries] of Object.entries(res)){
+    if(!entries.length)continue; total+=entries.length;
+    const avg=k=>{const vs=entries.map(e=>e[k]).filter(v=>v!=null&&v>=0);return vs.length?vs.reduce((a,b)=>a+b,0)/vs.length:null;};
+    rows.push({proto,n:entries.length,avg_bitrate:avg('avg_bitrate'),avg_buffer:avg('avg_buffer_s'),
+      rebuf_count:avg('rebuf_count'),rebuf_ms:avg('rebuf_ms'),startup_ms:avg('startup_ms'),avg_tp:avg('avg_throughput')});
   }
-  document.getElementById('ov-total').textContent  = total;
-  document.getElementById('ov-protos').textContent = rows.length;
-  const totalTraces = Object.values(allTraceSets).reduce((s,ts)=>s+ts.traces.length,0);
-  document.getElementById('ov-traces').textContent = totalTraces;
-
-  rows.sort((a,b) => a.proto.localeCompare(b.proto));
-  document.getElementById('ov-body').innerHTML = rows.map(r => `
-    <tr>
-      <td><span class="badge b-${r.proto}">${r.proto}</span></td>
+  document.getElementById('ov-total').textContent=total;
+  document.getElementById('ov-total-sub').textContent=activeNetwork==='all'?'across all networks':NET_LABELS[activeNetwork];
+  document.getElementById('ov-protos').textContent=rows.length;
+  document.getElementById('ov-traces').textContent=Object.values(allTraceSets).reduce((s,ts)=>s+ts.traces.length,0);
+  rows.sort((a,b)=>a.proto.localeCompare(b.proto));
+  document.getElementById('ov-body').innerHTML=rows.map(r=>`
+    <tr><td><span class="badge b-${r.proto}">${PLABEL[r.proto]||r.proto}</span></td>
       <td class="r dim">${r.n}</td>
       <td class="r">${f(r.avg_bitrate)} <span class="dim">kbps</span></td>
-      <td class="r ${r.rebuf_count > 5 ? 'bad' : r.rebuf_count > 1 ? 'warn' : 'good'}">${f(r.rebuf_count,1)}</td>
-      <td class="r ${r.rebuf_ms > 2000 ? 'bad' : r.rebuf_ms > 500 ? 'warn' : 'good'}">${f(r.rebuf_ms)} <span class="dim">ms</span></td>
+      <td class="r ${r.rebuf_count>5?'bad':r.rebuf_count>1?'warn':'good'}">${f(r.rebuf_count,1)}</td>
+      <td class="r ${r.rebuf_ms>2000?'bad':r.rebuf_ms>500?'warn':'good'}">${f(r.rebuf_ms)} <span class="dim">ms</span></td>
       <td class="r">${f(r.startup_ms)} <span class="dim">ms</span></td>
       <td class="r">${f(r.avg_buffer,2)} <span class="dim">s</span></td>
-      <td class="r dim">${f(r.avg_tp)} <span class="dim">kbps</span></td>
-    </tr>`).join('');
-
-  mkBar('ov-chart-bitrate', rows.map(r=>r.proto), rows.map(r=>r.avg_bitrate), 'Bitrate');
-  mkBar('ov-chart-startup',  rows.map(r=>r.proto), rows.map(r=>r.startup_ms),   'Startup');
+      <td class="r dim">${f(r.avg_tp)} <span class="dim">kbps</span></td></tr>`).join('')
+    || '<tr><td colspan="8" class="empty">No runs for this network yet.</td></tr>';
+  mkBar('ov-chart-bitrate',rows.map(r=>r.proto),rows.map(r=>r.avg_bitrate));
+  mkBar('ov-chart-startup',rows.map(r=>r.proto),rows.map(r=>r.startup_ms));
 }
 
-// ── run ───────────────────────────────────────────────────────────────────────
-async function startRun() {
-  const protocol = document.getElementById('run-proto').value;
-  const duration = +document.getElementById('run-dur').value;
-  const resDir   = document.getElementById('run-dir').value.trim() || undefined;
-  const traces    = [...document.querySelectorAll('.tcb:checked')].map(cb => cb.value);
-  const trace_set = document.getElementById('run-trace-set')?.value;
-
-  document.getElementById('run-btn').disabled = true;
-  document.getElementById('run-msg').textContent = 'Starting…';
-
-  const body = { protocol, duration, traces, trace_set };
-  if (resDir) body.results_dir = resDir;
-
-  const data = await fetch('/api/run', {
-    method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body)
-  }).then(r => r.json());
-
-  document.getElementById('run-btn').disabled = false;
-  if (data.run_id) {
-    document.getElementById('run-msg').textContent = `Started: ${data.run_id}`;
-    document.querySelector('[data-page=progress]').click();
-    attachSSE(data.run_id);
-  } else {
-    document.getElementById('run-msg').textContent = 'Error: ' + JSON.stringify(data);
+// ── preflight ──
+let _pfTimer=null;
+function refreshPreflight(){
+  if(!document.querySelector('#page-run'))return;
+  clearTimeout(_pfTimer);
+  _pfTimer=setTimeout(doPreflight,180);
+}
+async function doPreflight(){
+  const proto=document.getElementById('run-proto').value;
+  const ts=document.getElementById('run-trace-set')?.value||'';
+  const traces=[...document.querySelectorAll('.tcb:checked')].map(c=>c.value);
+  const banner=document.getElementById('pf-banner');
+  const list=document.getElementById('pf-list');
+  document.getElementById('pf-title').textContent='Checking…';
+  document.getElementById('pf-desc').textContent='';
+  banner.className='pf-banner';
+  try{
+    const q=new URLSearchParams({protocol:proto,trace_set:ts,traces:traces.join(',')});
+    const d=await fetch('/api/preflight?'+q).then(r=>r.json());
+    list.innerHTML=d.checks.map(c=>`
+      <div class="pf-check"><div class="pf-status ${c.status}">${ICON[c.status]||ICON.ok}</div>
+        <div class="pf-body"><b>${c.label}</b><span>${c.detail}</span></div></div>`).join('');
+    banner.classList.add(d.ready?'ok':'bad');
+    banner.querySelector('.pf-ic').innerHTML=`<div class="pf-status ${d.ready?'ok':'error'}" style="width:30px;height:30px">${d.ready?ICON.ok:ICON.error}</div>`;
+    document.getElementById('pf-title').textContent=d.ready?'Ready to launch':'Action needed before launch';
+    document.getElementById('pf-desc').textContent=d.ready
+      ?'All systems go — the run can be started from the GUI.'
+      :'Resolve the highlighted item(s) below, then re-check.';
+    document.getElementById('run-btn').disabled=!d.ready;
+    // topbar env chip reflects server readiness
+    const srv=d.checks.find(c=>c.key==='server');
+    if(srv){const dot=document.getElementById('env-dot'),txt=document.getElementById('env-text');
+      dot.style.background=srv.status==='ok'?'var(--green)':srv.status==='warn'?'var(--yellow)':'var(--red)';
+      txt.textContent=srv.status==='ok'?'Servers ready':srv.status==='warn'?'Auto-start needed':'Server down';}
+  }catch(e){
+    document.getElementById('pf-title').textContent='Pre-flight unavailable';
+    document.getElementById('pf-desc').textContent=String(e);
   }
 }
 
-// ── progress ──────────────────────────────────────────────────────────────────
-function renderProgress() {
-  fetch('/api/runs').then(r=>r.json()).then(runs => {
-    const noRuns = document.getElementById('no-runs');
-    const list   = document.getElementById('runs-list');
-    if (!runs.length) { noRuns.style.display=''; list.innerHTML=''; return; }
-    noRuns.style.display = 'none';
-    list.innerHTML = runs.map(r => `
-      <div class="card" id="rcard-${r.run_id}" style="margin-bottom:14px">
-        <div class="flex gap12" style="margin-bottom:12px">
-          <span class="badge b-${r.protocol}">${r.protocol}</span>
+// ── run ──
+async function startRun(){
+  const protocol=document.getElementById('run-proto').value;
+  const duration=+document.getElementById('run-dur').value;
+  const resDir=document.getElementById('run-dir').value.trim()||undefined;
+  const traces=[...document.querySelectorAll('.tcb:checked')].map(cb=>cb.value);
+  const trace_set=document.getElementById('run-trace-set')?.value;
+  const btn=document.getElementById('run-btn'); btn.disabled=true;
+  document.getElementById('run-msg').textContent='Starting…';
+  const body={protocol,duration,traces,trace_set}; if(resDir)body.results_dir=resDir;
+  try{
+    const data=await fetch('/api/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).then(r=>r.json());
+    btn.disabled=false;
+    if(data.run_id){document.getElementById('run-msg').textContent=`Started: ${data.run_id}`;navTo('progress');attachSSE(data.run_id);loadAll();}
+    else{document.getElementById('run-msg').textContent='Error: '+(data.error||JSON.stringify(data));}
+  }catch(e){btn.disabled=false;document.getElementById('run-msg').textContent='Error: '+e;}
+}
+
+// ── progress ──
+function renderProgress(){
+  fetch('/api/runs').then(r=>r.json()).then(allRuns=>{
+    const noRuns=document.getElementById('no-runs'),list=document.getElementById('runs-list');
+    const runs=(allRuns||[]).filter(r=>r.status==='running');
+    if(!runs.length){noRuns.textContent="Nothing's running.";noRuns.style.display='';list.innerHTML='';return;}
+    noRuns.style.display='none';
+    runs.sort((a,b)=>b.started_at-a.started_at);
+    list.innerHTML=runs.map(r=>`
+      <div class="card" id="rcard-${r.run_id}" style="margin-bottom:16px">
+        <div class="flex gap12" style="margin-bottom:14px">
+          <span class="badge b-${r.protocol}">${PLABEL[r.protocol]||r.protocol}</span>
           <span class="pill pill-${r.status}" id="rpill-${r.run_id}">${r.status}</span>
-          <span class="dim grow" style="font-size:.75rem">${r.run_id} · ${new Date(r.started_at*1000).toLocaleTimeString()}</span>
-          ${r.status==='running'?`<button class="btn-danger" style="font-size:.72rem;padding:3px 10px" onclick="stopRun('${r.run_id}')">Stop</button>`:''}
+          <span class="dim grow" style="font-size:.78rem">${r.run_id} · ${new Date(r.started_at*1000).toLocaleTimeString()}</span>
+          ${r.status==='running'?`<button class="btn-danger" style="font-size:.74rem;padding:5px 14px" onclick="stopRun('${r.run_id}')">Stop</button>`:''}
         </div>
         <div class="run-split">
           <div class="log-box" id="rlog-${r.run_id}"></div>
-          <div class="run-metrics" id="rmeta-${r.run_id}">
-            <div class="run-metrics-empty">Waiting for first result…</div>
-          </div>
-        </div>
-      </div>`).join('');
-    runs.filter(r=>r.status==='running').forEach(r => attachSSE(r.run_id));
-    runs.filter(r=>r.status!=='running').forEach(r => updateRunMetrics(r.run_id, r.protocol));
+          <div class="run-metrics" id="rmeta-${r.run_id}"><div class="run-metrics-empty">Waiting for first result…</div></div>
+        </div></div>`).join('');
+    runs.forEach(r=>attachSSE(r.run_id));
   });
 }
-
-function attachSSE(id) {
-  if (!window._sse) window._sse = {};
-  if (window._sse[id]) return;
-  const es = new EventSource(`/api/run/${id}/stream`);
-  window._sse[id] = { es, proto: null };
-  // fetch protocol for this run
-  fetch(`/api/run/${id}/status`).then(r=>r.json()).then(s => {
-    if (window._sse[id]) window._sse[id].proto = s.protocol;
-  });
-  es.onmessage = e => {
-    const d = JSON.parse(e.data);
-    appendLog(id, d.line);
-    if (/SAVED|results saved/i.test(d.line)) {
-      loadAll().then(() => updateRunMetrics(id, window._sse[id]?.proto));
-    }
-  };
-  es.addEventListener('done', e => {
-    const d = JSON.parse(e.data);
-    appendLog(id, `\n── Run ${id}: ${d.status} ──`);
-    const pill = document.getElementById(`rpill-${id}`);
-    if (pill) { pill.className = `pill pill-${d.status}`; pill.textContent = d.status; }
-    const proto = window._sse[id]?.proto;
-    es.close(); delete window._sse[id];
-    loadAll().then(() => updateRunMetrics(id, proto));
-  });
-  es.onerror = () => { es.close(); delete window._sse[id]; };
+function attachSSE(id){
+  if(!window._sse)window._sse={};
+  if(window._sse[id])return;
+  const es=new EventSource(`/api/run/${id}/stream`);
+  window._sse[id]={es,proto:null};
+  fetch(`/api/run/${id}/status`).then(r=>r.json()).then(s=>{if(window._sse[id])window._sse[id].proto=s.protocol;});
+  es.onmessage=e=>{const d=JSON.parse(e.data);appendLog(id,d.line);
+    if(/SAVED|results saved/i.test(d.line))loadAll().then(()=>updateRunMetrics(id,window._sse[id]?.proto));};
+  es.addEventListener('done',e=>{const d=JSON.parse(e.data);appendLog(id,`\n── Run ${id}: ${d.status} ──`);
+    const pill=document.getElementById(`rpill-${id}`);if(pill){pill.className=`pill pill-${d.status}`;pill.textContent=d.status;}
+    const proto=window._sse[id]?.proto;es.close();delete window._sse[id];
+    loadAll().then(()=>updateRunMetrics(id,proto));});
+  es.onerror=()=>{es.close();delete window._sse[id];};
 }
-
-function appendLog(id, line) {
-  const el = document.getElementById(`rlog-${id}`);
-  if (!el || !line) return;
-  const div = document.createElement('div');
-  div.className = /error|Error|ERROR|failed/i.test(line) ? 'le'
-                : /warn|WARN/i.test(line)                ? 'lw'
-                : /SAVED|COMPLETE|done/i.test(line)      ? 'lg'
-                : /^[=─\[]/.test(line)                   ? 'lh' : '';
-  div.textContent = line;
-  el.appendChild(div);
-  el.scrollTop = el.scrollHeight;
+function appendLog(id,line){
+  const el=document.getElementById(`rlog-${id}`); if(!el||!line)return;
+  const div=document.createElement('div');
+  div.className=/error|Error|ERROR|failed/i.test(line)?'le':/warn|WARN/i.test(line)?'lw'
+    :/SAVED|COMPLETE|done/i.test(line)?'lg':/^[=─\[]/.test(line)?'lh':'';
+  div.textContent=line; el.appendChild(div); el.scrollTop=el.scrollHeight;
 }
-
-function updateRunMetrics(runId, proto) {
-  const el = document.getElementById(`rmeta-${runId}`);
-  if (!el || !proto) return;
-  const entries = (allResults[proto] || []).slice(0, 8); // most recent
-  if (!entries.length) return;
-
-  const latest = entries[0];
-  const col = PC[proto] || '#4f7cf7';
-
-  const fv = (v, d=0) => v != null ? (+v).toLocaleString(undefined,{maximumFractionDigits:d}) : '—';
-
-  // mini stat row
-  const statsHtml = `
-    <div class="run-mini-stats">
-      <div class="run-mini-stat">
-        <div class="val">${fv(latest.avg_bitrate)}</div>
-        <div class="lbl">kbps</div>
-      </div>
-      <div class="run-mini-stat">
-        <div class="val ${latest.rebuf_count>5?'bad':latest.rebuf_count>1?'warn':'good'}">${fv(latest.rebuf_count,0)}</div>
-        <div class="lbl">rebuffers</div>
-      </div>
-      <div class="run-mini-stat">
-        <div class="val">${fv(latest.startup_ms)}</div>
-        <div class="lbl">startup ms</div>
-      </div>
-    </div>`;
-
-  // bitrate chart if samples available
-  const bitSamples = latest.samples?.bitrate || [];
-  const chartHtml = bitSamples.length > 1
-    ? `<div class="run-chart-box">
-        <div class="rct">Latest — Bitrate History</div>
-        <div style="position:relative;height:110px"><canvas id="rc-bit-${runId}"></canvas></div>
-       </div>`
-    : '';
-
-  // completed traces table (up to 6)
-  const rowsHtml = entries.slice(0,6).map(e => `
-    <tr>
-      <td class="dim" style="font-size:.72rem">${e.unit||'—'}</td>
-      <td class="r" style="font-size:.75rem">${fv(e.avg_bitrate)}</td>
-      <td class="r ${e.rebuf_count>5?'bad':e.rebuf_count>1?'warn':'good'}" style="font-size:.75rem">${fv(e.rebuf_count,0)}</td>
-      <td class="r" style="font-size:.75rem">${fv(e.startup_ms)}</td>
-    </tr>`).join('');
-
-  const tableHtml = `
-    <div class="run-chart-box" style="flex:0">
-      <div class="rct">Recent Traces</div>
-      <table class="tbl" style="font-size:.72rem">
-        <thead><tr><th>Unit</th><th class="r">Bitrate</th><th class="r">Rebuf</th><th class="r">Startup</th></tr></thead>
-        <tbody>${rowsHtml}</tbody>
-      </table>
-    </div>`;
-
-  el.innerHTML = statsHtml + chartHtml + tableHtml;
-
-  if (bitSamples.length > 1) {
-    const cvs = document.getElementById(`rc-bit-${runId}`);
-    if (cvs) {
-      if (cvs._chart) cvs._chart.destroy();
-      cvs._chart = new Chart(cvs.getContext('2d'), {
-        type: 'line',
-        data: { labels: bitSamples.map((_,i)=>i),
-          datasets: [{ data: bitSamples, borderColor: col, backgroundColor: col+'22',
-            fill: true, stepped: true, pointRadius: 0, borderWidth: 1.5 }] },
-        options: chartOpts('kbps'),
-      });
-    }
-  }
+function updateRunMetrics(runId,proto){
+  const el=document.getElementById(`rmeta-${runId}`); if(!el||!proto)return;
+  const entries=(allResults[proto]||[]).slice(0,8); if(!entries.length)return;
+  const latest=entries[0],col=PC[proto]||'#8ab4f8';
+  const fv=(v,d=0)=>v!=null?(+v).toLocaleString(undefined,{maximumFractionDigits:d}):'—';
+  const stats=`<div class="run-mini-stats">
+    <div class="run-mini-stat"><div class="val">${fv(latest.avg_bitrate)}</div><div class="lbl">kbps</div></div>
+    <div class="run-mini-stat"><div class="val ${latest.rebuf_count>5?'bad':latest.rebuf_count>1?'warn':'good'}">${fv(latest.rebuf_count,0)}</div><div class="lbl">rebuffers</div></div>
+    <div class="run-mini-stat"><div class="val">${fv(latest.startup_ms)}</div><div class="lbl">startup ms</div></div></div>`;
+  const bit=latest.samples?.bitrate||[];
+  const chart=bit.length>1?`<div class="run-chart-box"><div class="rct">Latest — Bitrate History</div><div style="position:relative;height:120px"><canvas id="rc-bit-${runId}"></canvas></div></div>`:'';
+  const rows=entries.slice(0,6).map(e=>`<tr><td class="dim" style="font-size:.72rem" title="${e.trace_id||''}">${shortTraceLabel(e.trace_id||e.unit)}</td>
+    <td class="r" style="font-size:.75rem">${fv(e.avg_bitrate)}</td>
+    <td class="r ${e.rebuf_count>5?'bad':e.rebuf_count>1?'warn':'good'}" style="font-size:.75rem">${fv(e.rebuf_count,0)}</td>
+    <td class="r" style="font-size:.75rem">${fv(e.startup_ms)}</td></tr>`).join('');
+  el.innerHTML=stats+chart+`<div class="run-chart-box"><div class="rct">Recent Traces</div>
+    <table class="tbl" style="font-size:.72rem"><thead><tr><th>Unit</th><th class="r">Bitrate</th><th class="r">Rebuf</th><th class="r">Startup</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  if(bit.length>1){const cvs=document.getElementById(`rc-bit-${runId}`);
+    if(cvs){if(cvs._chart)cvs._chart.destroy();
+      cvs._chart=new Chart(cvs.getContext('2d'),{type:'line',data:{labels:bit.map((_,i)=>i),
+        datasets:[{data:bit,borderColor:col,backgroundColor:col+'22',fill:true,stepped:true,pointRadius:0,borderWidth:1.5}]},options:chartOpts('kbps')});}}
 }
-
-async function stopRun(id) {
-  await fetch(`/api/run/${id}/stop`, {method:'POST'});
-  renderProgress();
-}
-
-// ── compare ───────────────────────────────────────────────────────────────────
-function buildToggles() {
-  document.getElementById('proto-toggles').innerHTML = PROTOS.map(p => `
-    <div class="ptoggle on" data-proto="${p}" style="color:${PC[p]}" onclick="toggleProto('${p}')">
-      <span style="font-size:.6rem">●</span> ${p}
-    </div>`).join('');
-}
-
-function toggleProto(p) {
-  if (activeProtos.has(p)) activeProtos.delete(p); else activeProtos.add(p);
-  document.querySelectorAll('.ptoggle').forEach(el => {
-    el.classList.toggle('on',  activeProtos.has(el.dataset.proto));
-    el.classList.toggle('off', !activeProtos.has(el.dataset.proto));
-  });
+async function stopRun(id){await fetch(`/api/run/${id}/stop`,{method:'POST'});renderProgress();loadAll();}
+// ════════════════════════════ COMPARE ════════════════════════════
+function setCmpMode(mode){
+  cmpMode=mode;
+  document.querySelectorAll('#cmp-mode-seg button').forEach(b=>b.classList.toggle('on',b.dataset.mode===mode));
+  document.getElementById('cmp-trace-card').style.display=mode==='trace'?'':'none';
+  document.getElementById('ladder-card').style.display='';
+  document.getElementById('series-card').style.display=mode==='trace'?'':'none';
   renderCompare();
 }
 
-function renderCompare() {
+function renderCompare(){
   buildNetworkTabs('cmp-net-tabs');
-  const protos = PROTOS.filter(p => activeProtos.has(p));
-  const res = filteredResults();
-
-  const avg = (proto, key) => {
-    const vals = (res[proto]||[]).map(e=>e[key]).filter(v=>v!=null&&v>=0);
-    return vals.length ? vals.reduce((a,b)=>a+b,0)/vals.length : null;
-  };
-
-  mkBar('c-bitrate',   protos, protos.map(p=>avg(p,'avg_bitrate')),   'Bitrate');
-  mkBar('c-rebuf-ms',  protos, protos.map(p=>avg(p,'rebuf_ms')),       'Rebuffer ms');
-  mkBar('c-startup',   protos, protos.map(p=>avg(p,'startup_ms')),     'Startup');
-  mkBar('c-buffer',    protos, protos.map(p=>avg(p,'avg_buffer_s')),   'Buffer');
-
-  const allUnits = [...new Set(PROTOS.flatMap(p=>(res[p]||[]).map(e=>e.unit).filter(Boolean)))].sort();
-  const datasets = protos.map(p => ({
-    label: p,
-    data: allUnits.map(u => {
-      const matches = (res[p]||[]).filter(e=>e.unit===u).sort((a,b)=>b.timestamp.localeCompare(a.timestamp));
-      return matches[0]?.rebuf_ms ?? null;
-    }),
-    backgroundColor: PC[p] + 'bb',
-    borderColor: PC[p],
-    borderWidth: 1, borderRadius: 3,
-  }));
-  mkGroupedBar('c-per-trace', allUnits, datasets);
+  if(!cmpProtos.length){
+    // seed with protocols that actually have data
+    const have=PROTOS.filter(p=>(filteredResults()[p]||[]).length);
+    cmpProtos=have.slice(0,3);
+  }
+  if(cmpMode==='trace'){
+    traceCompareIndex=buildTraceCompareIndex();
+    const sel=document.getElementById('tc-trace-select');
+    if(traceCompareIndex.length){
+      sel.innerHTML=traceCompareIndex.map(t=>`<option value="${t.trace_id}">${shortTraceLabel(t.trace_id)} (${t.proto_count}/${PROTOS.length})</option>`).join('');
+      if(!activeTraceId||!traceCompareIndex.some(t=>t.trace_id===activeTraceId))activeTraceId=traceCompareIndex[0].trace_id;
+      sel.value=activeTraceId;
+    }else{sel.innerHTML='<option>No traces with results</option>';activeTraceId=null;}
+  }
+  buildProtoSource();
+  buildArena();
+  renderViz();
 }
 
-// ── results ───────────────────────────────────────────────────────────────────
-function renderResults() {
-  const fp  = document.getElementById('rf-proto').value;
-  const fn  = document.getElementById('rf-net').value;
-  const fu  = document.getElementById('rf-unit').value.trim().toLowerCase();
-
-  let rows = [];
-  for (const [proto, entries] of Object.entries(allResults)) {
-    if (fp && proto !== fp) continue;
-    for (const e of entries) {
-      if (fn && e.trace_set !== fn) continue;
-      if (fu && !(e.unit||'').includes(fu)) continue;
-      rows.push(e);
-    }
+function buildTraceCompareIndex(){
+  const net=activeNetwork==='all'?null:activeNetwork;
+  const byTrace={}; const res=filteredResults();
+  for(const p of PROTOS) for(const e of (res[p]||[])){
+    if(!e.trace_id)continue;
+    if(!byTrace[e.trace_id])byTrace[e.trace_id]={};
+    const prev=byTrace[e.trace_id][p];
+    if(!prev||(e.timestamp||'')>(prev.timestamp||''))byTrace[e.trace_id][p]=e;
   }
-  const hasData = e => e.avg_bitrate != null || e.rebuf_count != null || e.startup_ms != null;
-  rows.sort((a, b) => {
-    const aOk = hasData(a), bOk = hasData(b);
-    if (aOk !== bOk) return aOk ? -1 : 1;
-    return b.timestamp.localeCompare(a.timestamp);
-  });
-
-  document.getElementById('res-body').innerHTML = rows.map(e => `
-    <tr>
-      <td><span class="badge b-${e.protocol}">${e.protocol}</span></td>
-      <td class="dim" style="font-size:.75rem">${NET_LABELS[e.trace_set]||e.trace_set||'—'}</td>
-      <td class="dim" style="font-size:.78rem">${e.unit||'—'}</td>
-      <td class="dim" style="font-size:.72rem">${(e.timestamp||'').replace('T',' ').slice(0,16)}</td>
-      <td class="r">${f(e.avg_bitrate)}</td>
-      <td class="r">${f(e.avg_buffer_s,2)}</td>
-      <td class="r ${e.rebuf_count>5?'bad':e.rebuf_count>1?'warn':'good'}">${f(e.rebuf_count,0)}</td>
-      <td class="r ${e.rebuf_ms>2000?'bad':e.rebuf_ms>500?'warn':'good'}">${f(e.rebuf_ms)}</td>
-      <td class="r">${f(e.startup_ms)}</td>
-      <td class="r dim">${f(e.avg_throughput)}</td>
-      <td><button class="btn-ghost" style="font-size:.7rem;padding:3px 8px" onclick='openDetail("${e.file}")'>Detail</button></td>
-    </tr>`).join('');
+  return Object.entries(byTrace).map(([trace_id,protocols])=>({trace_id,protocols,proto_count:Object.keys(protocols).length}))
+    .filter(t=>!net||Object.values(t.protocols).some(e=>e.trace_set===net))
+    .sort((a,b)=>a.trace_id.localeCompare(b.trace_id));
+}
+function onTraceCompareSelect(){activeTraceId=document.getElementById('tc-trace-select').value||null;renderViz();}
+function stepTraceCompare(d){
+  if(!traceCompareIndex.length)return;
+  const i=traceCompareIndex.findIndex(t=>t.trace_id===activeTraceId);
+  const n=(i<0?0:i+d+traceCompareIndex.length)%traceCompareIndex.length;
+  activeTraceId=traceCompareIndex[n].trace_id;
+  document.getElementById('tc-trace-select').value=activeTraceId;
+  renderViz();
 }
 
-// ── detail modal ──────────────────────────────────────────────────────────────
-async function openDetail(file) {
-  const d  = await fetch('/api/result-detail?file=' + encodeURIComponent(file)).then(r=>r.json());
-  const md = d.metrics || {};
-
-  const s = [
-    ['Timing',      md.timing      || {}],
-    ['Bitrate',     md.bitrate     || {}],
-    ['Rebuffering', md.rebuffering || {}],
-    ['Throughput',  md.throughput  || {}],
-    ['Buffer',      md.buffer      || {}],
-    ['Switching',   md.switching   || {}],
-  ];
-
-  let html = `
-    <div class="flex gap12" style="margin-bottom:20px">
-      <span class="badge b-${d.protocol}" style="font-size:.8rem">${d.protocol}</span>
-      <span class="dim" style="font-size:.78rem">${d.timestamp||''}</span>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">`;
-
-  for (const [title, obj] of s) {
-    const kv = Object.entries(obj).filter(([,v])=>typeof v !== 'object' && v != null);
-    if (!kv.length) continue;
-    html += `<div class="card" style="margin:0"><div class="card-title">${title}</div>
-      <table class="tbl" style="font-size:.78rem">${kv.map(([k,v])=>
-        `<tr><td class="dim">${k}</td><td class="r">${typeof v==='number'?v.toLocaleString(undefined,{maximumFractionDigits:2}):v}</td></tr>`
-      ).join('')}</table></div>`;
-  }
-  html += `</div>`;
-
-  const bitSamples = (md.samples||{}).bitrate || [];
-  const tpSamples  = (md.samples||{}).throughput || [];
-
-  if (bitSamples.length > 1) {
-    html += `<div class="card" style="margin-bottom:12px">
-      <div class="card-title">Bitrate History</div>
-      <div class="chart-wrap" style="height:130px"><canvas id="mc-bitrate"></canvas></div>
-    </div>`;
-  }
-  if (tpSamples.length > 1) {
-    html += `<div class="card">
-      <div class="card-title">Throughput Samples</div>
-      <div class="chart-wrap" style="height:130px"><canvas id="mc-tp"></canvas></div>
-    </div>`;
-  }
-
-  document.getElementById('modal-content').innerHTML = html;
-  document.getElementById('overlay').classList.add('open');
-
-  const col = PC[d.protocol] || '#4f7cf7';
-
-  if (bitSamples.length > 1) {
-    new Chart(document.getElementById('mc-bitrate').getContext('2d'), {
-      type: 'line',
-      data: { labels: bitSamples.map((_,i)=>i),
-        datasets: [{ data: bitSamples, borderColor: col, backgroundColor: col+'22',
-          fill: true, stepped: true, pointRadius: 2, borderWidth: 1.5 }] },
-      options: chartOpts('kbps'),
-    });
-  }
-  if (tpSamples.length > 1) {
-    const tp = tpSamples.map(v => Math.round(v));
-    new Chart(document.getElementById('mc-tp').getContext('2d'), {
-      type: 'line',
-      data: { labels: tp.map((_,i)=>i),
-        datasets: [{ data: tp, borderColor: '#4f7cf7', backgroundColor: '#4f7cf722',
-          fill: true, pointRadius: 0, borderWidth: 1.5, tension: 0.3 }] },
-      options: chartOpts('kbps'),
-    });
-  }
+// ── data access ──
+function currentTraceRow(){return traceCompareIndex.find(t=>t.trace_id===activeTraceId);}
+function getProtoEntry(p){
+  if(cmpMode==='trace'){const row=currentTraceRow();return row?row.protocols[p]:null;}
+  // aggregate: average across network
+  const entries=(filteredResults()[p]||[]); if(!entries.length)return null;
+  const avg=k=>{const vs=entries.map(e=>e[k]).filter(v=>v!=null&&v>=0);return vs.length?vs.reduce((a,b)=>a+b,0)/vs.length:null;};
+  return {protocol:p,_aggregate:true,n:entries.length,avg_bitrate:avg('avg_bitrate'),eff_bitrate:avg('eff_bitrate'),
+    rebuf_ms:avg('rebuf_ms'),rebuf_count:avg('rebuf_count'),rebuf_ratio:avg('rebuf_ratio'),startup_ms:avg('startup_ms'),
+    avg_buffer_s:avg('avg_buffer_s'),switches:avg('switches'),avg_throughput:avg('avg_throughput'),
+    trace_bw:avg('trace_bw'),bw_util:avg('bw_util')};
+}
+function getProtoSamples(p){
+  if(cmpMode==='trace'){const e=getProtoEntry(p);return e?.samples?.bitrate||[];}
+  // aggregate: concat bitrate samples from all runs
+  const out=[]; for(const e of (filteredResults()[p]||[])) (e.samples?.bitrate||[]).forEach(v=>out.push(v));
+  return out;
+}
+function activeCmpProtos(){
+  return cmpProtos.filter(p=>{const e=getProtoEntry(p);return e!=null;});
 }
 
-function closeModal() { document.getElementById('overlay').classList.remove('open'); }
-document.getElementById('overlay').addEventListener('click', e => {
-  if (e.target === document.getElementById('overlay')) closeModal();
-});
-
-// ── sidebar upload ────────────────────────────────────────────────────────────
-function uploadDragOver(e) { e.preventDefault(); document.getElementById('upload-zone').classList.add('drag-over'); }
-function uploadDragLeave()  { document.getElementById('upload-zone').classList.remove('drag-over'); }
-function uploadDrop(e) {
-  e.preventDefault();
-  document.getElementById('upload-zone').classList.remove('drag-over');
-  const file = e.dataTransfer.files[0];
-  if (file) doUpload(file);
-}
-function uploadFile(e) { const file = e.target.files[0]; if (file) doUpload(file); e.target.value = ''; }
-
-async function doUpload(file) {
-  const msg = document.getElementById('upload-msg');
-  msg.style.color = 'var(--muted)';
-  msg.textContent = `Uploading ${file.name}…`;
-  const fd = new FormData();
-  fd.append('file', file);
-  const r = await fetch('/api/upload-trace', { method: 'POST', body: fd }).then(r => r.json());
-  if (r.error) { msg.style.color = 'var(--red)'; msg.textContent = '✕ ' + r.error; return; }
-  msg.style.color = 'var(--green)';
-  msg.textContent = `✓ ${r.file} (${r.rows} rows)`;
-  await loadAll();
-  // auto-select the uploaded trace set in the Run page
-  const sel = document.getElementById('run-trace-set');
-  if (sel) { sel.value = 'uploaded'; renderTraceList(); }
-}
-
-// ── trace generator ───────────────────────────────────────────────────────────
-
-const MODEL_DEFS = {
-  constant: {
-    label: 'Constant', icon: '─',
-    ref: 'Fixed bandwidth baseline — used in BOLA (Spiteri et al., INFOCOM 2016) and MPC (Yin et al., SIGCOMM 2015) controlled evaluations.',
-    params: [
-      { id:'bw_kbps',  label:'Bandwidth', unit:'kbps', type:'number', min:100,  max:100000, step:100,  def:5000 },
-      { id:'rtt_ms',   label:'RTT',       unit:'ms',   type:'number', min:1,    max:500,    step:1,    def:20 },
-    ],
-  },
-  step: {
-    label: 'Step', icon: '⌐',
-    ref: 'Square-wave alternation between two bandwidth levels. Models sudden congestion onset/recovery; used in Pensieve evaluation traces (Mao et al., SIGCOMM 2017).',
-    params: [
-      { id:'high_kbps', label:'High BW',  unit:'kbps', type:'number', min:500,  max:100000, step:500,  def:10000 },
-      { id:'low_kbps',  label:'Low BW',   unit:'kbps', type:'number', min:100,  max:20000,  step:100,  def:1000 },
-      { id:'period_s',  label:'Period',   unit:'s',    type:'number', min:5,    max:120,    step:5,    def:30 },
-      { id:'rtt_ms',    label:'RTT',      unit:'ms',   type:'number', min:1,    max:500,    step:1,    def:20 },
-    ],
-  },
-  sinusoidal: {
-    label: 'Sinusoidal', icon: '∿',
-    ref: 'Smooth periodic oscillation modelling gradual congestion cycles. Used in Comyco (Huang et al., MM 2019) and RobustMPC (Huang et al., 2015) evaluations.',
-    params: [
-      { id:'min_kbps', label:'Min BW',   unit:'kbps', type:'number', min:100,  max:50000,  step:100,  def:1000 },
-      { id:'max_kbps', label:'Max BW',   unit:'kbps', type:'number', min:500,  max:100000, step:500,  def:15000 },
-      { id:'period_s', label:'Period',   unit:'s',    type:'number', min:10,   max:300,    step:5,    def:60 },
-      { id:'rtt_ms',   label:'RTT',      unit:'ms',   type:'number', min:1,    max:500,    step:1,    def:20 },
-    ],
-  },
-  markov: {
-    label: 'Markov', icon: '⇌',
-    ref: 'Markov-modulated discrete states with exponential holding times. Canonical ABR evaluation model from Mao et al., "Pensieve", SIGCOMM 2017.',
-    params: [
-      { id:'states_kbps', label:'States',    unit:'kbps, comma-sep', type:'text', def:'500,1000,2000,4000,8000,16000' },
-      { id:'mean_hold_s', label:'Mean hold', unit:'s',               type:'number', min:0.5, max:30, step:0.5, def:5 },
-      { id:'rtt_ms',      label:'RTT',       unit:'ms',              type:'number', min:1,   max:500, step:1,  def:20 },
-    ],
-  },
-  lognormal: {
-    label: 'Log-normal AR(1)', icon: '~',
-    ref: 'Autocorrelated log-normal process — best statistical match to empirical broadband. From Comyco (Huang et al., MM 2019), Oboe (Achterberg et al., SIGCOMM 2018), and Mok et al., IFIP/IEEE IM 2012.',
-    params: [
-      { id:'mean_kbps', label:'Mean BW',   unit:'kbps',   type:'number', min:100,  max:100000, step:100,  def:5000 },
-      { id:'std_kbps',  label:'Std dev',   unit:'kbps',   type:'number', min:50,   max:50000,  step:50,   def:2000 },
-      { id:'autocorr',  label:'Autocorr',  unit:'0–0.99', type:'number', min:0,    max:0.99,   step:0.01, def:0.8 },
-      { id:'rtt_ms',    label:'RTT',       unit:'ms',     type:'number', min:1,    max:500,    step:1,    def:20 },
-    ],
-  },
-  profile: {
-    label: '3GPP Profile', icon: '◉',
-    ref: 'Pre-calibrated profiles from 3GPP TR 38.901 (5G NR) and TR 36.942 (LTE/HSPA), with measured mean/variance from Huang et al. 2012 and ITU-T G.1010.',
-    params: [
-      { id:'profile', label:'Network', unit:'', type:'select', def:'lte', options: [
-        { value:'3g',        label:'3G UMTS  (~750 kbps, 100ms RTT)' },
-        { value:'hspa',      label:'HSPA+  (~3 Mbps, 70ms RTT)' },
-        { value:'lte',       label:'4G LTE  (~10 Mbps, 40ms RTT)' },
-        { value:'lte_a',     label:'LTE-Advanced  (~30 Mbps, 30ms RTT)' },
-        { value:'5g_nr',     label:'5G NR  (~100 Mbps, 10ms RTT)' },
-        { value:'wifi',      label:'WiFi 802.11ac  (~50 Mbps, 5ms RTT)' },
-        { value:'satellite', label:'Satellite  (~30 Mbps, 600ms RTT)' },
-      ]},
-    ],
-  },
-};
-
-let _activeModel = 'constant';
-let _previewChart = null;
-
-function renderTracesPage() {
-  // build model tabs once
-  const tabs = document.getElementById('model-tabs');
-  if (!tabs.children.length) {
-    for (const [key, def] of Object.entries(MODEL_DEFS)) {
-      const btn = document.createElement('button');
-      btn.className = 'model-tab' + (key === _activeModel ? ' active' : '');
-      btn.textContent = `${def.icon} ${def.label}`;
-      btn.onclick = () => setModel(key);
-      btn.dataset.model = key;
-      tabs.appendChild(btn);
-    }
-  }
-  setModel(_activeModel, false);
-  renderSynthList();
-}
-
-function setModel(key, resetDefaults = true) {
-  _activeModel = key;
-  document.querySelectorAll('.model-tab').forEach(b => b.classList.toggle('active', b.dataset.model === key));
-  const def = MODEL_DEFS[key];
-  document.getElementById('model-ref').textContent = def.ref;
-
-  // render param inputs
-  const grid = document.getElementById('model-params');
-  grid.innerHTML = def.params.map(p => {
-    if (p.type === 'select') {
-      const opts = p.options.map(o => `<option value="${o.value}">${o.label}</option>`).join('');
-      return `<label>${p.label}</label>
-        <select id="tp-${p.id}" onchange="refreshPreview()">${opts}</select>
-        <span class="unit"></span>`;
-    }
-    return `<label>${p.label}</label>
-      <input type="${p.type}" id="tp-${p.id}" value="${p.def}"
-        ${p.min!=null?`min="${p.min}"`:''}
-        ${p.max!=null?`max="${p.max}"`:''}
-        ${p.step!=null?`step="${p.step}"`:''}
-        oninput="refreshPreview()">
-      <span class="unit">${p.unit}</span>`;
+// ── tray ──
+function buildProtoSource(){
+  const res=filteredResults();
+  document.getElementById('proto-source-list').innerHTML=PROTOS.map(p=>{
+    const n=(res[p]||[]).length;
+    const inArena=cmpProtos.includes(p);
+    return `<div class="proto-source${inArena?' in-arena':''}" draggable="true" data-proto="${p}" style="--proto:${PC[p]}"
+        ondragstart="srcDragStart(event,'${p}')" ondragend="srcDragEnd(event)" onclick="toggleProto('${p}')">
+      <span class="proto-dot"></span><span class="ps-name">${PLABEL[p]||p}</span>
+      <span class="ps-meta">${n} run${n===1?'':'s'}</span>
+      <span class="drag-grip">${ICON.grip}</span></div>`;
   }).join('');
-
-  refreshPreview();
+}
+function toggleProto(p){
+  if(cmpProtos.includes(p))cmpProtos=cmpProtos.filter(x=>x!==p);
+  else cmpProtos.push(p);
+  buildProtoSource();buildArena();renderViz();
 }
 
-function getModelParams() {
-  const def = MODEL_DEFS[_activeModel];
-  const p = { duration_s: +(document.getElementById('tgen-dur').value || 120), interval_s: 1.0 };
-  for (const pd of def.params) {
-    const el = document.getElementById(`tp-${pd.id}`);
-    if (!el) continue;
-    p[pd.id] = pd.type === 'number' ? +el.value : el.value;
-  }
-  return p;
-}
-
-// ── JS-side preview computation (mirrors trace_gen.py) ──────────────────────
-
-function _randn() {
-  const u1 = Math.max(Math.random(), 1e-12), u2 = Math.random();
-  return Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
-}
-function _randexp(mean) { return -mean * Math.log(Math.max(Math.random(), 1e-12)); }
-
-function computePreviewBW(model, params) {
-  const dur = params.duration_s || 120;
-  const iv  = params.interval_s || 1;
-  const n   = Math.ceil(dur / iv) + 1;
-  const bws = [];
-
-  if (model === 'constant') {
-    for (let i = 0; i < n; i++) bws.push(params.bw_kbps || 5000);
-
-  } else if (model === 'step') {
-    const hi = params.high_kbps || 10000, lo = params.low_kbps || 1000, per = params.period_s || 30;
-    for (let i = 0; i < n; i++) bws.push((Math.floor(i * iv / per) % 2 === 0) ? hi : lo);
-
-  } else if (model === 'sinusoidal') {
-    const mn = params.min_kbps || 1000, mx = params.max_kbps || 15000, per = params.period_s || 60;
-    const amp = (mx - mn) / 2, ctr = (mx + mn) / 2;
-    for (let i = 0; i < n; i++) bws.push(Math.max(50, ctr + amp * Math.sin(2 * Math.PI * i * iv / per)));
-
-  } else if (model === 'markov') {
-    const raw = String(params.states_kbps || '500,1000,2000,4000,8000');
-    const states = raw.split(',').map(Number).filter(v => v > 0);
-    const hold = params.mean_hold_s || 5;
-    let state = states[0], nextT = _randexp(hold);
-    for (let i = 0; i < n; i++) {
-      const t = i * iv;
-      if (t >= nextT) {
-        const others = states.filter(s => s !== state);
-        state = others[Math.floor(Math.random() * others.length)] || state;
-        nextT = t + _randexp(hold);
-      }
-      bws.push(state);
-    }
-
-  } else if (model === 'lognormal' || model === 'profile') {
-    let mean = params.mean_kbps || 5000, std = params.std_kbps || 2000, ac = params.autocorr ?? 0.8;
-    // profile: look up preset values reflected in JS
-    if (model === 'profile') {
-      const P = {
-        '3g':       [750,   300,  0.85], 'hspa':  [3000,  1200, 0.85],
-        'lte':      [10000, 5000, 0.85], 'lte_a': [30000, 12000,0.82],
-        '5g_nr':    [100000,40000,0.80], 'wifi':  [50000, 10000,0.90],
-        'satellite':[30000, 15000,0.75],
-      };
-      [mean, std, ac] = P[params.profile || 'lte'] || [10000, 5000, 0.85];
-    }
-    const sigma2 = Math.log(1 + (std / mean) ** 2);
-    const mu = Math.log(mean) - sigma2 / 2;
-    const sigma = Math.sqrt(sigma2);
-    let prev = mu;
-    for (let i = 0; i < n; i++) {
-      const noise = _randn() * sigma * Math.sqrt(Math.max(0, 1 - ac ** 2));
-      const logBw = ac * prev + (1 - ac) * mu + noise;
-      bws.push(Math.max(50, Math.min(Math.exp(logBw), mean * 6)));
-      prev = logBw;
-    }
-  }
-  return bws;
-}
-
-function refreshPreview() {
-  const params = getModelParams();
-  const bws    = computePreviewBW(_activeModel, params);
-  const labels = bws.map((_, i) => i);
-
-  const avg = Math.round(bws.reduce((a,b)=>a+b,0) / bws.length);
-  const mn  = Math.round(Math.min(...bws));
-  const mx  = Math.round(Math.max(...bws));
-  document.getElementById('preview-stats').textContent =
-    `avg ${(avg/1000).toFixed(1)} Mbps · min ${(mn/1000).toFixed(1)} · max ${(mx/1000).toFixed(1)}`;
-
-  const ctx = document.getElementById('preview-chart').getContext('2d');
-  if (_previewChart) _previewChart.destroy();
-  _previewChart = new Chart(ctx, {
-    type: 'line',
-    data: { labels, datasets: [{ data: bws, borderColor: '#4f7cf7', backgroundColor: '#4f7cf711',
-      fill: true, pointRadius: 0, borderWidth: 1.5,
-      stepped: ['constant','step','markov'].includes(_activeModel) ? true : false,
-      tension: 0.3 }] },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      animation: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { display: false },
-        y: { ticks: { color: '#506070', font:{size:10},
-               callback: v => v >= 1000 ? (v/1000).toFixed(0)+'M' : v+'k' },
-             grid: { color: '#1e2a3a' } },
-      },
-    },
-  });
-}
-
-async function generateTrace() {
-  const params = getModelParams();
-  const name   = document.getElementById('tgen-name').value.trim() || '';
-  const msg    = document.getElementById('tgen-msg');
-  msg.textContent = 'Generating…';
-  msg.style.color = 'var(--muted)';
-
-  const r = await fetch('/api/generate-trace', {
-    method: 'POST',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({ model: _activeModel, params, name }),
-  }).then(r => r.json());
-
-  if (r.error) {
-    msg.textContent = '✕ ' + r.error; msg.style.color = 'var(--red)'; return;
-  }
-  const s = r.stats;
-  msg.style.color = 'var(--green)';
-  msg.textContent = `✓ Saved ${r.file}  ·  avg ${(s.avg_bw/1000).toFixed(1)} Mbps  ·  ${s.rows} samples`;
-  document.getElementById('tgen-name').value = '';
-  await loadAll();
-  renderSynthList();
-}
-
-function renderSynthList() {
-  const el = document.getElementById('synth-list');
-  const traces = allTraceSets['synthetic']?.traces || [];
-  if (!traces.length) {
-    el.innerHTML = '<div class="dim" style="font-size:.8rem;padding:12px 0">No synthetic traces yet.</div>';
+// ── arena ──
+function buildArena(){
+  const arena=document.getElementById('cmp-arena');
+  if(!cmpProtos.length){
+    arena.innerHTML=`<div class="cmp-arena-empty">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+      Drag protocols here to compare them</div>`;
     return;
   }
-  el.innerHTML = traces.map(t => `
-    <div class="synth-item">
-      <span class="si-name">${t.name}</span>
-      <button class="btn-ghost" style="font-size:.7rem;padding:3px 10px"
-        onclick="deleteSynthTrace('${t.name}')">Delete</button>
-    </div>`).join('');
+  arena.innerHTML=cmpProtos.map(p=>`<div class="arena-chip" draggable="true" data-proto="${p}" style="--proto:${PC[p]}"
+      ondragstart="chipDragStart(event,'${p}')" ondragend="chipDragEnd(event)" ondragover="chipDragOver(event,'${p}')">
+      <span class="proto-dot"></span>${PLABEL[p]||p}
+      <span class="chip-x" onclick="event.stopPropagation();toggleProto('${p}')">${ICON.x}</span></div>`).join('');
+}
+const arenaEl=document.getElementById('cmp-arena');
+arenaEl.addEventListener('dragover',e=>{e.preventDefault();arenaEl.classList.add('drop-hot');});
+arenaEl.addEventListener('dragleave',e=>{if(e.target===arenaEl)arenaEl.classList.remove('drop-hot');});
+arenaEl.addEventListener('drop',e=>{
+  e.preventDefault();arenaEl.classList.remove('drop-hot');
+  const p=e.dataTransfer.getData('text/proto'); if(p&&!cmpProtos.includes(p)){cmpProtos.push(p);buildProtoSource();buildArena();renderViz();}
+});
+function srcDragStart(e,p){e.dataTransfer.setData('text/proto',p);e.dataTransfer.effectAllowed='copy';e.currentTarget.classList.add('dragging');}
+function srcDragEnd(e){e.currentTarget.classList.remove('dragging');}
+let _dragChip=null;
+function chipDragStart(e,p){_dragChip=p;e.dataTransfer.setData('text/proto',p);e.dataTransfer.effectAllowed='move';e.currentTarget.classList.add('dragging');}
+function chipDragEnd(e){e.currentTarget.classList.remove('dragging');_dragChip=null;}
+function chipDragOver(e,target){
+  e.preventDefault();
+  if(!_dragChip||_dragChip===target)return;
+  const from=cmpProtos.indexOf(_dragChip),to=cmpProtos.indexOf(target);
+  if(from<0||to<0)return;
+  cmpProtos.splice(from,1);cmpProtos.splice(to,0,_dragChip);
+  buildArena();renderViz();
 }
 
-async function deleteSynthTrace(name) {
-  await fetch(`/api/synthetic-trace/${encodeURIComponent(name)}`, { method: 'DELETE' });
-  await loadAll();
-  renderSynthList();
+// ── ladder ──
+function computeLadder(samples){
+  if(!samples||!samples.length)return null;
+  const counts={}; samples.forEach(v=>{const k=Math.round(v);counts[k]=(counts[k]||0)+1;});
+  const total=samples.length;
+  const rungs=Object.keys(counts).map(Number).sort((a,b)=>b-a).map(kbps=>({kbps,frac:counts[kbps]/total,count:counts[kbps]}));
+  return {rungs,total};
+}
+function renderLadders(){
+  const protos=activeCmpProtos();
+  const cols=document.getElementById('ladder-cols'),empty=document.getElementById('ladder-empty');
+  const cards=protos.map(p=>{
+    const L=computeLadder(getProtoSamples(p)); const e=getProtoEntry(p);
+    if(!L)return '';
+    const maxFrac=Math.max(...L.rungs.map(r=>r.frac));
+    const rungsHtml=L.rungs.map(r=>{
+      const w=Math.max(2,(r.frac/maxFrac)*100);
+      return `<div class="rung"><div class="rung-kbps">${r.kbps>=1000?(r.kbps/1000).toFixed(1)+'M':r.kbps+'k'}</div>
+        <div class="rung-track"><div class="rung-fill" style="width:${w}%"></div></div>
+        <div class="rung-pct">${(r.frac*100).toFixed(0)}%</div></div>`;
+    }).join('');
+    const avg=e?.avg_bitrate,eff=e?.eff_bitrate;
+    return `<div class="ladder-card" style="--proto:${PC[p]}">
+      <div class="ladder-head"><span class="proto-dot"></span><span class="lh-name">${PLABEL[p]||p}</span></div>
+      <div class="ladder-sub">${L.rungs.length} rungs · ${L.total} samples${e?._aggregate?` · ${e.n} runs`:''}</div>
+      ${rungsHtml}
+      <div class="ladder-foot">
+        <div class="lf-stat"><div class="v" style="color:${PC[p]}">${avg!=null?Math.round(avg).toLocaleString():'—'}</div><div class="k">avg kbps</div></div>
+        <div class="lf-stat"><div class="v">${eff!=null?Math.round(eff).toLocaleString():'—'}</div><div class="k">effective kbps</div></div>
+      </div></div>`;
+  }).filter(Boolean);
+  if(cards.length){cols.innerHTML=cards.join('');cols.style.display='';empty.style.display='none';}
+  else{cols.innerHTML='';cols.style.display='none';empty.style.display='';}
 }
 
-// ── conditions page ───────────────────────────────────────────────────────────
-let _netStats = null;
+// ── series (bitrate over time) ──
+let _detailCache={};
+async function fetchDetail(file){
+  if(file in _detailCache)return _detailCache[file];
+  const d=await fetch('/api/result-detail?file='+encodeURIComponent(file)).then(r=>r.json()).catch(()=>null);
+  _detailCache[file]=d; return d;
+}
+// map a samples array onto playback progress (0..1) so series of different
+// lengths line up on the same time axis.
+function toProgress(arr){const n=arr.length;return arr.map((y,i)=>({x:n>1?i/(n-1):0,y}));}
 
-async function renderConditionsPage() {
-  if (!_netStats) {
-    _netStats = await fetch('/api/network-stats').then(r => r.json());
+async function renderSeries(){
+  if(cmpMode!=='trace')return;
+  const tid=activeTraceId;
+  const protos=activeCmpProtos();
+  const datasets=[];
+  protos.forEach(p=>{const s=getProtoSamples(p);if(!s.length)return;
+    datasets.push({label:PLABEL[p]||p,data:toProgress(s),borderColor:PC[p],backgroundColor:PC[p]+'18',
+      fill:false,stepped:true,pointRadius:0,borderWidth:2,tension:0});});
+  // actual trace bandwidth over time — pulled from the run's result detail
+  const row=currentTraceRow();
+  const anyE=row?protos.map(p=>row.protocols[p]).find(e=>e&&e.file):null;
+  if(anyE){
+    const d=await fetchDetail(anyE.file);
+    if(tid!==activeTraceId)return;                  // selection changed mid-fetch
+    const ts=(d&&d.trace_bandwidth&&d.trace_bandwidth.samples)||[];
+    if(ts.length>1){
+      datasets.unshift({label:'Trace bandwidth',data:toProgress(ts),
+        borderColor:'rgba(154,160,166,.7)',backgroundColor:'rgba(154,160,166,.10)',
+        fill:true,stepped:true,pointRadius:0,borderWidth:1.5,tension:0});
+    }
   }
-  renderCondSummary();
-  renderCondHistograms();
-  renderCondTraceTable();
+  if(charts['c-series'])charts['c-series'].destroy();
+  const ctx=document.getElementById('c-series')?.getContext('2d'); if(!ctx)return;
+  charts['c-series']=new Chart(ctx,{type:'line',data:{datasets},options:{
+    responsive:true,maintainAspectRatio:false,interaction:{mode:'nearest',axis:'x',intersect:false},
+    plugins:{legend:{display:true,labels:{boxWidth:12,padding:14,usePointStyle:true}},
+      tooltip:{callbacks:{
+        title:items=>items.length?`progress ${(items[0].parsed.x*100).toFixed(0)}%`:'',
+        label:c=>`${c.dataset.label}: ${Math.round(c.parsed.y).toLocaleString()} kbps`}}},
+    scales:{x:{type:'linear',min:0,max:1,title:{display:true,text:'playback progress',color:'#6b7177'},
+        ticks:{maxTicksLimit:11,callback:v=>(v*100).toFixed(0)+'%'},grid:{color:'#3c404322'}},
+      y:{ticks:{callback:v=>v>=1000?(v/1000).toFixed(0)+'k':v},grid:{color:'#3c404333'}}},
+    animation:{duration:350}}});
 }
 
-function renderCondSummary() {
-  const NET_COLORS = { '5g-ireland': 'var(--c-webrtc)', 'starlink-2024': 'var(--c-lldash-gpac)', 'fcc': 'var(--c-dash)' };
-  const order = ['5g-ireland', 'starlink-2024', 'fcc'];
-  document.getElementById('cond-summary-row').innerHTML = order.filter(n => _netStats[n]).map(n => {
-    const s = _netStats[n];
-    const col = NET_COLORS[n] || 'var(--text)';
-    return `
-      <div class="card" style="border-color:${col}33">
-        <div class="card-title" style="color:${col}">${s.label}</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
-          <div>
-            <div class="stat-label" style="font-size:.65rem">Avg BW</div>
-            <div style="font-size:1.5rem;font-weight:700;color:#fff">${fmbps(s.avg_bw)}</div>
-            <div class="dim" style="font-size:.7rem">median ${fmbps(s.median_bw)}</div>
-          </div>
-          <div>
-            <div class="stat-label" style="font-size:.65rem">Variability (CV)</div>
-            <div style="font-size:1.5rem;font-weight:700;color:${s.cv > 1 ? 'var(--red)' : s.cv > 0.5 ? 'var(--yellow)' : 'var(--green)'}">${(s.cv * 100).toFixed(0)}%</div>
-            <div class="dim" style="font-size:.7rem">std ${fmbps(s.std_bw)}</div>
-          </div>
-        </div>
-        <table class="tbl" style="font-size:.75rem">
-          <tr><td class="dim">Range</td><td class="r">${fmbps(s.min_bw)} – ${fmbps(s.max_bw)}</td></tr>
-          <tr><td class="dim">P10 / P90</td><td class="r">${fmbps(s.p10)} / ${fmbps(s.p90)}</td></tr>
-          <tr><td class="dim">Avg RTT</td><td class="r">${s.avg_rtt != null ? s.avg_rtt + ' ms' : '—'}</td></tr>
-          <tr><td class="dim">Traces</td><td class="r">${s.count}</td></tr>
-        </table>
-      </div>`;
-  }).join('');
-}
-
-function renderCondHistograms() {
-  const NET_COLORS = { '5g-ireland': '#a87cf7', 'starlink-2024': '#2dd4a0', 'fcc': '#4f7cf7' };
-  const order = ['5g-ireland', 'starlink-2024', 'fcc'];
-  const nets = order.filter(n => _netStats[n]);
-  // span full width if 3 nets, otherwise grid2
-  const gridId = 'cond-hist-grid';
-  const grid = document.getElementById(gridId);
-  grid.style.gridTemplateColumns = nets.length === 3 ? 'repeat(3,1fr)' : '1fr 1fr';
-  grid.innerHTML = nets.map(n => `
-    <div class="card" style="margin-bottom:0">
-      <div class="card-title">${_netStats[n].label} — BW Distribution</div>
-      <div style="position:relative;height:160px"><canvas id="hist-${n}"></canvas></div>
-      <div class="dim" style="font-size:.7rem;margin-top:8px;text-align:center">bandwidth (kbps)</div>
-    </div>`).join('');
-
-  nets.forEach(n => {
-    const s = _netStats[n];
-    const col = NET_COLORS[n] || '#4f7cf7';
-    const labels = s.histogram.map(b => b.lo >= 1000 ? (b.lo/1000).toFixed(0)+'k' : b.lo);
-    const data   = s.histogram.map(b => b.count);
-    const ctx = document.getElementById(`hist-${n}`)?.getContext('2d');
-    if (!ctx) return;
-    new Chart(ctx, {
-      type: 'bar',
-      data: { labels, datasets: [{ data, backgroundColor: col + 'bb', borderColor: col, borderWidth: 1, borderRadius: 3 }] },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: false },
-          tooltip: { callbacks: { label: ctx => `${ctx.parsed.y} samples` } } },
-        scales: {
-          x: { ticks: { color: '#506070', font:{size:9} }, grid: { color: '#1e2a3a40' } },
-          y: { ticks: { color: '#506070', font:{size:9} }, grid: { color: '#1e2a3a' } },
-        },
-        animation: { duration: 200 },
-      },
-    });
-  });
-}
-
-function renderCondTraceTable() {
-  const fn = document.getElementById('cond-filter-net').value;
-  const order = ['5g-ireland', 'starlink-2024', 'fcc'];
-  const NET_LABELS_LOCAL = { '5g-ireland': '5G/4G Ireland', 'starlink-2024': 'Starlink 2024', 'fcc': 'FCC' };
-  let rows = [];
-  for (const n of order) {
-    if (fn && n !== fn) continue;
-    if (!_netStats[n]) continue;
-    for (const t of _netStats[n].traces) rows.push({ ...t, net_id: n, net_label: NET_LABELS_LOCAL[n] });
+// ── bars + radar + table ──
+const TC_METRICS=[
+  {key:'avg_bitrate',label:'Avg bitrate',unit:'kbps',fmt:v=>f(v)},
+  {key:'eff_bitrate',label:'Effective bitrate',unit:'kbps',fmt:v=>f(v)},
+  {key:'rebuf_ms',label:'Rebuffer time',unit:'ms',fmt:v=>f(v)},
+  {key:'rebuf_count',label:'Rebuffer events',unit:'',fmt:v=>f(v,0)},
+  {key:'rebuf_ratio',label:'Rebuffer ratio',unit:'%',fmt:v=>v!=null?f(v*100,2):'—'},
+  {key:'startup_ms',label:'Startup',unit:'ms',fmt:v=>f(v)},
+  {key:'avg_buffer_s',label:'Avg buffer',unit:'s',fmt:v=>f(v,2)},
+  {key:'switches',label:'Switches',unit:'',fmt:v=>f(v,0)},
+  {key:'avg_throughput',label:'Throughput',unit:'kbps',fmt:v=>f(v)},
+  {key:'trace_bw',label:'Trace BW',unit:'kbps',fmt:v=>f(v)},
+  {key:'bw_util',label:'BW utilisation',unit:'%',fmt:v=>v!=null?f(v*100,1):'—'},
+];
+function renderViz(){
+  const protos=activeCmpProtos();
+  // meta
+  const meta=document.getElementById('tc-trace-meta');
+  if(cmpMode==='trace'){const row=currentTraceRow();
+    meta.textContent=row?`${row.trace_id} · ${protos.length} of ${PROTOS.length} protocols have data`:'No trace selected';
   }
-  document.getElementById('cond-trace-body').innerHTML = rows.map(t => `
-    <tr>
-      <td style="font-family:monospace;font-size:.75rem">${t.name}</td>
-      <td class="dim" style="font-size:.75rem">${t.net_label}</td>
-      <td class="r">${fmbps(t.avg_bw)}</td>
-      <td class="r">${fmbps(t.median_bw)}</td>
-      <td class="r dim">${fmbps(t.min_bw)}</td>
-      <td class="r dim">${fmbps(t.max_bw)}</td>
-      <td class="r">${fmbps(t.std_bw)}</td>
-      <td class="r ${t.cv > 1 ? 'bad' : t.cv > 0.5 ? 'warn' : 'good'}">${(t.cv * 100).toFixed(0)}%</td>
-      <td class="r dim">${t.avg_rtt != null ? t.avg_rtt + ' ms' : '—'}</td>
-    </tr>`).join('');
+  renderLadders();
+  renderSeries();
+  const val=(p,k)=>{const e=getProtoEntry(p);return e?e[k]:null;};
+  mkBar('c-bitrate',protos,protos.map(p=>val(p,'avg_bitrate')));
+  mkBar('c-rebuf-ms',protos,protos.map(p=>val(p,'rebuf_ms')));
+  mkBar('c-startup',protos,protos.map(p=>val(p,'startup_ms')));
+  mkBar('c-buffer',protos,protos.map(p=>val(p,'avg_buffer_s')));
+  renderRadar(protos);
+  renderCmpTable(protos);
+}
+function renderRadar(protos){
+  if(charts['c-radar'])charts['c-radar'].destroy();
+  const ctx=document.getElementById('c-radar')?.getContext('2d'); if(!ctx)return;
+  // metrics where higher-is-better after transform
+  const axes=[
+    {label:'Bitrate',get:p=>getProtoEntry(p)?.avg_bitrate,better:'high'},
+    {label:'Throughput',get:p=>getProtoEntry(p)?.avg_throughput,better:'high'},
+    {label:'Buffer',get:p=>getProtoEntry(p)?.avg_buffer_s,better:'high'},
+    {label:'Low stall',get:p=>getProtoEntry(p)?.rebuf_ms,better:'low'},
+    {label:'Fast start',get:p=>getProtoEntry(p)?.startup_ms,better:'low'},
+    {label:'Few switches',get:p=>getProtoEntry(p)?.switches,better:'low'},
+  ];
+  const ranges=axes.map(a=>{const vs=protos.map(p=>a.get(p)).filter(v=>v!=null);return {min:Math.min(...vs,0),max:Math.max(...vs,1)};});
+  const datasets=protos.map(p=>({label:PLABEL[p]||p,
+    data:axes.map((a,i)=>{let v=a.get(p);if(v==null)return 0;const {min,max}=ranges[i];const span=(max-min)||1;
+      let n=(v-min)/span;return Math.round((a.better==='low'?1-n:n)*100);}),
+    borderColor:PC[p],backgroundColor:PC[p]+'33',pointBackgroundColor:PC[p],borderWidth:2}));
+  charts['c-radar']=new Chart(ctx,{type:'radar',data:{labels:axes.map(a=>a.label),datasets},options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:true,labels:{boxWidth:12,padding:14,usePointStyle:true}}},
+    scales:{r:{suggestedMin:0,suggestedMax:100,grid:{color:'#3c404355'},angleLines:{color:'#3c404355'},
+      pointLabels:{color:'#bdc1c6',font:{size:12}},ticks:{display:false}}},animation:{duration:350}}});
+}
+function renderCmpTable(protos){
+  document.getElementById('tc-table-head').innerHTML='<th class="metric-name">Metric</th>'+
+    protos.map(p=>`<th class="proto-col"><span class="badge b-${p}">${PLABEL[p]||p}</span></th>`).join('');
+  const body=TC_METRICS.map(m=>`<tr><td class="metric-name">${m.label}${m.unit?` <span class="dim">(${m.unit})</span>`:''}</td>${
+    protos.map(p=>{const e=getProtoEntry(p);const v=e?e[m.key]:null;let cls='';
+      if(m.key==='rebuf_ms'&&v>2000)cls='bad';else if(m.key==='rebuf_count'&&v>5)cls='bad';
+      else if(m.key==='avg_buffer_s'&&v!=null&&v<2)cls='warn';
+      return `<td class="proto-col ${cls}">${m.fmt(v)}</td>`;}).join('')}</tr>`).join('');
+  let detailRow='';
+  if(cmpMode==='trace'){const row=currentTraceRow();
+    detailRow=`<tr><td class="metric-name dim">Detail</td>${protos.map(p=>{const e=row?.protocols[p];
+      return `<td class="proto-col">${e?`<button class="btn-ghost" style="font-size:.7rem;padding:5px 12px" onclick='openDetail(${JSON.stringify(e.file)})'>view</button>`:'—'}</td>`;}).join('')}</tr>`;}
+  document.getElementById('tc-table-body').innerHTML=body+detailRow;
+}
+// ── results ──
+function sparkSVG(samples,color){
+  if(!samples||samples.length<2)return '<span class="dim">—</span>';
+  const w=110,h=26,n=samples.length,mx=Math.max(...samples),mn=Math.min(...samples),span=(mx-mn)||1;
+  const pts=samples.map((v,i)=>`${(i/(n-1)*w).toFixed(1)},${(h-2-((v-mn)/span)*(h-4)).toFixed(1)}`).join(' ');
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="display:block">
+    <polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linejoin="round"/></svg>`;
+}
+function renderResults(){
+  const fp=document.getElementById('rf-proto').value;
+  const fn=document.getElementById('rf-net').value;
+  const fu=document.getElementById('rf-trace').value.trim().toLowerCase();
+  let rows=[];
+  for(const [proto,entries] of Object.entries(allResults)){
+    if(fp&&proto!==fp)continue;
+    for(const e of entries){if(fn&&e.trace_set!==fn)continue;
+      const tid=(e.trace_id||e.unit||'').toLowerCase(); if(fu&&!tid.includes(fu))continue; rows.push(e);}
+  }
+  const hasData=e=>e.avg_bitrate!=null||e.rebuf_count!=null||e.startup_ms!=null;
+  rows.sort((a,b)=>{const ao=hasData(a),bo=hasData(b);if(ao!==bo)return ao?-1:1;return (b.timestamp||'').localeCompare(a.timestamp||'');});
+  document.getElementById('res-body').innerHTML=rows.map(e=>`
+    <tr><td><span class="badge b-${e.protocol}">${PLABEL[e.protocol]||e.protocol}</span></td>
+      <td class="dim" style="font-size:.78rem">${NET_LABELS[e.trace_set]||e.trace_set||'—'}</td>
+      <td class="dim" style="font-size:.8rem" title="${e.trace_id||''}">${shortTraceLabel(e.trace_id||e.unit)}</td>
+      <td>${sparkSVG(e.samples?.bitrate,PC[e.protocol]||'#8ab4f8')}</td>
+      <td class="dim" style="font-size:.74rem">${(e.timestamp||'').replace('T',' ').slice(0,16)}</td>
+      <td class="r">${f(e.avg_bitrate)}</td><td class="r">${f(e.avg_buffer_s,2)}</td>
+      <td class="r ${e.rebuf_count>5?'bad':e.rebuf_count>1?'warn':'good'}">${f(e.rebuf_count,0)}</td>
+      <td class="r ${e.rebuf_ms>2000?'bad':e.rebuf_ms>500?'warn':'good'}">${f(e.rebuf_ms)}</td>
+      <td class="r">${f(e.startup_ms)}</td><td class="r dim">${f(e.avg_throughput)}</td>
+      <td><div class="flex gap8"><button class="btn-ghost" style="font-size:.7rem;padding:5px 11px" onclick='openDetail(${JSON.stringify(e.file)})'>Detail</button>
+        ${e.trace_id?`<button class="btn-ghost" style="font-size:.7rem;padding:5px 11px" title="Add to Compare" onclick="addToCompare('${e.protocol}','${e.trace_id}','${e.trace_set||''}')">+ Cmp</button>`:''}</div></td>
+    </tr>`).join('')||'<tr><td colspan="12" class="empty">No results match your filters.</td></tr>';
+}
+function addToCompare(proto,traceId,traceSet){
+  cmpMode='trace';
+  if(traceSet)activeNetwork=traceSet;
+  activeTraceId=traceId;
+  if(!cmpProtos.includes(proto))cmpProtos.push(proto);
+  navTo('compare');
+  setCmpMode('trace');
+  setTimeout(()=>{const sel=document.getElementById('tc-trace-select');if(sel&&[...sel.options].some(o=>o.value===traceId)){sel.value=traceId;onTraceCompareSelect();}},60);
 }
 
-function fmbps(kbps) {
-  if (kbps == null) return '<span class="dim">—</span>';
-  if (kbps >= 1000) return (kbps / 1000).toFixed(1) + ' <span class="dim">Mbps</span>';
-  return Math.round(kbps) + ' <span class="dim">kbps</span>';
+// ── detail modal ──
+function ladderHTML(samples,color,avg,eff){
+  const L=computeLadder(samples); if(!L)return '';
+  const maxFrac=Math.max(...L.rungs.map(r=>r.frac));
+  const rungs=L.rungs.map(r=>{const w=Math.max(2,(r.frac/maxFrac)*100);
+    return `<div class="rung"><div class="rung-kbps">${r.kbps>=1000?(r.kbps/1000).toFixed(1)+'M':r.kbps+'k'}</div>
+      <div class="rung-track"><div class="rung-fill" style="width:${w}%"></div></div>
+      <div class="rung-pct">${(r.frac*100).toFixed(0)}%</div></div>`;}).join('');
+  return `<div class="ladder-card" style="--proto:${color};border:none;padding:0">
+    <div class="ladder-sub">${L.rungs.length} rungs · ${L.total} samples</div>${rungs}
+    <div class="ladder-foot"><div class="lf-stat"><div class="v" style="color:${color}">${avg!=null?Math.round(avg).toLocaleString():'—'}</div><div class="k">avg kbps</div></div>
+      <div class="lf-stat"><div class="v">${eff!=null?Math.round(eff).toLocaleString():'—'}</div><div class="k">effective kbps</div></div></div></div>`;
 }
+async function openDetail(file){
+  const d=await fetch('/api/result-detail?file='+encodeURIComponent(file)).then(r=>r.json());
+  const md=d.metrics||{};
+  const col=PC[d.protocol]||'#8ab4f8';
+  const bit=(md.samples||{}).bitrate||[],tp=(md.samples||{}).throughput||[];
+  const totalSec=(md.timing&&md.timing.total_playback_time_ms||0)/1000;
+  const useTime=totalSec>0;
+  const toX=arr=>{const n=arr.length;return arr.map((y,i)=>({x:(n>1?i/(n-1):0)*(useTime?totalSec:Math.max(1,n-1)),y:Math.round(y)}));};
+  const xUnit=useTime?'s':'sample';
 
-// ── chart helpers ─────────────────────────────────────────────────────────────
-const CHART_DEFAULTS = {
-  plugins: { legend: { display: false } },
-  scales: {
-    x: { ticks: { color: '#506070', font: {size:10} }, grid: { color: '#1e2a3a' } },
-    y: { ticks: { color: '#506070', font: {size:10} }, grid: { color: '#1e2a3a' } },
-  },
-  animation: { duration: 300 },
+  let html=`<div class="flex gap12" style="margin-bottom:20px"><span class="badge b-${d.protocol}" style="font-size:.82rem">${PLABEL[d.protocol]||d.protocol}</span>
+    <span class="dim" style="font-size:.8rem">${d.timestamp||''}</span>${d.abr?`<span class="dim" style="font-size:.8rem">· ABR: ${d.abr}</span>`:''}</div>`;
+
+  // combined chart + ladder, side by side
+  const hasSeries=bit.length>1||tp.length>1;
+  if(hasSeries){
+    html+=`<div style="display:grid;grid-template-columns:1.7fr 1fr;gap:16px;margin-bottom:18px">
+      <div class="card" style="margin:0"><div class="card-title">Bitrate &amp; Throughput over time</div>
+        <div class="chart-wrap" style="height:300px"><canvas id="mc-combined"></canvas></div></div>
+      <div class="card" style="margin:0"><div class="card-title">Bitrate Ladder</div>
+        ${bit.length>1?ladderHTML(bit,col,md.bitrate&&md.bitrate.average_kbps,md.bitrate&&md.bitrate.effective_average_kbps)
+          :'<div class="dim" style="font-size:.82rem">No bitrate samples.</div>'}</div></div>`;
+  }
+
+  // metric cards
+  const s=[['Timing',md.timing||{}],['Bitrate',md.bitrate||{}],['Rebuffering',md.rebuffering||{}],
+    ['Throughput',md.throughput||{}],['Buffer',md.buffer||{}],['Switching',md.switching||{}]];
+  html+=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">`;
+  for(const [title,obj] of s){const kv=Object.entries(obj).filter(([,v])=>typeof v!=='object'&&v!=null);if(!kv.length)continue;
+    html+=`<div class="card" style="margin:0"><div class="card-title">${title}</div><table class="tbl" style="font-size:.8rem">${
+      kv.map(([k,v])=>`<tr><td class="dim">${k}</td><td class="r">${typeof v==='number'?v.toLocaleString(undefined,{maximumFractionDigits:2}):v}</td></tr>`).join('')}</table></div>`;}
+  html+=`</div>`;
+
+  document.getElementById('modal-content').innerHTML=html;
+  document.getElementById('overlay').classList.add('open');
+
+  if(hasSeries){
+    const datasets=[];
+    if(bit.length>1)datasets.push({label:'Bitrate',data:toX(bit),borderColor:col,backgroundColor:col+'1f',
+      fill:true,stepped:true,pointRadius:0,pointHoverRadius:4,borderWidth:2,tension:0});
+    if(tp.length>1)datasets.push({label:'Throughput',data:toX(tp),borderColor:'#fdd663',backgroundColor:'transparent',
+      fill:false,pointRadius:0,pointHoverRadius:4,borderWidth:1.8,tension:.25});
+    new Chart(document.getElementById('mc-combined').getContext('2d'),{type:'line',data:{datasets},options:{
+      responsive:true,maintainAspectRatio:false,interaction:{mode:'x',intersect:false},
+      plugins:{legend:{display:true,labels:{boxWidth:12,padding:14,usePointStyle:true}},
+        tooltip:{filter:(item,i,arr)=>arr.findIndex(a=>a.datasetIndex===item.datasetIndex)===i,callbacks:{
+          title:items=>items.length?`${useTime?'t = '+items[0].parsed.x.toFixed(1)+' s':'sample '+Math.round(items[0].parsed.x)}`:'',
+          label:c=>`${c.dataset.label}: ${c.parsed.y.toLocaleString()} kbps`}}},
+      scales:{x:{type:'linear',title:{display:true,text:useTime?'time (s)':'sample',color:'#6b7177'},
+          ticks:{maxTicksLimit:12},grid:{color:'#3c404322'}},
+        y:{title:{display:true,text:'kbps',color:'#6b7177'},ticks:{callback:v=>v>=1000?(v/1000).toFixed(0)+'k':v},grid:{color:'#3c404333'}}},
+      animation:{duration:300}}});
+  }
+}
+function closeModal(){document.getElementById('overlay').classList.remove('open');}
+document.getElementById('overlay').addEventListener('click',e=>{if(e.target===document.getElementById('overlay'))closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+// ── upload ──
+function uploadDragOver(e){e.preventDefault();document.getElementById('upload-zone').classList.add('drag-over');}
+function uploadDragLeave(){document.getElementById('upload-zone').classList.remove('drag-over');}
+function uploadDrop(e){e.preventDefault();document.getElementById('upload-zone').classList.remove('drag-over');const f=e.dataTransfer.files[0];if(f)doUpload(f);}
+function uploadFile(e){const f=e.target.files[0];if(f)doUpload(f);e.target.value='';}
+async function doUpload(file){
+  const msg=document.getElementById('upload-msg');msg.style.color='var(--muted)';msg.textContent=`Uploading ${file.name}…`;
+  const fd=new FormData();fd.append('file',file);
+  const r=await fetch('/api/upload-trace',{method:'POST',body:fd}).then(r=>r.json());
+  if(r.error){msg.style.color='var(--red)';msg.textContent='✕ '+r.error;return;}
+  msg.style.color='var(--green)';msg.textContent=`✓ ${r.file} (${r.rows} rows)`;
+  await loadAll();const sel=document.getElementById('run-trace-set');if(sel){sel.value='uploaded';renderTraceList();}
+}
+// ── trace generator ──
+const MODEL_DEFS={
+  constant:{label:'Constant',ref:'Fixed bandwidth baseline — used in BOLA (Spiteri et al., INFOCOM 2016) and MPC (Yin et al., SIGCOMM 2015).',
+    params:[{id:'bw_kbps',label:'Bandwidth',unit:'kbps',type:'number',min:100,max:100000,step:100,def:5000},{id:'rtt_ms',label:'RTT',unit:'ms',type:'number',min:1,max:500,step:1,def:20}]},
+  step:{label:'Step',ref:'Square-wave alternation between two levels. Models sudden congestion; used in Pensieve traces (Mao et al., SIGCOMM 2017).',
+    params:[{id:'high_kbps',label:'High BW',unit:'kbps',type:'number',min:500,max:100000,step:500,def:10000},{id:'low_kbps',label:'Low BW',unit:'kbps',type:'number',min:100,max:20000,step:100,def:1000},{id:'period_s',label:'Period',unit:'s',type:'number',min:5,max:120,step:5,def:30},{id:'rtt_ms',label:'RTT',unit:'ms',type:'number',min:1,max:500,step:1,def:20}]},
+  sinusoidal:{label:'Sinusoidal',ref:'Smooth periodic oscillation modelling gradual congestion cycles. Used in Comyco (MM 2019) and RobustMPC.',
+    params:[{id:'min_kbps',label:'Min BW',unit:'kbps',type:'number',min:100,max:50000,step:100,def:1000},{id:'max_kbps',label:'Max BW',unit:'kbps',type:'number',min:500,max:100000,step:500,def:15000},{id:'period_s',label:'Period',unit:'s',type:'number',min:10,max:300,step:5,def:60},{id:'rtt_ms',label:'RTT',unit:'ms',type:'number',min:1,max:500,step:1,def:20}]},
+  markov:{label:'Markov',ref:'Markov-modulated discrete states with exponential holding times. Canonical ABR model from Mao et al., Pensieve, SIGCOMM 2017.',
+    params:[{id:'states_kbps',label:'States',unit:'kbps, comma-sep',type:'text',def:'500,1000,2000,4000,8000,16000'},{id:'mean_hold_s',label:'Mean hold',unit:'s',type:'number',min:0.5,max:30,step:0.5,def:5},{id:'rtt_ms',label:'RTT',unit:'ms',type:'number',min:1,max:500,step:1,def:20}]},
+  lognormal:{label:'Log-normal AR(1)',ref:'Autocorrelated log-normal process — best statistical match to empirical broadband. Comyco (MM 2019), Oboe (SIGCOMM 2018).',
+    params:[{id:'mean_kbps',label:'Mean BW',unit:'kbps',type:'number',min:100,max:100000,step:100,def:5000},{id:'std_kbps',label:'Std dev',unit:'kbps',type:'number',min:50,max:50000,step:50,def:2000},{id:'autocorr',label:'Autocorr',unit:'0–0.99',type:'number',min:0,max:0.99,step:0.01,def:0.8},{id:'rtt_ms',label:'RTT',unit:'ms',type:'number',min:1,max:500,step:1,def:20}]},
+  profile:{label:'3GPP Profile',ref:'Pre-calibrated profiles from 3GPP TR 38.901 (5G NR) and TR 36.942 (LTE/HSPA).',
+    params:[{id:'profile',label:'Network',unit:'',type:'select',def:'lte',options:[
+      {value:'3g',label:'3G UMTS (~750 kbps, 100ms)'},{value:'hspa',label:'HSPA+ (~3 Mbps, 70ms)'},{value:'lte',label:'4G LTE (~10 Mbps, 40ms)'},
+      {value:'lte_a',label:'LTE-Advanced (~30 Mbps, 30ms)'},{value:'5g_nr',label:'5G NR (~100 Mbps, 10ms)'},{value:'wifi',label:'WiFi 802.11ac (~50 Mbps, 5ms)'},{value:'satellite',label:'Satellite (~30 Mbps, 600ms)'}]}]},
 };
+let _activeModel='constant',_previewChart=null;
+function renderTracesPage(){
+  const tabs=document.getElementById('model-tabs');
+  if(!tabs.children.length){for(const [key,def] of Object.entries(MODEL_DEFS)){
+    const b=document.createElement('button');b.className='model-tab'+(key===_activeModel?' active':'');b.textContent=def.label;b.dataset.model=key;b.onclick=()=>setModel(key);tabs.appendChild(b);}}
+  setModel(_activeModel,false);renderSynthList();
+}
+function setModel(key){
+  _activeModel=key;
+  document.querySelectorAll('.model-tab').forEach(b=>b.classList.toggle('active',b.dataset.model===key));
+  const def=MODEL_DEFS[key];document.getElementById('model-ref').textContent=def.ref;
+  document.getElementById('model-params').innerHTML=def.params.map(p=>{
+    if(p.type==='select')return `<label>${p.label}</label><select id="tp-${p.id}" onchange="refreshPreview()">${p.options.map(o=>`<option value="${o.value}">${o.label}</option>`).join('')}</select><span class="unit"></span>`;
+    return `<label>${p.label}</label><input type="${p.type}" id="tp-${p.id}" value="${p.def}" ${p.min!=null?`min="${p.min}"`:''} ${p.max!=null?`max="${p.max}"`:''} ${p.step!=null?`step="${p.step}"`:''} oninput="refreshPreview()"><span class="unit">${p.unit}</span>`;
+  }).join('');
+  refreshPreview();
+}
+function getModelParams(){
+  const def=MODEL_DEFS[_activeModel];
+  const p={duration_s:+(document.getElementById('tgen-dur').value||120),interval_s:1.0};
+  for(const pd of def.params){const el=document.getElementById(`tp-${pd.id}`);if(!el)continue;p[pd.id]=pd.type==='number'?+el.value:el.value;}
+  return p;
+}
+function _randn(){const u1=Math.max(Math.random(),1e-12),u2=Math.random();return Math.sqrt(-2*Math.log(u1))*Math.cos(2*Math.PI*u2);}
+function _randexp(m){return -m*Math.log(Math.max(Math.random(),1e-12));}
+function computePreviewBW(model,params){
+  const dur=params.duration_s||120,iv=params.interval_s||1,n=Math.ceil(dur/iv)+1,bws=[];
+  if(model==='constant'){for(let i=0;i<n;i++)bws.push(params.bw_kbps||5000);}
+  else if(model==='step'){const hi=params.high_kbps||10000,lo=params.low_kbps||1000,per=params.period_s||30;for(let i=0;i<n;i++)bws.push((Math.floor(i*iv/per)%2===0)?hi:lo);}
+  else if(model==='sinusoidal'){const mn=params.min_kbps||1000,mx=params.max_kbps||15000,per=params.period_s||60,amp=(mx-mn)/2,ctr=(mx+mn)/2;for(let i=0;i<n;i++)bws.push(Math.max(50,ctr+amp*Math.sin(2*Math.PI*i*iv/per)));}
+  else if(model==='markov'){const states=String(params.states_kbps||'500,1000,2000,4000,8000').split(',').map(Number).filter(v=>v>0);const hold=params.mean_hold_s||5;let state=states[0],nextT=_randexp(hold);for(let i=0;i<n;i++){const t=i*iv;if(t>=nextT){const o=states.filter(s=>s!==state);state=o[Math.floor(Math.random()*o.length)]||state;nextT=t+_randexp(hold);}bws.push(state);}}
+  else if(model==='lognormal'||model==='profile'){let mean=params.mean_kbps||5000,std=params.std_kbps||2000,ac=params.autocorr??0.8;
+    if(model==='profile'){const P={'3g':[750,300,0.85],hspa:[3000,1200,0.85],lte:[10000,5000,0.85],lte_a:[30000,12000,0.82],'5g_nr':[100000,40000,0.80],wifi:[50000,10000,0.90],satellite:[30000,15000,0.75]};[mean,std,ac]=P[params.profile||'lte']||[10000,5000,0.85];}
+    const sigma2=Math.log(1+(std/mean)**2),mu=Math.log(mean)-sigma2/2,sigma=Math.sqrt(sigma2);let prev=mu;
+    for(let i=0;i<n;i++){const noise=_randn()*sigma*Math.sqrt(Math.max(0,1-ac**2));const lb=ac*prev+(1-ac)*mu+noise;bws.push(Math.max(50,Math.min(Math.exp(lb),mean*6)));prev=lb;}}
+  return bws;
+}
+function refreshPreview(){
+  const params=getModelParams(),bws=computePreviewBW(_activeModel,params),labels=bws.map((_,i)=>i);
+  const avg=Math.round(bws.reduce((a,b)=>a+b,0)/bws.length),mn=Math.round(Math.min(...bws)),mx=Math.round(Math.max(...bws));
+  document.getElementById('preview-stats').textContent=`avg ${(avg/1000).toFixed(1)} Mbps · min ${(mn/1000).toFixed(1)} · max ${(mx/1000).toFixed(1)}`;
+  const ctx=document.getElementById('preview-chart').getContext('2d');if(_previewChart)_previewChart.destroy();
+  _previewChart=new Chart(ctx,{type:'line',data:{labels,datasets:[{data:bws,borderColor:'#8ab4f8',backgroundColor:'#8ab4f815',fill:true,pointRadius:0,borderWidth:2,
+    stepped:['constant','step','markov'].includes(_activeModel),tension:0.3}]},
+    options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false}},
+      scales:{x:{display:false},y:{ticks:{callback:v=>v>=1000?(v/1000).toFixed(0)+'M':v+'k'},grid:{color:'#3c404333'}}}}});
+}
+async function generateTrace(){
+  const params=getModelParams(),name=document.getElementById('tgen-name').value.trim()||'',msg=document.getElementById('tgen-msg');
+  msg.textContent='Generating…';msg.style.color='var(--muted)';
+  const r=await fetch('/api/generate-trace',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:_activeModel,params,name})}).then(r=>r.json());
+  if(r.error){msg.textContent='✕ '+r.error;msg.style.color='var(--red)';return;}
+  const s=r.stats;msg.style.color='var(--green)';msg.textContent=`✓ Saved ${r.file} · avg ${(s.avg_bw/1000).toFixed(1)} Mbps · ${s.rows} samples`;
+  document.getElementById('tgen-name').value='';await loadAll();renderSynthList();
+}
+function renderSynthList(){
+  const el=document.getElementById('synth-list'),traces=allTraceSets['synthetic']?.traces||[];
+  if(!traces.length){el.innerHTML='<div class="dim" style="font-size:.82rem;padding:12px 0">No synthetic traces yet.</div>';return;}
+  el.innerHTML=traces.map(t=>`<div class="synth-item"><span class="si-name">${t.name}</span><button class="btn-ghost" style="font-size:.72rem;padding:5px 12px" onclick="deleteSynthTrace('${t.name}')">Delete</button></div>`).join('');
+}
+async function deleteSynthTrace(name){await fetch(`/api/synthetic-trace/${encodeURIComponent(name)}`,{method:'DELETE'});await loadAll();renderSynthList();}
 
-function chartOpts(unit) {
-  return {
-    responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { display: false },
-      tooltip: { callbacks: { label: ctx => `${ctx.parsed.y?.toLocaleString()} ${unit}` } } },
-    scales: {
-      x: { display: false },
-      y: { ticks: { color: '#506070', font:{size:10}, callback: v => v >= 1000 ? (v/1000).toFixed(0)+'k' : v },
-           grid: { color: '#1e2a3a' } },
-    },
-    animation: { duration: 200 },
-  };
+// ── conditions ──
+async function renderConditionsPage(){
+  if(!_netStats)_netStats=await fetch('/api/network-stats').then(r=>r.json());
+  renderCondSummary();renderCondHistograms();renderCondTraceTable();
+}
+function renderCondSummary(){
+  const COL={'5g-ireland':'#c58af9','starlink-2024':'#81c995','fcc':'#8ab4f8'};const order=['5g-ireland','starlink-2024','fcc'];
+  document.getElementById('cond-summary-row').innerHTML=order.filter(n=>_netStats[n]).map(n=>{const s=_netStats[n],col=COL[n]||'#e8eaed';
+    return `<div class="card" style="margin:0;border-top:3px solid ${col}"><div class="card-title" style="color:${col}">${s.label}</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+        <div><div class="fld-label">Avg BW</div><div style="font-size:1.5rem;font-weight:700">${fmbps(s.avg_bw)}</div><div class="dim" style="font-size:.72rem">median ${fmbps(s.median_bw)}</div></div>
+        <div><div class="fld-label">Variability</div><div style="font-size:1.5rem;font-weight:700;color:${s.cv>1?'var(--red)':s.cv>0.5?'var(--yellow)':'var(--green)'}">${(s.cv*100).toFixed(0)}%</div><div class="dim" style="font-size:.72rem">std ${fmbps(s.std_bw)}</div></div></div>
+      <table class="tbl" style="font-size:.76rem"><tr><td class="dim">Range</td><td class="r">${fmbps(s.min_bw)} – ${fmbps(s.max_bw)}</td></tr>
+        <tr><td class="dim">P10 / P90</td><td class="r">${fmbps(s.p10)} / ${fmbps(s.p90)}</td></tr>
+        <tr><td class="dim">Avg RTT</td><td class="r">${s.avg_rtt!=null?s.avg_rtt+' ms':'—'}</td></tr>
+        <tr><td class="dim">Traces</td><td class="r">${s.count}</td></tr></table></div>`;}).join('');
+}
+function renderCondHistograms(){
+  const COL={'5g-ireland':'#c58af9','starlink-2024':'#81c995','fcc':'#8ab4f8'};const order=['5g-ireland','starlink-2024','fcc'];
+  const nets=order.filter(n=>_netStats[n]),grid=document.getElementById('cond-hist-grid');
+  grid.style.gridTemplateColumns=nets.length===3?'repeat(3,1fr)':'1fr 1fr';
+  grid.innerHTML=nets.map(n=>`<div class="card" style="margin:0"><div class="card-title">${_netStats[n].label} — BW Distribution</div>
+    <div style="position:relative;height:170px"><canvas id="hist-${n}"></canvas></div></div>`).join('');
+  nets.forEach(n=>{const s=_netStats[n],col=COL[n]||'#8ab4f8';
+    const ctx=document.getElementById(`hist-${n}`)?.getContext('2d');if(!ctx)return;
+    new Chart(ctx,{type:'bar',data:{labels:s.histogram.map(b=>b.lo>=1000?(b.lo/1000).toFixed(0)+'k':b.lo),
+      datasets:[{data:s.histogram.map(b=>b.count),backgroundColor:col+'cc',borderColor:col,borderWidth:1,borderRadius:4}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.parsed.y} samples`}}},
+        scales:{x:{grid:{color:'#3c404322'}},y:{grid:{color:'#3c404333'}}},animation:{duration:250}}});});
+}
+function renderCondTraceTable(){
+  const fn=document.getElementById('cond-filter-net').value,order=['5g-ireland','starlink-2024','fcc'];
+  const L={'5g-ireland':'5G/4G Ireland','starlink-2024':'Starlink 2024','fcc':'FCC'};let rows=[];
+  for(const n of order){if(fn&&n!==fn)continue;if(!_netStats[n])continue;for(const t of _netStats[n].traces)rows.push({...t,net_label:L[n]});}
+  document.getElementById('cond-trace-body').innerHTML=rows.map(t=>`<tr>
+    <td style="font-family:'JetBrains Mono',monospace;font-size:.75rem">${t.name}</td><td class="dim" style="font-size:.76rem">${t.net_label}</td>
+    <td class="r">${fmbps(t.avg_bw)}</td><td class="r">${fmbps(t.median_bw)}</td><td class="r dim">${fmbps(t.min_bw)}</td><td class="r dim">${fmbps(t.max_bw)}</td>
+    <td class="r">${fmbps(t.std_bw)}</td><td class="r ${t.cv>1?'bad':t.cv>0.5?'warn':'good'}">${(t.cv*100).toFixed(0)}%</td>
+    <td class="r dim">${t.avg_rtt!=null?t.avg_rtt+' ms':'—'}</td></tr>`).join('')||'<tr><td colspan="9" class="empty">No traces.</td></tr>';
 }
 
-function mkBar(id, labels, data, label) {
-  if (charts[id]) charts[id].destroy();
-  const ctx = document.getElementById(id)?.getContext('2d');
-  if (!ctx) return;
-  charts[id] = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels,
-      datasets: [{ label, data,
-        backgroundColor: labels.map(p => (PC[p]||'#4f7cf7') + 'bb'),
-        borderColor:     labels.map(p => PC[p]||'#4f7cf7'),
-        borderWidth: 1, borderRadius: 5,
-      }],
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      ...CHART_DEFAULTS,
-      scales: {
-        x: { ticks: { color: '#506070', font:{size:10} }, grid: { color: '#1e2a3a40' } },
-        y: { ticks: { color: '#506070', font:{size:10}, callback: v => v>=1000?(v/1000).toFixed(0)+'k':v },
-             grid: { color: '#1e2a3a' } },
-      },
-    },
-  });
+// ── chart helpers ──
+function chartOpts(unit){return{responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.parsed.y?.toLocaleString()} ${unit}`}}},
+  scales:{x:{display:false},y:{ticks:{callback:v=>v>=1000?(v/1000).toFixed(0)+'k':v},grid:{color:'#3c404333'}}},animation:{duration:200}};}
+function mkBar(id,protos,data){
+  if(charts[id])charts[id].destroy();
+  const ctx=document.getElementById(id)?.getContext('2d');if(!ctx)return;
+  charts[id]=new Chart(ctx,{type:'bar',data:{labels:protos.map(p=>PLABEL[p]||p),
+    datasets:[{data,backgroundColor:protos.map(p=>(PC[p]||'#8ab4f8')+'cc'),borderColor:protos.map(p=>PC[p]||'#8ab4f8'),borderWidth:1,borderRadius:6}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      scales:{x:{grid:{color:'#3c404322'}},y:{ticks:{callback:v=>v>=1000?(v/1000).toFixed(0)+'k':v},grid:{color:'#3c404333'}}},animation:{duration:300}}});
 }
 
-function mkGroupedBar(id, labels, datasets) {
-  if (charts[id]) charts[id].destroy();
-  const ctx = document.getElementById(id)?.getContext('2d');
-  if (!ctx) return;
-  charts[id] = new Chart(ctx, {
-    type: 'bar',
-    data: { labels, datasets },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: true, labels: { color: '#506070', font:{size:10}, boxWidth:10, padding:14 } } },
-      scales: {
-        x: { ticks: { color: '#506070', font:{size:9} }, grid: { color: '#1e2a3a40' } },
-        y: { ticks: { color: '#506070', font:{size:10}, callback: v => v>=1000?(v/1000).toFixed(0)+'k':v },
-             grid: { color: '#1e2a3a' } },
-      },
-      animation: { duration: 300 },
-    },
-  });
-}
-
-// ── utils ─────────────────────────────────────────────────────────────────────
-function f(v, dec=0) {
-  if (v == null || isNaN(v)) return '<span class="dim">—</span>';
-  return v.toLocaleString(undefined, {minimumFractionDigits:dec, maximumFractionDigits:dec});
-}
-
-// ── init ──────────────────────────────────────────────────────────────────────
-buildToggles();
-loadAll();
-setInterval(loadAll, 20000);
+// ── init ──
+buildArena();
+loadAll().then(()=>{renderOverview();});
+setInterval(()=>{const a=document.querySelector('.nav-item.active');if(a&&a.dataset.page==='progress')return;loadAll();},20000);
 </script>
 </body>
 </html>

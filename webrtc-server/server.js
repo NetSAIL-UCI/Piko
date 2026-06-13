@@ -78,14 +78,16 @@ const plainTransportOptions = {
 };
 
 // Simulcast layer definitions (low → high = spatialLayer 0 → 5)
-// 6-layer ladder aligned with SOTA research (Pensieve SIGCOMM '17): 300, 750, 1200, 1850, 2850, 4300 kbps
+// 6-layer ladder with min/max matching the DASH server encoding ladder
+// (100 / 4500 kbps) so WebRTC, MOQ and DASH/HLS all select rungs over the
+// same 100..4500 kbps range: 100, 600, 1200, 2000, 3000, 4500 kbps.
 const SIMULCAST_LAYERS = [
-  { ssrc: 22222220, resolution: '426x240',   bitrate: '300k',  maxBitrate: '300k',  bufsize: '600k',  label: '240p' },
-  { ssrc: 22222221, resolution: '640x360',   bitrate: '750k',  maxBitrate: '750k',  bufsize: '1500k', label: '360p' },
+  { ssrc: 22222220, resolution: '426x240',   bitrate: '100k',  maxBitrate: '100k',  bufsize: '200k',  label: '240p' },
+  { ssrc: 22222221, resolution: '640x360',   bitrate: '600k',  maxBitrate: '600k',  bufsize: '1200k', label: '360p' },
   { ssrc: 22222222, resolution: '854x480',   bitrate: '1200k', maxBitrate: '1200k', bufsize: '2400k', label: '480p' },
-  { ssrc: 22222223, resolution: '1024x576',  bitrate: '1850k', maxBitrate: '1850k', bufsize: '3700k', label: '576p' },
-  { ssrc: 22222224, resolution: '1280x720',  bitrate: '2850k', maxBitrate: '2850k', bufsize: '5700k', label: '720p' },
-  { ssrc: 22222225, resolution: '1920x1080', bitrate: '4300k', maxBitrate: '4300k', bufsize: '8600k', label: '1080p' },
+  { ssrc: 22222223, resolution: '1024x576',  bitrate: '2000k', maxBitrate: '2000k', bufsize: '4000k', label: '576p' },
+  { ssrc: 22222224, resolution: '1280x720',  bitrate: '3000k', maxBitrate: '3000k', bufsize: '6000k', label: '720p' },
+  { ssrc: 22222225, resolution: '1920x1080', bitrate: '4500k', maxBitrate: '4500k', bufsize: '9000k', label: '1080p' },
 ];
 
 // Global state

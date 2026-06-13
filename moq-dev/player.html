@@ -2,11 +2,12 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>MOQ2 Player</title>
+<title>MOQ2 Player (ABR)</title>
 <style>
 body { margin: 0; background: #111; color: #eee; font-family: monospace; }
 video { width: 100%; max-height: 60vh; display: block; background: #000; }
-#status { padding: 8px 12px; font-size: 13px; }
+#status { padding: 8px 12px; font-size: 13px; line-height: 1.5; }
+b { color: #6cf; }
 </style>
 </head>
 <body>
@@ -41,177 +42,296 @@ if (!Promise.any) {
 <script type="module">
 import { Moq } from '/moq-bundle.js';
 
-const RELAY_URL  = 'http://127.0.0.1:4446';
-const BROADCAST  = 'video';
-const CATALOG_TK = 'catalog.json';
-const VIDEO_TK   = 'video0.m4s';
+// ── Config (driven by the publisher / benchmark via query params) ──────────
+const params     = new URLSearchParams(location.search);
+const RELAY_URL   = params.get('relay') || 'http://127.0.0.1:4446';
+// targetLatency is THE single dial: every threshold below scales off it.
+const TARGET_LATENCY_MS = parseInt(params.get('targetLatency') || '3000', 10);
+const TL = TARGET_LATENCY_MS / 1000;  // seconds
+
+// Ladder of renditions ascending by bitrate: [{name, sid, kbps}, ...]
+let LADDER = [];
+try { LADDER = JSON.parse(params.get('ladder') || '[]'); } catch (e) { LADDER = []; }
+if (!LADDER.length) LADDER = [{ name: 'video', kbps: 0 }];   // fallback: single track
+LADDER.sort((a, b) => a.kbps - b.kbps);
+
+// ABR thresholds, all derived from targetLatency (Erik Herz's scheme):
+const ABR_DOWN_FRAC = 0.30;   // switch down if buffer < 30% of TL
+const ABR_UP_FRAC   = 1.50;   // switch up   if buffer > 150% of TL ...
+const ABR_UP_HOLD_MS = 5000;  //             ... sustained for 5 s
+const STALE_FRAC    = 1.50;   // drop fragments arriving > 1.5x TL behind live edge
+const SEEK_DRIFT_S  = 0.20;   // auto-seek to live edge if drift > 200 ms
 
 // ── Metrics exposed to Playwright ─────────────────────────────────────────
-window.__rebufferCount      = 0;
-window.__rebufferDurations  = [];
-window.__throughputSamples  = [];
-window.__playbackEnded      = false;
-window.__moq2StartupMs      = null;
+window.__rebufferCount     = 0;
+window.__rebufferDurations = [];
+window.__playbackEnded     = false;
+window.__moq2StartupMs     = null;
+window.__bytesDownloaded   = 0;     // delivered goodput (real, not link capacity)
+window.__qualitySwitches   = 0;
+window.__switchesUp        = 0;
+window.__switchesDown      = 0;
+window.__droppedFragments  = 0;
+window.__currentKbps       = 0;
+window.__renditionTimeline = [];    // [{t, kbps}]
+window.__liveLatencySamples = [];   // ms, distance behind live edge
 
-// ── Stall tracking ────────────────────────────────────────────────────────
-const video = document.getElementById('video');
+// ── State ──────────────────────────────────────────────────────────────────
+const video    = document.getElementById('video');
 const statusEl = document.getElementById('status-text');
-let stallStart = null;
+let curIdx     = Math.max(0, Math.floor(LADDER.length / 2)); // start mid-ladder
+let switchSeq  = 0;          // bumped on every switch to break the read loop
+let activeTrack = null;      // currently subscribed data track (closed on switch)
+let latestBDT  = 0;          // newest media decode time seen (seconds) = live edge
+let sb         = null;
+let ended      = false;
 
+// ── Stall tracking ──────────────────────────────────────────────────────────
+let stallStart = null;
 video.addEventListener('waiting', () => {
-  if (stallStart === null) {
-    stallStart = performance.now();
-    statusEl.textContent = 'Buffering…';
-  }
+  if (stallStart === null) { stallStart = performance.now(); }
 });
 video.addEventListener('playing', () => {
   if (stallStart !== null) {
-    const dur = performance.now() - stallStart;
     window.__rebufferCount++;
-    window.__rebufferDurations.push(dur);
+    window.__rebufferDurations.push(performance.now() - stallStart);
     stallStart = null;
-    statusEl.textContent = 'Playing';
   }
 });
 
 // ── MSE helpers ───────────────────────────────────────────────────────────
-function waitUpdateEnd(sb) {
-  if (!sb.updating) return Promise.resolve();
-  return new Promise(r => sb.addEventListener('updateend', r, { once: true }));
+function waitUpdateEnd(buf) {
+  if (!buf.updating) return Promise.resolve();
+  return new Promise(r => buf.addEventListener('updateend', r, { once: true }));
+}
+async function appendBuffer(buf, data) {
+  await waitUpdateEnd(buf);
+  buf.appendBuffer(data);
+  await waitUpdateEnd(buf);
+}
+function bufferLevel() {
+  if (!sb || !sb.buffered.length) return 0;
+  return Math.max(0, sb.buffered.end(sb.buffered.length - 1) - video.currentTime);
 }
 
-async function appendBuffer(sb, data) {
-  await waitUpdateEnd(sb);
-  sb.appendBuffer(data);
-  await waitUpdateEnd(sb);
+// ── mp4 box parsing: timescale (from init) + tfdt baseMediaDecodeTime ───────
+function readU32(u8, o) {
+  return (u8[o] * 0x1000000) + (u8[o + 1] << 16) + (u8[o + 2] << 8) + u8[o + 3];
+}
+function fourccAt(u8, o, a, b, c, d) {
+  return u8[o] === a && u8[o + 1] === b && u8[o + 2] === c && u8[o + 3] === d;
+}
+function parseTimescale(u8) {            // 'mdhd' -> timescale
+  for (let i = 0; i + 24 <= u8.length; i++) {
+    if (fourccAt(u8, i, 0x6d, 0x64, 0x68, 0x64)) {          // m d h d
+      const version = u8[i + 4];
+      let off = i + 8 + (version === 1 ? 16 : 8);           // skip creation/modification
+      return readU32(u8, off);
+    }
+  }
+  return 0;
+}
+function parseBDT(u8, timescale) {       // 'tfdt' -> baseMediaDecodeTime (seconds)
+  if (!timescale) return null;
+  for (let i = 0; i + 16 <= u8.length; i++) {
+    if (fourccAt(u8, i, 0x74, 0x66, 0x64, 0x74)) {          // t f d t
+      const version = u8[i + 4];
+      const off = i + 8;
+      const val = version === 1
+        ? readU32(u8, off) * 4294967296 + readU32(u8, off + 4)
+        : readU32(u8, off);
+      return val / timescale;
+    }
+  }
+  return null;
 }
 
-// ── Main playback loop ────────────────────────────────────────────────────
+// ── Rendition switching ─────────────────────────────────────────────────────
+function setQuality(idx) {
+  window.__currentKbps = LADDER[idx].kbps || 0;
+  window.__renditionTimeline.push({ t: performance.now(), kbps: window.__currentKbps });
+}
+function switchTo(idx) {
+  if (idx === curIdx || idx < 0 || idx >= LADDER.length || ended) return;
+  if (idx > curIdx) window.__switchesUp++; else window.__switchesDown++;
+  window.__qualitySwitches++;
+  curIdx = idx;
+  switchSeq++;
+  setQuality(idx);
+  // Force the blocked readFrame() to unblock so the loop re-subscribes now.
+  if (activeTrack) { try { activeTrack.close(); } catch (e) {} }
+}
+
+// ── ABR controller: scale decisions off targetLatency ───────────────────────
+let highBufStart = null;
+function abrTick() {
+  if (ended || LADDER.length < 2) return;
+  const buf = bufferLevel();
+  if (buf < ABR_DOWN_FRAC * TL && curIdx > 0) {
+    switchTo(curIdx - 1);                       // falling behind -> drop quality
+    highBufStart = null;
+  } else if (buf > ABR_UP_FRAC * TL && curIdx < LADDER.length - 1) {
+    if (highBufStart === null) highBufStart = performance.now();
+    else if (performance.now() - highBufStart >= ABR_UP_HOLD_MS) {
+      switchTo(curIdx + 1);                      // comfortably full 5s -> step up
+      highBufStart = null;
+    }
+  } else {
+    highBufStart = null;
+  }
+}
+
+// ── Live-edge management: keep playhead ~targetLatency behind the edge ───────
+function liveEdgeTick() {
+  if (ended || !sb || !sb.buffered.length) return;
+  const edge   = sb.buffered.end(sb.buffered.length - 1);
+  const behind = edge - video.currentTime;
+  window.__liveLatencySamples.push(behind * 1000);
+  const target = edge - TL;
+  if (target > 0 && (video.currentTime < target - SEEK_DRIFT_S)) {
+    try { video.currentTime = target; } catch (e) {}   // jump forward to live
+  }
+  const statusKbps = window.__currentKbps;
+  statusEl.innerHTML =
+    `<b>${statusKbps}k</b> · buffer ${behind.toFixed(1)}s · target ${TL.toFixed(1)}s · ` +
+    `switches ${window.__qualitySwitches} (↑${window.__switchesUp}/↓${window.__switchesDown}) · ` +
+    `dropped ${window.__droppedFragments}`;
+}
+
+// ── Load a rendition's catalog -> build its CMAF init + timescale ───────────
+async function loadRendition(conn, rend) {
+  const broadcast = conn.consume(rend.name);
+  const catalogTrack = broadcast.subscribe('catalog.json', Moq.Catalog.PRIORITY.catalog);
+  const catalog = await Moq.Catalog.fetch(catalogTrack);
+  catalogTrack.close();
+  if (!catalog || !catalog.video) throw new Error('no video in catalog for ' + rend.name);
+  const renditions = catalog.video.renditions;
+  const trackName = Object.keys(renditions)[0];
+  const cfg = renditions[trackName];
+  if (cfg.container?.kind !== 'cmaf') throw new Error('expected cmaf, got ' + cfg.container?.kind);
+  const init = Moq.Container.Cmaf.createVideoInitSegment(cfg);
+  return {
+    broadcast, trackName, config: cfg,
+    init, mime: `video/mp4; codecs="${cfg.codec}"`,
+    timescale: parseTimescale(new Uint8Array(init)),
+  };
+}
+
+// ── Main ────────────────────────────────────────────────────────────────────
 async function main() {
   statusEl.textContent = 'Connecting…';
-
   let conn;
   try {
     conn = await Moq.Moq.Connection.connect(new URL(RELAY_URL));
-    statusEl.textContent = 'Connected';
   } catch (e) {
     statusEl.textContent = 'Connection failed: ' + e.message;
-    console.error('connect failed', e);
     return;
   }
 
-  // Consume the broadcast
-  const broadcast = conn.consume(BROADCAST);
+  // Load every rendition's catalog/init up front so switches are instant.
+  const rends = {};
+  for (const r of LADDER) {
+    try { rends[r.name] = await loadRendition(conn, r); }
+    catch (e) { console.warn('rendition unavailable', r.name, e.message); }
+  }
+  const usable = LADDER.filter(r => rends[r.name]);
+  if (!usable.length) { statusEl.textContent = 'No renditions available'; return; }
+  // Re-point LADDER to only usable rungs (keeps indices valid).
+  LADDER.length = 0; usable.forEach(r => LADDER.push(r));
+  curIdx = Math.max(0, Math.floor(LADDER.length / 2));
 
-  // Subscribe to catalog track to get video config
-  const catalogTrack = broadcast.subscribe(CATALOG_TK, Moq.Catalog.PRIORITY.catalog);
-  statusEl.textContent = 'Loading catalog…';
-
-  let catalog;
-  try {
-    catalog = await Moq.Catalog.fetch(catalogTrack);
-    catalogTrack.close();
-  } catch (e) {
-    statusEl.textContent = 'Catalog error: ' + e.message;
-    console.error('catalog error', e);
+  // MSE setup using the starting rendition's codec.
+  const startMime = rends[LADDER[curIdx].name].mime;
+  if (!MediaSource.isTypeSupported(startMime)) {
+    statusEl.textContent = 'Codec not supported: ' + startMime;
     return;
   }
-
-  if (!catalog || !catalog.video) {
-    statusEl.textContent = 'No video in catalog';
-    console.error('no video in catalog', catalog);
-    return;
-  }
-
-  // Get first video rendition
-  const renditions = catalog.video.renditions;
-  const trackNames = Object.keys(renditions);
-  if (trackNames.length === 0) {
-    statusEl.textContent = 'No video renditions';
-    return;
-  }
-  const trackName = trackNames[0];
-  const videoConfig = renditions[trackName];
-  console.log('video config', trackName, videoConfig);
-
-  if (videoConfig.container?.kind !== 'cmaf') {
-    statusEl.textContent = 'Expected CMAF container, got: ' + videoConfig.container?.kind;
-    return;
-  }
-
-  // Build fMP4 init segment from catalog config
-  let initSegment;
-  try {
-    initSegment = Moq.Container.Cmaf.createVideoInitSegment(videoConfig);
-  } catch (e) {
-    statusEl.textContent = 'Init segment error: ' + e.message;
-    console.error('init segment error', e);
-    return;
-  }
-
-  // Set up MSE
   const mediaSource = new MediaSource();
   video.src = URL.createObjectURL(mediaSource);
-
   await new Promise(r => mediaSource.addEventListener('sourceopen', r, { once: true }));
-
-  const mimeType = `video/mp4; codecs="${videoConfig.codec}"`;
-  if (!MediaSource.isTypeSupported(mimeType)) {
-    statusEl.textContent = 'Codec not supported: ' + mimeType;
-    return;
-  }
-
-  const sb = mediaSource.addSourceBuffer(mimeType);
+  sb = mediaSource.addSourceBuffer(startMime);
   sb.mode = 'sequence';
 
-  // Append init segment
-  await appendBuffer(sb, initSegment);
+  setQuality(curIdx);
   statusEl.textContent = 'Receiving…';
 
-  // Subscribe to video data track
-  const dataTrack = broadcast.subscribe(trackName, Moq.Catalog.PRIORITY.video);
+  // Kick off the periodic controllers.
+  const abrTimer  = setInterval(abrTick, 1000);
+  const edgeTimer = setInterval(liveEdgeTick, 250);
 
   let firstFrame = true;
   const connectTime = performance.now();
+  let lastMime = startMime;
 
   try {
-    for (;;) {
-      const frame = await dataTrack.readFrame();
-      if (!frame) break;
+    // Outer loop: each iteration plays the currently-selected rendition until a
+    // switch is requested (switchSeq bumped + activeTrack.close()), then re-subs.
+    while (!ended) {
+      const R = rends[LADDER[curIdx].name];
+      const mySeq = switchSeq;
 
-      if (firstFrame) {
-        firstFrame = false;
-        window.__moq2StartupMs = performance.now() - connectTime;
-        statusEl.textContent = 'Playing';
-        video.play().catch(() => {});
-      }
-
+      // Reconfigure SourceBuffer for this rendition (resolution/level changes).
       try {
-        await appendBuffer(sb, frame);
-      } catch (e) {
-        console.warn('appendBuffer error', e);
-      }
+        if (sb.updating) await waitUpdateEnd(sb);
+        if (R.mime !== lastMime) { sb.changeType(R.mime); lastMime = R.mime; }
+      } catch (e) { /* changeType unsupported -> best effort */ }
+      try { await appendBuffer(sb, R.init); } catch (e) {}
 
-      // Trim old buffered data to prevent memory growth
-      if (sb.buffered.length > 0 && video.currentTime > 15 && !sb.updating) {
-        try {
-          sb.remove(0, video.currentTime - 10);
-          await waitUpdateEnd(sb);
-        } catch (e) { /* ignore trim errors */ }
-      }
+      activeTrack = R.broadcast.subscribe(R.trackName, Moq.Catalog.PRIORITY.video);
+      try {
+        for (;;) {
+          const frame = await activeTrack.readFrame();
+          if (!frame) break;                 // track ended
+          if (mySeq !== switchSeq) break;    // a switch was requested
+          if (ended) break;
+
+          window.__bytesDownloaded += frame.byteLength;
+
+          // Stale-fragment drop: skip anything > 1.5x TL behind the live edge.
+          const u8  = new Uint8Array(frame);
+          const bdt = parseBDT(u8, R.timescale);
+          if (bdt != null) {
+            if (bdt > latestBDT) latestBDT = bdt;
+            if (latestBDT - bdt > STALE_FRAC * TL) {
+              window.__droppedFragments++;
+              continue;
+            }
+          }
+
+          try { await appendBuffer(sb, frame); }
+          catch (e) { /* QuotaExceeded etc. -> rely on trim/seek */ }
+
+          if (firstFrame) {
+            firstFrame = false;
+            window.__moq2StartupMs = performance.now() - connectTime;
+            video.play().catch(() => {});
+          }
+
+          // Trim old data to cap memory.
+          if (sb.buffered.length > 0 && video.currentTime > 15 && !sb.updating) {
+            try { sb.remove(0, video.currentTime - 10); await waitUpdateEnd(sb); }
+            catch (e) {}
+          }
+        }
+      } catch (e) { /* readFrame threw (often due to our close on switch) */ }
+
+      try { activeTrack.close(); } catch (e) {}
+      activeTrack = null;
     }
-  } catch (e) {
-    console.warn('track ended', e);
+  } finally {
+    clearInterval(abrTimer);
+    clearInterval(edgeTimer);
   }
 
   window.__playbackEnded = true;
   statusEl.textContent = 'Done';
-  conn.close();
+  try { conn.close(); } catch (e) {}
 }
 
 main().catch(e => {
   console.error('fatal', e);
-  document.getElementById('status-text').textContent = 'Error: ' + e.message;
+  statusEl.textContent = 'Error: ' + e.message;
+  window.__playbackEnded = true;
 });
 </script>
 </body>

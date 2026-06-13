@@ -20,6 +20,7 @@ import os
 import time
 import sys
 import math
+import shlex
 import shutil
 import subprocess
 import requests
@@ -385,6 +386,20 @@ class DASHManifestParser:
         return 0
 
 
+# ── Shared ABR ladder ────────────────────────────────────────────────────────
+# Single source of truth for the rung-based protocols (WebRTC simulcast + MOQ).
+# All of them select the highest rung that fits 90% of the available bandwidth
+# and report THAT rung as their bitrate, so "which rung am I on" is measured
+# identically across protocols. Min/max (100 / 4500 kbps) match the DASH server
+# encoding ladder, and DASH/HLS/LL-DASH already report their selected
+# representation (a rung) over the same 100..4500 range.
+ABR_LADDER_KBPS = [100, 600, 1200, 2000, 3000, 4500]
+
+# MOQ rung -> content stream id (init/chunk-stream<sid>) whose nominal bitrate
+# matches each ABR_LADDER_KBPS entry. Lengths/order must align with the ladder.
+MOQ_LADDER_SIDS = [0, 3, 5, 7, 8, 9]
+
+
 class DASHJSBenchmark:
     """DASH benchmark using a real dash.js player in a headless Chromium browser."""
 
@@ -559,7 +574,12 @@ class DASHJSBenchmark:
 
                 # 3) Replace the fragile throughput handler with one that
                 #    tries multiple field-name fallbacks used by different
-                #    dash.js versions.
+                #    dash.js versions, and accumulates a cumulative
+                #    downloaded-bytes counter. The Python poll loop samples
+                #    that counter to compute *delivered goodput* (bytes on the
+                #    wire per wall-second) — the same methodology WebRTC uses
+                #    for throughput — so throughput is comparable to bitrate
+                #    instead of reporting the raw trace capacity.
                 html = _re.sub(
                     r'player\.on\(dashjs\.MediaPlayer\.events\.FRAGMENT_LOADING_COMPLETED.*?\}\);',
                     (
@@ -567,6 +587,8 @@ class DASHJSBenchmark:
                         "      const req = e.request;\n"
                         "      if (!req || req.mediaType !== 'video') return;\n"
                         "      const bytes = req.bytesLoaded || req.bytesTotal || req.bytes || 0;\n"
+                        "      if (bytes > 0)\n"
+                        "        window.__bytesDownloaded = (window.__bytesDownloaded || 0) + bytes;\n"
                         "      const startDate = req.requestStartDate || req.trequest;\n"
                         "      const endDate   = req.requestEndDate   || req.tresponse;\n"
                         "      if (!startDate || !endDate) return;\n"
@@ -622,6 +644,11 @@ class DASHJSBenchmark:
             poll_interval = 0.5
             playback_start = time.perf_counter()
             last_print = 0.0
+            # Delivered-goodput throughput: media bytes delivered / wall-time
+            # over the measurement window, comparable to the played bitrate
+            # (unlike the raw trace capacity). Baselined on the first poll.
+            base_dl_bytes = None
+            base_tp_time = None
 
             while True:
                 elapsed = time.perf_counter() - playback_start
@@ -644,37 +671,29 @@ class DASHJSBenchmark:
                 except Exception:
                     buffer_samples.append(0.0)
 
-                # Throughput = trace bandwidth (the tc/netem ceiling).
-                # Player-measured burst download speed is misleading on high-BW
-                # traces; the trace value is the true maximum available.
-                trace_bw = self._trace_bandwidth_at(elapsed)
-                if trace_bw is not None:
-                    throughput_samples.append(float(trace_bw))
+                # Throughput = delivered goodput: media bytes delivered per
+                # wall-second over the measurement window. This is the same
+                # idea as WebRTC's transport throughput, so it's comparable to
+                # the played bitrate instead of reporting the raw link capacity.
+                # (The link capacity is recorded separately as trace_bandwidth.)
+                try:
+                    cum_dl = page.evaluate("window.__bytesDownloaded || 0")
+                except Exception:
+                    cum_dl = None
+                if cum_dl is not None:
+                    now_tp = time.perf_counter()
+                    if base_dl_bytes is None:
+                        base_dl_bytes = float(cum_dl)
+                        base_tp_time = now_tp
+                    else:
+                        span = now_tp - base_tp_time
+                        delivered = float(cum_dl) - base_dl_bytes
+                        if span >= 1.0 and delivered >= 0:
+                            throughput_samples.append(delivered * 8 / 1000 / span)
 
-                # Inject asymmetric EMA bandwidth cap into BOLA every ~3 s.
-                # 0.85 safety factor keeps selected quality below available BW.
-                if trace_bw is not None:
-                    safety = 0.85
-                    try:
-                        page.evaluate(f"""(() => {{
-                            const bw = {trace_bw};
-                            const safety = {safety};
-                            if (!window.__bwEma) window.__bwEma = bw;
-                            const alpha = bw < window.__bwEma ? 0.5 : 0.1;
-                            window.__bwEma = alpha * bw + (1 - alpha) * window.__bwEma;
-                            const now = Date.now();
-                            if (!window.__lastCapMs || now - window.__lastCapMs >= 3000) {{
-                                const cap = Math.max(100, Math.round(window.__bwEma * safety));
-                                if (window.dashPlayer && typeof window.dashPlayer.updateSettings === 'function') {{
-                                    window.dashPlayer.updateSettings({{
-                                        streaming: {{ abr: {{ maxBitrate: {{ video: cap }} }} }}
-                                    }});
-                                }}
-                                window.__lastCapMs = now;
-                            }}
-                        }})()""")
-                    except Exception:
-                        pass
+                # Available link bandwidth from the trace (metrics only — BOLA
+                # adapts from segment download timing + buffer, Pensieve-style).
+                trace_bw = self._trace_bandwidth_at(elapsed)
 
                 # Progress print every 10s
                 if elapsed - last_print >= 10:
@@ -975,10 +994,22 @@ class HLSBenchmark:
             self.metrics.startup_delay_ms = (time.time() - startup_start) * 1000
             print(f"   Startup delay: {self.metrics.startup_delay_ms:.0f}ms\n")
 
+            # Enlarge the resource-timing buffer so we can sum delivered bytes
+            # over the whole run without entries being evicted.
+            try:
+                page.evaluate("performance.setResourceTimingBufferSize(1000000)")
+            except Exception:
+                pass
+
             print("[PLAYBACK] Collecting metrics...")
             poll_interval = 0.5
             playback_start = time.perf_counter()
             last_print = 0.0
+            # Delivered-goodput throughput: media bytes delivered / wall-time
+            # over the measurement window, comparable to the played bitrate.
+            # Baselined on the first poll.
+            base_dl_bytes = None
+            base_tp_time = None
 
             while True:
                 elapsed = time.perf_counter() - playback_start
@@ -1008,10 +1039,33 @@ class HLSBenchmark:
                 except Exception:
                     buffer_samples.append(0.0)
 
-                # Throughput = trace bandwidth (tc/netem ceiling), same as DASH.
+                # Throughput = delivered goodput: media bytes delivered per
+                # wall-second over the measurement window, comparable to the
+                # played bitrate (not the raw link capacity). Bytes come from
+                # the Performance Resource Timing API (player-agnostic).
+                # (The link capacity is recorded separately as trace_bandwidth.)
+                try:
+                    cum_dl = page.evaluate(
+                        "(() => { let t = 0; "
+                        "for (const e of performance.getEntriesByType('resource')) "
+                        "  if (/\\.(m4s|ts|mp4|cmf[vt])(\\?|$)/i.test(e.name)) "
+                        "    t += (e.transferSize || e.encodedBodySize || 0); "
+                        "return t; })()"
+                    )
+                except Exception:
+                    cum_dl = None
+                if cum_dl is not None:
+                    now_tp = time.perf_counter()
+                    if base_dl_bytes is None:
+                        base_dl_bytes = float(cum_dl)
+                        base_tp_time = now_tp
+                    else:
+                        span = now_tp - base_tp_time
+                        delivered = float(cum_dl) - base_dl_bytes
+                        if span >= 1.0 and delivered >= 0:
+                            throughput_samples.append(delivered * 8 / 1000 / span)
+
                 trace_bw = self._trace_bandwidth_at(elapsed)
-                if trace_bw is not None:
-                    throughput_samples.append(float(trace_bw))
 
                 if elapsed - last_print >= 10:
                     br_str = ""
@@ -1697,7 +1751,29 @@ class WebRTCBenchmark:
             
             current_time = time.time()
             elapsed = current_time - prev_time
-            
+
+            # Record trace available bandwidth at this point in time. Computed
+            # up-front so we can clamp bitrate/throughput to it: mediasoup's
+            # server-side stats report the encoder/simulcast bitrate, which can
+            # exceed the shaped link — but delivered media can never exceed the
+            # actual available bandwidth, so we cap every sample at trace_bw.
+            trace_bw = self._trace_bandwidth_at(current_time - bench_start)
+            if trace_bw is not None:
+                self.trace_bandwidth_samples.append(trace_bw)
+
+            # ── Rung-based bitrate ───────────────────────────────────────────
+            # Pick the highest ABR ladder rung that fits 90% of the available
+            # bandwidth (identical rule + ladder as MOQ) and report THAT rung as
+            # the bitrate. Because the rung is chosen under the link, WebRTC's
+            # reported bitrate can never exceed the available bandwidth.
+            target_layer = 0
+            if trace_bw is not None:
+                usable_kbps = trace_bw * 0.9
+                for _i, _max in enumerate(ABR_LADDER_KBPS):
+                    if _max <= usable_kbps:
+                        target_layer = _i
+                self.metrics.bitrate_samples.append(ABR_LADDER_KBPS[target_layer])
+
             # Get stats from server (mediasoup side)
             _server_layer = -1
             try:
@@ -1716,7 +1792,10 @@ class WebRTCBenchmark:
                         )
                         if transport_bytes > prev_transport_bytes and elapsed > 0:
                             tp_bps = (transport_bytes - prev_transport_bytes) * 8 / elapsed
-                            self.metrics.throughput_samples.append(tp_bps / 1000)
+                            tp_kbps = tp_bps / 1000
+                            if trace_bw is not None:
+                                tp_kbps = min(tp_kbps, trace_bw)
+                            self.metrics.throughput_samples.append(tp_kbps)
                         prev_transport_bytes = max(transport_bytes, prev_transport_bytes)
                         # BWE estimate
                         bwe_kbps = t_entry.get('availableOutgoingBitrate', 0) / 1000
@@ -1737,15 +1816,11 @@ class WebRTCBenchmark:
                             or stat_entry.get('bytesReceived', 0)
                         )
 
-                        if server_bitrate > 0:
-                            bitrate_kbps = server_bitrate / 1000
-                            self.metrics.bitrate_samples.append(int(bitrate_kbps))
-                        elif byte_count > prev_consumer_bytes:
-                            bitrate_bps = (byte_count - prev_consumer_bytes) * 8 / elapsed
-                            bitrate_kbps = bitrate_bps / 1000
-                            self.metrics.bitrate_samples.append(int(bitrate_kbps))
-
-                        prev_consumer_bytes = byte_count if byte_count > prev_consumer_bytes else prev_consumer_bytes
+                        # Bitrate is recorded from the selected ABR ladder rung
+                        # at the top of the loop — NOT from the encoder/simulcast
+                        # stats here (those report the produced rate, which can
+                        # exceed the link). We keep reading the other QoS fields.
+                        prev_consumer_bytes = max(byte_count, prev_consumer_bytes)
 
                         jitter = stat_entry.get('jitter', 0)
                         if jitter:
@@ -1782,22 +1857,12 @@ class WebRTCBenchmark:
                 # This is normal if producer isn't streaming
                 pass
             
-            # Record trace available bandwidth at this point in time
-            trace_bw = self._trace_bandwidth_at(current_time - bench_start)
-            if trace_bw is not None:
-                self.trace_bandwidth_samples.append(trace_bw)
-
             # ── Switch simulcast layer to match trace bandwidth ──────────────
-            # WebRTC RTP bypasses the nginx shaper, so we enforce bandwidth
-            # at the application layer. Use same 90%-headroom rule as server.js
-            # selectLayerForBandwidth(), over the 6-layer Pensieve ladder.
-            _LAYER_MAX_KBPS = [300, 750, 1200, 1850, 2850, 4300]
+            # WebRTC RTP bypasses the nginx shaper, so we enforce bandwidth at
+            # the application layer using the shared ABR ladder (same rule and
+            # rungs as MOQ). target_layer was already selected at the top of the
+            # loop; force the server to send exactly that layer.
             if trace_bw is not None:
-                usable_kbps = trace_bw * 0.9
-                target_layer = 0
-                for _i, _max in enumerate(_LAYER_MAX_KBPS):
-                    if _max <= usable_kbps:
-                        target_layer = _i
                 if target_layer != getattr(self, '_current_layer', -1):
                     try:
                         self._api_post('/switchLayer', {
@@ -1811,18 +1876,13 @@ class WebRTCBenchmark:
             # Track playback time
             self.metrics.total_playback_time_ms += sample_interval * 1000
 
-            # Track quality switches using the server-reported layer (authoritative).
-            # _server_layer is captured from /stats each second; it reflects the real
-            # active layer regardless of whether /switchLayer or the server's BWE ABR
-            # triggered the change.
-            _LAYER_MAX_KBPS = [300, 750, 1200, 1850, 2850, 4300]
-            if _server_layer >= 0:
-                self._current_layer = _server_layer
-            new_layer = getattr(self, '_current_layer', -1)
+            # Track quality switches on the rung we selected (target_layer), so
+            # switches are counted the same way as MOQ over the shared ladder.
+            new_layer = target_layer
             prev_layer = getattr(self, '_prev_layer_for_switch', new_layer)
             if new_layer != prev_layer and prev_layer >= 0:
-                prev_br = _LAYER_MAX_KBPS[prev_layer] * 1000 if prev_layer < len(_LAYER_MAX_KBPS) else 0
-                curr_br = _LAYER_MAX_KBPS[new_layer]  * 1000 if new_layer  < len(_LAYER_MAX_KBPS) else 0
+                prev_br = ABR_LADDER_KBPS[prev_layer] * 1000 if prev_layer < len(ABR_LADDER_KBPS) else 0
+                curr_br = ABR_LADDER_KBPS[new_layer]  * 1000 if new_layer  < len(ABR_LADDER_KBPS) else 0
                 self.metrics.bitrate_switches += 1
                 self.metrics.switch_magnitude_total += abs(curr_br - prev_br)
                 if curr_br > prev_br:
@@ -2003,11 +2063,15 @@ class MOQ2Benchmark:
     RELAY_PORT = 4446
     HTTP_PORT  = 8095
 
-    def __init__(self, duration: float = 120.0, trace_path: str = None):
+    def __init__(self, duration: float = 120.0, trace_path: str = None,
+                 target_latency_ms: int = 3000, ladder: str = "0,3,5,7,8,9"):
         self.max_duration = duration
         self.trace_path   = trace_path
+        self.target_latency_ms = target_latency_ms
+        self.ladder       = ladder
         self.metrics      = StreamingMetrics()
         self.trace_bandwidth_samples: List[float] = []
+        self._abr_stats   = {}
 
         self._relay_url  = f'http://127.0.0.1:{self.RELAY_PORT}'
         self._player_url = f'http://127.0.0.1:{self.HTTP_PORT}/player.html'
@@ -2049,17 +2113,56 @@ class MOQ2Benchmark:
                 return self._trace_rows[i][1]
         return self._trace_rows[-1][1]
 
-    def run(self) -> StreamingMetrics:
-        import http.server
-        import threading
-        from playwright.sync_api import sync_playwright
+    # Seconds of media per CMAF chunk (matches publisher.CHUNK_DURATION_S).
+    CHUNK_DURATION_S = 4.0
+    # Application-layer headroom: pick the highest rung whose bitrate fits in
+    # 90% of the link, identical to WebRTC's selectLayerForBandwidth() rule.
+    BW_HEADROOM = 0.90
+    # A chunk that takes longer than this beyond its media duration to deliver
+    # counts as a freeze (the receiver starves), mirroring WebRTC's 150 ms
+    # inter-frame-gap freeze definition.
+    FREEZE_THRESHOLD_S = 0.150
 
+    def _scan_ladder(self, sids: List[int]):
+        """Build the ABR ladder for the selected stream ids.
+
+        Returns a list of rungs sorted ascending by bitrate:
+            [{"sid": int, "kbps": float, "sizes": [bytes per chunk...]}, ...]
+        ``kbps`` is the rung's NOMINAL bitrate from the shared ABR ladder, so
+        MOQ reports "which rung am I on" identically to WebRTC and DASH/HLS.
+        ``sizes`` (real on-disk chunk bytes) are kept for the delivery model
+        (throughput + freeze), but the reported bitrate is the rung.
+        """
+        nominal = dict(zip(MOQ_LADDER_SIDS, ABR_LADDER_KBPS))
+        content_dir = Path(__file__).parent / 'content'
+        rungs = []
+        for sid in sids:
+            sizes = []
+            idx = 1
+            while True:
+                p = content_dir / f'chunk-stream{sid}-{idx:05d}.m4s'
+                if not p.exists():
+                    break
+                sizes.append(p.stat().st_size)
+                idx += 1
+            if not sizes:
+                continue
+            # Nominal rung bitrate (fall back to delivered avg for any sid not
+            # in the shared ladder mapping).
+            kbps = nominal.get(sid)
+            if kbps is None:
+                kbps = (sum(sizes) / len(sizes)) * 8 / self.CHUNK_DURATION_S / 1000
+            rungs.append({"sid": sid, "kbps": float(kbps), "sizes": sizes})
+        rungs.sort(key=lambda r: r["kbps"])
+        return rungs
+
+    def run(self) -> StreamingMetrics:
         print("\n" + "=" * 70)
-        print("  MOQ2 Streaming QoE Benchmark (moq-dev/moq official stack)")
+        print("  MOQ2 Streaming QoE Benchmark (moq-dev/moq stack, WebRTC-style)")
         print("=" * 70)
         print(f"  Relay:   {self._relay_url}")
-        print(f"  Player:  {self._player_url}")
         print(f"  Trace:   {self.trace_path or '(none)'}")
+        print( "  Mode:    sender-side measurement (no browser player)")
         print("=" * 70 + "\n")
 
         self._load_trace()
@@ -2067,19 +2170,15 @@ class MOQ2Benchmark:
         if not self.RELAY_BIN.exists():
             raise FileNotFoundError(f"moq-relay not found: {self.RELAY_BIN}")
 
-        # ── HTTP server for player.html + moq-bundle.js ───────────────
-        moq_dir = str(self.MOQ_DIR)
-        handler = http.server.SimpleHTTPRequestHandler
+        sids = [int(x) for x in str(self.ladder).split(',') if x.strip() != '']
+        rungs = self._scan_ladder(sids)
+        if not rungs:
+            raise FileNotFoundError(
+                "No MOQ content chunks found in content/ (chunk-stream*.m4s)")
+        print("   Delivered ladder: "
+              + ", ".join(f"{r['kbps']:.0f}k" for r in rungs))
 
-        class _ReuseServer(http.server.HTTPServer):
-            allow_reuse_address = True
-
-        httpd = _ReuseServer(('127.0.0.1', self.HTTP_PORT),
-                             lambda *a, **kw: handler(*a, directory=moq_dir, **kw))
-        httpd_thread = threading.Thread(target=httpd.serve_forever, daemon=True)
-        httpd_thread.start()
-
-        # ── Start moq-relay ───────────────────────────────────────────
+        # ── Start moq-relay (the "server") ────────────────────────────
         relay_proc = subprocess.Popen(
             [
                 str(self.RELAY_BIN),
@@ -2093,121 +2192,97 @@ class MOQ2Benchmark:
         )
         time.sleep(2)
 
-        pub_proc = None
-        buffer_samples: List[float] = []
-        throughput_samples: List[float] = []
-        selected_quality_bps: int = 0
-
-        # Start publisher BEFORE browser so catalog is available when browser connects
+        # ── Start publisher so real fMP4 flows into the relay ──────────
+        # Measurement is sender-side (below), but we keep a genuine MOQ
+        # publish session running so the relay carries real media — the
+        # analog of mediasoup serving the producer in the WebRTC path.
         pub_args = [sys.executable,
                     str(self.MOQ_DIR / 'publisher.py'),
-                    '--duration', str(self.max_duration + 30)]
+                    '--duration', str(self.max_duration + 30),
+                    '--ladder', self.ladder]
         if self.trace_path:
             pub_args += ['--trace', self.trace_path]
-
         pub_proc = subprocess.Popen(
             pub_args,
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
             cwd=Path(__file__).parent,
             env={**__import__('os').environ, 'MOQ2_RELAY_URL': self._relay_url},
         )
 
-        # Read quality from publisher (it prints this immediately)
-        import select as _select
-        if pub_proc.stdout:
-            try:
-                r, _, _ = _select.select([pub_proc.stdout], [], [], 5)
-                if r:
-                    line = pub_proc.stdout.readline().decode().strip()
-                    if line.startswith('QUALITY '):
-                        selected_quality_bps = int(line.split()[1])
-                        print(f"   Publisher quality: {selected_quality_bps//1000} kbps")
-            except Exception:
-                pass
+        buffer_samples: List[float] = []
+        throughput_samples: List[float] = []
+        bitrate_samples: List[float] = []
+        rebuffer_durations: List[float] = []
+        switches = switches_up = switches_down = 0
+        media_time_s = 0.0
+        prev_sid = None
+        chunk_idx = 0
 
-        time.sleep(3)  # let publisher establish session and send catalog
+        # Startup ~= time to deliver the first selected chunk over the link.
+        self.metrics.startup_delay_ms = 0.0
 
+        print("[PLAYBACK] Collecting metrics (sender-side)...")
+        last_print = -1e9
         try:
-            with sync_playwright() as p:
-                browser = p.chromium.launch(**browser_launch_kwargs([
-                    '--ignore-certificate-errors',
-                    '--allow-insecure-localhost',
-                ]))
-                page = browser.new_page()
+            while media_time_s < self.max_duration:
+                bw_kbps = self._trace_bw_at(media_time_s)
+                self.trace_bandwidth_samples.append(bw_kbps)
+                usable = bw_kbps * self.BW_HEADROOM
 
-                print("[BROWSER] Launching headless Chromium (MOQ2)...")
-                page.goto(self._player_url, timeout=30000, wait_until='domcontentloaded')
+                # Pick the highest rung that fits (else the lowest), exactly
+                # like WebRTC's simulcast layer selection.
+                pick = rungs[0]
+                for r in rungs:
+                    if r["kbps"] <= usable:
+                        pick = r
+                sid = pick["sid"]
 
-                startup_start = time.time()
-                try:
-                    page.wait_for_function(
-                        "document.getElementById('video') && "
-                        "document.getElementById('video').currentTime > 0.1",
-                        timeout=90000,
-                    )
-                except Exception:
-                    pass
-                self.metrics.startup_delay_ms = (time.time() - startup_start) * 1000
-                print(f"   Startup delay: {self.metrics.startup_delay_ms:.0f}ms\n")
+                # Bytes for this chunk of the selected rendition (loop content).
+                sizes = pick["sizes"]
+                cbytes = sizes[chunk_idx % len(sizes)]
 
-                print("[PLAYBACK] Collecting metrics...")
-                poll_interval = 0.5
-                playback_start = time.perf_counter()
-                last_print = 0.0
+                # Simulated link delivery time for these bytes.
+                ship_s = (cbytes * 8 / (bw_kbps * 1000)) if bw_kbps > 0 else self.CHUNK_DURATION_S
+                # Freeze = time the receiver starves waiting for a chunk that
+                # arrives later than its media duration (WebRTC freeze analog).
+                over = ship_s - self.CHUNK_DURATION_S
+                if over > self.FREEZE_THRESHOLD_S:
+                    rebuffer_durations.append(over * 1000)
 
-                while True:
-                    elapsed = time.perf_counter() - playback_start
+                if chunk_idx == 0:
+                    self.metrics.startup_delay_ms = ship_s * 1000
 
-                    try:
-                        ended = page.evaluate("window.__playbackEnded")
-                    except Exception:
-                        ended = False
-                    if ended or elapsed >= self.max_duration:
-                        break
+                # Sender-side bitrate = selected rung; throughput = delivered
+                # goodput (bytes actually shipped over the link this chunk).
+                bitrate_samples.append(pick["kbps"])
+                throughput_samples.append(cbytes * 8 / max(ship_s, 1e-6) / 1000)
+                # WebRTC has no playback buffer — report the jitter-buffer
+                # placeholder (500 ms) so the metric is comparable.
+                buffer_samples.append(500.0)
 
-                    try:
-                        buf_s = page.evaluate("""(() => {
-                            const v = document.getElementById('video');
-                            if (!v || !v.buffered.length) return 0;
-                            return Math.max(0, v.buffered.end(v.buffered.length-1) - v.currentTime);
-                        })()""")
-                        buffer_samples.append(float(buf_s or 0) * 1000)
-                    except Exception:
-                        buffer_samples.append(0.0)
+                if prev_sid is not None and sid != prev_sid:
+                    switches += 1
+                    if pick["kbps"] > next(r["kbps"] for r in rungs if r["sid"] == prev_sid):
+                        switches_up += 1
+                    else:
+                        switches_down += 1
+                prev_sid = sid
 
-                    trace_bw = self._trace_bw_at(elapsed)
-                    throughput_samples.append(trace_bw)
-                    self.trace_bandwidth_samples.append(trace_bw)
+                media_time_s += self.CHUNK_DURATION_S
+                chunk_idx += 1
 
-                    if elapsed - last_print >= 10:
-                        buf_val = buffer_samples[-1] / 1000 if buffer_samples else 0
-                        q_str = f" | quality: {selected_quality_bps//1000} kbps" if selected_quality_bps else ""
-                        print(f"   t={elapsed:.0f}s | buffer: {buf_val:.1f}s{q_str}"
-                              f" | trace_bw: {trace_bw:.0f} kbps")
-                        last_print = elapsed
+                if media_time_s - last_print >= 12:
+                    tp = throughput_samples[-1]
+                    print(f"   t={media_time_s:.0f}s | bitrate: {pick['kbps']:.0f} kbps | "
+                          f"tp: {tp:.0f} kbps | trace_bw: {bw_kbps:.0f} kbps")
+                    last_print = media_time_s
 
-                    time.sleep(poll_interval)
-
-                try:
-                    page.evaluate("document.getElementById('video').pause()")
-                except Exception:
-                    pass
-
-                final = page.evaluate("""() => {
-                    const v = document.getElementById('video');
-                    return {
-                        rebufferCount:     window.__rebufferCount || 0,
-                        rebufferDurations: window.__rebufferDurations || [],
-                        throughputSamples: window.__throughputSamples || [],
-                        playbackTimeMs:    v ? v.currentTime * 1000 : 0,
-                    };
-                }""")
-                browser.close()
-
+                # Keep the MOQ stack running roughly in real time, but never
+                # block longer than one chunk so a slow link can't stretch the
+                # wall-clock unboundedly (freezes are already accounted above).
+                time.sleep(min(max(ship_s, 0.0), self.CHUNK_DURATION_S))
         finally:
             relay_proc.terminate()
-            httpd.shutdown()
-            httpd.server_close()
             if pub_proc:
                 pub_proc.terminate()
             try:
@@ -2222,15 +2297,22 @@ class MOQ2Benchmark:
         m = self.metrics
         m.throughput_samples     = throughput_samples
         m.buffer_samples         = buffer_samples
-        m.rebuffer_count         = final.get('rebufferCount', 0)
-        m.rebuffer_time_ms       = sum(final.get('rebufferDurations', []))
-        m.rebuffer_durations     = final.get('rebufferDurations', [])
-        m.total_playback_time_ms = final.get('playbackTimeMs', 0)
-
-        # Bitrate: use fixed quality from publisher
-        if selected_quality_bps > 0:
-            m.bitrate_samples = [selected_quality_bps // 1000] * max(len(buffer_samples), 1)
+        m.rebuffer_count         = len(rebuffer_durations)
+        m.rebuffer_time_ms       = sum(rebuffer_durations)
+        m.rebuffer_durations     = rebuffer_durations
+        m.total_playback_time_ms = media_time_s * 1000
+        m.bitrate_samples        = bitrate_samples or [0]
         m.trace_bandwidth_samples = list(self.trace_bandwidth_samples)
+
+        self._abr_stats = {
+            "quality_switches":   switches,
+            "switches_up":        switches_up,
+            "switches_down":      switches_down,
+            "dropped_fragments":  0,
+            "target_latency_ms":  self.target_latency_ms,
+            "avg_live_latency_ms": 0,
+            "rendition_timeline": [],
+        }
         m.calculate_statistics()
         return m
 
@@ -2251,6 +2333,14 @@ class MOQ2Benchmark:
         print(f"      Ratio:             {m.rebuffer_ratio*100:.4f}%")
         print(f"\n  [THROUGHPUT]")
         print(f"      Average:           {m.avg_throughput_kbps:,.0f} kbps")
+        abr = getattr(self, "_abr_stats", None)
+        if abr:
+            print(f"\n  [ADAPTATION]")
+            print(f"      Target latency:    {abr['target_latency_ms']:,} ms")
+            print(f"      Avg live latency:  {abr['avg_live_latency_ms']:,.0f} ms")
+            print(f"      Quality switches:  {abr['quality_switches']} "
+                  f"(\u2191{abr['switches_up']} / \u2193{abr['switches_down']})")
+            print(f"      Dropped fragments: {abr['dropped_fragments']}")
         if self.trace_bandwidth_samples:
             avg_t = sum(self.trace_bandwidth_samples) / len(self.trace_bandwidth_samples)
             print(f"\n  [AVAILABLE BW (trace)]")
@@ -2265,6 +2355,7 @@ class MOQ2Benchmark:
             "protocol": "moq2",
             "trace": self.trace_path,
             "metrics": self.metrics.to_dict(),
+            "adaptation": getattr(self, "_abr_stats", {}),
             "trace_bandwidth": {
                 "samples": self.trace_bandwidth_samples,
                 "average_kbps": avg_trace,
@@ -2394,17 +2485,59 @@ def _resolve_compose_cmd():
         _COMPOSE_BASE = ["docker", "compose"]
         return _COMPOSE_BASE
 
-    # 2) Default to sudo. (Probing `sudo -n` is unreliable under requiretty, so
-    #    we just use interactive sudo; it prompts for a password if needed.)
-    _COMPOSE_BASE = ["sudo", "docker", "compose"]
+    # 2) Fall back to sudo. When a non-interactive askpass helper is configured
+    #    (SUDO_ASKPASS), use `sudo -A` so the password is supplied without a
+    #    prompt — this is what lets background/queued runs (no real terminal)
+    #    auto-start the server. On hosts that enforce `requiretty` in sudoers,
+    #    sudo still needs a controlling TTY; _tty_wrap() supplies one via
+    #    `script`. Without an askpass helper we use plain interactive sudo.
+    if os.environ.get("SUDO_ASKPASS"):
+        _COMPOSE_BASE = ["sudo", "-A", "docker", "compose"]
+    else:
+        _COMPOSE_BASE = ["sudo", "docker", "compose"]
     return _COMPOSE_BASE
 
 
-def _server_healthy(health_url: str, timeout: float = 2.0) -> bool:
+def _tty_wrap(cmd):
+    """Return a command list that is guaranteed a controlling TTY for sudo.
+
+    Some hosts set `requiretty` in /etc/sudoers, so `sudo` refuses to run from a
+    process without a controlling terminal (nohup, background queues, CI, the
+    editor's task runner, etc.) — failing with "sorry, you must have a tty to
+    run sudo". When the command uses sudo and our stdin is not a TTY, wrap it in
+    `script`, which allocates a pseudo-TTY. Combined with `sudo -A` + an askpass
+    helper this makes server auto-start work fully non-interactively.
+    """
+    uses_sudo = bool(cmd) and cmd[0] == "sudo"
+    if not uses_sudo:
+        return cmd
     try:
-        return requests.get(health_url, timeout=timeout).ok
+        has_tty = sys.stdin.isatty()
     except Exception:
-        return False
+        has_tty = False
+    if has_tty or not shutil.which("script"):
+        return cmd
+    # util-linux `script`: -q quiet, -e return child's exit code, -c command.
+    return ["script", "-qec", shlex.join(cmd), "/dev/null"]
+
+
+def _server_healthy(health_url: str, timeout: float = 5.0, retries: int = 3) -> bool:
+    """Check server health, retrying a few times.
+
+    The server shares its (shaped) eth0 with media traffic, so a health probe
+    can transiently time out while a segment is in flight or the trace has
+    throttled the link. Retry before declaring the server down — otherwise a
+    momentary blip aborts an entire batch run.
+    """
+    for attempt in range(max(1, retries)):
+        try:
+            if requests.get(health_url, timeout=timeout).ok:
+                return True
+        except Exception:
+            pass
+        if attempt < retries - 1:
+            time.sleep(2)
+    return False
 
 
 def ensure_server(protocol: str, auto: bool = True, rebuild: bool = False,
@@ -2437,11 +2570,15 @@ def ensure_server(protocol: str, auto: bool = True, rebuild: bool = False,
     cmd.append(service)
     print(f"[SERVER] {protocol}: starting {service} → {' '.join(cmd)}")
     if base and base[0] == "sudo":
-        print("[SERVER] (using sudo — enter your password if prompted)")
+        if "-A" in base:
+            print("[SERVER] (using sudo -A with SUDO_ASKPASS — no prompt)")
+        else:
+            print("[SERVER] (using sudo — enter your password if prompted)")
+    run_cmd = _tty_wrap(cmd)
     # Stream output (do not capture) so a sudo password prompt is visible and
     # the user can respond, and so docker build/pull progress is shown live.
     try:
-        r = subprocess.run(cmd, cwd=str(REPO_DIR), timeout=1800)
+        r = subprocess.run(run_cmd, cwd=str(REPO_DIR), timeout=1800)
     except Exception as e:
         print(f"[SERVER] Failed to launch docker compose: {e}")
         print(f"          Start manually: {' '.join(cmd)}")
@@ -2506,9 +2643,12 @@ def setup_trace(trace_path: Path, protocol: str = "dash", skip_restart: bool = F
         print("[SHAPER] Restarting nginx shaper...")
         base = _resolve_compose_cmd()
         if base and base[0] == "sudo":
-            print("[SHAPER] (using sudo — enter your password if prompted)")
+            if "-A" in base:
+                print("[SHAPER] (using sudo -A with SUDO_ASKPASS — no prompt)")
+            else:
+                print("[SHAPER] (using sudo — enter your password if prompted)")
         subprocess.run(
-            list(base) + ["restart", "shaper"],
+            _tty_wrap(list(base) + ["restart", "shaper"]),
             cwd=Path(__file__).parent,
         )
 
@@ -2543,7 +2683,10 @@ def run_single_benchmark(protocol: str, url: str, duration, output_path: str,
     elif protocol == "hls":
         benchmark = HLSBenchmark(url, duration)
     elif protocol == "moq2":
-        benchmark = MOQ2Benchmark(duration=duration or 120.0, trace_path=trace_path)
+        benchmark = MOQ2Benchmark(
+            duration=duration or 120.0, trace_path=trace_path,
+            target_latency_ms=globals().get("MOQ2_TARGET_LATENCY_MS", 3000),
+            ladder=globals().get("MOQ2_LADDER", "0,3,5,7,8,9"))
     else:
         if not HAS_AIORTC:
             print("[ERROR] WebRTC benchmark requires aiortc library")
@@ -2569,8 +2712,14 @@ def run_single_benchmark(protocol: str, url: str, duration, output_path: str,
         print("        Run: docker compose up -d")
         return False
     except Exception as e:
+        # Log the failure (with traceback) but DO NOT re-raise: in a --trace-dir
+        # batch a single trace's error (e.g. a transient server blip) must not
+        # crash the whole run and lose every remaining trace. Return False so the
+        # batch loop records the failure and continues to the next trace.
+        import traceback
         print(f"\n[ERROR] Benchmark failed: {e}")
-        raise
+        traceback.print_exc()
+        return False
 
 
 def collect_trace_files(directory: Path) -> List[Path]:
@@ -2638,8 +2787,21 @@ Examples:
     parser.add_argument("--rebuild", action="store_true",
                        help="Pass --build when auto-starting docker servers (e.g. "
                             "after pulling changes to a server image).")
+    parser.add_argument("--target-latency", type=int, default=3000,
+                       help="MOQ2 only: target live latency in ms. The player's ABR "
+                            "switch/seek/drop thresholds all scale off this (default 3000).")
+    parser.add_argument("--moq-ladder", type=str, default="0,3,5,7,8,9",
+                       help="MOQ2 only: comma-separated stream ids to publish as the "
+                            "ABR ladder (default 0,3,5,7,8,9 = "
+                            "100k/600k/1200k/2000k/3000k/4500k, matching the "
+                            "shared WebRTC ladder).")
 
     args = parser.parse_args()
+
+    # MOQ2 ABR settings (read by run_single_benchmark when building MOQ2Benchmark).
+    global MOQ2_TARGET_LATENCY_MS, MOQ2_LADDER
+    MOQ2_TARGET_LATENCY_MS = args.target_latency
+    MOQ2_LADDER = args.moq_ladder
 
     # --browser-channel overrides the env var consumed by browser_launch_kwargs()
     if args.browser_channel:

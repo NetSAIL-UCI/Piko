@@ -13,7 +13,7 @@ import os
 import json
 import subprocess
 import threading
-from http.server import HTTPServer, SimpleHTTPRequestHandler
+from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from datetime import datetime
 
 # Configuration
@@ -150,8 +150,14 @@ def main():
     print(f"  - GET /manifest.mpd - DASH manifest")
     print(f"=" * 50)
     
-    server = HTTPServer((HOST, PORT), DASHHandler)
-    
+    # ThreadingHTTPServer: serve each request on its own thread so a slow
+    # segment transfer over the shaped link can't block /health (or other
+    # segment) requests. The single-threaded HTTPServer would stall every
+    # other request for the full duration of one shaped download, which made
+    # the next run's health check time out ("Server is not available").
+    server = ThreadingHTTPServer((HOST, PORT), DASHHandler)
+    server.daemon_threads = True
+
     try:
         server.serve_forever()
     except KeyboardInterrupt:

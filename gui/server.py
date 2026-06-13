@@ -16,6 +16,7 @@ import sys
 import threading
 import time
 import uuid
+import urllib.request
 from pathlib import Path
 from flask import Flask, jsonify, request, Response, send_from_directory
 
@@ -25,6 +26,18 @@ import trace_gen as _tgen
 ROOT        = Path(__file__).resolve().parent.parent
 RESULTS_DIR = ROOT / 'results'
 BENCHMARK   = ROOT / 'benchmark.py'
+CONTENT_DIR = ROOT / 'content'
+
+# protocol -> (docker service or None, health url or None). Mirrors
+# benchmark.py's _DOCKER_SERVICES. lldash-gpac / moq2 start their server
+# in-process so they need no docker service.
+PROTO_SERVERS = {
+    'dash':        ('hls-dash-server', 'http://localhost:8080/health'),
+    'hls':         ('hls-dash-server', 'http://localhost:8080/health'),
+    'webrtc':      ('webrtc-server',   'http://localhost:3000/health'),
+    'lldash-gpac': (None, None),
+    'moq2':        (None, None),
+}
 
 SYNTHETIC_DIR = ROOT / 'traces' / 'synthetic'
 UPLOADED_DIR  = ROOT / 'traces' / 'uploaded'
@@ -33,6 +46,8 @@ UPLOADED_DIR.mkdir(parents=True, exist_ok=True)
 
 TRACE_SETS = {
     'fcc-2021':       {'label': 'FCC 2021 – September',     'dir': ROOT / 'traces' / 'fcc',            'glob': '*.csv'},
+    'fcc-2023':       {'label': 'FCC 2023 (Fixed Broadband)','dir': ROOT / 'traces' / 'fcc_2023',      'glob': '*_tc.csv'},
+    'puffer':         {'label': 'Puffer (Slow Streams)',    'dir': ROOT / 'traces' / 'puffer',         'glob': '*_tc.csv'},
     'starlink-2024':  {'label': 'Starlink 2024 (Mobile)',   'dir': ROOT / 'traces' / 'starlink-2024', 'glob': '*.csv'},
     '5g-ireland':     {'label': '5G/4G Ireland (UCC)',      'dir': ROOT / 'traces' / '5g-ireland',    'glob': '*.csv'},
     'synthetic':      {'label': 'Synthetic',                'dir': SYNTHETIC_DIR,                      'glob': '*.csv'},
@@ -50,6 +65,19 @@ _runs_lock = threading.Lock()
 # ── helpers ──────────────────────────────────────────────────────────────────
 
 PROTOCOLS = ['dash', 'lldash-gpac', 'hls', 'webrtc', 'moq2']
+
+_BENCHMARK_FNAME = re.compile(
+    r'^benchmark_([a-z0-9-]+)_(.+)_(\d{8}_\d{6})\.json$'
+)
+
+
+def _parse_benchmark_filename(fname: str):
+    """Return (protocol, trace_id, run_ts) from a benchmark JSON filename."""
+    m = _BENCHMARK_FNAME.match(fname)
+    if m:
+        return m.group(1), m.group(2), m.group(3)
+    return None, None, None
+
 
 def _list_traces():
     result = {}
@@ -71,25 +99,31 @@ def _list_results():
                 r = json.load(f)
             proto = r.get('protocol', 'unknown')
             fname = fpath.name
-            m = re.search(r'unit(\d+)', fname)
-            unit = m.group(1) if m else None
+            _, trace_id, run_ts = _parse_benchmark_filename(fname)
             dir_name = fpath.parent.name
             trace_set = dir_name[len(proto)+1:] if dir_name.startswith(proto + '_') else None
             md = r.get('metrics', {})
+            avg_br = md.get('bitrate', {}).get('average_kbps')
+            trace_bw = r.get('trace_bandwidth', {}).get('average_kbps')
+            bw_util = (avg_br / trace_bw) if avg_br and trace_bw and trace_bw > 0 else None
             entry = {
                 'file':      str(fpath.relative_to(ROOT)),
-                'timestamp': r.get('timestamp', ''),
+                'timestamp': r.get('timestamp', '') or run_ts or '',
                 'protocol':  proto,
                 'trace_set': trace_set,
-                'unit':      unit,
-                'trace_bw':  r.get('trace_bandwidth', {}).get('average_kbps'),
-                'avg_bitrate':   md.get('bitrate',    {}).get('average_kbps'),
+                'trace_id':  trace_id,
+                'unit':      trace_id,
+                'trace_bw':  trace_bw,
+                'avg_bitrate':   avg_br,
+                'eff_bitrate':   md.get('bitrate', {}).get('effective_average_kbps'),
                 'avg_buffer_s':  (md.get('buffer',    {}).get('average_ms') or 0) / 1000,
-                'rebuf_count':   md.get('rebuffering',{}).get('count'),
-                'rebuf_ms':      md.get('rebuffering',{}).get('total_time_ms'),
+                'rebuf_count':   md.get('rebuffering', {}).get('count'),
+                'rebuf_ms':      md.get('rebuffering', {}).get('total_time_ms'),
+                'rebuf_ratio':   md.get('rebuffering', {}).get('ratio'),
                 'startup_ms':    md.get('timing',     {}).get('startup_delay_ms'),
                 'switches':      md.get('switching',  {}).get('total_count'),
                 'avg_throughput':md.get('throughput', {}).get('average_kbps'),
+                'bw_util':       bw_util,
                 'samples': {
                     'bitrate':  md.get('samples', {}).get('bitrate', []),
                     'buffer':   md.get('samples', {}).get('buffer', []),
@@ -111,12 +145,16 @@ TRACE_NETWORK_DIRS = {
     '5g-ireland':    (ROOT / 'traces' / '5g-ireland',    '*.csv'),
     'starlink-2024': (ROOT / 'traces' / 'starlink-2024', '*.csv'),
     'fcc':           (ROOT / 'traces' / 'fcc',           '*_tc.csv'),
+    'fcc-2023':      (ROOT / 'traces' / 'fcc_2023',      '*_tc.csv'),
+    'puffer':        (ROOT / 'traces' / 'puffer',        '*_tc.csv'),
 }
 
 NET_DISPLAY = {
     '5g-ireland':    '5G/4G Ireland',
     'starlink-2024': 'Starlink 2024',
     'fcc':           'FCC (3G)',
+    'fcc-2023':      'FCC 2023 (Fixed)',
+    'puffer':        'Puffer (Slow)',
 }
 
 def _network_stats():
@@ -188,6 +226,122 @@ def _network_stats():
     return result
 
 
+def _http_ok(url: str, timeout: float = 3.0) -> bool:
+    try:
+        with urllib.request.urlopen(url, timeout=timeout) as r:
+            return 200 <= r.status < 400
+    except Exception:
+        return False
+
+
+def _docker_reachable() -> bool:
+    """True if the docker daemon is reachable without sudo (user in docker grp)."""
+    try:
+        return subprocess.run(['docker', 'ps'], capture_output=True,
+                              timeout=8).returncode == 0
+    except Exception:
+        return False
+
+
+def _content_ok(protocol: str) -> bool:
+    if protocol == 'dash':
+        return (CONTENT_DIR / 'manifest.mpd').exists()
+    if protocol == 'hls':
+        return (CONTENT_DIR / 'hls' / 'master.m3u8').exists()
+    if protocol == 'lldash-gpac':
+        return (CONTENT_DIR / 'll2s-manifest.mpd').exists()
+    if protocol == 'webrtc':
+        return any(CONTENT_DIR.glob(f'*{ext}')
+                   for ext in ('.mp4', '.mkv', '.webm', '.avi'))
+    return True  # moq2 / unknown — nothing we generate locally
+
+
+def _preflight(protocol: str, trace_set: str, traces: list) -> dict:
+    """Validate everything needed to launch a run; return structured checks."""
+    checks = []
+
+    def add(key, label, status, detail):
+        checks.append({'key': key, 'label': label, 'status': status, 'detail': detail})
+
+    # benchmark.py
+    add('benchmark', 'Benchmark engine',
+        'ok' if BENCHMARK.exists() else 'error',
+        str(BENCHMARK) if BENCHMARK.exists() else 'benchmark.py not found')
+
+    # traces
+    meta = TRACE_SETS.get(trace_set)
+    if not meta:
+        add('traces', 'Trace set', 'error', f'unknown trace set: {trace_set}')
+    else:
+        d = meta['dir']
+        all_files = sorted(d.glob(meta.get('glob', '*.csv'))) if d.exists() else []
+        if traces:
+            missing = [t for t in traces if not (d / t).exists()]
+            if missing:
+                add('traces', 'Selected traces', 'error',
+                    f'{len(missing)} selected trace(s) not found: ' + ', '.join(missing[:3]))
+            else:
+                add('traces', 'Selected traces', 'ok',
+                    f'{len(traces)} trace(s) selected in {meta["label"]}')
+        else:
+            tc_files = [f for f in all_files if f.name.endswith('_tc.csv')]
+            usable = tc_files or all_files
+            add('traces', 'Trace set',
+                'ok' if usable else 'error',
+                f'{len(usable)} trace(s) available in {meta["label"]}'
+                if usable else f'no usable traces in {meta["label"]}')
+
+    # content
+    add('content', 'Streaming content',
+        'ok' if _content_ok(protocol) else 'warn',
+        'present' if _content_ok(protocol)
+        else 'missing — benchmark.py auto-generates on first run (may be slow)')
+
+    # docker / server reachability
+    service, health = PROTO_SERVERS.get(protocol, (None, None))
+    docker_direct = _docker_reachable()
+    if service is None:
+        add('server', 'Streaming server', 'ok',
+            f'{protocol} starts its server in-process (no docker service required)')
+        # in-process protocols still need shaper/docker only for moq2? no.
+    else:
+        if health and _http_ok(health):
+            add('server', 'Streaming server', 'ok',
+                f'{service} healthy at {health}')
+        elif docker_direct:
+            add('server', 'Streaming server', 'warn',
+                f'{service} not responding yet — will auto-start via docker')
+        else:
+            add('server', 'Streaming server', 'error',
+                f'{service} is down and docker needs sudo (no passwordless access). '
+                f'Start it first: sudo docker compose up -d {service}')
+
+    # shaper note (dash/hls shape via HTTP API; webrtc/others restart shaper via docker)
+    if traces or trace_set:
+        if protocol in ('dash', 'hls'):
+            add('shaper', 'Network shaper', 'ok',
+                'tc/netem driven via in-container HTTP API (no sudo needed)')
+        elif protocol == 'lldash-gpac':
+            add('shaper', 'Network shaper', 'ok',
+                'in-process bandwidth pacing (no docker shaper)')
+        elif protocol == 'moq2':
+            add('shaper', 'Network shaper', 'ok',
+                'moq2 paces from the trace in-process')
+        elif protocol == 'webrtc':
+            add('shaper', 'Network shaper',
+                'ok' if (docker_direct or _http_ok('http://localhost:3000/health')) else 'warn',
+                'shaper restart is best-effort; run proceeds even if it is skipped')
+
+    ready = all(c['status'] != 'error' for c in checks)
+    return {
+        'ready': ready,
+        'protocol': protocol,
+        'trace_set': trace_set,
+        'docker_direct': docker_direct,
+        'checks': checks,
+    }
+
+
 def _stream_proc(run_id: str, proc: subprocess.Popen, log_q: queue.Queue):
     """Read subprocess stdout/stderr and push to queue."""
     for line in iter(proc.stdout.readline, ''):
@@ -217,6 +371,41 @@ def api_results():
     return jsonify(_list_results())
 
 
+@app.route('/api/trace-compare')
+def api_trace_compare():
+    """
+    Per-trace comparison: latest run per (trace_id, protocol) for a network set.
+    Query: trace_set (required), trace_id (optional — one trace or all).
+    """
+    trace_set = request.args.get('trace_set', '').strip()
+    trace_id  = request.args.get('trace_id', '').strip() or None
+    if not trace_set:
+        return jsonify({'error': 'trace_set required'}), 400
+
+    groups = _list_results()
+    by_trace: dict[str, dict] = {}
+
+    for proto, entries in groups.items():
+        for e in entries:
+            if e.get('trace_set') != trace_set or not e.get('trace_id'):
+                continue
+            tid = e['trace_id']
+            if trace_id and tid != trace_id:
+                continue
+            slot = by_trace.setdefault(tid, {'trace_id': tid, 'protocols': {}})
+            prev = slot['protocols'].get(proto)
+            if not prev or (e.get('timestamp') or '') > (prev.get('timestamp') or ''):
+                slot['protocols'][proto] = e
+
+    traces = sorted(by_trace.values(), key=lambda x: x['trace_id'])
+    return jsonify({
+        'trace_set': trace_set,
+        'trace_id':  trace_id,
+        'traces':    traces,
+        'protocols': PROTOCOLS,
+    })
+
+
 @app.route('/api/network-stats')
 def api_network_stats():
     return jsonify(_network_stats())
@@ -233,6 +422,16 @@ def api_result_detail():
         return jsonify(json.load(f))
 
 
+@app.route('/api/preflight')
+def api_preflight():
+    protocol  = request.args.get('protocol', 'dash')
+    trace_set = request.args.get('trace_set', DEFAULT_TRACE_SET)
+    traces    = [t for t in request.args.get('traces', '').split(',') if t]
+    if protocol not in PROTOCOLS:
+        return jsonify({'error': f'unknown protocol {protocol}'}), 400
+    return jsonify(_preflight(protocol, trace_set, traces))
+
+
 @app.route('/api/run', methods=['POST'])
 def api_run():
     body      = request.json or {}
@@ -240,7 +439,9 @@ def api_run():
     traces    = body.get('traces', [])   # list of trace filenames, empty = all
     trace_set = body.get('trace_set', DEFAULT_TRACE_SET)
     duration  = int(body.get('duration', 120))
-    results_subdir = body.get('results_dir', f'gui_run_{int(time.time())}')
+    results_subdir = body.get('results_dir') or f'gui_run_{int(time.time())}'
+    # keep results subdir filesystem-safe (it becomes a path component)
+    results_subdir = re.sub(r'[^a-zA-Z0-9_\-.]', '_', str(results_subdir))
 
     if protocol not in PROTOCOLS:
         return jsonify({'error': f'unknown protocol {protocol}'}), 400
@@ -248,6 +449,12 @@ def api_run():
         return jsonify({'error': f'unknown trace_set {trace_set}'}), 400
 
     traces_dir = TRACE_SETS[trace_set]['dir']
+    if not traces_dir.exists():
+        return jsonify({'error': f'trace dir missing: {traces_dir}'}), 400
+    # validate explicitly-selected traces exist before spawning anything
+    missing = [t for t in traces if not (traces_dir / t).exists()]
+    if missing:
+        return jsonify({'error': f'trace(s) not found: {", ".join(missing)}'}), 400
 
     # Build command
     results_path = RESULTS_DIR / results_subdir
@@ -292,7 +499,13 @@ def api_run():
         }
 
     if cmd is not None:
-        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, cwd=str(ROOT))
+        try:
+            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
+                                    stderr=subprocess.STDOUT, text=True, cwd=str(ROOT))
+        except Exception as e:
+            with _runs_lock:
+                _runs.pop(run_id, None)
+            return jsonify({'error': f'failed to launch benchmark: {e}'}), 500
         with _runs_lock:
             _runs[run_id]['proc'] = proc
         threading.Thread(target=_stream_proc, args=(run_id, proc, log_q), daemon=True).start()

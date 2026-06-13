@@ -1,16 +1,22 @@
 #!/usr/bin/env python3
 """
-MOQ2 Publisher — pipes DASH fMP4 segments into moq-cli (moq-dev/moq stack).
+MOQ2 Publisher — publishes a MULTI-RENDITION ladder into the moq-dev/moq stack.
 
-Quality is fixed per run (chosen once from the trace median bandwidth).
-Each chunk is paced at the current trace bandwidth to simulate network delay.
-Selected quality is printed as: QUALITY <bps>
+Unlike the old single-quality publisher, this one publishes every rung of the
+ladder simultaneously, each as its own broadcast (video<sid>), so the browser
+player can switch between them (ABR). Each rendition's chunks are paced at the
+current trace bandwidth based on *that rendition's* byte size, so a higher
+rendition genuinely costs more to deliver than a lower one — which is what
+gives the player's ABR something real to react to.
+
+Prints, once at startup, a machine-readable ladder line for benchmark.py:
+    LADDER [{"name": "video0", "sid": 0, "kbps": 100}, ...]
 """
 
 import asyncio
 import csv
+import json
 import os
-import subprocess
 import sys
 import time
 from pathlib import Path
@@ -19,22 +25,21 @@ CONTENT_DIR = Path(os.getenv('MOQ_CONTENT_DIR',
                               str(Path(__file__).parent.parent / 'content')))
 MOQ_CLI     = Path(os.getenv('MOQ_CLI', '/tmp/moq-dev/target/release/moq-cli'))
 RELAY_URL   = os.getenv('MOQ2_RELAY_URL', 'http://127.0.0.1:4446')
-BROADCAST   = os.getenv('MOQ2_BROADCAST', 'video')
 
-LADDER = [
-    (0,   100_000),
-    (1,   200_000),
-    (2,   400_000),
-    (3,   600_000),
-    (4,   800_000),
-    (5,  1_200_000),
-    (6,  1_500_000),
-    (7,  2_000_000),
-    (8,  3_000_000),
-    (9,  4_500_000),
-]
+# stream id -> nominal bitrate (bps). Matches the DASH encoding ladder.
+LADDER_BPS = {
+    0:   100_000,
+    1:   200_000,
+    2:   400_000,
+    3:   600_000,
+    4:   800_000,
+    5: 1_200_000,
+    6: 1_500_000,
+    7: 2_000_000,
+    8: 3_000_000,
+    9: 4_500_000,
+}
 CHUNK_DURATION_S = 4.0
-ABR_SAFETY       = 0.85
 
 
 def load_trace(path: str):
@@ -60,6 +65,7 @@ def load_trace(path: str):
 
 
 def trace_bw_at(rows, elapsed_s: float) -> float:
+    """Available bandwidth (kbps) at a given elapsed time, looping the trace."""
     if not rows:
         return 4_500_000
     dur = rows[-1][0]
@@ -70,96 +76,90 @@ def trace_bw_at(rows, elapsed_s: float) -> float:
     return rows[-1][1]
 
 
-def select_quality(trace_rows, *, safety=ABR_SAFETY) -> int:
-    if not trace_rows:
-        return 5  # 1.2 Mbps default
-    bws = sorted(bw for _, bw in trace_rows)
-    median_bw_kbps = bws[len(bws) // 2]
-    available_bps = median_bw_kbps * 1000 * safety  # kbps → bps
-    chosen = 0
-    for sid, bps in LADDER:
-        if bps <= available_bps:
-            chosen = sid
-    return chosen
-
-
-async def run(trace_path=None, duration=120.0):
-    trace_rows = load_trace(trace_path) if trace_path else []
-    quality = select_quality(trace_rows)
-    quality_bps = LADDER[quality][1]
-
-    print(f'QUALITY {quality_bps}', flush=True)
-    print(f'[MOQ2 PUB] quality=stream{quality} ({quality_bps//1000}kbps)', file=sys.stderr)
-
-    init_path = CONTENT_DIR / f'init-stream{quality}.m4s'
+async def feed_rendition(sid: int, trace_rows, duration: float):
+    """Publish one rendition as broadcast video<sid>, paced by the trace."""
+    init_path = CONTENT_DIR / f'init-stream{sid}.m4s'
     if not init_path.exists():
         print(f'[MOQ2 PUB] ERROR: init not found: {init_path}', file=sys.stderr)
         return
 
-    # Start moq-cli in publish mode, reading fMP4 from stdin
     proc = await asyncio.create_subprocess_exec(
         str(MOQ_CLI),
         'publish',
         '--url', RELAY_URL,
-        '--name', BROADCAST,
+        '--name', f'video{sid}',
         'fmp4', '--passthrough',
         stdin=asyncio.subprocess.PIPE,
         stdout=asyncio.subprocess.DEVNULL,
-        stderr=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.DEVNULL,
     )
 
-    start_time = time.monotonic()
-    chunk_idx  = 1
-
+    start = time.monotonic()
+    idx = 1
     try:
-        # Write init segment (ftyp + moov)
-        init_data = init_path.read_bytes()
-        proc.stdin.write(init_data)
+        proc.stdin.write(init_path.read_bytes())
         await proc.stdin.drain()
-        print(f'[MOQ2 PUB] sent init ({len(init_data)} bytes)', file=sys.stderr)
 
-        # Feed chunks with trace-based pacing
         while True:
-            elapsed = time.monotonic() - start_time
+            elapsed = time.monotonic() - start
             if elapsed >= duration:
                 break
 
-            chunk_path = CONTENT_DIR / f'chunk-stream{quality}-{chunk_idx:05d}.m4s'
+            chunk_path = CONTENT_DIR / f'chunk-stream{sid}-{idx:05d}.m4s'
             if not chunk_path.exists():
-                chunk_idx = 1
-                chunk_path = CONTENT_DIR / f'chunk-stream{quality}-{chunk_idx:05d}.m4s'
+                idx = 1
+                chunk_path = CONTENT_DIR / f'chunk-stream{sid}-{idx:05d}.m4s'
                 if not chunk_path.exists():
-                    print('[MOQ2 PUB] no chunks found', file=sys.stderr)
                     break
 
-            chunk_data = chunk_path.read_bytes()
-            chunk_bytes = len(chunk_data)
+            data = chunk_path.read_bytes()
 
-            # Pacing: simulate chunk download delay based on trace bandwidth
-            bw_kbps = trace_bw_at(trace_rows, elapsed)
-            bw_bps  = bw_kbps * 1000  # kbps → bps
-            delay_s = chunk_bytes * 8 / bw_bps if bw_bps > 0 else CHUNK_DURATION_S
-            delay_s = min(delay_s, CHUNK_DURATION_S * 2)  # cap at 2x chunk duration
-
-            proc.stdin.write(chunk_data)
+            proc.stdin.write(data)
             await proc.stdin.drain()
 
-            if chunk_idx % 10 == 0:
-                print(f'[MOQ2 PUB] t={elapsed:.0f}s chunk={chunk_idx} '
-                      f'bw={bw_bps//1000:.0f}kbps delay={delay_s:.2f}s', file=sys.stderr)
-
+            # Pace this rendition's delivery by how long it would take to ship
+            # `len(data)` bytes over the current trace bandwidth. Bigger renditions
+            # (higher bitrate) take longer -> their buffer drains faster at the
+            # player -> ABR has a real cost signal to react to.
+            bw_kbps = trace_bw_at(trace_rows, elapsed)
+            bw_bps = bw_kbps * 1000
+            delay_s = (len(data) * 8 / bw_bps) if bw_bps > 0 else CHUNK_DURATION_S
+            delay_s = min(delay_s, CHUNK_DURATION_S * 3)
             await asyncio.sleep(delay_s)
-            chunk_idx += 1
-
+            idx += 1
     except (BrokenPipeError, ConnectionResetError):
         pass
     finally:
-        if proc.stdin and not proc.stdin.is_closing():
-            proc.stdin.close()
+        try:
+            if proc.stdin and not proc.stdin.is_closing():
+                proc.stdin.close()
+        except Exception:
+            pass
         try:
             await asyncio.wait_for(proc.wait(), timeout=5)
-        except asyncio.TimeoutError:
-            proc.terminate()
+        except (asyncio.TimeoutError, ProcessLookupError):
+            try:
+                proc.terminate()
+            except Exception:
+                pass
+
+
+async def run(trace_path=None, duration=120.0, sids=None):
+    trace_rows = load_trace(trace_path) if trace_path else []
+    sids = sids or [0, 3, 6, 9]
+    sids = [s for s in sids if (CONTENT_DIR / f'init-stream{s}.m4s').exists()]
+    if not sids:
+        print('[MOQ2 PUB] ERROR: no renditions available', file=sys.stderr)
+        return
+
+    ladder = [{'name': f'video{s}', 'sid': s, 'kbps': LADDER_BPS.get(s, 0) // 1000}
+              for s in sids]
+    ladder.sort(key=lambda r: r['kbps'])
+    print('LADDER ' + json.dumps(ladder), flush=True)
+    print(f'[MOQ2 PUB] publishing {len(sids)} renditions: '
+          + ', '.join(f"{r['name']}({r['kbps']}k)" for r in ladder), file=sys.stderr)
+
+    await asyncio.gather(*(feed_rendition(s, trace_rows, duration) for s in sids))
 
 
 if __name__ == '__main__':
@@ -167,5 +167,8 @@ if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument('--trace',    default=None)
     ap.add_argument('--duration', type=float, default=120.0)
+    ap.add_argument('--ladder',   default='0,3,6,9',
+                    help='comma-separated stream ids to publish as the ABR ladder')
     args = ap.parse_args()
-    asyncio.run(run(trace_path=args.trace, duration=args.duration))
+    sid_list = [int(x) for x in args.ladder.split(',') if x.strip() != '']
+    asyncio.run(run(trace_path=args.trace, duration=args.duration, sids=sid_list))
