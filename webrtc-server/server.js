@@ -19,11 +19,10 @@ const HOST = process.env.HOST || '0.0.0.0';
 const CONTENT_DIR = process.env.CONTENT_DIR || '/app/content';
 const ANNOUNCED_IP = process.env.ANNOUNCED_IP || '127.0.0.1';
 
-// Port range is the range of users that can be supported
 const workerSettings = {
   logLevel: 'warn',
-  rtcMinPort: 10000,
-  rtcMaxPort: 10100,
+  rtcMinPort: parseInt(process.env.RTC_MIN_PORT, 10) || 10000,
+  rtcMaxPort: parseInt(process.env.RTC_MAX_PORT, 10) || 10100,
 };
 
 // mediasoup Router (room) settings - video codecs

@@ -505,6 +505,21 @@ class DASHJSBenchmark:
             # Capture browser console errors to aid debugging
             page.on('console', lambda msg: print(f"[BROWSER-{msg.type.upper()}] {msg.text}")
                     if msg.type in ('error', 'warn') else None)
+            # Capture browser console errors to aid debugging (rate-limited to prevent huge logs)
+            _seen_console_msgs = {}
+
+            def _handle_console(msg):
+                if msg.type in ('error', 'warn'):
+                    txt = msg.text
+                    cnt = _seen_console_msgs.get(txt, 0)
+                    if cnt < 5:
+                        _seen_console_msgs[txt] = cnt + 1
+                        print(f"[BROWSER-{msg.type.upper()}] {txt}")
+                    elif cnt == 5:
+                        _seen_console_msgs[txt] = cnt + 1
+                        print(f"[BROWSER-{msg.type.upper()}] (repeats of this message suppressed)")
+
+            page.on('console', _handle_console)
 
             # ── Patch player HTML on-the-fly (no container rebuild required) ──
             # Fixes: (1) remove instantaneous maxBitrate cap that causes
@@ -859,9 +874,10 @@ class LLDASHGPACBenchmark:
     SERVER_PORT   = 8082
     SERVER_SCRIPT = Path(__file__).parent / 'lldash-server' / 'gpac_server.py'
 
-    def __init__(self, url: str, max_duration=None):
+    def __init__(self, url: str, max_duration=None, trace_path=None):
         self._url        = url
         self.max_duration = max_duration
+        self.trace_path  = trace_path
         self._inner      = DASHJSBenchmark(url, max_duration, protocol_name='lldash-gpac')
         self.metrics     = self._inner.metrics
         self._proc       = None
@@ -871,7 +887,11 @@ class LLDASHGPACBenchmark:
         return self._inner.max_bitrate
 
     def run(self):
-        env = {**os.environ, 'LLDASH_PORT': str(self.SERVER_PORT)}
+        from urllib.parse import urlparse
+        p = urlparse(self._url).port or self.SERVER_PORT
+        env = {**os.environ, 'LLDASH_PORT': str(p)}
+        if self.trace_path:
+            env['LLDASH_TRACE'] = str(self.trace_path)
         self._proc = subprocess.Popen(
             [sys.executable, '-u', str(self.SERVER_SCRIPT)],
             env=env,
@@ -1541,7 +1561,10 @@ class WebRTCBenchmark:
             raise
         finally:
             # Cleanup
-            await self._cleanup()
+            try:
+                await asyncio.wait_for(self._cleanup(), timeout=5.0)
+            except Exception:
+                pass
         
         # Calculate final statistics
         self.metrics.trace_bandwidth_samples = list(self.trace_bandwidth_samples)
@@ -1920,7 +1943,10 @@ class WebRTCBenchmark:
             pass
         
         if self.pc:
-            await self.pc.close()
+            try:
+                await asyncio.wait_for(self.pc.close(), timeout=3.0)
+            except Exception:
+                pass
     
     def run(self) -> StreamingMetrics:
         """Run the benchmark (sync wrapper)."""
@@ -2060,6 +2086,8 @@ class MOQ2Benchmark:
 
     RELAY_BIN  = Path('/srv/disk00/ajhunjh1/tmp/moq-dev/target/release/moq-relay')
     MOQ_DIR    = Path(__file__).parent / 'moq-dev'
+    RELAY_BIN  = Path(__file__).parent / 'moq' / 'target' / 'release' / 'moq-relay'
+    MOQ_DIR    = Path(__file__).parent / 'moq'
     RELAY_PORT = 4446
     HTTP_PORT  = 8095
 
@@ -2600,14 +2628,21 @@ def ensure_server(protocol: str, auto: bool = True, rebuild: bool = False,
     return False
 
 
-def setup_trace(trace_path: Path, protocol: str = "dash", skip_restart: bool = False) -> None:
+def setup_trace(trace_path: Path, protocol: str = "dash", skip_restart: bool = False,
+                worker_id: Optional[int] = None, base_url: Optional[str] = None) -> None:
     """Copy a trace file to the shaper directory and restart the shaper.
 
     For WebRTC, also starts a tc-trace replay inside the webrtc container
     so that UDP/RTP traffic is shaped identically to the HTTP shaper path.
     """
-    shaper_trace = Path(__file__).parent / "shaper" / "trace" / "trace.csv"
-    shaper_trace.parent.mkdir(parents=True, exist_ok=True)
+    if worker_id is not None:
+        worker_dir = Path(__file__).parent / "shaper" / "trace" / f"worker_{worker_id}"
+        worker_dir.mkdir(parents=True, exist_ok=True)
+        shaper_trace = worker_dir / "trace.csv"
+    else:
+        shaper_trace = Path(__file__).parent / "shaper" / "trace" / "trace.csv"
+        shaper_trace.parent.mkdir(parents=True, exist_ok=True)
+
     if trace_path.resolve() != shaper_trace.resolve():
         shutil.copy(trace_path, shaper_trace)
     print(f"[TRACE] {trace_path.name}")
@@ -2620,15 +2655,17 @@ def setup_trace(trace_path: Path, protocol: str = "dash", skip_restart: bool = F
         return
 
     # Protocols that use tc/netem directly inside their own container
+    default_dash_url = f"http://localhost:{8100 + worker_id}" if worker_id is not None else "http://localhost:8080"
     _direct_shapers = {
-        "dash":   "http://localhost:8080",
-        "hls":    "http://localhost:8080",
-
+        "dash":   base_url or default_dash_url,
+        "hls":    base_url or default_dash_url,
     }
     if protocol in _direct_shapers:
-        url = _direct_shapers[protocol]
+        from urllib.parse import urlsplit
+        parsed = urlsplit(_direct_shapers[protocol])
+        url = f"{parsed.scheme}://{parsed.netloc}"
         tag = protocol.upper()
-        print(f"[{tag}-SHAPER] Triggering tc-trace via /startShaping API...")
+        print(f"[{tag}-SHAPER] Triggering tc-trace via {url}/startShaping API...")
         try:
             resp = requests.post(f"{url}/startShaping", timeout=5)
             if resp.ok:
@@ -2679,7 +2716,7 @@ def run_single_benchmark(protocol: str, url: str, duration, output_path: str,
     if protocol == "dash":
         benchmark = DASHJSBenchmark(url, duration, protocol_name="dash")
     elif protocol == "lldash-gpac":
-        benchmark = LLDASHGPACBenchmark(url, duration)
+        benchmark = LLDASHGPACBenchmark(url, duration, trace_path=trace_path)
     elif protocol == "hls":
         benchmark = HLSBenchmark(url, duration)
     elif protocol == "moq2":
@@ -2791,10 +2828,12 @@ Examples:
                        help="MOQ2 only: target live latency in ms. The player's ABR "
                             "switch/seek/drop thresholds all scale off this (default 3000).")
     parser.add_argument("--moq-ladder", type=str, default="0,3,5,7,8,9",
-                       help="MOQ2 only: comma-separated stream ids to publish as the "
-                            "ABR ladder (default 0,3,5,7,8,9 = "
-                            "100k/600k/1200k/2000k/3000k/4500k, matching the "
-                            "shared WebRTC ladder).")
+                        help="MOQ2 only: comma-separated stream ids to publish as the "
+                             "ABR ladder (default 0,3,5,7,8,9 = "
+                             "100k/600k/1200k/2000k/3000k/4500k, matching the "
+                             "shared WebRTC ladder).")
+    parser.add_argument("--worker-id", type=int, default=None,
+                        help="Worker ID (1..16) for parallel execution; isolates trace directory and ports.")
 
     args = parser.parse_args()
 
@@ -2812,26 +2851,34 @@ Examples:
         print("[ERROR] --trace and --trace-dir are mutually exclusive. Use one or the other.")
         sys.exit(1)
 
-    # Set default URL based on protocol
+    # Set default URL based on protocol and worker-id
+    if args.worker_id is not None:
+        dash_p = 8100 + args.worker_id
+        webrtc_p = 3100 + args.worker_id
+        gpac_p = 8200 + args.worker_id
+        moq_p = 8300 + args.worker_id
+    else:
+        dash_p = 8080
+        webrtc_p = 3000
+        gpac_p = LLDASHGPACBenchmark.SERVER_PORT
+        moq_p = MOQ2Benchmark.HTTP_PORT
+
     if args.url is None:
         if args.protocol == "dash":
-            args.url = "http://localhost:8080"
+            args.url = f"http://localhost:{dash_p}"
         elif args.protocol == "hls":
-            # Both page and media from port 8080 — tc/netem shapes inside hls-dash-server
-            args.url = "http://localhost:8080/hls.html?manifest=http://localhost:8080/hls/master.m3u8"
+            args.url = f"http://localhost:{dash_p}/hls.html?manifest=http://localhost:{dash_p}/hls/master.m3u8"
         elif args.protocol == "lldash-gpac":
-            # GPAC LL-DASH server started on-demand at port 8082; absolute mpd URL for dash.js
-            p = LLDASHGPACBenchmark.SERVER_PORT
-            args.url = f"http://localhost:{p}/player.html?mpd=http://localhost:{p}/manifest.mpd"
+            args.url = f"http://localhost:{gpac_p}/player.html?mpd=http://localhost:{gpac_p}/manifest.mpd"
         elif args.protocol == "moq2":
-            args.url = f"http://localhost:{MOQ2Benchmark.HTTP_PORT}/player.html"
+            args.url = f"http://localhost:{moq_p}/player.html"
         else:
-            args.url = "http://localhost:3000"
+            args.url = f"http://localhost:{webrtc_p}"
 
     # Derive the DASH server URL so WebRTC can query the manifest for duration
     from urllib.parse import urlparse
     parsed = urlparse(args.url)
-    dash_url = f"{parsed.scheme}://{parsed.hostname}:8080"
+    dash_url = f"{parsed.scheme}://{parsed.hostname}:{dash_p}"
 
     # Results root is configurable so runs by users other than the repo owner
     # don't hit PermissionError when the in-repo results/ dir is owned by
@@ -2888,7 +2935,8 @@ Examples:
             print(f"{'─' * 70}")
 
             if args.protocol != 'moq2':
-                setup_trace(trace_path, protocol=args.protocol, skip_restart=args.no_shaper_restart)
+                setup_trace(trace_path, protocol=args.protocol, skip_restart=args.no_shaper_restart,
+                            worker_id=args.worker_id, base_url=args.url)
             url = resolve_url(args.url, args.protocol, shaped=True)
 
             trace_stem = trace_path.stem  # e.g. trace_12743_3g_tc
@@ -2921,13 +2969,18 @@ Examples:
             sys.exit(1)
 
         if args.protocol != 'moq2':
-            setup_trace(trace_path, protocol=args.protocol, skip_restart=args.no_shaper_restart)
+            setup_trace(trace_path, protocol=args.protocol, skip_restart=args.no_shaper_restart,
+                        worker_id=args.worker_id, base_url=args.url)
         args.shaped = True
 
     url = resolve_url(args.url, args.protocol, args.shaped)
 
     if args.output:
         output_path = str(results_dir / Path(args.output).name)
+    elif args.trace:
+        output_path = str(
+            results_dir / f"benchmark_{args.protocol}_{Path(args.trace).stem}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+        )
     else:
         output_path = str(
             results_dir / f"benchmark_{args.protocol}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
