@@ -28,7 +28,7 @@ import xml.etree.ElementTree as ET
 import asyncio
 import uuid
 from dataclasses import dataclass, field
-from typing import List, Optional
+from typing import List, Optional, Union
 from datetime import datetime
 from pathlib import Path
 
@@ -404,7 +404,8 @@ class DASHJSBenchmark:
     """DASH benchmark using a real dash.js player in a headless Chromium browser."""
 
     def __init__(self, base_url: str, max_duration: Optional[float] = None,
-                 protocol_name: str = "dash", abr_name: str = "bola"):
+                 protocol_name: str = "dash", abr_name: str = "bola",
+                 trace_path: Optional[Union[str, Path]] = None):
         self.base_url = base_url.rstrip('/')
         self.max_duration = max_duration
         self.metrics = StreamingMetrics()
@@ -413,11 +414,12 @@ class DASHJSBenchmark:
         self.trace_data: List[tuple] = []
         self.protocol_name = protocol_name
         self.abr_name = abr_name
+        self.trace_path = Path(trace_path) if trace_path else None
 
     def _load_trace(self) -> None:
         """Load the active shaper trace file to look up available bandwidth."""
-        trace_path = Path(__file__).parent / "shaper" / "trace" / "trace.csv"
-        if not trace_path.exists():
+        trace_path = self.trace_path if self.trace_path and self.trace_path.exists() else (Path(__file__).parent / "shaper" / "trace" / "trace.csv")
+        if not trace_path or not trace_path.exists():
             return
         try:
             with open(trace_path, "r") as f:
@@ -878,7 +880,7 @@ class LLDASHGPACBenchmark:
         self._url        = url
         self.max_duration = max_duration
         self.trace_path  = trace_path
-        self._inner      = DASHJSBenchmark(url, max_duration, protocol_name='lldash-gpac')
+        self._inner      = DASHJSBenchmark(url, max_duration, protocol_name='lldash-gpac', trace_path=trace_path)
         self.metrics     = self._inner.metrics
         self._proc       = None
 
@@ -918,7 +920,8 @@ class LLDASHGPACBenchmark:
 class HLSBenchmark:
     """HLS benchmark using hls.js player in a headless Chromium browser."""
 
-    def __init__(self, base_url: str, max_duration: Optional[float] = None):
+    def __init__(self, base_url: str, max_duration: Optional[float] = None,
+                 trace_path: Optional[Union[str, Path]] = None):
         self.base_url = base_url.rstrip('/')
         # If the URL already points directly at the player page (contains hls.html),
         # use it as-is; otherwise append the default path.
@@ -928,11 +931,12 @@ class HLSBenchmark:
         self.max_bitrate: int = 3000
         self.trace_bandwidth_samples: List[float] = []
         self.trace_data: List[tuple] = []
+        self.trace_path = Path(trace_path) if trace_path else None
 
     def _load_trace(self) -> None:
         """Load the active shaper trace file to look up available bandwidth."""
-        trace_path = Path(__file__).parent / "shaper" / "trace" / "trace.csv"
-        if not trace_path.exists():
+        trace_path = self.trace_path if self.trace_path and self.trace_path.exists() else (Path(__file__).parent / "shaper" / "trace" / "trace.csv")
+        if not trace_path or not trace_path.exists():
             return
         try:
             with open(trace_path, "r") as f:
@@ -1237,10 +1241,12 @@ class WebRTCBenchmark:
     """WebRTC streaming performance benchmark using mediasoup server."""
     
     def __init__(self, base_url: str, max_duration: Optional[float] = None,
-                 dash_url: Optional[str] = None):
+                 dash_url: Optional[str] = None,
+                 trace_path: Optional[Union[str, Path]] = None):
         self.base_url = base_url.rstrip('/')
         self.max_duration = max_duration  # None = derive from DASH manifest
         self.dash_url = dash_url  # DASH server URL for manifest lookup
+        self.trace_path = Path(trace_path) if trace_path else None
         self.session = requests.Session()
         self.metrics = StreamingMetrics()
         self.client_id = str(uuid.uuid4())
@@ -1271,8 +1277,8 @@ class WebRTCBenchmark:
         
     def _load_trace(self) -> None:
         """Load the active shaper trace file to look up available bandwidth."""
-        trace_path = Path(__file__).parent / "shaper" / "trace" / "trace.csv"
-        if not trace_path.exists():
+        trace_path = self.trace_path if self.trace_path and self.trace_path.exists() else (Path(__file__).parent / "shaper" / "trace" / "trace.csv")
+        if not trace_path or not trace_path.exists():
             return
         try:
             with open(trace_path, "r") as f:
@@ -2714,11 +2720,11 @@ def run_single_benchmark(protocol: str, url: str, duration, output_path: str,
                          trace_path: str = None):
     """Run a single benchmark and save results. Returns True on success."""
     if protocol == "dash":
-        benchmark = DASHJSBenchmark(url, duration, protocol_name="dash")
+        benchmark = DASHJSBenchmark(url, duration, protocol_name="dash", trace_path=trace_path)
     elif protocol == "lldash-gpac":
         benchmark = LLDASHGPACBenchmark(url, duration, trace_path=trace_path)
     elif protocol == "hls":
-        benchmark = HLSBenchmark(url, duration)
+        benchmark = HLSBenchmark(url, duration, trace_path=trace_path)
     elif protocol == "moq2":
         benchmark = MOQ2Benchmark(
             duration=duration or 120.0, trace_path=trace_path,
@@ -2729,7 +2735,7 @@ def run_single_benchmark(protocol: str, url: str, duration, output_path: str,
             print("[ERROR] WebRTC benchmark requires aiortc library")
             print("        Install with: pip install aiortc")
             return False
-        benchmark = WebRTCBenchmark(url, duration, dash_url=dash_url)
+        benchmark = WebRTCBenchmark(url, duration, dash_url=dash_url, trace_path=trace_path)
 
     try:
         benchmark.run()

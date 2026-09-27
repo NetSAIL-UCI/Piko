@@ -376,7 +376,7 @@ app.post('/resumeConsumer', async (req, res) => {
 });
 
 // Switch consumer to a different simulcast layer (producer)
-app.post('/setPreferredLayers', async (req, res) => {
+app.post(['/setPreferredLayers', '/switchLayer'], async (req, res) => {
   const { clientId, spatialLayer } = req.body;
   
   const client = consumers.get(clientId);
