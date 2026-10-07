@@ -209,10 +209,13 @@ function connect() {
 }
 
 // ── Video events ───────────────────────────────────────────────────────────
+let hasStartedPlayback = false;
+window.__hasStartedPlayback = false;
 let stallStart = null;
 
 video.addEventListener('waiting', () => {
   updateStatus('Buffering…');
+  if (!hasStartedPlayback) return;
   if (stallStart === null) {
     stallStart = Date.now();
     window.__rebufferCount++;
@@ -221,6 +224,13 @@ video.addEventListener('waiting', () => {
 });
 video.addEventListener('playing', () => {
   updateStatus('Playing');
+  if (!hasStartedPlayback) {
+    hasStartedPlayback = true;
+    window.__hasStartedPlayback = true;
+    stallStart = null;
+    window.__rebufferStart = null;
+    return;
+  }
   if (stallStart !== null) {
     window.__rebufferDurations.push(Date.now() - stallStart);
     stallStart = null;
@@ -232,7 +242,9 @@ video.addEventListener('ended', () => {
   window.__playbackEnded = true;
   if (curPieces.length) flushGroup(false, curPieces);
 });
-video.addEventListener('canplay', () => { if (stallStart === null) updateStatus('Playing'); });
+video.addEventListener('canplay', () => {
+  if (hasStartedPlayback && stallStart === null) updateStatus('Playing');
+});
 
 // ── HUD ───────────────────────────────────────────────────────────────────
 function updateStatus(text) {

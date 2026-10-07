@@ -29,6 +29,8 @@ var bitrateSwitchCount = 0;
 var totalStallingTime  = 0;
 var isStalling         = false;
 var stallingStartTime  = null;
+var hasStartedPlayback = false;
+window.__hasStartedPlayback = false;
 
 const video    = document.getElementById('video');
 const statusEl = document.getElementById('status-text');
@@ -64,10 +66,18 @@ player.updateSettings({
 player.initialize(video, mpd, true);
 
 player.on(dashjs.MediaPlayer.events.CAN_PLAY, () => {
-  statusEl.textContent = 'Playing';
+  if (!hasStartedPlayback) statusEl.textContent = 'Buffering…';
 });
 player.on(dashjs.MediaPlayer.events.PLAYBACK_PLAYING, () => {
   statusEl.textContent = 'Playing';
+  if (!hasStartedPlayback) {
+    hasStartedPlayback = true;
+    window.__hasStartedPlayback = true;
+    isStalling = false;
+    stallingStartTime = null;
+    rebufStart = null;
+    return;
+  }
   if (isStalling && stallingStartTime !== null) {
     totalStallingTime += Date.now() - stallingStartTime;
     window.__rebufferDurations.push(Date.now() - stallingStartTime);
@@ -78,6 +88,7 @@ player.on(dashjs.MediaPlayer.events.PLAYBACK_PLAYING, () => {
 });
 player.on(dashjs.MediaPlayer.events.PLAYBACK_WAITING, () => {
   statusEl.textContent = 'Buffering…';
+  if (!hasStartedPlayback) return;
   if (!isStalling) {
     isStalling = true;
     stallingStartTime = Date.now();

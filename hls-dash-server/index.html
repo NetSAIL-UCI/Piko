@@ -248,20 +248,62 @@
     document.getElementById('manifest-url').textContent = '/manifest.mpd';
     document.getElementById('server-url').textContent = baseUrl;
     
+    // Determine ABR mode from URL parameter (?abr=mpc, ?abr=bola, ?abr=throughput)
+    const urlParams = new URLSearchParams(window.location.search);
+    const abrMode = (urlParams.get('abr') || 'mpc').toLowerCase();
+    window.__abrMode = abrMode;
+
     // Initialize dash.js player
     const player = dashjs.MediaPlayer().create();
     const video = document.getElementById('video');
 
-    // Allow slow/shaped networks: long segment timeout, start at lowest quality
-    player.updateSettings({
-      streaming: {
-        timeouts: { load: 120000 },
-        abr: {
-          initialBitrate: { video: 100 },       // Start at lowest rung to minimize startup stall
-          autoSwitchBitrate: { video: true },    // Let BOLA switch freely
-        },
-      }
-    });
+    if (abrMode === 'mpc') {
+      // Fast MPC mode: manual representation switching via MPC controller
+      player.updateSettings({
+        streaming: {
+          abr: {
+            initialBitrate: { video: 100 },
+            autoSwitchBitrate: { video: false },
+            rules: {
+              bolaRule: { active: false },
+              throughputRule: { active: false },
+              switchHistoryRule: { active: false }
+            }
+          }
+        }
+      });
+    } else if (abrMode === 'throughput') {
+      // Pure throughput rule without BOLA buffer conservatism
+      player.updateSettings({
+        streaming: {
+          abr: {
+            initialBitrate: { video: 100 },
+            autoSwitchBitrate: { video: true },
+            rules: {
+              bolaRule: { active: false },
+              throughputRule: { active: true },
+              switchHistoryRule: { active: false }
+            },
+            throughput: {
+              bandwidthSafetyFactor: 0.9
+            }
+          }
+        }
+      });
+    } else {
+      // Default / BOLA mode
+      player.updateSettings({
+        streaming: {
+          abr: {
+            initialBitrate: { video: 100 },
+            autoSwitchBitrate: { video: true },
+            rules: {
+              bolaRule: { active: true }
+            }
+          }
+        }
+      });
+    }
 
     player.initialize(video, manifestUrl, true);
 
@@ -271,6 +313,8 @@
     window.__rebufferCount = 0;
     window.__rebufferDurations = [];
     window.__rebufferStart = null;
+    let hasStartedPlayback = false;
+    window.__hasStartedPlayback = false;
 
     // Trace-driven bandwidth: benchmark.py injects the current trace BW for reference.
     // We only record it — we do NOT cap maxBitrate dynamically because updating
@@ -411,12 +455,14 @@
     
     // Event listeners
     player.on(dashjs.MediaPlayer.events.CAN_PLAY, () => {
-      updateStatus('Playing');
+      if (!hasStartedPlayback) updateStatus('Ready');
       setInterval(updateMetrics, 500);
     });
     
     player.on(dashjs.MediaPlayer.events.PLAYBACK_WAITING, () => {
       updateStatus('Buffering...', false);
+      // If playback has not yet started, this is startup delay, NOT a stall/rebuffer!
+      if (!hasStartedPlayback) return;
       // Start tracking stalling time
       if (!isStalling) {
         isStalling = true;
@@ -428,6 +474,15 @@
     
     player.on(dashjs.MediaPlayer.events.PLAYBACK_PLAYING, () => {
       updateStatus('Playing');
+      if (!hasStartedPlayback) {
+        hasStartedPlayback = true;
+        window.__hasStartedPlayback = true;
+        // Clean startup transition — no stall to record
+        isStalling = false;
+        stallingStartTime = null;
+        window.__rebufferStart = null;
+        return;
+      }
       // Stop tracking stalling time
       if (isStalling && stallingStartTime) {
         totalStallingTime += Date.now() - stallingStartTime;
@@ -450,24 +505,72 @@
       window.__playbackEnded = true;
     });
 
+    // Robust MPC Controller for DASH
+    window.__mpcHistory = [];
+    window.__mpcCurrentRep = 0;
+
+    function runMpcDecision(req) {
+      if (abrMode !== 'mpc') return;
+      if (!req || req.type !== 'MediaSegment') return;
+      
+      const bytes = req.bytesLoaded || req.bytesTotal || req.bytes || 0;
+      const startDate = req.startDate || req.requestStartDate || req.trequest;
+      const endDate = req.endDate || req.requestEndDate || req.tresponse;
+      if (!startDate || !endDate || bytes <= 0) return;
+      
+      const ms = (endDate instanceof Date ? endDate.getTime() : +endDate) -
+                 (startDate instanceof Date ? startDate.getTime() : +startDate);
+      if (ms <= 0) return;
+      
+      const tpBps = (bytes * 8) / (ms / 1000);
+      window.__mpcHistory.push(tpBps);
+      if (window.__mpcHistory.length > 5) window.__mpcHistory.shift();
+
+      // Harmonic mean throughput
+      let sumInv = 0;
+      for (const t of window.__mpcHistory) sumInv += 1 / t;
+      const predTpBps = window.__mpcHistory.length / sumInv;
+      const usableBps = predTpBps * 0.90; // 90% bandwidth headroom
+
+      const buffer = player.getBufferLength('video') || 0;
+      const reps = player.getRepresentationsByType('video') || [];
+      const segDuration = req.duration || 4.0;
+
+      let bestIdx = 0;
+      for (let i = reps.length - 1; i >= 0; i--) {
+        const rep = reps[i];
+        const estDownloadTime = (rep.bandwidth * segDuration) / predTpBps;
+        if (rep.bandwidth <= usableBps && (buffer - estDownloadTime >= 2.0 || buffer >= 8.0)) {
+          bestIdx = i;
+          break;
+        }
+      }
+      if (buffer < 2.0) bestIdx = Math.min(bestIdx, 1);
+      player.setRepresentationForTypeByIndex('video', bestIdx);
+      window.__mpcCurrentRep = bestIdx;
+    }
+
     // Throughput tracking via stable public event.
-    // bytesLoaded may be missing in some dash.js builds; fall back to bytesTotal/bytes.
-    // requestEndDate and requestFirstByteDate are Date objects so subtraction gives ms.
     window.__throughputSamples = [];
     player.on(dashjs.MediaPlayer.events.FRAGMENT_LOADING_COMPLETED, e => {
       const req = e.request;
       if (!req) return;
       if (req.mediaType !== 'video') return;
-      // Accept MediaSegment and regular index requests (type can vary by build)
       const bytes = req.bytesLoaded || req.bytesTotal || req.bytes || 0;
-      const startDate = req.requestStartDate || req.trequest;
-      const endDate   = req.requestEndDate   || req.tresponse;
+      if (bytes > 0) {
+        window.__bytesDownloaded = (window.__bytesDownloaded || 0) + bytes;
+      }
+      const startDate = req.startDate || req.requestStartDate || req.trequest;
+      const endDate   = req.endDate   || req.requestEndDate   || req.tresponse;
       if (!startDate || !endDate) return;
-      const ms = (endDate instanceof Date ? endDate.getTime() : endDate)
-               - (startDate instanceof Date ? startDate.getTime() : startDate);
+      const ms = (endDate instanceof Date ? endDate.getTime() : +endDate)
+               - (startDate instanceof Date ? startDate.getTime() : +startDate);
       if (ms > 0 && bytes > 0) {
-        // (bytes × 8) / ms  =  kbps  (since 1 kbps = 1 bit/ms)
+        // (bytes * 8) / ms = kbps
         window.__throughputSamples.push((bytes * 8) / ms);
+      }
+      if (abrMode === 'mpc') {
+        runMpcDecision(req);
       }
     });
   </script>

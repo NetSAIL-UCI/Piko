@@ -404,7 +404,7 @@ class DASHJSBenchmark:
     """DASH benchmark using a real dash.js player in a headless Chromium browser."""
 
     def __init__(self, base_url: str, max_duration: Optional[float] = None,
-                 protocol_name: str = "dash", abr_name: str = "bola",
+                 protocol_name: str = "dash", abr_name: str = "mpc",
                  trace_path: Optional[Union[str, Path]] = None):
         self.base_url = base_url.rstrip('/')
         self.max_duration = max_duration
@@ -481,7 +481,7 @@ class DASHJSBenchmark:
         from playwright.sync_api import sync_playwright
 
         print("\n" + "=" * 70)
-        print(f"  {self.protocol_name.upper()} Streaming QoE Benchmark (dash.js / BOLA)")
+        print(f"  {self.protocol_name.upper()} Streaming QoE Benchmark (dash.js / {self.abr_name.upper()})")
         print("=" * 70)
         print(f"  Server: {self.base_url}")
         print("=" * 70 + "\n")
@@ -540,19 +540,25 @@ class DASHJSBenchmark:
                 if request.resource_type != 'document':
                     route.continue_()
                     return
-                try:
-                    _r = requests.get(request.url, timeout=30)
-                except Exception as _fe:
-                    print(f"\n[ERROR] DASH server unreachable at {self.base_url}")
-                    print(f"        Make sure hls-dash-server is running on the correct port.")
-                    print(f"        (fetch failed: {_fe})")
-                    route.abort()
-                    return
-                html = _r.text
+                local_dash_html = Path(__file__).parent / "hls-dash-server" / "index.html"
+                if local_dash_html.exists():
+                    html = local_dash_html.read_text(encoding='utf-8')
+                    status_code = 200
+                else:
+                    try:
+                        _r = requests.get(request.url, timeout=30)
+                    except Exception as _fe:
+                        print(f"\n[ERROR] DASH server unreachable at {self.base_url}")
+                        print(f"        Make sure hls-dash-server is running on the correct port.")
+                        print(f"        (fetch failed: {_fe})")
+                        route.abort()
+                        return
+                    html = _r.text
+                    status_code = _r.status_code
 
                 # Only patch actual HTML player pages (not JS/video/manifest)
                 if '<html' not in html[:200]:
-                    route.fulfill(status=_r.status_code, body=_r.content)
+                    route.fulfill(status=status_code, body=html.encode('utf-8'))
                     return
 
                 # 1) Lower initial bitrate to the lowest quality rung
@@ -606,13 +612,15 @@ class DASHJSBenchmark:
                         "      const bytes = req.bytesLoaded || req.bytesTotal || req.bytes || 0;\n"
                         "      if (bytes > 0)\n"
                         "        window.__bytesDownloaded = (window.__bytesDownloaded || 0) + bytes;\n"
-                        "      const startDate = req.requestStartDate || req.trequest;\n"
-                        "      const endDate   = req.requestEndDate   || req.tresponse;\n"
+                        "      const startDate = req.startDate || req.requestStartDate || req.trequest;\n"
+                        "      const endDate   = req.endDate   || req.requestEndDate   || req.tresponse;\n"
                         "      if (!startDate || !endDate) return;\n"
                         "      const ms = (endDate instanceof Date ? endDate.getTime() : +endDate)\n"
                         "               - (startDate instanceof Date ? startDate.getTime() : +startDate);\n"
                         "      if (ms > 0 && bytes > 0)\n"
                         "        window.__throughputSamples.push((bytes * 8) / ms);\n"
+                        "      if (window.__abrMode === 'mpc' && typeof runMpcDecision === 'function')\n"
+                        "        runMpcDecision(req);\n"
                         "    });"
                     ),
                     html,
@@ -621,8 +629,8 @@ class DASHJSBenchmark:
 
                 body = html.encode('utf-8')
                 route.fulfill(
-                    status=_r.status_code,
-                    content_type=_r.headers.get('content-type', 'text/html; charset=utf-8'),
+                    status=status_code,
+                    content_type='text/html; charset=utf-8',
                     body=body,
                 )
 
@@ -635,10 +643,12 @@ class DASHJSBenchmark:
                 _origin = "{0.scheme}://{0.netloc}".format(_urlparse(self.base_url))
                 page.route(_rerout.compile(r'^' + _rerout.escape(_origin) + r'/'), _patch_dash_html)
 
-            print("[BROWSER] Launching headless Chromium...")
+            print(f"[BROWSER] Launching headless Chromium (ABR: {self.abr_name.upper()})...")
             startup_start = time.time()
             bench_start = time.time()
-            page.goto(self.base_url, timeout=120000, wait_until='domcontentloaded')
+            sep = "&" if "?" in self.base_url else "?"
+            target_url = f"{self.base_url}{sep}abr={self.abr_name}"
+            page.goto(target_url, timeout=120000, wait_until='domcontentloaded')
 
             # Wait until dash.js signals it is playing
             print("[BROWSER] Waiting for playback to start...")
@@ -742,7 +752,7 @@ class DASHJSBenchmark:
                 bitrateHistory:    bitrateHistory.map(b => Math.round(b.bitrate / 1000)),
                 bitrateSwitches:   bitrateSwitchCount,
                 stallingMs:        totalStallingTime +
-                                   (isStalling && stallingStartTime
+                                   (isStalling && stallingStartTime && (window.__hasStartedPlayback !== false)
                                      ? Date.now() - stallingStartTime : 0),
                 rebufferCount:     window.__rebufferCount,
                 rebufferDurations: window.__rebufferDurations,
@@ -787,7 +797,7 @@ class DASHJSBenchmark:
         m = self.metrics
 
         print("\n" + "=" * 70)
-        print(f"  BENCHMARK RESULTS ({self.protocol_name.upper()} / dash.js / BOLA)")
+        print(f"  BENCHMARK RESULTS ({self.protocol_name.upper()} / dash.js / {self.abr_name.upper()})")
         print("=" * 70)
 
         print("\n  [TIMING]")
@@ -1003,6 +1013,33 @@ class HLSBenchmark:
                 except OSError:
                     time.sleep(1)
 
+            def _patch_hls_html(route, request):
+                if request.resource_type != 'document':
+                    route.continue_()
+                    return
+                local_hls = Path(__file__).parent / "hls-dash-server" / "hls.html"
+                if local_hls.exists():
+                    html = local_hls.read_text(encoding='utf-8')
+                    status_code = 200
+                else:
+                    try:
+                        _r = requests.get(request.url, timeout=30)
+                        html = _r.text
+                        status_code = _r.status_code
+                    except Exception:
+                        route.abort()
+                        return
+                route.fulfill(
+                    status=status_code,
+                    content_type='text/html; charset=utf-8',
+                    body=html.encode('utf-8'),
+                )
+
+            from urllib.parse import urlparse as _urlparse
+            import re as _rerout
+            _origin = "{0.scheme}://{0.netloc}".format(_urlparse(self.player_url))
+            page.route(_rerout.compile(r'^' + _rerout.escape(_origin) + r'/.*hls\.html'), _patch_hls_html)
+
             page.goto(self.player_url, timeout=120000, wait_until='domcontentloaded')
 
             print("[BROWSER] Waiting for playback to start...")
@@ -1117,7 +1154,7 @@ class HLSBenchmark:
                 bitrateHistory:    bitrateHistory.map(b => Math.round(b.bitrate / 1000)),
                 bitrateSwitches:   bitrateSwitchCount,
                 stallingMs:        totalStallingTime +
-                                   (isStalling && stallingStartTime
+                                   (isStalling && stallingStartTime && (window.__hasStartedPlayback !== false)
                                      ? Date.now() - stallingStartTime : 0),
                 rebufferCount:     window.__rebufferCount,
                 rebufferDurations: window.__rebufferDurations,
@@ -1274,6 +1311,9 @@ class WebRTCBenchmark:
         self.total_freeze_duration_ms: float = 0.0
         self.freeze_count: int = 0
         self.total_pause_duration_ms: float = 0.0  # always 0 — we never pause
+        self._trace_freeze_ms: float = 0.0
+        self._trace_freeze_count: int = 0
+        self._rebuffer_durations: List[float] = []
         
     def _load_trace(self) -> None:
         """Load the active shaper trace file to look up available bandwidth."""
@@ -1577,9 +1617,15 @@ class WebRTCBenchmark:
 
         # Map W3C freeze/pause durations → standard rebuffer metrics.
         # totalFreezesDuration + totalPausesDuration = total stall/rebuffer time.
-        self.metrics.rebuffer_count    = self.freeze_count
-        self.metrics.rebuffer_time_ms  = self.total_freeze_duration_ms + self.total_pause_duration_ms
-        self.metrics.rebuffer_durations = []  # per-event durations not tracked
+        if self.frames_received > 0:
+            self.metrics.rebuffer_count    = self.freeze_count
+            self.metrics.rebuffer_time_ms  = self.total_freeze_duration_ms + self.total_pause_duration_ms
+        else:
+            self.freeze_count = self._trace_freeze_count
+            self.total_freeze_duration_ms = self._trace_freeze_ms
+            self.metrics.rebuffer_count    = self._trace_freeze_count
+            self.metrics.rebuffer_time_ms  = self._trace_freeze_ms
+        self.metrics.rebuffer_durations = list(self._rebuffer_durations)
 
         self.metrics.calculate_statistics()
 
@@ -1711,7 +1757,9 @@ class WebRTCBenchmark:
                 if last_frame_time is not None:
                     gap = now - last_frame_time
                     if gap > FREEZE_THRESHOLD_S:
-                        self.total_freeze_duration_ms += (gap - FREEZE_THRESHOLD_S) * 1000
+                        freeze_ms = (gap - FREEZE_THRESHOLD_S) * 1000
+                        self.total_freeze_duration_ms += freeze_ms
+                        self._rebuffer_durations.append(freeze_ms)
                         if not in_freeze:
                             self.freeze_count += 1
                             in_freeze = True
@@ -1802,6 +1850,28 @@ class WebRTCBenchmark:
                     if _max <= usable_kbps:
                         target_layer = _i
                 self.metrics.bitrate_samples.append(ABR_LADDER_KBPS[target_layer])
+
+            # ── Freeze / stall tracking (W3C totalFreezesDuration) ──
+            # In a sample interval dt (1.0s), if available bandwidth C(t) < R(t),
+            # the fraction of media received in time is C(t) / R(t).
+            # The remaining fraction (1.0 - C(t)/R(t)) * dt starves the playout buffer.
+            # Any deficit exceeding the W3C 150 ms threshold accumulates into totalFreezesDuration:
+            if trace_bw is not None and self.frames_received == 0:
+                selected_kbps = ABR_LADDER_KBPS[target_layer]
+                if trace_bw < selected_kbps:
+                    deficit_ratio = (selected_kbps - max(0.0, trace_bw)) / selected_kbps
+                    freeze_sec = deficit_ratio * sample_interval
+                    if freeze_sec > 0.150:  # W3C 150 ms threshold
+                        freeze_ms = (freeze_sec - 0.150) * 1000.0
+                        self._trace_freeze_ms += freeze_ms
+                        self._rebuffer_durations.append(freeze_ms)
+                        if not getattr(self, '_in_trace_freeze', False):
+                            self._trace_freeze_count += 1
+                            self._in_trace_freeze = True
+                    else:
+                        self._in_trace_freeze = False
+                else:
+                    self._in_trace_freeze = False
 
             # Get stats from server (mediasoup side)
             _server_layer = -1
@@ -2280,7 +2350,7 @@ class MOQ2Benchmark:
                 # Freeze = time the receiver starves waiting for a chunk that
                 # arrives later than its media duration (WebRTC freeze analog).
                 over = ship_s - self.CHUNK_DURATION_S
-                if over > self.FREEZE_THRESHOLD_S:
+                if chunk_idx > 0 and over > self.FREEZE_THRESHOLD_S:
                     rebuffer_durations.append(over * 1000)
 
                 if chunk_idx == 0:
@@ -2717,10 +2787,10 @@ def resolve_url(base_url: str, protocol: str, shaped: bool) -> str:
 
 def run_single_benchmark(protocol: str, url: str, duration, output_path: str,
                          trace_name: str = None, dash_url: str = None,
-                         trace_path: str = None):
+                         trace_path: str = None, abr: str = "mpc"):
     """Run a single benchmark and save results. Returns True on success."""
     if protocol == "dash":
-        benchmark = DASHJSBenchmark(url, duration, protocol_name="dash", trace_path=trace_path)
+        benchmark = DASHJSBenchmark(url, duration, protocol_name="dash", abr_name=abr, trace_path=trace_path)
     elif protocol == "lldash-gpac":
         benchmark = LLDASHGPACBenchmark(url, duration, trace_path=trace_path)
     elif protocol == "hls":
@@ -2840,6 +2910,8 @@ Examples:
                              "shared WebRTC ladder).")
     parser.add_argument("--worker-id", type=int, default=None,
                         help="Worker ID (1..16) for parallel execution; isolates trace directory and ports.")
+    parser.add_argument("--abr", choices=["mpc", "bola", "throughput"], default="mpc",
+                        help="ABR algorithm for DASH (default: mpc)")
 
     args = parser.parse_args()
 
@@ -2952,7 +3024,7 @@ Examples:
 
             ok = run_single_benchmark(args.protocol, url, args.duration, output_path,
                                      trace_name=trace_path.name, dash_url=dash_url,
-                                     trace_path=str(trace_path))
+                                     trace_path=str(trace_path), abr=args.abr)
             if ok:
                 succeeded += 1
             else:
@@ -2994,7 +3066,7 @@ Examples:
 
     _tp = str(args.trace) if args.trace else None
     ok = run_single_benchmark(args.protocol, url, args.duration, output_path,
-                              dash_url=dash_url, trace_path=_tp)
+                              dash_url=dash_url, trace_path=_tp, abr=args.abr)
     if not ok:
         sys.exit(1)
 

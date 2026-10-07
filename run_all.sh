@@ -16,6 +16,15 @@ TRACE_SETS=(
   "5g-ireland:traces/5g-ireland"
   "starlink-2024:traces/starlink-2024"
   "fcc:traces/fcc"
+  "fcc_2017:traces/fcc_2017"
+  "fcc_2018:traces/fcc_2018"
+  "fcc_2019:traces/fcc_2019"
+  "fcc_2020:traces/fcc_2020"
+  "fcc_2021:traces/fcc_2021"
+  "fcc_2022:traces/fcc_2022"
+  "fcc_2023:traces/fcc_2023"
+  "puffer:traces/puffer"
+  "high_bandwidth:traces/high_bandwidth"
 )
 
 DURATION=120

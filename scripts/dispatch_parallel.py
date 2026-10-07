@@ -110,7 +110,7 @@ def collect_all_tasks(protocols: List[str], trace_sets: List[str],
 
 
 def run_worker_task(task: dict, worker_id: int, duration: float,
-                    out_dir: Path, log_dir: Path) -> Tuple[bool, dict, float]:
+                    out_dir: Path, log_dir: Path, abr: str = "mpc") -> Tuple[bool, dict, float]:
     """Execute a single benchmark task on a specific worker."""
     proto = task["protocol"]
     trace = task["trace_path"]
@@ -129,6 +129,7 @@ def run_worker_task(task: dict, worker_id: int, duration: float,
         "--no-autostart",
         "--no-shaper-restart",
         "--no-autocontent",
+        "--abr", abr,
     ]
 
     t0 = time.time()
@@ -200,6 +201,8 @@ def main():
                         help="Limit the number of traces sampled per trace set")
     parser.add_argument("--dry-run", action="store_true",
                         help="Show queue summary and counts without running")
+    parser.add_argument("--abr", type=str, default="mpc", choices=["mpc", "bola", "throughput"],
+                        help="ABR algorithm for DASH (default: mpc)")
 
     args = parser.parse_args()
 
@@ -259,7 +262,7 @@ def main():
     def _worker_wrapper(task):
         wid = worker_pool.get()
         try:
-            return run_worker_task(task, wid, args.duration, out_dir, log_dir)
+            return run_worker_task(task, wid, args.duration, out_dir, log_dir, abr=args.abr)
         finally:
             worker_pool.put(wid)
 

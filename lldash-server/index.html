@@ -100,6 +100,8 @@
     window.__rebufferCount     = 0;
     window.__rebufferDurations = [];
     window.__rebufferStart     = null;
+    let hasStartedPlayback     = false;
+    window.__hasStartedPlayback = false;
 
     // Benchmark state variables
     let bitrateHistory     = [];
@@ -146,9 +148,19 @@
       document.getElementById('status-text').textContent = text;
     }
 
-    player.on(dashjs.MediaPlayer.events.CAN_PLAY, () => updateStatus('Playing'));
+    player.on(dashjs.MediaPlayer.events.CAN_PLAY, () => {
+      if (!hasStartedPlayback) updateStatus('Buffering...');
+    });
     player.on(dashjs.MediaPlayer.events.PLAYBACK_PLAYING, () => {
       updateStatus('Playing');
+      if (!hasStartedPlayback) {
+        hasStartedPlayback = true;
+        window.__hasStartedPlayback = true;
+        isStalling = false;
+        stallingStartTime = null;
+        window.__rebufferStart = null;
+        return;
+      }
       if (isStalling && stallingStartTime) {
         totalStallingTime += Date.now() - stallingStartTime;
         isStalling = false;
@@ -161,6 +173,7 @@
     });
     player.on(dashjs.MediaPlayer.events.PLAYBACK_WAITING, () => {
       updateStatus('Buffering...');
+      if (!hasStartedPlayback) return;
       if (!isStalling) {
         isStalling = true;
         stallingStartTime = Date.now();

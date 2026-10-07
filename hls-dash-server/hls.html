@@ -101,6 +101,8 @@
     let totalStallingTime = 0;
     let stallingStartTime = null;
     let isStalling = false;
+    let hasStartedPlayback = false;
+    window.__hasStartedPlayback = false;
 
     function setStatus(text) {
       document.getElementById('status-text').textContent = text;
@@ -148,6 +150,7 @@
 
     function onWaiting() {
       setStatus('Buffering...');
+      if (!hasStartedPlayback) return;
       if (!isStalling) {
         isStalling = true;
         stallingStartTime = Date.now();
@@ -157,6 +160,13 @@
 
     function onPlaying() {
       setStatus('Playing');
+      if (!hasStartedPlayback) {
+        hasStartedPlayback = true;
+        window.__hasStartedPlayback = true;
+        isStalling = false;
+        stallingStartTime = null;
+        return;
+      }
       if (isStalling && stallingStartTime) {
         const dur = Date.now() - stallingStartTime;
         totalStallingTime += dur;
