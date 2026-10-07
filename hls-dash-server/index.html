@@ -291,14 +291,27 @@
         }
       });
     } else {
-      // Default / BOLA mode
+      // Default / BOLA mode (Optimized: pure BOLA with unblocked buffer ceiling)
       player.updateSettings({
         streaming: {
+          buffer: {
+            bufferTimeDefault: 32,
+            bufferTimeAtTopQuality: 32
+          },
           abr: {
             initialBitrate: { video: 100 },
             autoSwitchBitrate: { video: true },
             rules: {
-              bolaRule: { active: true }
+              throughputRule: { active: false },
+              bolaRule: { active: true },
+              insufficientBufferRule: { active: true }
+            },
+            throughput: {
+              bandwidthSafetyFactor: 0.98,
+              ewma: {
+                throughputSlowHalfLifeSeconds: 2,
+                throughputFastHalfLifeSeconds: 1
+              }
             }
           }
         }
