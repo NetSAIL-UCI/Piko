@@ -1421,6 +1421,12 @@ class WebRTCBenchmark:
         self.max_duration = self._resolve_duration()
         
         try:
+            # Reset any lingering tc shaping on the server so DTLS & signaling connect cleanly
+            try:
+                self._api_post('/stopShaping')
+            except Exception:
+                pass
+
             # Step 1: Get router capabilities
             print("📡 Getting router capabilities...")
             rtp_capabilities = self._api_get('/rtpCapabilities')
@@ -2013,6 +2019,10 @@ class WebRTCBenchmark:
         """Cleanup WebRTC resources."""
         print("\n[CLEANUP] Disconnecting...")
         
+        try:
+            self._api_post('/stopShaping')
+        except Exception:
+            pass
         try:
             self._api_post('/disconnect', {'clientId': self.client_id})
         except Exception:

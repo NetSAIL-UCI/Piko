@@ -449,6 +449,17 @@ app.post('/requestKeyFrame', async (req, res) => {
 // Start/restart tc-trace.py shaping inside the container.
 // Called by benchmark.py instead of 'sudo docker exec' (which requires a TTY).
 let _tcTraceProc = null;
+function stopTcShaping() {
+  if (_tcTraceProc) {
+    try { _tcTraceProc.kill('SIGTERM'); } catch (_) {}
+    _tcTraceProc = null;
+  }
+  try {
+    const { exec } = require('child_process');
+    exec('pkill -f tc-trace.py ; tc qdisc del dev eth0 root 2>/dev/null');
+  } catch (_) {}
+}
+
 app.post('/startShaping', (_req, res) => {
   // Kill any existing tc-trace process
   if (_tcTraceProc) {
@@ -465,6 +476,11 @@ app.post('/startShaping', (_req, res) => {
     console.log('[SHAPING] tc-trace.py started (pid:', _tcTraceProc.pid, ')');
   }, 300);
   res.json({ success: true, message: 'tc-trace.py starting' });
+});
+
+app.post('/stopShaping', (_req, res) => {
+  stopTcShaping();
+  res.json({ success: true, message: 'tc-trace.py stopped' });
 });
 
 // Get consumer stats
@@ -524,6 +540,9 @@ function cleanupClient(clientId) {
     consumers.delete(clientId);
     abrState.delete(clientId);
     console.log(`Cleaned up client ${clientId}`);
+  }
+  if (consumers.size === 0) {
+    stopTcShaping();
   }
 }
 
