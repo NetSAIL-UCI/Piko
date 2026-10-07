@@ -79,11 +79,33 @@ def find_completed_runs(results_dir: Path) -> Set[Tuple[str, str]]:
 
 def collect_all_tasks(protocols: List[str], trace_sets: List[str],
                       completed: Set[Tuple[str, str]],
-                      limit_per_set: int = None) -> Tuple[List[dict], int, int]:
+                      limit_per_set: int = None,
+                      trace_list_file: Path = None) -> Tuple[List[dict], int, int]:
     """Collect all pending (protocol, trace_file) tasks."""
     tasks = []
     total_found = 0
     total_skipped = 0
+
+    if trace_list_file and trace_list_file.exists():
+        lines = [line.strip() for line in trace_list_file.read_text().splitlines() if line.strip()]
+        for line in lines:
+            t = Path(line)
+            if not t.exists():
+                continue
+            total_found += 1
+            stem = t.stem
+            set_name = t.parent.name
+            for proto in protocols:
+                if (proto, stem) in completed:
+                    total_skipped += 1
+                    continue
+                tasks.append({
+                    "protocol": proto,
+                    "trace_path": t,
+                    "trace_stem": stem,
+                    "trace_set": set_name,
+                })
+        return tasks, total_found, total_skipped
 
     for set_name in trace_sets:
         set_dir = TRACES_DIR / set_name
@@ -195,6 +217,10 @@ def main():
                         help="Trace sets to include (default: all 12 sets)")
     parser.add_argument("--results-tag", type=str, default=None,
                         help="Subdirectory tag under results/ (default: parallel_<timestamp>)")
+    parser.add_argument("--trace-list", type=str, default=None,
+                        help="Path to text file containing trace paths (one per line)")
+    parser.add_argument("--force-rerun", action="store_true",
+                        help="Do not skip runs found in previous benchmark batches; only check current out_dir")
     parser.add_argument("--max-tasks", type=int, default=None,
                         help="Limit the total number of tasks to execute")
     parser.add_argument("--limit-per-set", type=int, default=None,
@@ -221,13 +247,16 @@ def main():
     print("=" * 75)
 
     # Check already completed runs
-    print(f"\n[SCAN] Scanning existing results in {RESULTS_DIR} ...")
-    completed = find_completed_runs(RESULTS_DIR)
+    scan_dir = out_dir if args.force_rerun else RESULTS_DIR
+    print(f"\n[SCAN] Scanning existing results in {scan_dir} ...")
+    completed = find_completed_runs(scan_dir)
     print(f"[SCAN] Found {len(completed):,} previously completed benchmark runs")
 
     # Build task list
+    trace_list_p = Path(args.trace_list) if args.trace_list else None
     tasks, total_traces, skipped_count = collect_all_tasks(
-        args.protocols, args.trace_sets, completed, args.limit_per_set
+        args.protocols, args.trace_sets, completed, args.limit_per_set,
+        trace_list_file=trace_list_p
     )
     if args.max_tasks and args.max_tasks > 0:
         tasks = tasks[:args.max_tasks]
