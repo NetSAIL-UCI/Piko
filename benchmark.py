@@ -1540,6 +1540,13 @@ class WebRTCBenchmark:
             # consumer RTP params and establish the PeerConnection.
             print("\U0001f91d Setting up peer connection...")
             config = RTCConfiguration(iceServers=[])
+            # The server's candidates are all rewritten to 127.0.0.1 (Docker
+            # port-mapped), but aioice by default gathers only non-loopback
+            # host addresses (LAN / docker bridges). Those pairs never complete
+            # on the client side, so ICE stays "checking", DTLS never starts and
+            # no media flows. Gather loopback only so the pair matches.
+            import aioice.ice as _aioice_ice
+            _aioice_ice.get_host_addresses = lambda use_ipv4=True, use_ipv6=False: ["127.0.0.1"]
             self.pc = RTCPeerConnection(configuration=config)
             
             video_track_received = asyncio.Event()
@@ -1806,11 +1813,20 @@ class WebRTCBenchmark:
             print(f"   [WARN] DTLS not connected within {timeout:.0f}s — "
                   "starting shaping anyway")
 
-        try:
-            self._api_post('/startShaping')
-            print("[WEBRTC-SHAPER] tc-trace.py starting in container")
-        except Exception as e:
-            print(f"[WEBRTC-SHAPER] Warning: could not reach /startShaping: {e}")
+        _last_err = None
+        for _attempt in range(1, 5):
+            try:
+                self._api_post('/startShaping')
+                print("[WEBRTC-SHAPER] tc-trace.py starting in container")
+                _last_err = None
+                break
+            except Exception as e:
+                _last_err = str(e)
+                print(f"[WEBRTC-SHAPER] /startShaping attempt {_attempt}/4 failed: {_last_err}")
+                await asyncio.sleep(3)
+        if _last_err is not None:
+            raise RuntimeError("WebRTC shaper did not start after 4 attempts "
+                               f"({_last_err}); refusing to run on an unshaped link")
 
     async def _collect_stats_for_duration(self):
         """Collect WebRTC stats over the benchmark duration."""
@@ -2752,14 +2768,26 @@ def setup_trace(trace_path: Path, protocol: str = "dash", skip_restart: bool = F
         url = f"{parsed.scheme}://{parsed.netloc}"
         tag = protocol.upper()
         print(f"[{tag}-SHAPER] Triggering tc-trace via {url}/startShaping API...")
-        try:
-            resp = requests.post(f"{url}/startShaping", timeout=5)
-            if resp.ok:
-                print(f"[{tag}-SHAPER] tc-trace.py starting in container")
-            else:
-                print(f"[{tag}-SHAPER] /startShaping returned {resp.status_code}")
-        except Exception as e:
-            print(f"[{tag}-SHAPER] Warning: could not reach /startShaping: {e}")
+        # A failed call used to be only a warning, so the run proceeded on the
+        # previous job's trace (the container keeps replaying whatever it had).
+        # Retry with a generous timeout, then fail the run rather than measure
+        # the wrong network.
+        _last_err = None
+        for _attempt in range(1, 5):
+            try:
+                resp = requests.post(f"{url}/startShaping", timeout=30)
+                if resp.ok:
+                    print(f"[{tag}-SHAPER] tc-trace.py starting in container")
+                    _last_err = None
+                    break
+                _last_err = f"HTTP {resp.status_code}"
+            except Exception as e:
+                _last_err = str(e)
+            print(f"[{tag}-SHAPER] /startShaping attempt {_attempt}/4 failed: {_last_err}")
+            time.sleep(3)
+        if _last_err is not None:
+            raise RuntimeError(f"{tag} shaper did not start after 4 attempts ({_last_err}); "
+                               "refusing to run on a stale/unshaped link")
     elif skip_restart:
         print("[SHAPER] Skipping restart (--no-shaper-restart)")
     else:
