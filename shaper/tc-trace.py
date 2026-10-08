@@ -68,6 +68,17 @@ def tc_init():
     run_tc("qdisc", "add", "dev", ETHERNET, "parent", "1:1", "handle", "10:",
            "netem", "delay", "40ms", "loss", "0.1%")
 
+    # Keep the webrtc-server control API (TCP source port 3000) off the shaped
+    # class. Otherwise /stats, /health etc. replies queue behind the shaped
+    # media in the HTB/netem queue and each poll takes seconds, stalling the
+    # benchmark's 1 Hz sampling loop. Media is UDP, so this never affects it.
+    # (dash/hls media is TCP on other ports and stays shaped.)
+    run_tc("class", "add", "dev", ETHERNET, "parent", "1:", "classid", "1:2",
+           "htb", "rate", "1000mbit", "ceil", "1000mbit", check=False)
+    run_tc("filter", "add", "dev", ETHERNET, "parent", "1:", "protocol", "ip",
+           "prio", "1", "u32", "match", "ip", "protocol", "6", "0xff",
+           "match", "ip", "sport", "3000", "0xffff", "flowid", "1:2", check=False)
+
     print("TC initialized successfully")
 
 
