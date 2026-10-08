@@ -209,6 +209,10 @@ def main():
     )
     parser.add_argument("--workers", "-w", type=int, default=16,
                         help="Number of concurrent worker slots (default: 16)")
+    parser.add_argument("--worker-offset", type=int, default=0,
+                        help="First worker id is offset+1 (e.g. --workers 8 --worker-offset 8 uses "
+                             "workers 9..16). Lets two dispatchers run side by side without "
+                             "sharing a worker's trace dir / ports.")
     parser.add_argument("--duration", "-d", type=float, default=60.0,
                         help="Trace playback duration in seconds (default: 60)")
     parser.add_argument("--protocols", "-p", nargs="+", default=DEFAULT_PROTOCOLS,
@@ -281,7 +285,7 @@ def main():
 
     # Worker ID queue (thread-safe pool 1..N)
     worker_pool = queue.Queue()
-    for wid in range(1, args.workers + 1):
+    for wid in range(args.worker_offset + 1, args.worker_offset + args.workers + 1):
         worker_pool.put(wid)
 
     done_count = 0
