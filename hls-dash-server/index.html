@@ -291,18 +291,21 @@
         }
       });
     } else {
-      // Default / BOLA mode (Optimized: pure BOLA with unblocked buffer ceiling)
+      // Default / BOLA mode (dash.js Dynamic: throughput + BOLA hybrid)
       player.updateSettings({
         streaming: {
           buffer: {
             bufferTimeDefault: 32,
-            bufferTimeAtTopQuality: 32
+            bufferTimeAtTopQuality: 32,
+            fastSwitchEnabled: false
           },
           abr: {
             initialBitrate: { video: 100 },
             autoSwitchBitrate: { video: true },
             rules: {
-              throughputRule: { active: false },
+              // Both active => dash.js "Dynamic" strategy: throughput rule below
+              // bufferTimeDefault, BOLA above. Pure BOLA needs ~25s buffer to pick 4500k.
+              throughputRule: { active: true },
               bolaRule: { active: true },
               insufficientBufferRule: { active: true }
             },
