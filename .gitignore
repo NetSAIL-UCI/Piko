@@ -56,3 +56,7 @@ scratch_bola*.js
 *.zip
 parallel_*.log
 archive_stale_runs_*/
+
+# Nested upstream moq checkout and root-level run logs
+moq/
+/*.log
