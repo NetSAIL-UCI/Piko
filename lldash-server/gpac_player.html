@@ -125,8 +125,10 @@ player.on(dashjs.MediaPlayer.events.FRAGMENT_LOADING_COMPLETED, e => {
   const req = e.request;
   if (!req || req.mediaType !== 'video') return;
   const bytes = req.bytesLoaded || req.bytesTotal || req.bytes || 0;
-  const startDate = req.requestStartDate || req.trequest;
-  const endDate   = req.requestEndDate   || req.tresponse;
+  // dash.js 5.x exposes startDate/endDate (same field order as hls-dash-server/index.html);
+  // reading only requestStartDate/requestEndDate yielded 0 samples -> throughput always 0.
+  const startDate = req.startDate || req.requestStartDate || req.trequest;
+  const endDate   = req.endDate   || req.requestEndDate   || req.tresponse;
   if (!startDate || !endDate) return;
   const ms = (endDate instanceof Date ? endDate.getTime() : +endDate)
            - (startDate instanceof Date ? startDate.getTime() : +startDate);
